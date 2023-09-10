@@ -2,6 +2,7 @@ package localauth
 
 import (
 	"encoding/json"
+	"fmt"
 	"os"
 )
 
@@ -22,7 +23,7 @@ func LoadToken() (TokenJson, error) {
 
 	var tj TokenJson
 	if err := json.Unmarshal(contents, &tj); err != nil {
-		return TokenJson{}, err
+		return TokenJson{}, fmt.Errorf("failed to parse token file: %w", err)
 	}
 
 	return tj, nil
