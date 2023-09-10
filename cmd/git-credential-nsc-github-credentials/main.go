@@ -21,17 +21,26 @@ var (
 	repository = flag.String("repository", "", "The repository to fetch credentials for.")
 	secretID   = flag.String("secret_id", "", "The secret that represents the association.")
 	generate   = flag.Bool("generate", false, "If true, emits a token immediately.")
+	validate   = flag.Bool("validate", false, "If true, validates that the arguments are usable.")
 )
 
 func main() {
 	flag.Parse()
 
-	if *generate {
+	switch {
+	case *validate:
+		if !strings.HasPrefix(*repository, "https://github.com/") {
+			fmt.Fprintf(os.Stderr, "Using GitHub short-term credentials requires HTTPS access (saw %q).\n", *repository)
+			os.Exit(2)
+		}
+
+	case *generate:
 		if err := gen(context.Background(), *repository, *secretID); err != nil {
 			fmt.Fprintf(os.Stderr, "%v\n", err)
 			os.Exit(1)
 		}
-	} else {
+
+	default:
 		if err := do(context.Background(), *repository, *secretID); err != nil {
 			fmt.Fprintf(os.Stderr, "%v\n", err)
 			os.Exit(1)
