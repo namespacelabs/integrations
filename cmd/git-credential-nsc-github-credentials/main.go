@@ -124,6 +124,7 @@ func fetch(ctx context.Context, token localauth.TokenJson, repository, secretID 
 		return "", err
 	}
 
+	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Authorization", "Bearer "+token.BearerToken)
 
 	resp, err := http.DefaultClient.Do(req)
