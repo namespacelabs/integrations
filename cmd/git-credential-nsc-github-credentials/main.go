@@ -22,6 +22,7 @@ var (
 	secretID   = flag.String("secret_id", "", "The secret that represents the association.")
 	generate   = flag.Bool("generate", false, "If true, emits a token immediately.")
 	validate   = flag.Bool("validate", false, "If true, validates that the arguments are usable.")
+	debug      = flag.Bool("debug", false, "Whether to emit debug statements.")
 )
 
 func main() {
@@ -41,7 +42,7 @@ func main() {
 		}
 
 	default:
-		if err := do(context.Background(), *repository, *secretID); err != nil {
+		if err := helper(context.Background(), *repository, *secretID); err != nil {
 			fmt.Fprintf(os.Stderr, "%v\n", err)
 			os.Exit(1)
 		}
@@ -65,7 +66,7 @@ func gen(ctx context.Context, repository, secretID string) error {
 	return nil
 }
 
-func do(ctx context.Context, repository, secretID string) error {
+func helper(ctx context.Context, repository, secretID string) error {
 	if repository == "" || secretID == "" {
 		return errors.New("--repository and --secret_id are required")
 	}
@@ -91,11 +92,26 @@ func do(ctx context.Context, repository, secretID string) error {
 			}
 		}
 
+		if *debug {
+			fmt.Fprintf(os.Stderr, "Obtained the following attributes: %v\n", attributes)
+		}
+
 		if attributes["protocol"] == "https" && attributes["host"] == "github.com" {
+			requestForRepository := repository
+
+			if attributes["path"] != "" {
+				// "path" will be {org}/{repository}.git
+				requestForRepository = attributes["path"]
+
+				if *debug {
+					fmt.Fprintf(os.Stderr, "Will request permissions for %q instead.\n", requestForRepository)
+				}
+			}
+
 			ctx, done := context.WithTimeout(ctx, 10*time.Second)
 			defer done()
 
-			tok, err := fetch(ctx, token, repository, secretID)
+			tok, err := fetch(ctx, token, requestForRepository, secretID)
 			if err != nil {
 				return err
 			}
@@ -111,10 +127,16 @@ func do(ctx context.Context, repository, secretID string) error {
 }
 
 func fetch(ctx context.Context, token localauth.TokenJson, repository, secretID string) (string, error) {
-	bodyBytes, err := json.Marshal(map[string]string{
+	request := map[string]string{
 		"repository": repository,
 		"secret_id":  secretID,
-	})
+	}
+
+	if *debug {
+		fmt.Fprintf(os.Stderr, "Will fetch credentials with the following request: %v\n", request)
+	}
+
+	bodyBytes, err := json.Marshal(request)
 	if err != nil {
 		return "", fmt.Errorf("failed to marshal body: %w", err)
 	}
