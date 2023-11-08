@@ -11,7 +11,6 @@ import (
 	"log"
 	"net"
 	"os"
-	"path/filepath"
 
 	"golang.org/x/sys/unix"
 	"namespacelabs.dev/go-ids"
@@ -19,34 +18,31 @@ import (
 )
 
 type Proxy struct {
-	TempDir    string
 	SocketAddr string
+	Cleanup    func()
 }
 
 type ProxyOpts struct {
 	Debug, Errors  io.Writer
 	SocketPath     string
-	Kind           string
 	Blocking       bool
 	Connect        func(context.Context) (net.Conn, error)
 	AnnounceSocket func(string)
 }
 
 func RunProxy(ctx context.Context, opts ProxyOpts) (*Proxy, error) {
-	socketPath := opts.SocketPath
-
-	if err := unix.Unlink(socketPath); err != nil && !os.IsNotExist(err) {
+	if err := unix.Unlink(opts.SocketPath); err != nil && !os.IsNotExist(err) {
 		return nil, err
 	}
 
 	var d net.ListenConfig
-	listener, err := d.Listen(ctx, "unix", socketPath)
+	listener, err := d.Listen(ctx, "unix", opts.SocketPath)
 	if err != nil {
 		return nil, err
 	}
 
 	if opts.AnnounceSocket != nil {
-		opts.AnnounceSocket(socketPath)
+		opts.AnnounceSocket(opts.SocketPath)
 	}
 
 	if opts.Blocking {
@@ -60,6 +56,7 @@ func RunProxy(ctx context.Context, opts ProxyOpts) (*Proxy, error) {
 		}()
 
 		defer close(ch)
+		defer os.Remove(opts.SocketPath)
 
 		if err := serveProxy(ctx, opts.Debug, opts.Errors, listener, func(ctx context.Context) (net.Conn, error) {
 			return opts.Connect(ctx)
@@ -71,17 +68,21 @@ func RunProxy(ctx context.Context, opts ProxyOpts) (*Proxy, error) {
 			return nil, err
 		}
 
-		return nil, nil
+		return &Proxy{opts.SocketPath, func() {}}, nil
 	} else {
+		ctxWithCancel, cancel := context.WithCancel(ctx)
 		go func() {
-			if err := serveProxy(ctx, opts.Debug, opts.Errors, listener, func(ctx context.Context) (net.Conn, error) {
+			if err := serveProxy(ctxWithCancel, opts.Debug, opts.Errors, listener, func(ctx context.Context) (net.Conn, error) {
 				return opts.Connect(ctx)
 			}); err != nil {
 				log.Fatal(err)
 			}
 		}()
 
-		return &Proxy{filepath.Dir(socketPath), socketPath}, nil
+		return &Proxy{opts.SocketPath, func() {
+			cancel()
+			os.Remove(opts.SocketPath)
+		}}, nil
 	}
 }
 
