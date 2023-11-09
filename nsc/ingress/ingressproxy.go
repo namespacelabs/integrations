@@ -1,4 +1,4 @@
-package ingressproxy
+package ingress
 
 import (
 	"context"
@@ -9,13 +9,14 @@ import (
 	"net/url"
 	"time"
 
+	computev1beta "buf.build/gen/go/namespace/cloud/protocolbuffers/go/proto/namespace/cloud/compute/v1beta"
 	"github.com/gorilla/websocket"
 	"github.com/jpillora/chisel/share/cnet"
 	"namespacelabs.dev/go-ids"
-	"namespacelabs.dev/integrations/nsc/localauth"
+	"namespacelabs.dev/integrations/nsc/auth"
 )
 
-func DialEndpoint(ctx context.Context, debugLog io.Writer, token localauth.TokenJson, endpoint string) (net.Conn, error) {
+func DialEndpoint(ctx context.Context, debugLog io.Writer, token auth.Token, endpoint string) (net.Conn, error) {
 	tid := ids.NewRandomBase32ID(4)
 	fmt.Fprintf(debugLog, "[%s] Gateway: dialing %v...\n", tid, endpoint)
 
@@ -38,7 +39,7 @@ func DialEndpoint(ctx context.Context, debugLog io.Writer, token localauth.Token
 	return cnet.NewWebSocketConn(wsConn), nil
 }
 
-func DialHostedService(ctx context.Context, debugLog io.Writer, token localauth.TokenJson, instanceId, ingressDomain, serviceName string, vars url.Values) (net.Conn, error) {
+func DialHostedService(ctx context.Context, debugLog io.Writer, token auth.Token, instanceId, ingressDomain, serviceName string, vars url.Values) (net.Conn, error) {
 	u := url.URL{
 		Scheme:   "wss",
 		Host:     fmt.Sprintf("gate.%s", ingressDomain),
@@ -47,4 +48,10 @@ func DialHostedService(ctx context.Context, debugLog io.Writer, token localauth.
 	}
 
 	return DialEndpoint(ctx, debugLog, token, u.String())
+}
+
+func DialNamedUnixSocket(ctx context.Context, debugLog io.Writer, token auth.Token, metadata *computev1beta.InstanceMetadata, name string) (net.Conn, error) {
+	vars := url.Values{}
+	vars.Set("name", fmt.Sprintf("%s-socket", name))
+	return DialHostedService(ctx, debugLog, token, metadata.InstanceId, metadata.IngressDomain, "unixsocket", vars)
 }

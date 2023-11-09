@@ -14,7 +14,7 @@ import (
 	"strings"
 	"time"
 
-	"namespacelabs.dev/integrations/nsc/localauth"
+	"namespacelabs.dev/integrations/nsc/auth"
 )
 
 var (
@@ -52,7 +52,7 @@ func main() {
 }
 
 func gen(ctx context.Context, repository, secretID string) error {
-	token, err := localauth.LoadToken()
+	token, err := auth.LoadWorkloadToken()
 	if err != nil {
 		return err
 	}
@@ -71,7 +71,7 @@ func helper(ctx context.Context, repository, secretID string) error {
 		return errors.New("--repository and --secret_id are required")
 	}
 
-	token, err := localauth.LoadToken()
+	token, err := auth.LoadWorkloadToken()
 	if err != nil {
 		return err
 	}
@@ -126,7 +126,7 @@ func helper(ctx context.Context, repository, secretID string) error {
 	return nil
 }
 
-func fetch(ctx context.Context, token localauth.TokenJson, repository, secretID string) (string, error) {
+func fetch(ctx context.Context, token auth.Token, repository, secretID string) (string, error) {
 	request := map[string]string{
 		"repository": repository,
 		"secret_id":  secretID,

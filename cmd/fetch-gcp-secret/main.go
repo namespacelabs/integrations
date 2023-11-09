@@ -9,8 +9,8 @@ import (
 	secretmanager "cloud.google.com/go/secretmanager/apiv1"
 	"cloud.google.com/go/secretmanager/apiv1/secretmanagerpb"
 	"google.golang.org/api/option"
+	"namespacelabs.dev/integrations/nsc/auth"
 	"namespacelabs.dev/integrations/nsc/gcpfederation"
-	"namespacelabs.dev/integrations/nsc/localauth"
 )
 
 var (
@@ -58,7 +58,7 @@ func maybeExchangeOpts() *gcpfederation.ExchangeOIDCTokenOpts {
 func do(ctx context.Context, secretName, target string, exchangeopts *gcpfederation.ExchangeOIDCTokenOpts) error {
 	var clientopts []option.ClientOption
 	if exchangeopts != nil {
-		o, err := gcpfederation.SDKOptions(ctx, *exchangeopts, localauth.LoadToken)
+		o, err := gcpfederation.SDKOptions(ctx, *exchangeopts, auth.LoadWorkloadToken)
 		if err != nil {
 			return err
 		}

@@ -5,10 +5,10 @@ import (
 	"context"
 
 	"google.golang.org/api/option"
-	"namespacelabs.dev/integrations/nsc/localauth"
+	"namespacelabs.dev/integrations/nsc/auth"
 )
 
-func SDKOptions(ctx context.Context, opts ExchangeOIDCTokenOpts, gt func() (localauth.TokenJson, error)) ([]option.ClientOption, error) {
+func SDKOptions(ctx context.Context, opts ExchangeOIDCTokenOpts, gt func() (auth.Token, error)) ([]option.ClientOption, error) {
 	t, err := gt()
 	if err != nil {
 		return nil, err
