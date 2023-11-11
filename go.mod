@@ -3,10 +3,9 @@ module namespacelabs.dev/integrations
 go 1.20
 
 require (
-	buf.build/gen/go/namespace/cloud/connectrpc/go v1.12.0-20231108165355-9b9b61cd2c3c.1
+	buf.build/gen/go/namespace/cloud/grpc/go v1.3.0-20231111065615-29ef9ab4ea92.2
 	buf.build/gen/go/namespace/cloud/protocolbuffers/go v1.31.0-20231108165355-9b9b61cd2c3c.2
 	cloud.google.com/go/secretmanager v1.11.1
-	connectrpc.com/connect v1.12.0
 	github.com/gorilla/websocket v1.5.1
 	github.com/jpillora/chisel v1.9.1
 	golang.org/x/sys v0.13.0
