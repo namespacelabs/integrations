@@ -11,6 +11,7 @@ import (
 	"buf.build/gen/go/namespace/cloud/grpc/go/proto/namespace/cloud/compute/v1beta/computev1betagrpc"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
+	"namespacelabs.dev/integrations/nsc"
 	"namespacelabs.dev/integrations/nsc/auth"
 )
 
@@ -38,6 +39,7 @@ func NewClientWithEndpoint(ctx context.Context, endpoint string, token auth.Toke
 
 	conn, err := grpc.DialContext(ctx, parsed,
 		append([]grpc.DialOption{
+			grpc.WithUserAgent(fmt.Sprintf("nsc-go/%s", nsc.Version)),
 			grpc.WithTransportCredentials(credentials.NewTLS(&tls.Config{})),
 			grpc.WithPerRPCCredentials(credWrapper{token}),
 		}, opts...)...,
