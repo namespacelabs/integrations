@@ -11,7 +11,7 @@ require (
 	golang.org/x/sys v0.13.0
 	google.golang.org/api v0.136.0
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20230807174057-1744710a1577
-	google.golang.org/grpc v1.57.0
+	google.golang.org/grpc v1.57.1
 	inet.af/tcpproxy v0.0.0-20231102063150-2862066fc2a9
 	namespacelabs.dev/go-ids v0.0.0-20221124082625-9fc72ee06af7
 )
