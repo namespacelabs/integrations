@@ -52,6 +52,6 @@ func DialHostedService(ctx context.Context, debugLog io.Writer, token auth.Token
 
 func DialNamedUnixSocket(ctx context.Context, debugLog io.Writer, token auth.Token, metadata *computev1beta.InstanceMetadata, name string) (net.Conn, error) {
 	vars := url.Values{}
-	vars.Set("name", fmt.Sprintf("%s-socket", name))
+	vars.Set("name", name)
 	return DialHostedService(ctx, debugLog, token, metadata.InstanceId, metadata.IngressDomain, "unixsocket", vars)
 }
