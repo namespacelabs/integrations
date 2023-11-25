@@ -14,6 +14,7 @@ import (
 	"strings"
 	"time"
 
+	"namespacelabs.dev/integrations/nsc"
 	"namespacelabs.dev/integrations/nsc/auth"
 )
 
@@ -126,7 +127,7 @@ func helper(ctx context.Context, repository, secretID string) error {
 	return nil
 }
 
-func fetch(ctx context.Context, token auth.Token, repository, secretID string) (string, error) {
+func fetch(ctx context.Context, token nsc.TokenSource, repository, secretID string) (string, error) {
 	request := map[string]string{
 		"repository": repository,
 		"secret_id":  secretID,
@@ -146,8 +147,13 @@ func fetch(ctx context.Context, token auth.Token, repository, secretID string) (
 		return "", err
 	}
 
+	bt, err := token.IssueToken(ctx)
+	if err != nil {
+		return "", err
+	}
+
 	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("Authorization", "Bearer "+token.BearerToken)
+	req.Header.Set("Authorization", "Bearer "+bt)
 
 	resp, err := http.DefaultClient.Do(req)
 	if err != nil {

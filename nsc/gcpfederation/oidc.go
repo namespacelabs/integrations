@@ -8,9 +8,11 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+
+	"namespacelabs.dev/integrations/nsc"
 )
 
-func WithProduceOIDCWorkloadToken(workloadToken string) func(context.Context, string) (string, error) {
+func WithProduceOIDCWorkloadToken(authsrc nsc.TokenSource) func(context.Context, string) (string, error) {
 	return func(ctx context.Context, audience string) (string, error) {
 		req, err := json.Marshal(map[string]any{
 			"audience": audience,
@@ -25,8 +27,13 @@ func WithProduceOIDCWorkloadToken(workloadToken string) func(context.Context, st
 			return "", err
 		}
 
+		bt, err := authsrc.IssueToken(ctx)
+		if err != nil {
+			return "", err
+		}
+
 		httpReq.Header.Add("content-type", "application/json")
-		httpReq.Header.Add("authorization", "Bearer "+workloadToken)
+		httpReq.Header.Add("authorization", "Bearer "+bt)
 
 		log.Printf("Obtaining id_token")
 

@@ -12,7 +12,6 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
 	"namespacelabs.dev/integrations/nsc"
-	"namespacelabs.dev/integrations/nsc/auth"
 )
 
 type Client struct {
@@ -23,7 +22,7 @@ type Client struct {
 	Conn *grpc.ClientConn
 }
 
-func NewClient(ctx context.Context, token auth.Token, opts ...grpc.DialOption) (Client, error) {
+func NewClient(ctx context.Context, token nsc.TokenSource, opts ...grpc.DialOption) (Client, error) {
 	if endpoint := os.Getenv("NSC_ENDPOINT"); endpoint != "" {
 		return NewClientWithEndpoint(ctx, endpoint, token)
 	}
@@ -31,7 +30,7 @@ func NewClient(ctx context.Context, token auth.Token, opts ...grpc.DialOption) (
 	return NewClientWithEndpoint(ctx, "https://eu.compute.namespaceapis.com", token, opts...)
 }
 
-func NewClientWithEndpoint(ctx context.Context, endpoint string, token auth.Token, opts ...grpc.DialOption) (Client, error) {
+func NewClientWithEndpoint(ctx context.Context, endpoint string, token nsc.TokenSource, opts ...grpc.DialOption) (Client, error) {
 	parsed, err := parseEndpoint(endpoint)
 	if err != nil {
 		return Client{}, err
@@ -82,12 +81,17 @@ func parseEndpoint(endpoint string) (string, error) {
 }
 
 type credWrapper struct {
-	token auth.Token
+	token nsc.TokenSource
 }
 
 func (auth credWrapper) GetRequestMetadata(ctx context.Context, uri ...string) (map[string]string, error) {
+	token, err := auth.token.IssueToken(ctx)
+	if err != nil {
+		return nil, err
+	}
+
 	return map[string]string{
-		"Authorization": "Bearer " + auth.token.BearerToken,
+		"Authorization": "Bearer " + token,
 	}, nil
 }
 
