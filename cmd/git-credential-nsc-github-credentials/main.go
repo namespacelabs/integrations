@@ -147,7 +147,7 @@ func fetch(ctx context.Context, token nsc.TokenSource, repository, secretID stri
 		return "", err
 	}
 
-	bt, err := token.IssueToken(ctx)
+	bt, err := token.IssueToken(ctx, 5*time.Minute, false)
 	if err != nil {
 		return "", err
 	}

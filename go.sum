@@ -1,8 +1,8 @@
-buf.build/gen/go/namespace/cloud/grpc/go v1.3.0-20231111065615-29ef9ab4ea92.2 h1:MadcialrNWmjL/cmtYk6bcS4pxnz472URCyPS1HyPYA=
-buf.build/gen/go/namespace/cloud/grpc/go v1.3.0-20231111065615-29ef9ab4ea92.2/go.mod h1:eCXGkdiEbpglTGzZBwiFV+v9fiVv9/8KuWEuZ1o93Po=
-buf.build/gen/go/namespace/cloud/protocolbuffers/go v1.28.1-20231111065615-29ef9ab4ea92.4/go.mod h1:l1zO7s3LJijO15OmkU3q5AsKdFOyYtmp+pAnzQDvo/c=
-buf.build/gen/go/namespace/cloud/protocolbuffers/go v1.31.0-20231108165355-9b9b61cd2c3c.2 h1:AO/mHmsl6GB7wlxGQ8PVXUywA/W58WdrO5sKpEyw0lk=
-buf.build/gen/go/namespace/cloud/protocolbuffers/go v1.31.0-20231108165355-9b9b61cd2c3c.2/go.mod h1:iAE+HO0Kju0lsod8bl0ddz9NJtY1e498YlGU+scyjGg=
+buf.build/gen/go/namespace/cloud/grpc/go v1.3.0-20231126152223-7def32713e70.2 h1:5DQ67hyLXAmoV//DXGYZ7g7jjoaN3bWR6ocIeo6NdWw=
+buf.build/gen/go/namespace/cloud/grpc/go v1.3.0-20231126152223-7def32713e70.2/go.mod h1:zMPxQX6bL+cphpKpO82W0GDFK3QanSJgcJKzCpgcBmY=
+buf.build/gen/go/namespace/cloud/protocolbuffers/go v1.28.1-20231126152223-7def32713e70.4/go.mod h1:l1zO7s3LJijO15OmkU3q5AsKdFOyYtmp+pAnzQDvo/c=
+buf.build/gen/go/namespace/cloud/protocolbuffers/go v1.31.0-20231126152223-7def32713e70.2 h1:Q935aHlbfCwzP/R5t0oOVVRrPFcbg3Tfxwv88Z7x9tE=
+buf.build/gen/go/namespace/cloud/protocolbuffers/go v1.31.0-20231126152223-7def32713e70.2/go.mod h1:iAE+HO0Kju0lsod8bl0ddz9NJtY1e498YlGU+scyjGg=
 cloud.google.com/go v0.26.0/go.mod h1:aQUYkXzVsufM+DwF1aE+0xfcU+56JwCaLick0ClmMTw=
 cloud.google.com/go v0.34.0/go.mod h1:aQUYkXzVsufM+DwF1aE+0xfcU+56JwCaLick0ClmMTw=
 cloud.google.com/go v0.38.0/go.mod h1:990N+gfupTy94rShfmMCWGDn0LpTmnzTp2qbd1dvSRU=
@@ -444,6 +444,8 @@ github.com/ghodss/yaml v1.0.0/go.mod h1:4dBDuWmgqj2HViK6kFavaiC9ZROes6MMH2rRYeME
 github.com/go-gl/glfw v0.0.0-20190409004039-e6da0acd62b1/go.mod h1:vR7hzQXu2zJy9AVAgeJqvqgH9Q5CA+iKCZ2gyEVpxRU=
 github.com/go-gl/glfw/v3.3/glfw v0.0.0-20191125211704-12ad95a8df72/go.mod h1:tQ2UAYgL5IevRw8kRxooKSPJfGvJ9fJQFa0TUsXzTg8=
 github.com/go-gl/glfw/v3.3/glfw v0.0.0-20200222043503-6f7a984d4dc4/go.mod h1:tQ2UAYgL5IevRw8kRxooKSPJfGvJ9fJQFa0TUsXzTg8=
+github.com/golang-jwt/jwt/v4 v4.5.0 h1:7cYmW1XlMY7h7ii7UhUyChSgS5wUJEnm9uZVTGqOWzg=
+github.com/golang-jwt/jwt/v4 v4.5.0/go.mod h1:m21LjoU+eqJr34lmDMbreY2eSTRJ1cv77w39/MY0Ch0=
 github.com/golang/glog v0.0.0-20160126235308-23def4e6c14b/go.mod h1:SBH7ygxi8pfUlaOkMMuAQtPIUF8ecWP5IEl/CR7VP2Q=
 github.com/golang/glog v1.0.0/go.mod h1:EWib/APOK0SL3dFbYqvxE3UYd8E6s1ouQ7iEp/0LWV4=
 github.com/golang/groupcache v0.0.0-20190702054246-869f871628b6/go.mod h1:cIg4eruTrX1D+g88fzRXU5OdNfaM+9IcxsU14FzY7Hc=

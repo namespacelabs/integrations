@@ -1,0 +1,74 @@
+package grpcapi
+
+import (
+	"context"
+	"crypto/tls"
+	"fmt"
+	"net/url"
+	"strings"
+	"time"
+
+	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials"
+	"namespacelabs.dev/integrations/nsc"
+)
+
+func NewConnectionWithEndpoint(ctx context.Context, endpoint string, token nsc.TokenSource, opts ...grpc.DialOption) (*grpc.ClientConn, error) {
+	parsed, err := parseEndpoint(endpoint)
+	if err != nil {
+		return nil, err
+	}
+
+	ourOpts := []grpc.DialOption{
+		grpc.WithUserAgent(fmt.Sprintf("nsc-go/%s", nsc.Version)),
+		grpc.WithTransportCredentials(credentials.NewTLS(&tls.Config{})),
+	}
+
+	if token != nil {
+		ourOpts = append(ourOpts, grpc.WithPerRPCCredentials(credWrapper{token}))
+	}
+
+	return grpc.DialContext(ctx, parsed, append(ourOpts, opts...)...)
+}
+
+func parseEndpoint(endpoint string) (string, error) {
+	if strings.HasPrefix(endpoint, "http://") {
+		return "", fmt.Errorf("http scheme not supported")
+	}
+
+	if strings.HasPrefix(endpoint, "https://") {
+		u, err := url.Parse(endpoint)
+		if err != nil {
+			return "", fmt.Errorf("invalid endpoint: %w", err)
+		}
+
+		if strings.TrimPrefix(u.Path, "/") != "" {
+			return "", fmt.Errorf("path not supported: %q", u.Path)
+		}
+
+		return parseEndpoint(u.Host)
+	}
+
+	if strings.IndexByte(endpoint, ':') < 0 {
+		return endpoint + ":443", nil
+	}
+
+	return endpoint, nil
+}
+
+type credWrapper struct {
+	token nsc.TokenSource
+}
+
+func (auth credWrapper) GetRequestMetadata(ctx context.Context, uri ...string) (map[string]string, error) {
+	token, err := auth.token.IssueToken(ctx, 5*time.Minute, false)
+	if err != nil {
+		return nil, err
+	}
+
+	return map[string]string{
+		"Authorization": "Bearer " + token,
+	}, nil
+}
+
+func (credWrapper) RequireTransportSecurity() bool { return true }

@@ -1,7 +1,10 @@
 package nsc
 
-import "context"
+import (
+	"context"
+	"time"
+)
 
 type TokenSource interface {
-	IssueToken(context.Context) (string, error)
+	IssueToken(context.Context, time.Duration, bool) (string, error)
 }

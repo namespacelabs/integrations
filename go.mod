@@ -3,15 +3,17 @@ module namespacelabs.dev/integrations
 go 1.20
 
 require (
-	buf.build/gen/go/namespace/cloud/grpc/go v1.3.0-20231111065615-29ef9ab4ea92.2
-	buf.build/gen/go/namespace/cloud/protocolbuffers/go v1.31.0-20231108165355-9b9b61cd2c3c.2
+	buf.build/gen/go/namespace/cloud/grpc/go v1.3.0-20231126152223-7def32713e70.2
+	buf.build/gen/go/namespace/cloud/protocolbuffers/go v1.31.0-20231126152223-7def32713e70.2
 	cloud.google.com/go/secretmanager v1.11.1
+	github.com/golang-jwt/jwt/v4 v4.5.0
 	github.com/gorilla/websocket v1.5.1
 	github.com/jpillora/chisel v1.9.1
 	golang.org/x/sys v0.13.0
 	google.golang.org/api v0.136.0
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20230807174057-1744710a1577
 	google.golang.org/grpc v1.57.0
+	google.golang.org/protobuf v1.31.0
 	inet.af/tcpproxy v0.0.0-20231102063150-2862066fc2a9
 	namespacelabs.dev/go-ids v0.0.0-20221124082625-9fc72ee06af7
 )
@@ -38,5 +40,4 @@ require (
 	google.golang.org/appengine v1.6.7 // indirect
 	google.golang.org/genproto v0.0.0-20230803162519-f966b187b2e5 // indirect
 	google.golang.org/genproto/googleapis/api v0.0.0-20230803162519-f966b187b2e5 // indirect
-	google.golang.org/protobuf v1.31.0 // indirect
 )

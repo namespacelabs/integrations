@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"time"
 
 	"namespacelabs.dev/integrations/nsc"
 )
@@ -27,7 +28,7 @@ func WithProduceOIDCWorkloadToken(authsrc nsc.TokenSource) func(context.Context,
 			return "", err
 		}
 
-		bt, err := authsrc.IssueToken(ctx)
+		bt, err := authsrc.IssueToken(ctx, 30*time.Minute, false)
 		if err != nil {
 			return "", err
 		}
