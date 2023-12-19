@@ -142,7 +142,12 @@ func fetch(ctx context.Context, token nsc.TokenSource, repository, secretID stri
 		return "", fmt.Errorf("failed to marshal body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "POST", "https://api.namespacelabs.net/nsl.secrets.SecretsService/ObtainGitHubCredentials", bytes.NewReader(bodyBytes))
+	apiEndpoint := "https://api.namespacelabs.net"
+	if apiEndpointOverride := os.Getenv("NSC_API_ENDPOINT"); apiEndpointOverride != "" {
+		apiEndpoint = apiEndpointOverride
+	}
+	url := apiEndpoint + "/nsl.secrets.SecretsService/ObtainGitHubCredentials"
+	req, err := http.NewRequestWithContext(ctx, "POST", url, bytes.NewReader(bodyBytes))
 	if err != nil {
 		return "", err
 	}
