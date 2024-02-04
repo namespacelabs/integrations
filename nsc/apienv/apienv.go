@@ -15,5 +15,5 @@ func GlobalEndpoint() string {
 		return v
 	}
 
-	return "https://api.namespacelabs.net"
+	return "https://private-api.global.namespaceapis.com"
 }
