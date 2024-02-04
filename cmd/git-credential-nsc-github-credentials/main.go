@@ -15,6 +15,7 @@ import (
 	"time"
 
 	"namespacelabs.dev/integrations/nsc"
+	"namespacelabs.dev/integrations/nsc/apienv"
 	"namespacelabs.dev/integrations/nsc/auth"
 )
 
@@ -142,11 +143,7 @@ func fetch(ctx context.Context, token nsc.TokenSource, repository, secretID stri
 		return "", fmt.Errorf("failed to marshal body: %w", err)
 	}
 
-	apiEndpoint := "https://api.namespacelabs.net"
-	if apiEndpointOverride := os.Getenv("NSC_API_ENDPOINT"); apiEndpointOverride != "" {
-		apiEndpoint = apiEndpointOverride
-	}
-	url := apiEndpoint + "/nsl.secrets.SecretsService/ObtainGitHubCredentials"
+	url := apienv.IAMEndpoint() + "/nsl.secrets.SecretsService/ObtainGitHubCredentials"
 	req, err := http.NewRequestWithContext(ctx, "POST", url, bytes.NewReader(bodyBytes))
 	if err != nil {
 		return "", err

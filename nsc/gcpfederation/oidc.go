@@ -11,6 +11,7 @@ import (
 	"time"
 
 	"namespacelabs.dev/integrations/nsc"
+	"namespacelabs.dev/integrations/nsc/apienv"
 )
 
 func WithProduceOIDCWorkloadToken(authsrc nsc.TokenSource) func(context.Context, string) (string, error) {
@@ -23,7 +24,7 @@ func WithProduceOIDCWorkloadToken(authsrc nsc.TokenSource) func(context.Context,
 			return "", err
 		}
 
-		httpReq, err := http.NewRequestWithContext(ctx, "POST", "https://api.namespacelabs.net/nsl.tenants.TenantsService/IssueIdToken", bytes.NewReader(req))
+		httpReq, err := http.NewRequestWithContext(ctx, "POST", apienv.IAMEndpoint()+"/nsl.tenants.TenantsService/IssueIdToken", bytes.NewReader(req))
 		if err != nil {
 			return "", err
 		}

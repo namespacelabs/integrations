@@ -15,6 +15,7 @@ import (
 	"google.golang.org/grpc/metadata"
 	"google.golang.org/protobuf/types/known/durationpb"
 	"namespacelabs.dev/integrations/nsc"
+	"namespacelabs.dev/integrations/nsc/apienv"
 	"namespacelabs.dev/integrations/nsc/grpcapi"
 )
 
@@ -34,7 +35,7 @@ func (t *loadedToken) client(ctx context.Context) (sessionsv1betagrpc.UserSessio
 	defer t.mu.Unlock()
 
 	if t.sessionsClient == nil {
-		conn, err := grpcapi.NewConnectionWithEndpoint(ctx, iamEndpoint(), nil)
+		conn, err := grpcapi.NewConnectionWithEndpoint(ctx, apienv.IAMEndpoint(), nil)
 		if err != nil {
 			return nil, err
 		}
@@ -43,14 +44,6 @@ func (t *loadedToken) client(ctx context.Context) (sessionsv1betagrpc.UserSessio
 	}
 
 	return t.sessionsClient, nil
-}
-
-func iamEndpoint() string {
-	if v := os.Getenv("NSC_IAM_ENDPOINT"); v != "" {
-		return v
-	}
-
-	return "https://api.namespacelabs.net"
 }
 
 func (t *loadedToken) IssueToken(ctx context.Context, minDur time.Duration, skipCache bool) (string, error) {
