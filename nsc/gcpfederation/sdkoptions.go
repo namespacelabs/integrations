@@ -5,10 +5,10 @@ import (
 	"context"
 
 	"google.golang.org/api/option"
-	"namespacelabs.dev/integrations/nsc"
+	"namespacelabs.dev/integrations/api"
 )
 
-func SDKOptions(ctx context.Context, opts ExchangeOIDCTokenOpts, gt func() (nsc.TokenSource, error)) ([]option.ClientOption, error) {
+func SDKOptions(ctx context.Context, opts ExchangeOIDCTokenOpts, gt func() (api.TokenSource, error)) ([]option.ClientOption, error) {
 	t, err := gt()
 	if err != nil {
 		return nil, err

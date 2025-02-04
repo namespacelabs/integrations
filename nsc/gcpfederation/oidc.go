@@ -10,11 +10,11 @@ import (
 	"net/http"
 	"time"
 
-	"namespacelabs.dev/integrations/nsc"
+	"namespacelabs.dev/integrations/api"
 	"namespacelabs.dev/integrations/nsc/apienv"
 )
 
-func WithProduceOIDCWorkloadToken(authsrc nsc.TokenSource) func(context.Context, string) (string, error) {
+func WithProduceOIDCWorkloadToken(authsrc api.TokenSource) func(context.Context, string) (string, error) {
 	return func(ctx context.Context, audience string) (string, error) {
 		req, err := json.Marshal(map[string]any{
 			"audience": audience,

@@ -12,9 +12,9 @@ import (
 
 	computepb "buf.build/gen/go/namespace/cloud/protocolbuffers/go/proto/namespace/cloud/compute/v1beta"
 	"google.golang.org/protobuf/types/known/timestamppb"
-	"namespacelabs.dev/integrations/nsc"
-	"namespacelabs.dev/integrations/nsc/auth"
-	"namespacelabs.dev/integrations/nsc/compute"
+	"namespacelabs.dev/integrations/api"
+	"namespacelabs.dev/integrations/api/compute"
+	"namespacelabs.dev/integrations/auth"
 )
 
 func main() {
@@ -34,7 +34,7 @@ func main() {
 	}
 }
 
-func create(ctx context.Context, debugLog io.Writer, token nsc.TokenSource, shape *computepb.InstanceShape) error {
+func create(ctx context.Context, debugLog io.Writer, token api.TokenSource, shape *computepb.InstanceShape) error {
 	// Create a stub to use the Namespace Compute API.
 	cli, err := compute.NewClient(ctx, token)
 	if err != nil {

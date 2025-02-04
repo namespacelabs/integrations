@@ -10,10 +10,11 @@ import (
 
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
+	"namespacelabs.dev/integrations/api"
 	"namespacelabs.dev/integrations/nsc"
 )
 
-func NewConnectionWithEndpoint(ctx context.Context, endpoint string, token nsc.TokenSource, opts ...grpc.DialOption) (*grpc.ClientConn, error) {
+func NewConnectionWithEndpoint(ctx context.Context, endpoint string, token api.TokenSource, opts ...grpc.DialOption) (*grpc.ClientConn, error) {
 	parsed, err := parseEndpoint(endpoint)
 	if err != nil {
 		return nil, err
@@ -57,7 +58,7 @@ func parseEndpoint(endpoint string) (string, error) {
 }
 
 type credWrapper struct {
-	token nsc.TokenSource
+	token api.TokenSource
 }
 
 func (auth credWrapper) GetRequestMetadata(ctx context.Context, uri ...string) (map[string]string, error) {

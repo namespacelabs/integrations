@@ -14,9 +14,9 @@ import (
 	"strings"
 	"time"
 
-	"namespacelabs.dev/integrations/nsc"
+	"namespacelabs.dev/integrations/api"
+	"namespacelabs.dev/integrations/auth"
 	"namespacelabs.dev/integrations/nsc/apienv"
-	"namespacelabs.dev/integrations/nsc/auth"
 )
 
 var (
@@ -128,7 +128,7 @@ func helper(ctx context.Context, repository, secretID string) error {
 	return nil
 }
 
-func fetch(ctx context.Context, token nsc.TokenSource, repository, secretID string) (string, error) {
+func fetch(ctx context.Context, token api.TokenSource, repository, secretID string) (string, error) {
 	request := map[string]string{
 		"repository": repository,
 		"secret_id":  secretID,

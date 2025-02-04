@@ -1,4 +1,4 @@
-package nsc
+package api
 
 import (
 	"context"

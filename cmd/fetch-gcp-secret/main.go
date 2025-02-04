@@ -9,7 +9,7 @@ import (
 	secretmanager "cloud.google.com/go/secretmanager/apiv1"
 	"cloud.google.com/go/secretmanager/apiv1/secretmanagerpb"
 	"google.golang.org/api/option"
-	"namespacelabs.dev/integrations/nsc/auth"
+	"namespacelabs.dev/integrations/auth"
 	"namespacelabs.dev/integrations/nsc/gcpfederation"
 )
 
