@@ -5,7 +5,7 @@ go 1.21
 toolchain go1.23.4
 
 require (
-	buf.build/gen/go/namespace/cloud/grpc/go v1.5.1-20250131161032-8a8578523eb0.2
+	buf.build/gen/go/namespace/cloud/grpc/go v1.5.1-20250204161447-a582c42d9b87.2
 	buf.build/gen/go/namespace/cloud/protocolbuffers/go v1.36.4-20250204141930-c4c13c4d9b38.1
 	cloud.google.com/go/secretmanager v1.11.5
 	github.com/golang-jwt/jwt/v4 v4.5.0

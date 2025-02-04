@@ -6,7 +6,7 @@ import (
 
 	"buf.build/gen/go/namespace/cloud/grpc/go/proto/namespace/cloud/compute/v1beta/computev1betagrpc"
 	"google.golang.org/grpc"
-	"namespacelabs.dev/integrations/nsc"
+	"namespacelabs.dev/integrations/api"
 	"namespacelabs.dev/integrations/nsc/grpcapi"
 )
 
@@ -18,7 +18,7 @@ type Client struct {
 	Conn *grpc.ClientConn
 }
 
-func NewClient(ctx context.Context, token nsc.TokenSource, opts ...grpc.DialOption) (Client, error) {
+func NewClient(ctx context.Context, token api.TokenSource, opts ...grpc.DialOption) (Client, error) {
 	if endpoint := os.Getenv("NSC_ENDPOINT"); endpoint != "" {
 		return NewClientWithEndpoint(ctx, endpoint, token)
 	}
@@ -26,7 +26,7 @@ func NewClient(ctx context.Context, token nsc.TokenSource, opts ...grpc.DialOpti
 	return NewClientWithEndpoint(ctx, "https://eu.compute.namespaceapis.com", token, opts...)
 }
 
-func NewClientWithEndpoint(ctx context.Context, endpoint string, token nsc.TokenSource, opts ...grpc.DialOption) (Client, error) {
+func NewClientWithEndpoint(ctx context.Context, endpoint string, token api.TokenSource, opts ...grpc.DialOption) (Client, error) {
 	conn, err := grpcapi.NewConnectionWithEndpoint(ctx, endpoint, token, opts...)
 	if err != nil {
 		return Client{}, err

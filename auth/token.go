@@ -14,7 +14,7 @@ import (
 	sessions "buf.build/gen/go/namespace/cloud/protocolbuffers/go/proto/namespace/private/sessions"
 	"google.golang.org/grpc/metadata"
 	"google.golang.org/protobuf/types/known/durationpb"
-	"namespacelabs.dev/integrations/nsc"
+	"namespacelabs.dev/integrations/api"
 	"namespacelabs.dev/integrations/nsc/apienv"
 	"namespacelabs.dev/integrations/nsc/grpcapi"
 )
@@ -113,7 +113,7 @@ func (t *loadedToken) IssueToken(ctx context.Context, minDur time.Duration, skip
 	return t.BearerToken, nil
 }
 
-func LoadDefaults() (nsc.TokenSource, error) {
+func LoadDefaults() (api.TokenSource, error) {
 	if tf := os.Getenv("NSC_TOKEN_FILE"); tf != "" {
 		return loadFromFile(tf)
 	}
@@ -130,7 +130,7 @@ func LoadDefaults() (nsc.TokenSource, error) {
 	return LoadUserToken()
 }
 
-func LoadUserToken() (nsc.TokenSource, error) {
+func LoadUserToken() (api.TokenSource, error) {
 	dir, err := configDir()
 	if err != nil {
 		return nil, err
@@ -146,7 +146,7 @@ func LoadUserToken() (nsc.TokenSource, error) {
 	return token, err
 }
 
-func LoadWorkloadToken() (nsc.TokenSource, error) {
+func LoadWorkloadToken() (api.TokenSource, error) {
 	if tf := os.Getenv("NSC_TOKEN_FILE"); tf != "" {
 		return loadFromFile(tf)
 	}
@@ -154,7 +154,7 @@ func LoadWorkloadToken() (nsc.TokenSource, error) {
 	return loadFromFile("/var/run/nsc/token.json")
 }
 
-func loadFromFile(tokenFile string) (nsc.TokenSource, error) {
+func loadFromFile(tokenFile string) (api.TokenSource, error) {
 	contents, err := os.ReadFile(tokenFile)
 	if err != nil {
 		return nil, err
