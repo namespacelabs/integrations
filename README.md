@@ -2,7 +2,7 @@
 
 ## SDK
 
-Under `api` you can find our SDK to access Namespace Compute/Storage APIs.
+Under `api` you can find our SDK to access [Namespace](https://namespace.so) Compute/Storage APIs.
 The SDK also handles credential management for you:
 
 - From a workstation, run `nsc login`, and then run `auth.LoadUsertoken()`
