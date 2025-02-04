@@ -39,3 +39,7 @@ func NewClientWithEndpoint(ctx context.Context, endpoint string, token nsc.Token
 		Conn:    conn,
 	}, nil
 }
+
+func (c Client) Close() error {
+	return c.Conn.Close()
+}
