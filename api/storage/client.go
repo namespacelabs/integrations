@@ -100,7 +100,7 @@ func UploadArtifact(ctx context.Context, c Client, namespace, path string, in io
 	return nil
 }
 
-func ResolveArtifactStream(ctx context.Context, c Client, namespace, path string) (io.Reader, error) {
+func ResolveArtifactStream(ctx context.Context, c Client, namespace, path string) (io.ReadCloser, error) {
 	res, err := c.Artifacts.ResolveArtifact(ctx, &storagev1beta.ResolveArtifactRequest{
 		Path:      path,
 		Namespace: namespace,
