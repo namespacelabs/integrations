@@ -28,7 +28,7 @@ func NewClient(ctx context.Context, token api.TokenSource, opts ...grpc.DialOpti
 		return NewClientWithEndpoint(ctx, endpoint, token, opts...)
 	}
 
-	return NewClientWithEndpoint(ctx, "https://eu.storage.namespaceapis.com", token, opts...)
+	return NewClientWithEndpoint(ctx, "https://ord.storage.namespaceapis.com", token, opts...)
 }
 
 func NewClientWithEndpoint(ctx context.Context, endpoint string, token api.TokenSource, opts ...grpc.DialOption) (Client, error) {
