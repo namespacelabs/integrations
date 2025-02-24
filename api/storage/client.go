@@ -3,8 +3,6 @@ package storage
 import (
 	"bytes"
 	"context"
-	"crypto/md5"
-	"encoding/base64"
 	"fmt"
 	"io"
 	"net/http"
@@ -49,12 +47,25 @@ func (c Client) Close() error {
 }
 
 func UploadArtifact(ctx context.Context, c Client, namespace, path string, in io.Reader) error {
-	return UploadArtifactWithLabels(ctx, c, namespace, path, nil, in)
+	return UploadArtifactWithOpts(ctx, c, namespace, path, in, UploadOpts{})
 }
 
-func UploadArtifactWithLabels(ctx context.Context, c Client, namespace, path string, labels map[string]string, in io.Reader) error {
+type UploadOpts struct {
+	// Artifact labels to save.
+	Labels map[string]string
+
+	// Expected length of the uploaded content.
+	// If not set and the Reader is a Seeker, the length will be determined automatically.
+	// Otherwise the content will be buffered in memory.
+	Length int64
+
+	// Expected MD5 of the uploaded content; optional.
+	MD5 string
+}
+
+func UploadArtifactWithOpts(ctx context.Context, c Client, namespace, path string, in io.Reader, o UploadOpts) error {
 	var labelRecords []*stdlib.Label
-	for k, v := range labels {
+	for k, v := range o.Labels {
 		labelRecords = append(labelRecords, &stdlib.Label{Name: k, Value: v})
 	}
 
@@ -67,25 +78,40 @@ func UploadArtifactWithLabels(ctx context.Context, c Client, namespace, path str
 		return err
 	}
 
-	var tmp bytes.Buffer
-	n, err := io.Copy(&tmp, in)
-	if err != nil {
-		return fmt.Errorf("failed to copy input: %w", err)
+	length := o.Length
 
+	if length == 0 {
+		if s, ok := in.(io.Seeker); ok {
+			n, err := getReaderLength(s)
+			if err != nil {
+				return fmt.Errorf("failed to determine input length by seeking: %w", err)
+			}
+			length = n
+		}
 	}
 
-	h := md5.New()
-	h.Write(tmp.Bytes())
-	md5s := base64.StdEncoding.EncodeToString(h.Sum(nil))
+	if length == 0 {
+		tmp := bytes.NewBuffer(nil)
+		n, err := io.Copy(tmp, in)
+		if err != nil {
+			return fmt.Errorf("failed to buffer input: %w", err)
+		}
 
-	httpReq, err := http.NewRequestWithContext(ctx, "PUT", res.SignedUploadUrl, &tmp)
+		in = tmp
+		length = n
+	}
+
+	httpReq, err := http.NewRequestWithContext(ctx, "PUT", res.SignedUploadUrl, in)
 	if err != nil {
 		return fmt.Errorf("failed to construct http request: %w", err)
-
 	}
 
-	httpReq.Header.Set("Content-Length", fmt.Sprintf("%d", n))
-	httpReq.Header.Set("Content-MD5", md5s)
+	// This also disabled chunked encoding, which is unsupported by MinIO.
+	httpReq.ContentLength = length
+
+	if o.MD5 != "" {
+		httpReq.Header.Set("Content-MD5", o.MD5)
+	}
 
 	httpRes, err := http.DefaultClient.Do(httpReq)
 	if err != nil {
@@ -135,4 +161,23 @@ func ResolveArtifactStream(ctx context.Context, c Client, namespace, path string
 	}
 
 	return httpRes.Body, nil
+}
+
+func getReaderLength(r io.Seeker) (int64, error) {
+	cur, err := r.Seek(0, io.SeekCurrent)
+	if err != nil {
+		return 0, err
+	}
+
+	end, err := r.Seek(0, io.SeekEnd)
+	if err != nil {
+		return 0, err
+	}
+
+	_, err = r.Seek(cur, io.SeekStart)
+	if err != nil {
+		return 0, err
+	}
+
+	return end - cur, nil
 }
