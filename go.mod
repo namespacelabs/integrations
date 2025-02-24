@@ -5,8 +5,8 @@ go 1.21
 toolchain go1.23.4
 
 require (
-	buf.build/gen/go/namespace/cloud/grpc/go v1.5.1-20250204161447-a582c42d9b87.2
-	buf.build/gen/go/namespace/cloud/protocolbuffers/go v1.36.4-20250204141930-c4c13c4d9b38.1
+	buf.build/gen/go/namespace/cloud/grpc/go v1.5.1-20250224132556-fb7cb9fe8c84.2
+	buf.build/gen/go/namespace/cloud/protocolbuffers/go v1.36.5-20250224132556-fb7cb9fe8c84.1
 	cloud.google.com/go/secretmanager v1.11.5
 	github.com/golang-jwt/jwt/v4 v4.5.0
 	github.com/gorilla/websocket v1.5.1
@@ -15,7 +15,7 @@ require (
 	google.golang.org/api v0.169.0
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20240318140521-94a12d6c2237
 	google.golang.org/grpc v1.64.1
-	google.golang.org/protobuf v1.36.4
+	google.golang.org/protobuf v1.36.5
 	inet.af/tcpproxy v0.0.0-20231102063150-2862066fc2a9
 	namespacelabs.dev/go-ids v0.0.0-20221124082625-9fc72ee06af7
 )

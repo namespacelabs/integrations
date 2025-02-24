@@ -12,6 +12,7 @@ import (
 
 	"buf.build/gen/go/namespace/cloud/grpc/go/proto/namespace/cloud/storage/v1beta/storagev1betagrpc"
 	storagev1beta "buf.build/gen/go/namespace/cloud/protocolbuffers/go/proto/namespace/cloud/storage/v1beta"
+	"buf.build/gen/go/namespace/cloud/protocolbuffers/go/proto/namespace/stdlib"
 	"google.golang.org/grpc"
 	"namespacelabs.dev/integrations/api"
 	"namespacelabs.dev/integrations/nsc/grpcapi"
@@ -52,9 +53,9 @@ func UploadArtifact(ctx context.Context, c Client, namespace, path string, in io
 }
 
 func UploadArtifactWithLabels(ctx context.Context, c Client, namespace, path string, labels map[string]string, in io.Reader) error {
-	var labelRecords []*storagev1beta.Label
+	var labelRecords []*stdlib.Label
 	for k, v := range labels {
-		labelRecords = append(labelRecords, &storagev1beta.Label{Name: k, Value: v})
+		labelRecords = append(labelRecords, &stdlib.Label{Name: k, Value: v})
 	}
 
 	res, err := c.Artifacts.CreateArtifact(ctx, &storagev1beta.CreateArtifactRequest{
