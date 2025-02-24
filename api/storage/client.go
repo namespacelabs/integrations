@@ -48,9 +48,19 @@ func (c Client) Close() error {
 }
 
 func UploadArtifact(ctx context.Context, c Client, namespace, path string, in io.Reader) error {
+	return UploadArtifactWithLabels(ctx, c, namespace, path, nil, in)
+}
+
+func UploadArtifactWithLabels(ctx context.Context, c Client, namespace, path string, labels map[string]string, in io.Reader) error {
+	var labelRecords []*storagev1beta.Label
+	for k, v := range labels {
+		labelRecords = append(labelRecords, &storagev1beta.Label{Name: k, Value: v})
+	}
+
 	res, err := c.Artifacts.CreateArtifact(ctx, &storagev1beta.CreateArtifactRequest{
 		Path:      path,
 		Namespace: namespace,
+		Labels:    labelRecords,
 	})
 	if err != nil {
 		return err
