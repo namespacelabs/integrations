@@ -3,6 +3,8 @@ package storage
 import (
 	"bytes"
 	"context"
+	"crypto/sha256"
+	"encoding/hex"
 	"fmt"
 	"io"
 	"net/http"
@@ -14,6 +16,10 @@ import (
 	"google.golang.org/grpc"
 	"namespacelabs.dev/integrations/api"
 	"namespacelabs.dev/integrations/nsc/grpcapi"
+)
+
+const (
+	ArtifactDigestLabel = "artifact.digest.sha256"
 )
 
 type Client struct {
@@ -103,12 +109,15 @@ func UploadArtifactWithOpts(ctx context.Context, c Client, namespace, path strin
 		length = n
 	}
 
-	httpReq, err := http.NewRequestWithContext(ctx, "PUT", res.SignedUploadUrl, in)
+	hasher := sha256.New()
+	body := io.TeeReader(in, hasher)
+
+	httpReq, err := http.NewRequestWithContext(ctx, "PUT", res.SignedUploadUrl, body)
 	if err != nil {
 		return fmt.Errorf("failed to construct http request: %w", err)
 	}
 
-	// This also disabled chunked encoding, which is unsupported by MinIO.
+	// This also disables chunked encoding, which is unsupported by MinIO.
 	httpReq.ContentLength = length
 
 	if o.MD5 != "" {
@@ -129,6 +138,7 @@ func UploadArtifactWithOpts(ctx context.Context, c Client, namespace, path strin
 		Path:      path,
 		Namespace: namespace,
 		UploadId:  res.UploadId,
+		AddLabels: []*stdlib.Label{{Name: ArtifactDigestLabel, Value: hex.EncodeToString(hasher.Sum(nil))}},
 	}); err != nil {
 		return err
 	}
