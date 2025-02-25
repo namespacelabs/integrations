@@ -80,7 +80,9 @@ func UploadArtifactWithOpts(ctx context.Context, c Client, namespace, path strin
 
 	length := o.Length
 
-	if length == 0 {
+	// Zero length could be a valid explicitly set value, but we it's also the default value.
+	// We don't want to force the user to explicitly set it to -1, so we may do useless work of counting 0 bytes again.
+	if length <= 0 {
 		if s, ok := in.(io.Seeker); ok {
 			n, err := getReaderLength(s)
 			if err != nil {
@@ -90,7 +92,7 @@ func UploadArtifactWithOpts(ctx context.Context, c Client, namespace, path strin
 		}
 	}
 
-	if length == 0 {
+	if length <= 0 {
 		tmp := bytes.NewBuffer(nil)
 		n, err := io.Copy(tmp, in)
 		if err != nil {
@@ -117,12 +119,9 @@ func UploadArtifactWithOpts(ctx context.Context, c Client, namespace, path strin
 	if err != nil {
 		return fmt.Errorf("failed to upload file: %w", err)
 	}
+	httpRes.Body.Close()
 
 	if httpRes.StatusCode != http.StatusOK {
-		if _, err := io.ReadAll(httpRes.Body); err != nil {
-			return fmt.Errorf("reading response body: %w", err)
-		}
-
 		return fmt.Errorf("failed to upload file: status %d", httpRes.StatusCode)
 	}
 
