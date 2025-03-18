@@ -39,6 +39,16 @@ func build(ctx context.Context) error {
 		return err
 	}
 
+	cli, err := builds.NewClient(ctx, token)
+	if err != nil {
+		return err
+	}
+
+	bk, err := buildkit.Connect(ctx, cli.Builder)
+	if err != nil {
+		return err
+	}
+
 	var fs []secretsprovider.Source
 	store, err := secretsprovider.NewStore(fs)
 	if err != nil {
@@ -46,8 +56,6 @@ func build(ctx context.Context) error {
 	}
 
 	solveOpt := client.SolveOpt{
-		// Session:       attachables,
-		// Exports:       exp.Exports(),
 		Frontend: "dockerfile.v0",
 		FrontendInputs: map[string]llb.State{
 			dockerui.DefaultLocalNameDockerfile: makeDockerfileState([]byte(`
@@ -66,16 +74,6 @@ RUN apt install -y curl
 	solveOpt.Session = append(solveOpt.Session, authprovider.NewDockerAuthProvider(authprovider.DockerAuthProviderConfig{
 		ConfigFile: config.LoadDefaultConfigFile(os.Stderr),
 	}))
-
-	cli, err := builds.NewClient(ctx, token)
-	if err != nil {
-		return err
-	}
-
-	bk, err := buildkit.Connect(ctx, cli.Builder)
-	if err != nil {
-		return err
-	}
 
 	ch := make(chan *client.SolveStatus)
 
