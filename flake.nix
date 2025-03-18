@@ -21,7 +21,7 @@
         buildInputs = with pkgs;
           [
             buf
-            go_1_20
+            go_1_24
             gopls
             go-outline
             go-tools
@@ -30,15 +30,9 @@
             goreleaser
 
             git
-            nodejs
             crane
             kubectl
-            awscli2
             jq
-            aws-iam-authenticator
-            google-cloud-sdk
-
-            postgresql_15
           ];
       };
     });
