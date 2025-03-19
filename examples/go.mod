@@ -4,17 +4,11 @@ go 1.22.0
 
 toolchain go1.24.1
 
-replace namespacelabs.dev/integrations/buildkit => ../buildkit
-
-replace namespacelabs.dev/integrations => ..
-
 require (
-	buf.build/gen/go/namespace/cloud/protocolbuffers/go v1.36.5-20250318114912-7d54cd70714d.1
+	buf.build/gen/go/namespace/cloud/protocolbuffers/go v1.36.5-20250319174257-d2fbf17db2b5.1
 	github.com/docker/cli v28.0.1+incompatible
 	github.com/moby/buildkit v0.20.1
 	google.golang.org/protobuf v1.36.5
-	namespacelabs.dev/integrations v0.0.0-00010101000000-000000000000
-	namespacelabs.dev/integrations/buildkit v0.0.0-00010101000000-000000000000
 )
 
 require (

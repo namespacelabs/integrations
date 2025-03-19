@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package test.service;
+
+option go_package = "namespacelabs.dev/integrations/examples/buildandrun/proto";
+
+service TestService {
+    rpc Echo(EchoRequest) returns (EchoResponse);
+}
+
+message EchoRequest {
+    string request = 1;
+}
+
+message EchoResponse {
+    string reply = 1;
+}
