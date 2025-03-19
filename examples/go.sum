@@ -2,6 +2,8 @@ buf.build/gen/go/namespace/cloud/grpc/go v1.5.1-20250305120214-88888c6436a0.2 h1
 buf.build/gen/go/namespace/cloud/grpc/go v1.5.1-20250305120214-88888c6436a0.2/go.mod h1:DdLfHAIfStgIoaXQ6TvlU/Q9LqtE2vF1174etMM+GSE=
 buf.build/gen/go/namespace/cloud/protocolbuffers/go v1.36.5-20250318114912-7d54cd70714d.1 h1:IXVAcW9SNTEreqpDhW0uGVmndMYWMSNlOSwJ0hCJQ3Y=
 buf.build/gen/go/namespace/cloud/protocolbuffers/go v1.36.5-20250318114912-7d54cd70714d.1/go.mod h1:zt28YIKaEMO+bCYJ4CLfUVrAFIMtE4P3zN/VZhFrR9Y=
+buf.build/gen/go/namespace/cloud/protocolbuffers/go v1.36.5-20250319174257-d2fbf17db2b5.1 h1:Pa5tPe0jQSxR33sP2X9VAVx1edoZ9SZlcA7/NHtB6MM=
+buf.build/gen/go/namespace/cloud/protocolbuffers/go v1.36.5-20250319174257-d2fbf17db2b5.1/go.mod h1:zt28YIKaEMO+bCYJ4CLfUVrAFIMtE4P3zN/VZhFrR9Y=
 github.com/AdaLogics/go-fuzz-headers v0.0.0-20240806141605-e8a1dd7889d6 h1:He8afgbRMd7mFxO99hRNu+6tazq8nFF9lIwo9JFroBk=
 github.com/AdaLogics/go-fuzz-headers v0.0.0-20240806141605-e8a1dd7889d6/go.mod h1:8o94RPi1/7XTJvwPpRSzSUedZrtlirdB3r9Z20bi2f8=
 github.com/AdamKorcz/go-118-fuzz-build v0.0.0-20231105174938-2b5cbb29f3e2 h1:dIScnXFlF784X79oi7MzVT6GWqr/W1uUt0pB5CsDs9M=
