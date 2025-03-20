@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"crypto/tls"
 	"flag"
 	"fmt"
 	"io"
@@ -23,11 +22,11 @@ import (
 	"google.golang.org/grpc/credentials"
 	"google.golang.org/protobuf/types/known/timestamppb"
 	"namespacelabs.dev/integrations/api"
-	"namespacelabs.dev/integrations/api/builds"
 	"namespacelabs.dev/integrations/api/compute"
 	"namespacelabs.dev/integrations/api/iam"
 	"namespacelabs.dev/integrations/auth"
 	"namespacelabs.dev/integrations/auth/aws"
+	"namespacelabs.dev/integrations/auth/nstls"
 	"namespacelabs.dev/integrations/buildkit"
 	"namespacelabs.dev/integrations/examples/buildandrun/testserver/proto"
 )
@@ -104,20 +103,13 @@ func ensureTenant(ctx context.Context, debugLog io.Writer, token api.TokenSource
 	return resp.Tenant, auth.TenantTokenSource(iam, resp.Tenant.Id), nil
 }
 
-func buildImage(ctx context.Context, debugLog io.Writer, tenant *iamv1beta.Tenant, token api.TokenSource) (string, error) {
+func buildImage(ctx context.Context, debugLog io.Writer, tenant *iamv1beta.Tenant, token api.TokenAndCertificateSource) (string, error) {
 	display, err := progressui.NewDisplay(os.Stdout, progressui.PlainMode)
 	if err != nil {
 		return "", err
 	}
 
-	cli, err := builds.NewClient(ctx, token)
-	if err != nil {
-		return "", err
-	}
-
-	defer cli.Close()
-
-	bk, err := buildkit.Connect(ctx, cli.Builder)
+	bk, err := buildkit.ConnectWith(ctx, token, nil)
 	if err != nil {
 		return "", err
 	}
@@ -196,7 +188,8 @@ func createInstance(ctx context.Context, debugLog io.Writer, token api.TokenSour
 			Name:     "test",
 			ImageRef: imageRef,
 			Args:     []string{},
-			Network:  computepb.ContainerRequest_HOST,
+			// Host networking is required to ensure that the TLS-terminated TCP proxied port is reachable.
+			Network: computepb.ContainerRequest_HOST,
 		}},
 		Experimental: &computepb.CreateInstanceRequest_ExperimentalFeatures{
 			TlsBackedPorts: []*computepb.CreateInstanceRequest_ExperimentalFeatures_TlsBackedPort{
@@ -237,18 +230,8 @@ func createInstance(ctx context.Context, debugLog io.Writer, token api.TokenSour
 }
 
 func callInstance(ctx context.Context, debugLog io.Writer, token api.CertificateSource, target string) error {
-	cert, err := token.IssueCertificate(ctx, 15*time.Minute, false)
-	if err != nil {
-		return err
-	}
-
 	conn, err := grpc.NewClient(target,
-		grpc.WithTransportCredentials(credentials.NewTLS(&tls.Config{
-			GetClientCertificate: func(*tls.CertificateRequestInfo) (*tls.Certificate, error) {
-				return &cert, nil
-			},
-		})),
-	)
+		grpc.WithTransportCredentials(credentials.NewTLS(nstls.ClientConfig(ctx, token))))
 	if err != nil {
 		return err
 	}
