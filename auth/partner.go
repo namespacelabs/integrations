@@ -2,9 +2,7 @@ package auth
 
 import (
 	"context"
-	"crypto/ecdsa"
-	"crypto/x509"
-	"encoding/pem"
+	"crypto/tls"
 	"time"
 
 	iamv1beta "buf.build/gen/go/namespace/cloud/protocolbuffers/go/proto/namespace/cloud/iam/v1beta"
@@ -38,28 +36,15 @@ func (ts iamTokenSource) IssueToken(ctx context.Context, minDuration time.Durati
 	return token.BearerToken, nil
 }
 
-func (ts iamTokenSource) IssueCertificate(ctx context.Context, minDuration time.Duration, force bool) (*x509.Certificate, *ecdsa.PrivateKey, error) {
+func (ts iamTokenSource) IssueCertificate(ctx context.Context, minDuration time.Duration, force bool) (tls.Certificate, error) {
 	// TODO implement certificate caching.
 	resp, err := ts.client.Tenants.IssueTenantClientCertificate(ctx, &iamv1beta.IssueTenantClientCertificateRequest{
 		TenantId:     ts.tenantId,
 		DurationSecs: int64(minDuration.Seconds()),
 	})
 	if err != nil {
-		return nil, nil, err
+		return tls.Certificate{}, err
 	}
 
-	pub, _ := pem.Decode([]byte(resp.ClientCertificatePem))
-	priv, _ := pem.Decode([]byte(resp.PrivateKeyPem))
-
-	cert, err := x509.ParseCertificate(pub.Bytes)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	key, err := x509.ParseECPrivateKey(priv.Bytes)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	return cert, key, nil
+	return tls.X509KeyPair([]byte(resp.ClientCertificatePem), []byte(resp.PrivateKeyPem))
 }

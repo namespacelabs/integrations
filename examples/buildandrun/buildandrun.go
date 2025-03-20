@@ -85,38 +85,6 @@ func do(ctx context.Context, debugLog io.Writer) error {
 	return nil
 }
 
-func callInstance(ctx context.Context, debugLog io.Writer, token api.CertificateSource, fqdn string) error {
-	pub, priv, err := token.IssueCertificate(ctx, 15*time.Minute, false)
-	if err != nil {
-		return err
-	}
-
-	cert := tls.Certificate{
-		Certificate: [][]byte{pub.Raw},
-		PrivateKey:  priv,
-	}
-
-	conn, err := grpc.NewClient(fqdn+":443",
-		grpc.WithTransportCredentials(credentials.NewTLS(&tls.Config{
-			Certificates: []tls.Certificate{cert},
-		})),
-	)
-	if err != nil {
-		return err
-	}
-
-	resp, err := proto.NewTestServiceClient(conn).Echo(ctx, &proto.EchoRequest{
-		Request: "hello world",
-	})
-	if err != nil {
-		return err
-	}
-
-	fmt.Fprintf(debugLog, "received: %q\n", resp.Reply)
-
-	return nil
-}
-
 func ensureTenant(ctx context.Context, debugLog io.Writer, token api.TokenSource) (*iamv1beta.Tenant, api.TokenAndCertificateSource, error) {
 	iam, err := iam.NewClient(ctx, token)
 	if err != nil {
@@ -242,19 +210,6 @@ func createInstance(ctx context.Context, debugLog io.Writer, token api.TokenSour
 
 	fmt.Fprintf(debugLog, "Created instance: %s (waiting until it's ready)\n", resp.InstanceUrl)
 
-	var fqdn string
-	for _, ctr := range resp.Containers {
-		for _, port := range ctr.ExportedPort {
-			fqdn = port.Fqdn
-			fmt.Fprintf(debugLog, " %d -> https://%s\n", port.ContainerPort, fqdn)
-		}
-	}
-
-	for _, port := range resp.ExtendedMetadata.GetTlsBackedPort() {
-		fqdn = port.ServerName
-		fmt.Fprintf(debugLog, " %d -> %s\n", port.Port, fqdn)
-	}
-
 	if _, err := cli.Compute.WaitInstanceSync(ctx, &computepb.WaitInstanceRequest{
 		InstanceId: resp.Metadata.InstanceId,
 	}); err != nil {
@@ -263,5 +218,49 @@ func createInstance(ctx context.Context, debugLog io.Writer, token api.TokenSour
 
 	fmt.Fprintf(debugLog, "Instance ready.\n")
 
-	return fqdn, nil
+	// The initial creation does not return the set of TLS ports as these are
+	// only populated after readiness.
+	desc, err := cli.Compute.DescribeInstance(ctx, &computepb.DescribeInstanceRequest{
+		InstanceId: resp.Metadata.InstanceId,
+	})
+	if err != nil {
+		return "", err
+	}
+
+	var target string
+	for _, port := range desc.ExtendedMetadata.GetTlsBackedPort() {
+		target = port.ServerName
+		fmt.Fprintf(debugLog, " %d -> %s\n", port.Port, target)
+	}
+
+	return target, nil
+}
+
+func callInstance(ctx context.Context, debugLog io.Writer, token api.CertificateSource, target string) error {
+	cert, err := token.IssueCertificate(ctx, 15*time.Minute, false)
+	if err != nil {
+		return err
+	}
+
+	conn, err := grpc.NewClient(target,
+		grpc.WithTransportCredentials(credentials.NewTLS(&tls.Config{
+			GetClientCertificate: func(*tls.CertificateRequestInfo) (*tls.Certificate, error) {
+				return &cert, nil
+			},
+		})),
+	)
+	if err != nil {
+		return err
+	}
+
+	resp, err := proto.NewTestServiceClient(conn).Echo(ctx, &proto.EchoRequest{
+		Request: "hello world",
+	})
+	if err != nil {
+		return err
+	}
+
+	fmt.Fprintf(debugLog, "received: %q\n", resp.Reply)
+
+	return nil
 }

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"flag"
 	"fmt"
 	"log"
@@ -16,7 +17,12 @@ var port = flag.Int("port", 15000, "The port to listen on.")
 func main() {
 	flag.Parse()
 
-	srv := grpc.NewServer((grpc.Creds(insecure.NewCredentials())))
+	srv := grpc.NewServer(grpc.Creds(insecure.NewCredentials()),
+		grpc.UnaryInterceptor(func(ctx context.Context, req any, info *grpc.UnaryServerInfo, handler grpc.UnaryHandler) (any, error) {
+			response, err := handler(ctx, req)
+			log.Printf("%s -> %v", info.FullMethod, err)
+			return response, err
+		}))
 
 	proto.RegisterTestServiceServer(srv, impl{})
 
@@ -34,4 +40,10 @@ func main() {
 
 type impl struct {
 	proto.UnimplementedTestServiceServer
+}
+
+func (impl impl) Echo(_ context.Context, req *proto.EchoRequest) (*proto.EchoResponse, error) {
+	return &proto.EchoResponse{
+		Reply: "hello from within: " + req.Request,
+	}, nil
 }

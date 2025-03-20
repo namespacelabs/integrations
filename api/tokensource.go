@@ -2,8 +2,7 @@ package api
 
 import (
 	"context"
-	"crypto/ecdsa"
-	"crypto/x509"
+	"crypto/tls"
 	"time"
 )
 
@@ -20,7 +19,7 @@ type CertificateSource interface {
 	// force is true, skip any token caches available.
 	//
 	// Returns a public and private key certificate which can be used to authenticate as a tenant.
-	IssueCertificate(ctx context.Context, minDuration time.Duration, force bool) (*x509.Certificate, *ecdsa.PrivateKey, error)
+	IssueCertificate(ctx context.Context, minDuration time.Duration, force bool) (tls.Certificate, error)
 }
 
 type TokenAndCertificateSource interface {
