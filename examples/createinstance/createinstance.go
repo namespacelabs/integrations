@@ -43,6 +43,9 @@ func create(ctx context.Context, debugLog io.Writer, token api.TokenSource, shap
 
 	defer cli.Close()
 
+	enc := json.NewEncoder(debugLog)
+	enc.SetIndent("", "  ")
+
 	// Create or re-use an existing instance that runs the dagger engine.
 	resp, err := cli.Compute.CreateInstance(ctx, &computepb.CreateInstanceRequest{
 		Shape:             shape,
@@ -55,6 +58,9 @@ func create(ctx context.Context, debugLog io.Writer, token api.TokenSource, shap
 			Name:     "nginx",
 			ImageRef: "nginx",
 			Args:     []string{},
+			ExportPorts: []*computepb.ContainerPort{
+				{Name: "nginx", ContainerPort: 80, Proto: computepb.ContainerPort_TCP},
+			},
 		}},
 	})
 	if err != nil {
@@ -62,6 +68,8 @@ func create(ctx context.Context, debugLog io.Writer, token api.TokenSource, shap
 	}
 
 	fmt.Fprintf(debugLog, "[namespace] Instance: %s\n", resp.InstanceUrl)
+
+	enc.Encode(resp)
 
 	// Wait until the instance is ready.
 	md, err := cli.Compute.WaitInstanceSync(ctx, &computepb.WaitInstanceRequest{
@@ -71,7 +79,7 @@ func create(ctx context.Context, debugLog io.Writer, token api.TokenSource, shap
 		return err
 	}
 
-	enc := json.NewEncoder(debugLog)
-	enc.SetIndent("", "  ")
-	return enc.Encode(md.Metadata)
+	_ = enc.Encode(md.Metadata)
+
+	return nil
 }

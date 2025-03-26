@@ -1,7 +1,7 @@
-buf.build/gen/go/namespace/cloud/grpc/go v1.5.1-20250319174257-d2fbf17db2b5.2 h1:hY7ECtN1VpFrfKXCvj+XQbPEwke687SDrRJDmY2Oqz4=
-buf.build/gen/go/namespace/cloud/grpc/go v1.5.1-20250319174257-d2fbf17db2b5.2/go.mod h1:rOa45MHa+2O67wZ0uXR0WI4eIy+xtwb2TpXlJKLsFbI=
-buf.build/gen/go/namespace/cloud/protocolbuffers/go v1.36.5-20250319174257-d2fbf17db2b5.1 h1:Pa5tPe0jQSxR33sP2X9VAVx1edoZ9SZlcA7/NHtB6MM=
-buf.build/gen/go/namespace/cloud/protocolbuffers/go v1.36.5-20250319174257-d2fbf17db2b5.1/go.mod h1:zt28YIKaEMO+bCYJ4CLfUVrAFIMtE4P3zN/VZhFrR9Y=
+buf.build/gen/go/namespace/cloud/grpc/go v1.5.1-20250326140621-ac1d1758c8eb.2 h1:eZ/Cfb72k5Fms8/HlthF+MjCa9O//4zNLQN6S1P+aIg=
+buf.build/gen/go/namespace/cloud/grpc/go v1.5.1-20250326140621-ac1d1758c8eb.2/go.mod h1:hRhyted9+uy31eM+Efmq4iepphIWeD5y2E9jE6MRRws=
+buf.build/gen/go/namespace/cloud/protocolbuffers/go v1.36.6-20250326140621-ac1d1758c8eb.1 h1:lQ58V0JYF78XdMRefobCti3HCs5gQrAY2u0rFHNZJSQ=
+buf.build/gen/go/namespace/cloud/protocolbuffers/go v1.36.6-20250326140621-ac1d1758c8eb.1/go.mod h1:J6KXPNqce753NzqwbCXNeyoMoVR2BQDPCQqJmtjsF/g=
 cloud.google.com/go v0.26.0/go.mod h1:aQUYkXzVsufM+DwF1aE+0xfcU+56JwCaLick0ClmMTw=
 cloud.google.com/go v0.112.1 h1:uJSeirPke5UNZHIb4SxfZklVSiWWVqW4oXlETwZziwM=
 cloud.google.com/go v0.112.1/go.mod h1:+Vbu+Y1UU+I1rjmzeMOb/8RfkKJK2Gyxi1X6jJCZLo4=
@@ -203,8 +203,8 @@ google.golang.org/protobuf v1.22.0/go.mod h1:EGpADcykh3NcUnDUJcl1+ZksZNG86OlYog2
 google.golang.org/protobuf v1.23.0/go.mod h1:EGpADcykh3NcUnDUJcl1+ZksZNG86OlYog2l/sGQquU=
 google.golang.org/protobuf v1.23.1-0.20200526195155-81db48ad09cc/go.mod h1:EGpADcykh3NcUnDUJcl1+ZksZNG86OlYog2l/sGQquU=
 google.golang.org/protobuf v1.25.0/go.mod h1:9JNX74DMeImyA3h4bdi1ymwjUzf21/xIlbajtzgsN7c=
-google.golang.org/protobuf v1.36.5 h1:tPhr+woSbjfYvY6/GPufUoYizxw1cF/yFoxJ2fmpwlM=
-google.golang.org/protobuf v1.36.5/go.mod h1:9fA7Ob0pmnwhb644+1+CVWFRbNajQ6iRojtC/QF5bRE=
+google.golang.org/protobuf v1.36.6 h1:z1NpPI8ku2WgiWnf+t9wTPsn6eP1L7ksHUlkfLvd9xY=
+google.golang.org/protobuf v1.36.6/go.mod h1:jduwjTPXsFjZGTmRluh+L6NjiWu7pchiJ2/5YcXBHnY=
 gopkg.in/check.v1 v0.0.0-20161208181325-20d25e280405/go.mod h1:Co6ibVJAznAaIkqp8huTwlJQCZ016jof/cbN4VW5Yz0=
 gopkg.in/yaml.v3 v3.0.0-20200313102051-9f266ea9e77c/go.mod h1:K4uyk7z7BCEPqu6E+C64Yfv1cQ7kz7rIZviUmN+EgEM=
 gopkg.in/yaml.v3 v3.0.1 h1:fxVm/GzAzEWqLHuvctI91KS9hhNmmWOoWu0XTYJS7CA=

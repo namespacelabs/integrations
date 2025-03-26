@@ -188,17 +188,26 @@ func createInstance(ctx context.Context, debugLog io.Writer, token api.TokenSour
 			Name:     "test",
 			ImageRef: imageRef,
 			Args:     []string{},
-			// Host networking is required to ensure that the TLS-terminated TCP proxied port is reachable.
-			Network: computepb.ContainerRequest_HOST,
-		}},
-		Experimental: &computepb.CreateInstanceRequest_ExperimentalFeatures{
-			TlsBackedPorts: []*computepb.CreateInstanceRequest_ExperimentalFeatures_TlsBackedPort{
-				{Name: "grpc", Port: 15000, TerminateTls: true},
+			ExportPorts: []*computepb.ContainerPort{
+				{Name: "grpc", ContainerPort: 15000, Proto: computepb.ContainerPort_TCP},
 			},
-		},
+		}},
 	})
 	if err != nil {
 		return "", err
+	}
+
+	var target string
+	for _, ctr := range resp.Containers {
+		for _, port := range ctr.ExportedPort {
+			target = port.Fqdn
+			fmt.Fprintf(debugLog, " %d -> %s\n", port.ContainerPort, target)
+		}
+	}
+
+	// XXX there's a missing rollout to ensure that the `:444` prefix is present.
+	if !strings.HasSuffix(target, ":444") {
+		target += ":444"
 	}
 
 	fmt.Fprintf(debugLog, "Created instance: %s (waiting until it's ready)\n", resp.InstanceUrl)
@@ -210,21 +219,6 @@ func createInstance(ctx context.Context, debugLog io.Writer, token api.TokenSour
 	}
 
 	fmt.Fprintf(debugLog, "Instance ready.\n")
-
-	// The initial creation does not return the set of TLS ports as these are
-	// only populated after readiness.
-	desc, err := cli.Compute.DescribeInstance(ctx, &computepb.DescribeInstanceRequest{
-		InstanceId: resp.Metadata.InstanceId,
-	})
-	if err != nil {
-		return "", err
-	}
-
-	var target string
-	for _, port := range desc.ExtendedMetadata.GetTlsBackedPort() {
-		target = port.ServerName
-		fmt.Fprintf(debugLog, " %d -> %s\n", port.Port, target)
-	}
 
 	return target, nil
 }
