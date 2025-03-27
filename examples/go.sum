@@ -1,5 +1,4 @@
-buf.build/gen/go/namespace/cloud/protocolbuffers/go v1.36.6-20250326140621-ac1d1758c8eb.1 h1:lQ58V0JYF78XdMRefobCti3HCs5gQrAY2u0rFHNZJSQ=
-buf.build/gen/go/namespace/cloud/protocolbuffers/go v1.36.6-20250326140621-ac1d1758c8eb.1/go.mod h1:J6KXPNqce753NzqwbCXNeyoMoVR2BQDPCQqJmtjsF/g=
+buf.build/gen/go/namespace/cloud/protocolbuffers/go v1.36.6-20250327002427-a1c59b2abe12.1 h1:xG4gZjY73sXrS0l+pMRX7UvhpOxPlMWo1LiOdpkuoTw=
 github.com/AdaLogics/go-fuzz-headers v0.0.0-20240806141605-e8a1dd7889d6 h1:He8afgbRMd7mFxO99hRNu+6tazq8nFF9lIwo9JFroBk=
 github.com/AdaLogics/go-fuzz-headers v0.0.0-20240806141605-e8a1dd7889d6/go.mod h1:8o94RPi1/7XTJvwPpRSzSUedZrtlirdB3r9Z20bi2f8=
 github.com/AdamKorcz/go-118-fuzz-build v0.0.0-20231105174938-2b5cbb29f3e2 h1:dIScnXFlF784X79oi7MzVT6GWqr/W1uUt0pB5CsDs9M=

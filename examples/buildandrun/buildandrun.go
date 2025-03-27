@@ -197,17 +197,12 @@ func createInstance(ctx context.Context, debugLog io.Writer, token api.TokenSour
 		return "", err
 	}
 
-	var target string
+	var endpoint string
 	for _, ctr := range resp.Containers {
 		for _, port := range ctr.ExportedPort {
-			target = port.Fqdn
-			fmt.Fprintf(debugLog, " %d -> %s\n", port.ContainerPort, target)
+			endpoint = port.Endpoint
+			fmt.Fprintf(debugLog, " %d -> %s\n", port.ContainerPort, port.Endpoint)
 		}
-	}
-
-	// XXX there's a missing rollout to ensure that the `:444` prefix is present.
-	if !strings.HasSuffix(target, ":444") {
-		target += ":444"
 	}
 
 	fmt.Fprintf(debugLog, "Created instance: %s (waiting until it's ready)\n", resp.InstanceUrl)
@@ -220,7 +215,7 @@ func createInstance(ctx context.Context, debugLog io.Writer, token api.TokenSour
 
 	fmt.Fprintf(debugLog, "Instance ready.\n")
 
-	return target, nil
+	return endpoint, nil
 }
 
 func callInstance(ctx context.Context, debugLog io.Writer, token api.CertificateSource, target string) error {
