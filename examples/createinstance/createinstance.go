@@ -46,12 +46,9 @@ func create(ctx context.Context, debugLog io.Writer, token api.TokenSource, shap
 	enc := json.NewEncoder(debugLog)
 	enc.SetIndent("", "  ")
 
-	// Create or re-use an existing instance that runs the dagger engine.
 	resp, err := cli.Compute.CreateInstance(ctx, &computepb.CreateInstanceRequest{
 		Shape:             shape,
 		DocumentedPurpose: "createinstance example",
-		// Block until resources for the instance have been allocated.
-		Interactive: true,
 		Deadline:    timestamppb.New(time.Now().Add(1 * time.Hour)),
 		// Run the engine in a container.
 		Containers: []*computepb.ContainerRequest{{
