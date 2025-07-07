@@ -179,7 +179,6 @@ func createInstance(ctx context.Context, debugLog io.Writer, token api.TokenSour
 
 	defer cli.Close()
 
-	// Create or re-use an existing instance that runs the dagger engine.
 	resp, err := cli.Compute.CreateInstance(ctx, &computepb.CreateInstanceRequest{
 		Shape:             shape,
 		DocumentedPurpose: "createinstance example",
