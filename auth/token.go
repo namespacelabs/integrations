@@ -68,7 +68,7 @@ func (t *loadedToken) IssueToken(ctx context.Context, minDur time.Duration, skip
 			return issue(minDur)
 		}
 
-		sessionClaims, err := tokenClaims(t.debugLog, t.SessionToken)
+		sessionClaims, err := ExtractClaims(t.SessionToken)
 		if err != nil {
 			return "", err
 		}
@@ -81,7 +81,7 @@ func (t *loadedToken) IssueToken(ctx context.Context, minDur time.Duration, skip
 					return "", err
 				}
 			} else {
-				cacheClaims, err := tokenClaims(t.debugLog, string(cacheContents))
+				cacheClaims, err := ExtractClaims(string(cacheContents))
 				if err != nil {
 					return "", err
 				}
