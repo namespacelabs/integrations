@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"strings"
 	"time"
 
 	"github.com/moby/buildkit/session"
@@ -31,7 +32,7 @@ type tokenKeychain struct {
 }
 
 func (dk tokenKeychain) Resolve(ctx context.Context, host string) (*auth.CredentialsResponse, error) {
-	if host == "nscr.io" {
+	if host == "nscr.io" || strings.HasSuffix(host, ".nscr.io") {
 		token, err := dk.token.IssueToken(ctx, 10*time.Minute, false)
 		if err != nil {
 			return nil, err
