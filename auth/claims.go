@@ -12,10 +12,12 @@ var ErrNotLoggedIn = errors.New("not logged in")
 type TokenClaims struct {
 	jwt.RegisteredClaims
 
-	TenantID      string `json:"tenant_id"`
-	InstanceID    string `json:"instance_id"`
-	OwnerID       string `json:"owner_id"`
-	PrimaryRegion string `json:"primary_region"`
+	TenantID       string `json:"tenant_id"`
+	ActorID        string `json:"actor_id"`
+	InstanceID     string `json:"instance_id"`
+	OwnerID        string `json:"owner_id"`
+	PrimaryRegion  string `json:"primary_region"`
+	WorkloadRegion string `json:"workload_region"`
 }
 
 func ExtractClaims(token string) (*TokenClaims, error) {
