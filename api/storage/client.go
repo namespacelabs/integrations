@@ -21,6 +21,7 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
+	"google.golang.org/protobuf/types/known/timestamppb"
 	"namespacelabs.dev/integrations/api"
 	"namespacelabs.dev/integrations/nsc/grpcapi"
 )
@@ -76,6 +77,9 @@ type UploadOpts struct {
 	// Artifact labels to save.
 	Labels map[string]string
 
+	// Sets an expiry. Optional.
+	ExpiresAt *time.Time
+
 	// Expected length of the uploaded content.
 	// If not set and the Reader is a Seeker, the length will be determined automatically.
 	// Otherwise the content will be buffered in memory.
@@ -99,11 +103,17 @@ func UploadArtifactWithOpts(ctx context.Context, c Client, namespace, path strin
 		labelRecords = append(labelRecords, &stdlib.Label{Name: k, Value: v})
 	}
 
-	res, err := c.Artifacts.CreateArtifact(ctx, &storagev1beta.CreateArtifactRequest{
+	req := &storagev1beta.CreateArtifactRequest{
 		Path:      path,
 		Namespace: namespace,
 		Labels:    labelRecords,
-	})
+	}
+
+	if o.ExpiresAt != nil {
+		req.ExpiresAt = timestamppb.New(*o.ExpiresAt)
+	}
+
+	res, err := c.Artifacts.CreateArtifact(ctx, req)
 	if err != nil {
 		return ArtifactInfo{}, err
 	}
@@ -181,8 +191,7 @@ func ResolveArtifactStream(ctx context.Context, cli Client, namespace, path stri
 	return r, err
 }
 
-type ResolveArtifactOpts struct {
-}
+type ResolveArtifactOpts struct{}
 
 func ResolveArtifactWithOpts(ctx context.Context, cli Client, namespace, path string, opts ResolveArtifactOpts) (io.ReadCloser, ArtifactInfo, error) {
 	res, err := cli.Artifacts.ResolveArtifact(ctx, &storagev1beta.ResolveArtifactRequest{

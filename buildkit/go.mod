@@ -5,8 +5,8 @@ go 1.23.0
 toolchain go1.24.1
 
 require (
-	buf.build/gen/go/namespace/cloud/grpc/go v1.5.1-20250327002427-a1c59b2abe12.2
-	buf.build/gen/go/namespace/cloud/protocolbuffers/go v1.36.6-20250327002427-a1c59b2abe12.1
+	buf.build/gen/go/namespace/cloud/grpc/go v1.5.1-20250807002031-b2135457e633.2
+	buf.build/gen/go/namespace/cloud/protocolbuffers/go v1.36.6-20250807002031-b2135457e633.1
 	github.com/moby/buildkit v0.20.1
 	google.golang.org/grpc v1.71.0
 	namespacelabs.dev/integrations v0.0.8
