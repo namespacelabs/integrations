@@ -5,7 +5,7 @@ go 1.23.0
 toolchain go1.24.1
 
 require (
-	buf.build/gen/go/namespace/cloud/protocolbuffers/go v1.36.6-20250327002427-a1c59b2abe12.1
+	buf.build/gen/go/namespace/cloud/protocolbuffers/go v1.36.6-20250807002031-b2135457e633.1
 	github.com/docker/cli v28.0.1+incompatible
 	github.com/moby/buildkit v0.20.1
 	github.com/tonistiigi/fsutil v0.0.0-20250113203817-b14e27f4135a
