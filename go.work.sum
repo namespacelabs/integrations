@@ -3,6 +3,7 @@ buf.build/gen/go/namespace/cloud/protocolbuffers/go v1.36.1-20250319174257-d2fbf
 buf.build/gen/go/namespace/cloud/protocolbuffers/go v1.36.1-20250326140621-ac1d1758c8eb.1/go.mod h1:yEfFbF0z7upec777gWAKvoWu6O0CJ8XqoSIjUAZtiG0=
 buf.build/gen/go/namespace/cloud/protocolbuffers/go v1.36.1-20250327002427-a1c59b2abe12.1/go.mod h1:yEfFbF0z7upec777gWAKvoWu6O0CJ8XqoSIjUAZtiG0=
 buf.build/gen/go/namespace/cloud/protocolbuffers/go v1.36.1-20250807002031-b2135457e633.1/go.mod h1:yEfFbF0z7upec777gWAKvoWu6O0CJ8XqoSIjUAZtiG0=
+buf.build/gen/go/namespace/cloud/protocolbuffers/go v1.36.1-20250818132830-3618cc48acf5.1/go.mod h1:yEfFbF0z7upec777gWAKvoWu6O0CJ8XqoSIjUAZtiG0=
 cel.dev/expr v0.16.2/go.mod h1:gXngZQMkWJoSbE8mOzehJlXQyubn/Vg0vR9/F3W7iw8=
 cel.dev/expr v0.19.1 h1:NciYrtDRIR0lNCnH1LFJegdjspNx9fI59O7TWcua/W4=
 cel.dev/expr v0.19.1/go.mod h1:MrpN08Q+lEBs+bGYdLxxHkZoUSsCp0nSKTs0nTymJgw=
