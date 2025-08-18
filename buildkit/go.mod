@@ -5,8 +5,8 @@ go 1.23.0
 toolchain go1.24.1
 
 require (
-	buf.build/gen/go/namespace/cloud/grpc/go v1.5.1-20250807002031-b2135457e633.2
-	buf.build/gen/go/namespace/cloud/protocolbuffers/go v1.36.6-20250807002031-b2135457e633.1
+	buf.build/gen/go/namespace/cloud/grpc/go v1.5.1-20250818132830-3618cc48acf5.2
+	buf.build/gen/go/namespace/cloud/protocolbuffers/go v1.36.7-20250818132830-3618cc48acf5.1
 	github.com/moby/buildkit v0.20.1
 	google.golang.org/grpc v1.71.0
 	namespacelabs.dev/integrations v0.0.8
@@ -69,5 +69,5 @@ require (
 	golang.org/x/text v0.23.0 // indirect
 	google.golang.org/genproto/googleapis/api v0.0.0-20250106144421-5f5ef82da422 // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20250115164207-1a7da9e5054f // indirect
-	google.golang.org/protobuf v1.36.6 // indirect
+	google.golang.org/protobuf v1.36.7 // indirect
 )
