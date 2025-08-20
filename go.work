@@ -7,4 +7,5 @@ use (
 	./buildkit
 	./examples
 	./examples/buildandrun/testserver
+	./examples/sidecar/sidecard
 )
