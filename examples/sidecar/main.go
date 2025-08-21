@@ -17,6 +17,7 @@ import (
 	"namespacelabs.dev/integrations/api/compute"
 	"namespacelabs.dev/integrations/auth"
 	"namespacelabs.dev/integrations/buildkit/buildhelper"
+	"namespacelabs.dev/integrations/examples"
 )
 
 var basedir = flag.String("basedir", "", "If not specified, it's computed from the binary's location.")
@@ -30,7 +31,7 @@ func main() {
 }
 
 func do(ctx context.Context) error {
-	basedir, err := computeBaseDir()
+	basedir, err := examples.ComputeBaseDir(*basedir)
 	if err != nil {
 		return err
 	}
@@ -56,33 +57,6 @@ func do(ctx context.Context) error {
 		Os:              "linux",
 		MachineArch:     "amd64",
 	}, builtBase, builtSidecar)
-}
-
-func computeBaseDir() (string, error) {
-	if *basedir != "" {
-		return *basedir, nil
-	}
-
-	us, err := executablePath()
-	if err != nil {
-		return "", err
-	}
-
-	return filepath.Dir(us), nil
-}
-
-func executablePath() (string, error) {
-	exe, err := os.Executable()
-	if err != nil {
-		return "", err
-	}
-
-	exe, err = filepath.EvalSymlinks(exe)
-	if err != nil {
-		return "", err
-	}
-
-	return exe, nil
 }
 
 func runInstance(ctx context.Context, debugLog io.Writer, token api.TokenSource, shape *computepb.InstanceShape, mainImage, sidecardImage string) error {
