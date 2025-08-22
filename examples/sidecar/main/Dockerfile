@@ -1,4 +1,4 @@
 FROM ubuntu
 
 RUN apt-get update -y
-RUN apt-get install -y curl ca-certificates
+RUN apt-get install -y curl ca-certificates vim
