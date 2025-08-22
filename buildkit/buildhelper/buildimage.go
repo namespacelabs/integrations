@@ -58,7 +58,6 @@ func BuildImageFromDockerfileAndContext(ctx context.Context, debugLog io.Writer,
 			Attrs: map[string]string{
 				"push":              "true",
 				"name":              target,
-				"push-by-digest":    "true",
 				"buildinfo":         "false", // Remove build info to keep reproducibility.
 				"source-date-epoch": "0",
 			},

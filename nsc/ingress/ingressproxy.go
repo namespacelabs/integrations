@@ -60,3 +60,13 @@ func DialNamedUnixSocket(ctx context.Context, debugLog io.Writer, token api.Toke
 	vars.Set("name", name)
 	return DialHostedService(ctx, debugLog, token, metadata.InstanceId, metadata.IngressDomain, "unixsocket", vars)
 }
+
+func DialInstanceService(ctx context.Context, debugLog io.Writer, token api.TokenSource, metadata *computev1beta.InstanceMetadata, serviceName string) (net.Conn, error) {
+	for _, srv := range metadata.Services {
+		if srv.Name == serviceName {
+			return DialEndpoint(ctx, debugLog, token, srv.Endpoint)
+		}
+	}
+
+	return nil, fmt.Errorf("no such service %q", serviceName)
+}
