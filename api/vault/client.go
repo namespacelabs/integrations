@@ -1,19 +1,17 @@
-package compute
+package vault
 
 import (
 	"context"
 	"os"
 
-	"buf.build/gen/go/namespace/cloud/grpc/go/proto/namespace/cloud/compute/v1beta/computev1betagrpc"
+	"buf.build/gen/go/namespace/cloud/grpc/go/proto/namespace/cloud/vault/v1beta/vaultv1betagrpc"
 	"google.golang.org/grpc"
 	"namespacelabs.dev/integrations/api"
 	"namespacelabs.dev/integrations/nsc/grpcapi"
 )
 
 type Client struct {
-	Compute computev1betagrpc.ComputeServiceClient
-	Storage computev1betagrpc.StorageServiceClient
-	Usage   computev1betagrpc.UsageServiceClient
+	Vault vaultv1betagrpc.VaultServiceClient
 
 	Conn *grpc.ClientConn
 }
@@ -33,10 +31,8 @@ func NewClientWithEndpoint(ctx context.Context, endpoint string, token api.Token
 	}
 
 	return Client{
-		Compute: computev1betagrpc.NewComputeServiceClient(conn),
-		Storage: computev1betagrpc.NewStorageServiceClient(conn),
-		Usage:   computev1betagrpc.NewUsageServiceClient(conn),
-		Conn:    conn,
+		Vault: vaultv1betagrpc.NewVaultServiceClient(conn),
+		Conn:  conn,
 	}, nil
 }
 
