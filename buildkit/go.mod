@@ -5,8 +5,8 @@ go 1.24
 toolchain go1.24.1
 
 require (
-	buf.build/gen/go/namespace/cloud/grpc/go v1.5.1-20250822141522-a160a3a95fa5.2
-	buf.build/gen/go/namespace/cloud/protocolbuffers/go v1.36.8-20250822141522-a160a3a95fa5.1
+	buf.build/gen/go/namespace/cloud/grpc/go v1.5.1-20250918100349-882e2f020c28.2
+	buf.build/gen/go/namespace/cloud/protocolbuffers/go v1.36.9-20250918100349-882e2f020c28.1
 	github.com/google/go-containerregistry v0.20.6
 	github.com/moby/buildkit v0.20.1
 	github.com/tonistiigi/fsutil v0.0.0-20250113203817-b14e27f4135a
@@ -76,5 +76,5 @@ require (
 	golang.org/x/time v0.6.0 // indirect
 	google.golang.org/genproto/googleapis/api v0.0.0-20250106144421-5f5ef82da422 // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20250115164207-1a7da9e5054f // indirect
-	google.golang.org/protobuf v1.36.8 // indirect
+	google.golang.org/protobuf v1.36.9 // indirect
 )

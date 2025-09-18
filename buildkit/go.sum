@@ -1,5 +1,5 @@
-buf.build/gen/go/namespace/cloud/grpc/go v1.5.1-20250822141522-a160a3a95fa5.2 h1:0VgAkrHCSberDbbRoJsesUVIiLekkXHboGdN12sA51A=
-buf.build/gen/go/namespace/cloud/protocolbuffers/go v1.36.8-20250822141522-a160a3a95fa5.1 h1:tQ4ETufJ4wMvxT2Ya85JHVpXoHSitx7bhhTiexVNN3w=
+buf.build/gen/go/namespace/cloud/grpc/go v1.5.1-20250918100349-882e2f020c28.2 h1:RbilHWnn7um+RXAur2l2ornTn1QXGwCjPzQDygsqc80=
+buf.build/gen/go/namespace/cloud/protocolbuffers/go v1.36.9-20250918100349-882e2f020c28.1 h1:aIeNOkgfUiftbecy2qhvMRp1SHjVmH+N1EVg7beimAU=
 github.com/AdaLogics/go-fuzz-headers v0.0.0-20240806141605-e8a1dd7889d6 h1:He8afgbRMd7mFxO99hRNu+6tazq8nFF9lIwo9JFroBk=
 github.com/AdaLogics/go-fuzz-headers v0.0.0-20240806141605-e8a1dd7889d6/go.mod h1:8o94RPi1/7XTJvwPpRSzSUedZrtlirdB3r9Z20bi2f8=
 github.com/AdamKorcz/go-118-fuzz-build v0.0.0-20231105174938-2b5cbb29f3e2 h1:dIScnXFlF784X79oi7MzVT6GWqr/W1uUt0pB5CsDs9M=
@@ -202,7 +202,7 @@ google.golang.org/genproto/googleapis/rpc v0.0.0-20250115164207-1a7da9e5054f h1:
 google.golang.org/genproto/googleapis/rpc v0.0.0-20250115164207-1a7da9e5054f/go.mod h1:+2Yz8+CLJbIfL9z73EW45avw8Lmge3xVElCP9zEKi50=
 google.golang.org/grpc v1.71.0 h1:kF77BGdPTQ4/JZWMlb9VpJ5pa25aqvVqogsxNHHdeBg=
 google.golang.org/grpc v1.71.0/go.mod h1:H0GRtasmQOh9LkFoCPDu3ZrwUtD1YGE+b2vYBYd/8Ec=
-google.golang.org/protobuf v1.36.8 h1:xHScyCOEuuwZEc6UtSOvPbAT4zRh0xcNRYekJwfqyMc=
+google.golang.org/protobuf v1.36.9 h1:w2gp2mA27hUeUzj9Ex9FBjsBm40zfaDtEWow293U7Iw=
 gopkg.in/check.v1 v0.0.0-20161208181325-20d25e280405/go.mod h1:Co6ibVJAznAaIkqp8huTwlJQCZ016jof/cbN4VW5Yz0=
 gopkg.in/yaml.v3 v3.0.0-20200313102051-9f266ea9e77c/go.mod h1:K4uyk7z7BCEPqu6E+C64Yfv1cQ7kz7rIZviUmN+EgEM=
 gopkg.in/yaml.v3 v3.0.1 h1:fxVm/GzAzEWqLHuvctI91KS9hhNmmWOoWu0XTYJS7CA=
