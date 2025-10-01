@@ -5,8 +5,8 @@ go 1.24
 toolchain go1.24.1
 
 require (
-	buf.build/gen/go/namespace/cloud/grpc/go v1.5.1-20250918100349-882e2f020c28.2
-	buf.build/gen/go/namespace/cloud/protocolbuffers/go v1.36.9-20250918100349-882e2f020c28.1
+	buf.build/gen/go/namespace/cloud/grpc/go v1.5.1-20251001121052-759caec0c93c.2
+	buf.build/gen/go/namespace/cloud/protocolbuffers/go v1.36.9-20251001121052-759caec0c93c.1
 	cloud.google.com/go/secretmanager v1.11.5
 	github.com/aws/aws-sdk-go-v2 v1.36.3
 	github.com/aws/aws-sdk-go-v2/config v1.29.9

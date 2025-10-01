@@ -5,7 +5,7 @@ go 1.24
 toolchain go1.24.1
 
 require (
-	buf.build/gen/go/namespace/cloud/protocolbuffers/go v1.36.9-20250918100349-882e2f020c28.1
+	buf.build/gen/go/namespace/cloud/protocolbuffers/go v1.36.9-20251001121052-759caec0c93c.1
 	github.com/containerd/console v1.0.4
 	github.com/docker/cli v28.2.2+incompatible
 	github.com/google/go-containerregistry v0.20.6

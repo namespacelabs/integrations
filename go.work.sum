@@ -6,6 +6,7 @@ buf.build/gen/go/namespace/cloud/protocolbuffers/go v1.36.1-20250807002031-b2135
 buf.build/gen/go/namespace/cloud/protocolbuffers/go v1.36.1-20250818132830-3618cc48acf5.1/go.mod h1:yEfFbF0z7upec777gWAKvoWu6O0CJ8XqoSIjUAZtiG0=
 buf.build/gen/go/namespace/cloud/protocolbuffers/go v1.36.1-20250822141522-a160a3a95fa5.1/go.mod h1:yEfFbF0z7upec777gWAKvoWu6O0CJ8XqoSIjUAZtiG0=
 buf.build/gen/go/namespace/cloud/protocolbuffers/go v1.36.1-20250918100349-882e2f020c28.1/go.mod h1:yEfFbF0z7upec777gWAKvoWu6O0CJ8XqoSIjUAZtiG0=
+buf.build/gen/go/namespace/cloud/protocolbuffers/go v1.36.1-20251001121052-759caec0c93c.1/go.mod h1:yEfFbF0z7upec777gWAKvoWu6O0CJ8XqoSIjUAZtiG0=
 cel.dev/expr v0.16.2/go.mod h1:gXngZQMkWJoSbE8mOzehJlXQyubn/Vg0vR9/F3W7iw8=
 cel.dev/expr v0.19.1 h1:NciYrtDRIR0lNCnH1LFJegdjspNx9fI59O7TWcua/W4=
 cel.dev/expr v0.19.1/go.mod h1:MrpN08Q+lEBs+bGYdLxxHkZoUSsCp0nSKTs0nTymJgw=
@@ -911,7 +912,6 @@ google.golang.org/protobuf v1.35.2/go.mod h1:9fA7Ob0pmnwhb644+1+CVWFRbNajQ6iRojt
 google.golang.org/protobuf v1.36.1/go.mod h1:9fA7Ob0pmnwhb644+1+CVWFRbNajQ6iRojtC/QF5bRE=
 google.golang.org/protobuf v1.36.3/go.mod h1:9fA7Ob0pmnwhb644+1+CVWFRbNajQ6iRojtC/QF5bRE=
 google.golang.org/protobuf v1.36.4/go.mod h1:9fA7Ob0pmnwhb644+1+CVWFRbNajQ6iRojtC/QF5bRE=
-google.golang.org/protobuf v1.36.9 h1:w2gp2mA27hUeUzj9Ex9FBjsBm40zfaDtEWow293U7Iw=
 gopkg.in/alecthomas/kingpin.v2 v2.2.6/go.mod h1:FMv+mEhP44yOT+4EoQTLFTRgOQ1FBLkstjWtayDeSgw=
 gopkg.in/check.v1 v0.0.0-20161208181325-20d25e280405 h1:yhCVgyC4o1eVCa2tZl7eS0r+SDo693bJlVdllGtEeKM=
 gopkg.in/check.v1 v1.0.0-20180628173108-788fd7840127/go.mod h1:Co6ibVJAznAaIkqp8huTwlJQCZ016jof/cbN4VW5Yz0=
