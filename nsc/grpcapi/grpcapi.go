@@ -29,6 +29,16 @@ var DebugShowRequests bool
 var DebugShowResponses bool
 
 func NewConnectionWithEndpoint(ctx context.Context, endpoint string, token api.TokenSource, opts ...grpc.DialOption) (*grpc.ClientConn, error) {
+	opts = append(opts, grpc.WithTransportCredentials(credentials.NewTLS(&tls.Config{})))
+
+	return newConnectionWithEndpoint(ctx, endpoint, token, opts...)
+}
+
+func NewConnectionWithEndpointForTesting(ctx context.Context, endpoint string, token api.TokenSource, opts ...grpc.DialOption) (*grpc.ClientConn, error) {
+	return newConnectionWithEndpoint(ctx, endpoint, token, opts...)
+}
+
+func newConnectionWithEndpoint(ctx context.Context, endpoint string, token api.TokenSource, opts ...grpc.DialOption) (*grpc.ClientConn, error) {
 	parsed, err := parseEndpoint(endpoint)
 	if err != nil {
 		return nil, err
@@ -36,7 +46,6 @@ func NewConnectionWithEndpoint(ctx context.Context, endpoint string, token api.T
 
 	ourOpts := []grpc.DialOption{
 		grpc.WithUserAgent(fmt.Sprintf("nsc-go/%s", nsc.Version)),
-		grpc.WithTransportCredentials(credentials.NewTLS(&tls.Config{})),
 	}
 
 	if token != nil {
