@@ -28,6 +28,9 @@ var DebugShowRequests bool
 // If set, shows response payloads in debug output.
 var DebugShowResponses bool
 
+// Tokens require TLS.
+var RequireTransportSecurity = true
+
 func NewConnectionWithEndpoint(ctx context.Context, endpoint string, token api.TokenSource, opts ...grpc.DialOption) (*grpc.ClientConn, error) {
 	return NewConnectionWithEndpointWithTransportCredentials(ctx, endpoint, token, credentials.NewTLS(&tls.Config{}), opts...)
 }
@@ -126,4 +129,4 @@ func (auth credWrapper) GetRequestMetadata(ctx context.Context, uri ...string) (
 	}, nil
 }
 
-func (credWrapper) RequireTransportSecurity() bool { return true }
+func (credWrapper) RequireTransportSecurity() bool { return RequireTransportSecurity }
