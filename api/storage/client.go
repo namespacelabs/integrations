@@ -202,6 +202,10 @@ func ResolveArtifactWithOpts(ctx context.Context, cli Client, namespace, path st
 		return nil, ArtifactInfo{}, err
 	}
 
+	if res.GetDescription().GetStatus() != storagev1beta.Artifact_LIVE {
+		return nil, ArtifactInfo{}, fmt.Errorf("the resolved artifact is in status %q but LIVE was expected", res.GetDescription().GetStatus())
+	}
+
 	httpReq, err := http.NewRequestWithContext(ctx, "GET", res.SignedDownloadUrl, nil)
 	if err != nil {
 		return nil, ArtifactInfo{}, fmt.Errorf("failed to construct http request: %w", err)
