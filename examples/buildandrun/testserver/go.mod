@@ -6,12 +6,11 @@ toolchain go1.24.1
 
 require (
 	google.golang.org/grpc v1.71.0
-	google.golang.org/protobuf v1.36.9
+	google.golang.org/protobuf v1.36.10
 )
 
 require (
 	github.com/go-logr/logr v1.4.3 // indirect
-	github.com/google/go-cmp v0.7.0 // indirect
 	go.opentelemetry.io/otel v1.36.0 // indirect
 	go.opentelemetry.io/otel/sdk/metric v1.36.0 // indirect
 	golang.org/x/net v0.41.0 // indirect

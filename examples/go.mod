@@ -5,7 +5,7 @@ go 1.24
 toolchain go1.24.1
 
 require (
-	buf.build/gen/go/namespace/cloud/protocolbuffers/go v1.36.9-20251001125529-1bc0888670a5.1
+	buf.build/gen/go/namespace/cloud/protocolbuffers/go v1.36.10-20251014083539-aa0729ced7c3.1
 	github.com/containerd/console v1.0.4
 	github.com/docker/cli v28.2.2+incompatible
 	github.com/google/go-containerregistry v0.20.6
@@ -14,7 +14,7 @@ require (
 	golang.org/x/crypto v0.39.0
 	golang.org/x/term v0.32.0
 	google.golang.org/grpc v1.71.0
-	google.golang.org/protobuf v1.36.9
+	google.golang.org/protobuf v1.36.10
 )
 
 require (
