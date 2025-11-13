@@ -186,6 +186,15 @@ func UploadArtifactWithOpts(ctx context.Context, c Client, namespace, path strin
 	}, nil
 }
 
+func ExpireArtifact(ctx context.Context, cli Client, namespace, path string) error {
+	_, err := cli.Artifacts.ExpireArtifact(ctx, &storagev1beta.ExpireArtifactRequest{
+		Path:      path,
+		Namespace: namespace,
+	})
+
+	return err
+}
+
 func ResolveArtifactStream(ctx context.Context, cli Client, namespace, path string) (io.ReadCloser, error) {
 	r, _, err := ResolveArtifactWithOpts(ctx, cli, namespace, path, ResolveArtifactOpts{})
 	return r, err
