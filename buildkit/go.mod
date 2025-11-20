@@ -5,8 +5,8 @@ go 1.24
 toolchain go1.24.1
 
 require (
-	buf.build/gen/go/namespace/cloud/grpc/go v1.5.1-20251014083539-aa0729ced7c3.2
-	buf.build/gen/go/namespace/cloud/protocolbuffers/go v1.36.10-20251014083539-aa0729ced7c3.1
+	buf.build/gen/go/namespace/cloud/grpc/go v1.5.1-20251120154756-31e5d9a72f68.2
+	buf.build/gen/go/namespace/cloud/protocolbuffers/go v1.36.10-20251120154756-31e5d9a72f68.1
 	github.com/google/go-containerregistry v0.20.6
 	github.com/moby/buildkit v0.20.1
 	github.com/tonistiigi/fsutil v0.0.0-20250113203817-b14e27f4135a
