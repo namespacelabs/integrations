@@ -1,7 +1,7 @@
 buf.build/gen/go/namespace/cloud/grpc/go v1.5.1-20251014083539-aa0729ced7c3.2 h1:Ob6gUQMu3ITGsG4HD7FIJofkuXNpnMP+ISipL/zNo0s=
 buf.build/gen/go/namespace/cloud/grpc/go v1.5.1-20251014083539-aa0729ced7c3.2/go.mod h1:5t52ImAACCsjFrnMsE6ltXetfaXH46ZWuNhaIPR3Nic=
-buf.build/gen/go/namespace/cloud/protocolbuffers/go v1.36.10-20251014083539-aa0729ced7c3.1 h1:BYRUAcDN/cQ17/8EgoWPgYdVp+z8Ky/Zvp5xMohuOhw=
-buf.build/gen/go/namespace/cloud/protocolbuffers/go v1.36.10-20251014083539-aa0729ced7c3.1/go.mod h1:6s048eton1DZG10lY5nhzZWbTdiBNuM8fgKBHKFCjZE=
+buf.build/gen/go/namespace/cloud/protocolbuffers/go v1.36.10-20251120154756-31e5d9a72f68.1 h1:jk5AH6b3uXmqEOQYJg+PBFQhpea+/KbmwgIKacv/yzY=
+buf.build/gen/go/namespace/cloud/protocolbuffers/go v1.36.10-20251120154756-31e5d9a72f68.1/go.mod h1:6s048eton1DZG10lY5nhzZWbTdiBNuM8fgKBHKFCjZE=
 cloud.google.com/go v0.26.0/go.mod h1:aQUYkXzVsufM+DwF1aE+0xfcU+56JwCaLick0ClmMTw=
 cloud.google.com/go v0.112.1 h1:uJSeirPke5UNZHIb4SxfZklVSiWWVqW4oXlETwZziwM=
 cloud.google.com/go v0.112.1/go.mod h1:+Vbu+Y1UU+I1rjmzeMOb/8RfkKJK2Gyxi1X6jJCZLo4=
