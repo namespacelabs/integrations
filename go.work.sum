@@ -9,6 +9,7 @@ buf.build/gen/go/namespace/cloud/protocolbuffers/go v1.36.1-20250822141522-a160a
 buf.build/gen/go/namespace/cloud/protocolbuffers/go v1.36.1-20250918100349-882e2f020c28.1/go.mod h1:yEfFbF0z7upec777gWAKvoWu6O0CJ8XqoSIjUAZtiG0=
 buf.build/gen/go/namespace/cloud/protocolbuffers/go v1.36.1-20251001121052-759caec0c93c.1/go.mod h1:yEfFbF0z7upec777gWAKvoWu6O0CJ8XqoSIjUAZtiG0=
 buf.build/gen/go/namespace/cloud/protocolbuffers/go v1.36.1-20251120154756-31e5d9a72f68.1/go.mod h1:yEfFbF0z7upec777gWAKvoWu6O0CJ8XqoSIjUAZtiG0=
+buf.build/gen/go/namespace/cloud/protocolbuffers/go v1.36.1-20251121142918-2a477e0555b1.1/go.mod h1:yEfFbF0z7upec777gWAKvoWu6O0CJ8XqoSIjUAZtiG0=
 buf.build/gen/go/namespace/cloud/protocolbuffers/go v1.36.10-20251014083539-aa0729ced7c3.1/go.mod h1:6s048eton1DZG10lY5nhzZWbTdiBNuM8fgKBHKFCjZE=
 cel.dev/expr v0.16.2/go.mod h1:gXngZQMkWJoSbE8mOzehJlXQyubn/Vg0vR9/F3W7iw8=
 cel.dev/expr v0.19.1 h1:NciYrtDRIR0lNCnH1LFJegdjspNx9fI59O7TWcua/W4=
