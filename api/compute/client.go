@@ -11,9 +11,10 @@ import (
 )
 
 type Client struct {
-	Compute computev1betagrpc.ComputeServiceClient
-	Storage computev1betagrpc.StorageServiceClient
-	Usage   computev1betagrpc.UsageServiceClient
+	Compute       computev1betagrpc.ComputeServiceClient
+	Storage       computev1betagrpc.StorageServiceClient
+	Usage         computev1betagrpc.UsageServiceClient
+	Observability computev1betagrpc.ObservabilityServiceClient
 
 	Conn *grpc.ClientConn
 }
@@ -33,10 +34,11 @@ func NewClientWithEndpoint(ctx context.Context, endpoint string, token api.Token
 	}
 
 	return Client{
-		Compute: computev1betagrpc.NewComputeServiceClient(conn),
-		Storage: computev1betagrpc.NewStorageServiceClient(conn),
-		Usage:   computev1betagrpc.NewUsageServiceClient(conn),
-		Conn:    conn,
+		Compute:       computev1betagrpc.NewComputeServiceClient(conn),
+		Storage:       computev1betagrpc.NewStorageServiceClient(conn),
+		Usage:         computev1betagrpc.NewUsageServiceClient(conn),
+		Observability: computev1betagrpc.NewObservabilityServiceClient(conn),
+		Conn:          conn,
 	}, nil
 }
 
