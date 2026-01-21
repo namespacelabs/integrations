@@ -154,6 +154,26 @@ func LoadWorkloadToken() (api.TokenSource, error) {
 	return loadFromFile("/var/run/nsc/token.json")
 }
 
+// LoadLocalToken returns a TokenSource that reloads the token from the
+// specified file path on each IssueToken call, allowing the token to be
+// updated without restarting the process.
+func LoadLocalToken(path string) (api.TokenSource, error) {
+	return reloadingToken{path: path}, nil
+}
+
+type reloadingToken struct {
+	path string
+}
+
+func (r reloadingToken) IssueToken(ctx context.Context, minDuration time.Duration, force bool) (string, error) {
+	tok, err := loadFromFile(r.path)
+	if err != nil {
+		return "", err
+	}
+
+	return tok.IssueToken(ctx, minDuration, force)
+}
+
 func loadFromFile(tokenFile string) (api.TokenSource, error) {
 	contents, err := os.ReadFile(tokenFile)
 	if err != nil {
