@@ -104,9 +104,10 @@ func UploadArtifactWithOpts(ctx context.Context, c Client, namespace, path strin
 	}
 
 	req := &storagev1beta.CreateArtifactRequest{
-		Path:      path,
-		Namespace: namespace,
-		Labels:    labelRecords,
+		Path:                     path,
+		Namespace:                namespace,
+		Labels:                   labelRecords,
+		CreateNewVersionIfExists: true,
 	}
 
 	if o.ExpiresAt != nil {
