@@ -5,7 +5,7 @@ go 1.24.0
 toolchain go1.24.1
 
 require (
-	buf.build/gen/go/namespace/cloud/protocolbuffers/go v1.36.11-20260220221842-e9199b240c7f.1
+	buf.build/gen/go/namespace/cloud/protocolbuffers/go v1.36.11-20260330151916-64087d8756e1.1
 	github.com/containerd/console v1.0.4
 	github.com/docker/cli v28.2.2+incompatible
 	github.com/google/go-containerregistry v0.20.6
@@ -21,7 +21,7 @@ require (
 )
 
 require (
-	buf.build/gen/go/namespace/cloud/grpc/go v1.6.1-20260220221842-e9199b240c7f.1 // indirect
+	buf.build/gen/go/namespace/cloud/grpc/go v1.6.1-20260330151916-64087d8756e1.1 // indirect
 	github.com/AdaLogics/go-fuzz-headers v0.0.0-20240806141605-e8a1dd7889d6 // indirect
 	github.com/Microsoft/go-winio v0.6.2 // indirect
 	github.com/aws/aws-sdk-go-v2 v1.36.3 // indirect
