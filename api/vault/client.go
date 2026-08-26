@@ -4,14 +4,14 @@ import (
 	"context"
 	"os"
 
-	"buf.build/gen/go/namespace/cloud/grpc/go/proto/namespace/cloud/vault/v1beta/vaultv1betagrpc"
 	"google.golang.org/grpc"
 	"namespacelabs.dev/integrations/api"
 	"namespacelabs.dev/integrations/nsc/grpcapi"
+	vaultv1beta "namespacelabs.dev/integrations/proto/namespace/cloud/vault/v1beta"
 )
 
 type Client struct {
-	Vault vaultv1betagrpc.VaultServiceClient
+	Vault vaultv1beta.VaultServiceClient
 
 	Conn *grpc.ClientConn
 }
@@ -31,7 +31,7 @@ func NewClientWithEndpoint(ctx context.Context, endpoint string, token api.Token
 	}
 
 	return Client{
-		Vault: vaultv1betagrpc.NewVaultServiceClient(conn),
+		Vault: vaultv1beta.NewVaultServiceClient(conn),
 		Conn:  conn,
 	}, nil
 }

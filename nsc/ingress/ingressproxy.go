@@ -9,11 +9,11 @@ import (
 	"net/url"
 	"time"
 
-	computev1beta "buf.build/gen/go/namespace/cloud/protocolbuffers/go/proto/namespace/cloud/compute/v1beta"
 	"github.com/gorilla/websocket"
 	"github.com/jpillora/chisel/share/cnet"
 	"namespacelabs.dev/go-ids"
 	"namespacelabs.dev/integrations/api"
+	computev1beta "namespacelabs.dev/integrations/proto/namespace/cloud/compute/v1beta"
 )
 
 func DialEndpoint(ctx context.Context, debugLog io.Writer, token api.TokenSource, endpoint string) (net.Conn, error) {

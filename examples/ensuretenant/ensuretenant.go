@@ -7,9 +7,9 @@ import (
 	"log"
 	"os"
 
-	iamv1beta "buf.build/gen/go/namespace/cloud/protocolbuffers/go/proto/namespace/cloud/iam/v1beta"
 	"namespacelabs.dev/integrations/api/iam"
 	"namespacelabs.dev/integrations/auth/aws"
+	iamv1beta "namespacelabs.dev/integrations/proto/namespace/cloud/iam/v1beta"
 )
 
 var (

@@ -15,15 +15,14 @@ import (
 	"strings"
 	"time"
 
-	"buf.build/gen/go/namespace/cloud/grpc/go/proto/namespace/cloud/storage/v1beta/storagev1betagrpc"
-	storagev1beta "buf.build/gen/go/namespace/cloud/protocolbuffers/go/proto/namespace/cloud/storage/v1beta"
-	"buf.build/gen/go/namespace/cloud/protocolbuffers/go/proto/namespace/stdlib"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 	"google.golang.org/protobuf/types/known/timestamppb"
 	"namespacelabs.dev/integrations/api"
 	"namespacelabs.dev/integrations/nsc/grpcapi"
+	storagev1beta "namespacelabs.dev/integrations/proto/namespace/cloud/storage/v1beta"
+	"namespacelabs.dev/integrations/proto/namespace/stdlib"
 )
 
 const (
@@ -39,7 +38,7 @@ var (
 )
 
 type Client struct {
-	Artifacts storagev1betagrpc.ArtifactsServiceClient
+	Artifacts storagev1beta.ArtifactsServiceClient
 
 	Conn *grpc.ClientConn
 }
@@ -59,7 +58,7 @@ func NewClientWithEndpoint(ctx context.Context, endpoint string, token api.Token
 	}
 
 	return Client{
-		Artifacts: storagev1betagrpc.NewArtifactsServiceClient(conn),
+		Artifacts: storagev1beta.NewArtifactsServiceClient(conn),
 		Conn:      conn,
 	}, nil
 }

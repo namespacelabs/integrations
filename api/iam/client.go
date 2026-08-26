@@ -3,16 +3,16 @@ package iam
 import (
 	"context"
 
-	"buf.build/gen/go/namespace/cloud/grpc/go/proto/namespace/cloud/iam/v1beta/iamv1betagrpc"
 	"google.golang.org/grpc"
 	"namespacelabs.dev/integrations/api"
 	"namespacelabs.dev/integrations/nsc/apienv"
 	"namespacelabs.dev/integrations/nsc/grpcapi"
+	iamv1beta "namespacelabs.dev/integrations/proto/namespace/cloud/iam/v1beta"
 )
 
 type Client struct {
-	Tenants iamv1betagrpc.TenantServiceClient
-	Tokens  iamv1betagrpc.TokenServiceClient
+	Tenants iamv1beta.TenantServiceClient
+	Tokens  iamv1beta.TokenServiceClient
 
 	Conn *grpc.ClientConn
 }
@@ -28,8 +28,8 @@ func NewClientWithEndpoint(ctx context.Context, endpoint string, token api.Token
 	}
 
 	return Client{
-		Tenants: iamv1betagrpc.NewTenantServiceClient(conn),
-		Tokens:  iamv1betagrpc.NewTokenServiceClient(conn),
+		Tenants: iamv1beta.NewTenantServiceClient(conn),
+		Tokens:  iamv1beta.NewTokenServiceClient(conn),
 		Conn:    conn,
 	}, nil
 }

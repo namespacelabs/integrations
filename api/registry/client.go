@@ -3,15 +3,15 @@ package iam
 import (
 	"context"
 
-	"buf.build/gen/go/namespace/cloud/grpc/go/proto/namespace/cloud/registry/v1beta/registryv1betagrpc"
 	"google.golang.org/grpc"
 	"namespacelabs.dev/integrations/api"
 	"namespacelabs.dev/integrations/nsc/apienv"
 	"namespacelabs.dev/integrations/nsc/grpcapi"
+	registryv1beta "namespacelabs.dev/integrations/proto/namespace/cloud/registry/v1beta"
 )
 
 type Client struct {
-	ContainerRegistry registryv1betagrpc.ContainerRegistryServiceClient
+	ContainerRegistry registryv1beta.ContainerRegistryServiceClient
 
 	Conn *grpc.ClientConn
 }
@@ -27,7 +27,7 @@ func NewClientWithEndpoint(ctx context.Context, endpoint string, token api.Token
 	}
 
 	return Client{
-		ContainerRegistry: registryv1betagrpc.NewContainerRegistryServiceClient(conn),
+		ContainerRegistry: registryv1beta.NewContainerRegistryServiceClient(conn),
 		Conn:              conn,
 	}, nil
 }

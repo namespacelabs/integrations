@@ -24,6 +24,17 @@ It provides GRPC clients ready to use.
 Also, it provides convenience wrappers to simplify the upload/download of artifacts using the `io.Reader` API.
 The public API definition can be found at [buf.build/namespace](https://buf.build/namespace/cloud/docs/main:namespace.cloud.storage.v1beta).
 
+### Protobuf definitions
+
+Generated Go protobuf and gRPC packages are checked in under `proto`.
+Regenerate them from a sibling checkout of `namespacelabs/internal` with:
+
+```sh
+./scripts/generate-protos.sh
+```
+
+Set `NS_INTERNAL` to use an internal checkout in another location.
+
 ## Tools
 
 This repository hosts a series of integration tools that can be used either
