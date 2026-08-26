@@ -7,17 +7,16 @@ import (
 	"errors"
 	"fmt"
 
-	"buf.build/gen/go/namespace/cloud/grpc/go/proto/namespace/cloud/builder/v1beta/builderv1betagrpc"
-	builderv1beta "buf.build/gen/go/namespace/cloud/protocolbuffers/go/proto/namespace/cloud/builder/v1beta"
 	bkclient "github.com/moby/buildkit/client"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
 	"namespacelabs.dev/integrations/api"
 	"namespacelabs.dev/integrations/api/builds"
 	"namespacelabs.dev/integrations/auth/nstls"
+	builderv1beta "namespacelabs.dev/integrations/proto/namespace/cloud/builder/v1beta"
 )
 
-func Connect(ctx context.Context, builder builderv1betagrpc.BuilderServiceClient) (*bkclient.Client, error) {
+func Connect(ctx context.Context, builder builderv1beta.BuilderServiceClient) (*bkclient.Client, error) {
 	resp, err := builder.GetBuilderConfiguration(ctx, &builderv1beta.GetBuilderConfigurationRequest{
 		Platform:             "linux/amd64",
 		ReturnNewCredentials: true,
@@ -55,8 +54,8 @@ func Connect(ctx context.Context, builder builderv1betagrpc.BuilderServiceClient
 }
 
 type ConnectOptions struct {
-	Client       *builds.Client                         // If none is provided, one is instantiated for this purpose.
-	BuildsClient builderv1betagrpc.BuilderServiceClient // If none is provided, one is obtained from the client above.
+	Client       *builds.Client                     // If none is provided, one is instantiated for this purpose.
+	BuildsClient builderv1beta.BuilderServiceClient // If none is provided, one is obtained from the client above.
 
 	Platform string // If not specified, "linux/amd64" is used by default.
 }

@@ -10,11 +10,11 @@ import (
 	"os"
 	"time"
 
-	computepb "buf.build/gen/go/namespace/cloud/protocolbuffers/go/proto/namespace/cloud/compute/v1beta"
 	"google.golang.org/protobuf/types/known/timestamppb"
 	"namespacelabs.dev/integrations/api"
 	"namespacelabs.dev/integrations/api/compute"
 	"namespacelabs.dev/integrations/auth"
+	computepb "namespacelabs.dev/integrations/proto/namespace/cloud/compute/v1beta"
 )
 
 func main() {
@@ -49,7 +49,7 @@ func create(ctx context.Context, debugLog io.Writer, token api.TokenSource, shap
 	resp, err := cli.Compute.CreateInstance(ctx, &computepb.CreateInstanceRequest{
 		Shape:             shape,
 		DocumentedPurpose: "createinstance example",
-		Deadline:    timestamppb.New(time.Now().Add(1 * time.Hour)),
+		Deadline:          timestamppb.New(time.Now().Add(1 * time.Hour)),
 		// Run the engine in a container.
 		Containers: []*computepb.ContainerRequest{{
 			Name:     "nginx",

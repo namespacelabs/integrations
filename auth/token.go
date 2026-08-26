@@ -10,13 +10,12 @@ import (
 	"sync"
 	"time"
 
-	"buf.build/gen/go/namespace/cloud/grpc/go/proto/namespace/private/sessions/sessionsv1betagrpc"
-	sessions "buf.build/gen/go/namespace/cloud/protocolbuffers/go/proto/namespace/private/sessions"
 	"google.golang.org/grpc/metadata"
 	"google.golang.org/protobuf/types/known/durationpb"
 	"namespacelabs.dev/integrations/api"
 	"namespacelabs.dev/integrations/nsc/apienv"
 	"namespacelabs.dev/integrations/nsc/grpcapi"
+	sessions "namespacelabs.dev/integrations/proto/namespace/private/sessions"
 )
 
 type loadedToken struct {
@@ -27,10 +26,10 @@ type loadedToken struct {
 	debugLog io.Writer
 
 	mu             sync.Mutex
-	sessionsClient sessionsv1betagrpc.UserSessionsServiceClient
+	sessionsClient sessions.UserSessionsServiceClient
 }
 
-func (t *loadedToken) client(ctx context.Context) (sessionsv1betagrpc.UserSessionsServiceClient, error) {
+func (t *loadedToken) client(ctx context.Context) (sessions.UserSessionsServiceClient, error) {
 	t.mu.Lock()
 	defer t.mu.Unlock()
 
@@ -40,7 +39,7 @@ func (t *loadedToken) client(ctx context.Context) (sessionsv1betagrpc.UserSessio
 			return nil, err
 		}
 
-		t.sessionsClient = sessionsv1betagrpc.NewUserSessionsServiceClient(conn)
+		t.sessionsClient = sessions.NewUserSessionsServiceClient(conn)
 	}
 
 	return t.sessionsClient, nil

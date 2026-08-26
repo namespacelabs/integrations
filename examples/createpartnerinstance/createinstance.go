@@ -10,14 +10,14 @@ import (
 	"os"
 	"time"
 
-	computepb "buf.build/gen/go/namespace/cloud/protocolbuffers/go/proto/namespace/cloud/compute/v1beta"
-	iamv1beta "buf.build/gen/go/namespace/cloud/protocolbuffers/go/proto/namespace/cloud/iam/v1beta"
 	"google.golang.org/protobuf/types/known/timestamppb"
 	"namespacelabs.dev/integrations/api"
 	"namespacelabs.dev/integrations/api/compute"
 	"namespacelabs.dev/integrations/api/iam"
 	"namespacelabs.dev/integrations/auth"
 	"namespacelabs.dev/integrations/auth/aws"
+	computepb "namespacelabs.dev/integrations/proto/namespace/cloud/compute/v1beta"
+	iamv1beta "namespacelabs.dev/integrations/proto/namespace/cloud/iam/v1beta"
 )
 
 var (

@@ -4,17 +4,17 @@ import (
 	"context"
 	"os"
 
-	"buf.build/gen/go/namespace/cloud/grpc/go/proto/namespace/cloud/compute/v1beta/computev1betagrpc"
 	"google.golang.org/grpc"
 	"namespacelabs.dev/integrations/api"
 	"namespacelabs.dev/integrations/nsc/grpcapi"
+	computev1beta "namespacelabs.dev/integrations/proto/namespace/cloud/compute/v1beta"
 )
 
 type Client struct {
-	Compute       computev1betagrpc.ComputeServiceClient
-	Storage       computev1betagrpc.StorageServiceClient
-	Usage         computev1betagrpc.UsageServiceClient
-	Observability computev1betagrpc.ObservabilityServiceClient
+	Compute       computev1beta.ComputeServiceClient
+	Storage       computev1beta.StorageServiceClient
+	Usage         computev1beta.UsageServiceClient
+	Observability computev1beta.ObservabilityServiceClient
 
 	Conn *grpc.ClientConn
 }
@@ -34,10 +34,10 @@ func NewClientWithEndpoint(ctx context.Context, endpoint string, token api.Token
 	}
 
 	return Client{
-		Compute:       computev1betagrpc.NewComputeServiceClient(conn),
-		Storage:       computev1betagrpc.NewStorageServiceClient(conn),
-		Usage:         computev1betagrpc.NewUsageServiceClient(conn),
-		Observability: computev1betagrpc.NewObservabilityServiceClient(conn),
+		Compute:       computev1beta.NewComputeServiceClient(conn),
+		Storage:       computev1beta.NewStorageServiceClient(conn),
+		Usage:         computev1beta.NewUsageServiceClient(conn),
+		Observability: computev1beta.NewObservabilityServiceClient(conn),
 		Conn:          conn,
 	}, nil
 }

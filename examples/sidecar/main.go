@@ -14,7 +14,6 @@ import (
 	"syscall"
 	"time"
 
-	computepb "buf.build/gen/go/namespace/cloud/protocolbuffers/go/proto/namespace/cloud/compute/v1beta"
 	cc "github.com/containerd/console"
 	"golang.org/x/crypto/ssh"
 	"golang.org/x/term"
@@ -25,6 +24,7 @@ import (
 	"namespacelabs.dev/integrations/buildkit/buildhelper"
 	"namespacelabs.dev/integrations/examples"
 	"namespacelabs.dev/integrations/nsc/ingress"
+	computepb "namespacelabs.dev/integrations/proto/namespace/cloud/compute/v1beta"
 )
 
 var (

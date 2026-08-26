@@ -5,9 +5,9 @@ import (
 	"crypto/tls"
 	"time"
 
-	iamv1beta "buf.build/gen/go/namespace/cloud/protocolbuffers/go/proto/namespace/cloud/iam/v1beta"
 	"namespacelabs.dev/integrations/api"
 	"namespacelabs.dev/integrations/api/iam"
+	iamv1beta "namespacelabs.dev/integrations/proto/namespace/cloud/iam/v1beta"
 )
 
 func TenantTokenSource(client iam.Client, tenantId string) api.TokenAndCertificateSource {

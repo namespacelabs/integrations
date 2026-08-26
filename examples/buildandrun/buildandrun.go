@@ -10,8 +10,6 @@ import (
 	"strings"
 	"time"
 
-	computepb "buf.build/gen/go/namespace/cloud/protocolbuffers/go/proto/namespace/cloud/compute/v1beta"
-	iamv1beta "buf.build/gen/go/namespace/cloud/protocolbuffers/go/proto/namespace/cloud/iam/v1beta"
 	"github.com/moby/buildkit/client"
 	"github.com/moby/buildkit/client/llb"
 	"github.com/moby/buildkit/exporter/containerimage/exptypes"
@@ -29,6 +27,8 @@ import (
 	"namespacelabs.dev/integrations/auth/nstls"
 	"namespacelabs.dev/integrations/buildkit"
 	"namespacelabs.dev/integrations/examples/buildandrun/testserver/proto"
+	computepb "namespacelabs.dev/integrations/proto/namespace/cloud/compute/v1beta"
+	iamv1beta "namespacelabs.dev/integrations/proto/namespace/cloud/iam/v1beta"
 )
 
 var (
