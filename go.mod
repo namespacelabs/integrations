@@ -6,6 +6,7 @@ toolchain go1.24.1
 
 require (
 	cloud.google.com/go/secretmanager v1.11.5
+	connectrpc.com/connect v1.20.0
 	github.com/aws/aws-sdk-go-v2 v1.36.3
 	github.com/aws/aws-sdk-go-v2/config v1.29.9
 	github.com/aws/aws-sdk-go-v2/service/cognitoidentity v1.29.3

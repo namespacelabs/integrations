@@ -22,6 +22,7 @@ The public API definition can be found at [buf.build/namespace](https://buf.buil
 The Namespace Storage SDK can be found at `api/storage`.
 It provides GRPC clients ready to use.
 Also, it provides convenience wrappers to simplify the upload/download of artifacts using the `io.Reader` API.
+For large artifacts, `storage/downloader` supports parallel downloads, retries, and resuming partial downloads.
 The public API definition can be found at [buf.build/namespace](https://buf.build/namespace/cloud/docs/main:namespace.cloud.storage.v1beta).
 
 ### Protobuf definitions
