@@ -1000,6 +1000,108 @@ func (x *IssueTenantClientCertificateResponse) GetPrivateKeyPem() string {
 	return ""
 }
 
+type ExchangeTenantTokenForClientCertRequest struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// The public key for which the certificate should be issued. This must
+	// contain exactly one PEM "PUBLIC KEY" block.
+	PublicKeyPem string `protobuf:"bytes,1,opt,name=public_key_pem,json=publicKeyPem,proto3" json:"public_key_pem,omitempty"`
+	// Optionally restrict the certificate to a subset of the permissions in
+	// the tenant token. The request fails if any permission is not granted by
+	// the token. If empty, the certificate inherits the token's permissions.
+	Permissions   []*Permission `protobuf:"bytes,2,rep,name=permissions,proto3" json:"permissions,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ExchangeTenantTokenForClientCertRequest) Reset() {
+	*x = ExchangeTenantTokenForClientCertRequest{}
+	mi := &file_proto_namespace_cloud_iam_v1beta_tenants_proto_msgTypes[14]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ExchangeTenantTokenForClientCertRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ExchangeTenantTokenForClientCertRequest) ProtoMessage() {}
+
+func (x *ExchangeTenantTokenForClientCertRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_namespace_cloud_iam_v1beta_tenants_proto_msgTypes[14]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ExchangeTenantTokenForClientCertRequest.ProtoReflect.Descriptor instead.
+func (*ExchangeTenantTokenForClientCertRequest) Descriptor() ([]byte, []int) {
+	return file_proto_namespace_cloud_iam_v1beta_tenants_proto_rawDescGZIP(), []int{14}
+}
+
+func (x *ExchangeTenantTokenForClientCertRequest) GetPublicKeyPem() string {
+	if x != nil {
+		return x.PublicKeyPem
+	}
+	return ""
+}
+
+func (x *ExchangeTenantTokenForClientCertRequest) GetPermissions() []*Permission {
+	if x != nil {
+		return x.Permissions
+	}
+	return nil
+}
+
+type ExchangeTenantTokenForClientCertResponse struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// The PEM-encoded client certificate chain issued for the supplied key.
+	ClientCertificatePem string `protobuf:"bytes,1,opt,name=client_certificate_pem,json=clientCertificatePem,proto3" json:"client_certificate_pem,omitempty"`
+	unknownFields        protoimpl.UnknownFields
+	sizeCache            protoimpl.SizeCache
+}
+
+func (x *ExchangeTenantTokenForClientCertResponse) Reset() {
+	*x = ExchangeTenantTokenForClientCertResponse{}
+	mi := &file_proto_namespace_cloud_iam_v1beta_tenants_proto_msgTypes[15]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ExchangeTenantTokenForClientCertResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ExchangeTenantTokenForClientCertResponse) ProtoMessage() {}
+
+func (x *ExchangeTenantTokenForClientCertResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_namespace_cloud_iam_v1beta_tenants_proto_msgTypes[15]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ExchangeTenantTokenForClientCertResponse.ProtoReflect.Descriptor instead.
+func (*ExchangeTenantTokenForClientCertResponse) Descriptor() ([]byte, []int) {
+	return file_proto_namespace_cloud_iam_v1beta_tenants_proto_rawDescGZIP(), []int{15}
+}
+
+func (x *ExchangeTenantTokenForClientCertResponse) GetClientCertificatePem() string {
+	if x != nil {
+		return x.ClientCertificatePem
+	}
+	return ""
+}
+
 type EnsureTenantGroupRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// A canonical name for the Tenant group.
@@ -1014,7 +1116,7 @@ type EnsureTenantGroupRequest struct {
 
 func (x *EnsureTenantGroupRequest) Reset() {
 	*x = EnsureTenantGroupRequest{}
-	mi := &file_proto_namespace_cloud_iam_v1beta_tenants_proto_msgTypes[14]
+	mi := &file_proto_namespace_cloud_iam_v1beta_tenants_proto_msgTypes[16]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1026,7 +1128,7 @@ func (x *EnsureTenantGroupRequest) String() string {
 func (*EnsureTenantGroupRequest) ProtoMessage() {}
 
 func (x *EnsureTenantGroupRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_cloud_iam_v1beta_tenants_proto_msgTypes[14]
+	mi := &file_proto_namespace_cloud_iam_v1beta_tenants_proto_msgTypes[16]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1039,7 +1141,7 @@ func (x *EnsureTenantGroupRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EnsureTenantGroupRequest.ProtoReflect.Descriptor instead.
 func (*EnsureTenantGroupRequest) Descriptor() ([]byte, []int) {
-	return file_proto_namespace_cloud_iam_v1beta_tenants_proto_rawDescGZIP(), []int{14}
+	return file_proto_namespace_cloud_iam_v1beta_tenants_proto_rawDescGZIP(), []int{16}
 }
 
 func (x *EnsureTenantGroupRequest) GetName() string {
@@ -1065,7 +1167,7 @@ type TenantGroupResponse struct {
 
 func (x *TenantGroupResponse) Reset() {
 	*x = TenantGroupResponse{}
-	mi := &file_proto_namespace_cloud_iam_v1beta_tenants_proto_msgTypes[15]
+	mi := &file_proto_namespace_cloud_iam_v1beta_tenants_proto_msgTypes[17]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1077,7 +1179,7 @@ func (x *TenantGroupResponse) String() string {
 func (*TenantGroupResponse) ProtoMessage() {}
 
 func (x *TenantGroupResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_cloud_iam_v1beta_tenants_proto_msgTypes[15]
+	mi := &file_proto_namespace_cloud_iam_v1beta_tenants_proto_msgTypes[17]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1090,7 +1192,7 @@ func (x *TenantGroupResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TenantGroupResponse.ProtoReflect.Descriptor instead.
 func (*TenantGroupResponse) Descriptor() ([]byte, []int) {
-	return file_proto_namespace_cloud_iam_v1beta_tenants_proto_rawDescGZIP(), []int{15}
+	return file_proto_namespace_cloud_iam_v1beta_tenants_proto_rawDescGZIP(), []int{17}
 }
 
 func (x *TenantGroupResponse) GetName() string {
@@ -1121,7 +1223,7 @@ type TenantGroupPolicy struct {
 
 func (x *TenantGroupPolicy) Reset() {
 	*x = TenantGroupPolicy{}
-	mi := &file_proto_namespace_cloud_iam_v1beta_tenants_proto_msgTypes[16]
+	mi := &file_proto_namespace_cloud_iam_v1beta_tenants_proto_msgTypes[18]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1133,7 +1235,7 @@ func (x *TenantGroupPolicy) String() string {
 func (*TenantGroupPolicy) ProtoMessage() {}
 
 func (x *TenantGroupPolicy) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_cloud_iam_v1beta_tenants_proto_msgTypes[16]
+	mi := &file_proto_namespace_cloud_iam_v1beta_tenants_proto_msgTypes[18]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1146,7 +1248,7 @@ func (x *TenantGroupPolicy) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TenantGroupPolicy.ProtoReflect.Descriptor instead.
 func (*TenantGroupPolicy) Descriptor() ([]byte, []int) {
-	return file_proto_namespace_cloud_iam_v1beta_tenants_proto_rawDescGZIP(), []int{16}
+	return file_proto_namespace_cloud_iam_v1beta_tenants_proto_rawDescGZIP(), []int{18}
 }
 
 func (x *TenantGroupPolicy) GetPolicy() string {
@@ -1171,7 +1273,7 @@ type ListTenantGroupsRequest struct {
 
 func (x *ListTenantGroupsRequest) Reset() {
 	*x = ListTenantGroupsRequest{}
-	mi := &file_proto_namespace_cloud_iam_v1beta_tenants_proto_msgTypes[17]
+	mi := &file_proto_namespace_cloud_iam_v1beta_tenants_proto_msgTypes[19]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1183,7 +1285,7 @@ func (x *ListTenantGroupsRequest) String() string {
 func (*ListTenantGroupsRequest) ProtoMessage() {}
 
 func (x *ListTenantGroupsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_cloud_iam_v1beta_tenants_proto_msgTypes[17]
+	mi := &file_proto_namespace_cloud_iam_v1beta_tenants_proto_msgTypes[19]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1196,7 +1298,7 @@ func (x *ListTenantGroupsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListTenantGroupsRequest.ProtoReflect.Descriptor instead.
 func (*ListTenantGroupsRequest) Descriptor() ([]byte, []int) {
-	return file_proto_namespace_cloud_iam_v1beta_tenants_proto_rawDescGZIP(), []int{17}
+	return file_proto_namespace_cloud_iam_v1beta_tenants_proto_rawDescGZIP(), []int{19}
 }
 
 type ListTenantGroupsResponse struct {
@@ -1208,7 +1310,7 @@ type ListTenantGroupsResponse struct {
 
 func (x *ListTenantGroupsResponse) Reset() {
 	*x = ListTenantGroupsResponse{}
-	mi := &file_proto_namespace_cloud_iam_v1beta_tenants_proto_msgTypes[18]
+	mi := &file_proto_namespace_cloud_iam_v1beta_tenants_proto_msgTypes[20]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1220,7 +1322,7 @@ func (x *ListTenantGroupsResponse) String() string {
 func (*ListTenantGroupsResponse) ProtoMessage() {}
 
 func (x *ListTenantGroupsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_cloud_iam_v1beta_tenants_proto_msgTypes[18]
+	mi := &file_proto_namespace_cloud_iam_v1beta_tenants_proto_msgTypes[20]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1233,7 +1335,7 @@ func (x *ListTenantGroupsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListTenantGroupsResponse.ProtoReflect.Descriptor instead.
 func (*ListTenantGroupsResponse) Descriptor() ([]byte, []int) {
-	return file_proto_namespace_cloud_iam_v1beta_tenants_proto_rawDescGZIP(), []int{18}
+	return file_proto_namespace_cloud_iam_v1beta_tenants_proto_rawDescGZIP(), []int{20}
 }
 
 func (x *ListTenantGroupsResponse) GetTenantGroups() []*ListTenantGroupsResponse_TenantGroup {
@@ -1254,7 +1356,7 @@ type TenantGroupReference struct {
 
 func (x *TenantGroupReference) Reset() {
 	*x = TenantGroupReference{}
-	mi := &file_proto_namespace_cloud_iam_v1beta_tenants_proto_msgTypes[19]
+	mi := &file_proto_namespace_cloud_iam_v1beta_tenants_proto_msgTypes[21]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1266,7 +1368,7 @@ func (x *TenantGroupReference) String() string {
 func (*TenantGroupReference) ProtoMessage() {}
 
 func (x *TenantGroupReference) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_cloud_iam_v1beta_tenants_proto_msgTypes[19]
+	mi := &file_proto_namespace_cloud_iam_v1beta_tenants_proto_msgTypes[21]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1279,7 +1381,7 @@ func (x *TenantGroupReference) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TenantGroupReference.ProtoReflect.Descriptor instead.
 func (*TenantGroupReference) Descriptor() ([]byte, []int) {
-	return file_proto_namespace_cloud_iam_v1beta_tenants_proto_rawDescGZIP(), []int{19}
+	return file_proto_namespace_cloud_iam_v1beta_tenants_proto_rawDescGZIP(), []int{21}
 }
 
 func (x *TenantGroupReference) GetName() string {
@@ -1307,7 +1409,7 @@ type DescribeTenantGroupResponse struct {
 
 func (x *DescribeTenantGroupResponse) Reset() {
 	*x = DescribeTenantGroupResponse{}
-	mi := &file_proto_namespace_cloud_iam_v1beta_tenants_proto_msgTypes[20]
+	mi := &file_proto_namespace_cloud_iam_v1beta_tenants_proto_msgTypes[22]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1319,7 +1421,7 @@ func (x *DescribeTenantGroupResponse) String() string {
 func (*DescribeTenantGroupResponse) ProtoMessage() {}
 
 func (x *DescribeTenantGroupResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_cloud_iam_v1beta_tenants_proto_msgTypes[20]
+	mi := &file_proto_namespace_cloud_iam_v1beta_tenants_proto_msgTypes[22]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1332,7 +1434,7 @@ func (x *DescribeTenantGroupResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DescribeTenantGroupResponse.ProtoReflect.Descriptor instead.
 func (*DescribeTenantGroupResponse) Descriptor() ([]byte, []int) {
-	return file_proto_namespace_cloud_iam_v1beta_tenants_proto_rawDescGZIP(), []int{20}
+	return file_proto_namespace_cloud_iam_v1beta_tenants_proto_rawDescGZIP(), []int{22}
 }
 
 func (x *DescribeTenantGroupResponse) GetName() string {
@@ -1376,7 +1478,7 @@ type TenantPolicy_ExpirationPolicy struct {
 
 func (x *TenantPolicy_ExpirationPolicy) Reset() {
 	*x = TenantPolicy_ExpirationPolicy{}
-	mi := &file_proto_namespace_cloud_iam_v1beta_tenants_proto_msgTypes[21]
+	mi := &file_proto_namespace_cloud_iam_v1beta_tenants_proto_msgTypes[23]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1388,7 +1490,7 @@ func (x *TenantPolicy_ExpirationPolicy) String() string {
 func (*TenantPolicy_ExpirationPolicy) ProtoMessage() {}
 
 func (x *TenantPolicy_ExpirationPolicy) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_cloud_iam_v1beta_tenants_proto_msgTypes[21]
+	mi := &file_proto_namespace_cloud_iam_v1beta_tenants_proto_msgTypes[23]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1427,7 +1529,7 @@ type ListTenantGroupsResponse_TenantGroup struct {
 
 func (x *ListTenantGroupsResponse_TenantGroup) Reset() {
 	*x = ListTenantGroupsResponse_TenantGroup{}
-	mi := &file_proto_namespace_cloud_iam_v1beta_tenants_proto_msgTypes[22]
+	mi := &file_proto_namespace_cloud_iam_v1beta_tenants_proto_msgTypes[24]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1439,7 +1541,7 @@ func (x *ListTenantGroupsResponse_TenantGroup) String() string {
 func (*ListTenantGroupsResponse_TenantGroup) ProtoMessage() {}
 
 func (x *ListTenantGroupsResponse_TenantGroup) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_cloud_iam_v1beta_tenants_proto_msgTypes[22]
+	mi := &file_proto_namespace_cloud_iam_v1beta_tenants_proto_msgTypes[24]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1452,7 +1554,7 @@ func (x *ListTenantGroupsResponse_TenantGroup) ProtoReflect() protoreflect.Messa
 
 // Deprecated: Use ListTenantGroupsResponse_TenantGroup.ProtoReflect.Descriptor instead.
 func (*ListTenantGroupsResponse_TenantGroup) Descriptor() ([]byte, []int) {
-	return file_proto_namespace_cloud_iam_v1beta_tenants_proto_rawDescGZIP(), []int{18, 0}
+	return file_proto_namespace_cloud_iam_v1beta_tenants_proto_rawDescGZIP(), []int{20, 0}
 }
 
 func (x *ListTenantGroupsResponse_TenantGroup) GetName() string {
@@ -1546,7 +1648,12 @@ const file_proto_namespace_cloud_iam_v1beta_tenants_proto_rawDesc = "" +
 	"\x0epublic_key_pem\x18\x05 \x01(\tR\fpublicKeyPem\"\x8a\x01\n" +
 	"$IssueTenantClientCertificateResponse\x124\n" +
 	"\x16client_certificate_pem\x18\x01 \x01(\tR\x14clientCertificatePem\x12&\n" +
-	"\x0fprivate_key_pem\x18\x02 \x01(\tR\rprivateKeyPemJ\x04\b\x03\x10\x04\"y\n" +
+	"\x0fprivate_key_pem\x18\x02 \x01(\tR\rprivateKeyPemJ\x04\b\x03\x10\x04\"\x99\x01\n" +
+	"'ExchangeTenantTokenForClientCertRequest\x12$\n" +
+	"\x0epublic_key_pem\x18\x01 \x01(\tR\fpublicKeyPem\x12H\n" +
+	"\vpermissions\x18\x02 \x03(\v2&.namespace.cloud.iam.v1beta.PermissionR\vpermissions\"`\n" +
+	"(ExchangeTenantTokenForClientCertResponse\x124\n" +
+	"\x16client_certificate_pem\x18\x01 \x01(\tR\x14clientCertificatePem\"y\n" +
 	"\x18EnsureTenantGroupRequest\x12\x12\n" +
 	"\x04name\x18\x01 \x01(\tR\x04name\x12I\n" +
 	"\bpolicies\x18\x02 \x03(\v2-.namespace.cloud.iam.v1beta.TenantGroupPolicyR\bpolicies\")\n" +
@@ -1568,7 +1675,7 @@ const file_proto_namespace_cloud_iam_v1beta_tenants_proto_rawDesc = "" +
 	"\x04name\x18\x01 \x01(\tR\x04name\x12I\n" +
 	"\bpolicies\x18\x02 \x03(\v2-.namespace.cloud.iam.v1beta.TenantGroupPolicyR\bpolicies\x12.\n" +
 	"\x13enrolled_tenant_ids\x18\x03 \x03(\tR\x11enrolledTenantIds\x12I\n" +
-	"\bversions\x18\x04 \x03(\v2-.namespace.cloud.iam.v1beta.TenantGroupPolicyR\bversions2\xc7\r\n" +
+	"\bversions\x18\x04 \x03(\v2-.namespace.cloud.iam.v1beta.TenantGroupPolicyR\bversions2\xf7\x0e\n" +
 	"\rTenantService\x12k\n" +
 	"\fCreateTenant\x12/.namespace.cloud.iam.v1beta.CreateTenantRequest\x1a*.namespace.cloud.iam.v1beta.TenantResponse\x12k\n" +
 	"\fUpdateTenant\x12/.namespace.cloud.iam.v1beta.UpdateTenantRequest\x1a*.namespace.cloud.iam.v1beta.TenantResponse\x12}\n" +
@@ -1578,7 +1685,8 @@ const file_proto_namespace_cloud_iam_v1beta_tenants_proto_rawDesc = "" +
 	"\fRemoveTenant\x12+.namespace.cloud.iam.v1beta.TenantReference\x1a\x16.google.protobuf.Empty\x12n\n" +
 	"\vListTenants\x12..namespace.cloud.iam.v1beta.ListTenantsRequest\x1a/.namespace.cloud.iam.v1beta.ListTenantsResponse\x12}\n" +
 	"\x10IssueTenantToken\x123.namespace.cloud.iam.v1beta.IssueTenantTokenRequest\x1a4.namespace.cloud.iam.v1beta.IssueTenantTokenResponse\x12\xa1\x01\n" +
-	"\x1cIssueTenantClientCertificate\x12?.namespace.cloud.iam.v1beta.IssueTenantClientCertificateRequest\x1a@.namespace.cloud.iam.v1beta.IssueTenantClientCertificateResponse\x12T\n" +
+	"\x1cIssueTenantClientCertificate\x12?.namespace.cloud.iam.v1beta.IssueTenantClientCertificateRequest\x1a@.namespace.cloud.iam.v1beta.IssueTenantClientCertificateResponse\x12\xad\x01\n" +
+	" ExchangeTenantTokenForClientCert\x12C.namespace.cloud.iam.v1beta.ExchangeTenantTokenForClientCertRequest\x1aD.namespace.cloud.iam.v1beta.ExchangeTenantTokenForClientCertResponse\x12T\n" +
 	"\rSuspendTenant\x12+.namespace.cloud.iam.v1beta.TenantReference\x1a\x16.google.protobuf.Empty\x12S\n" +
 	"\fResumeTenant\x12+.namespace.cloud.iam.v1beta.TenantReference\x1a\x16.google.protobuf.Empty\x12z\n" +
 	"\x11EnsureTenantGroup\x124.namespace.cloud.iam.v1beta.EnsureTenantGroupRequest\x1a/.namespace.cloud.iam.v1beta.TenantGroupResponse\x12}\n" +
@@ -1599,97 +1707,103 @@ func file_proto_namespace_cloud_iam_v1beta_tenants_proto_rawDescGZIP() []byte {
 	return file_proto_namespace_cloud_iam_v1beta_tenants_proto_rawDescData
 }
 
-var file_proto_namespace_cloud_iam_v1beta_tenants_proto_msgTypes = make([]protoimpl.MessageInfo, 23)
+var file_proto_namespace_cloud_iam_v1beta_tenants_proto_msgTypes = make([]protoimpl.MessageInfo, 25)
 var file_proto_namespace_cloud_iam_v1beta_tenants_proto_goTypes = []any{
-	(*CreateTenantRequest)(nil),                   // 0: namespace.cloud.iam.v1beta.CreateTenantRequest
-	(*UpdateTenantRequest)(nil),                   // 1: namespace.cloud.iam.v1beta.UpdateTenantRequest
-	(*UpdatePoliciesRequest)(nil),                 // 2: namespace.cloud.iam.v1beta.UpdatePoliciesRequest
-	(*EnsureTenantForExternalAccountRequest)(nil), // 3: namespace.cloud.iam.v1beta.EnsureTenantForExternalAccountRequest
-	(*DescribePoliciesRequest)(nil),               // 4: namespace.cloud.iam.v1beta.DescribePoliciesRequest
-	(*DescribePoliciesResponse)(nil),              // 5: namespace.cloud.iam.v1beta.DescribePoliciesResponse
-	(*TenantPolicy)(nil),                          // 6: namespace.cloud.iam.v1beta.TenantPolicy
-	(*TenantResponse)(nil),                        // 7: namespace.cloud.iam.v1beta.TenantResponse
-	(*Tenant)(nil),                                // 8: namespace.cloud.iam.v1beta.Tenant
-	(*TenantReference)(nil),                       // 9: namespace.cloud.iam.v1beta.TenantReference
-	(*ListTenantsRequest)(nil),                    // 10: namespace.cloud.iam.v1beta.ListTenantsRequest
-	(*ListTenantsResponse)(nil),                   // 11: namespace.cloud.iam.v1beta.ListTenantsResponse
-	(*IssueTenantClientCertificateRequest)(nil),   // 12: namespace.cloud.iam.v1beta.IssueTenantClientCertificateRequest
-	(*IssueTenantClientCertificateResponse)(nil),  // 13: namespace.cloud.iam.v1beta.IssueTenantClientCertificateResponse
-	(*EnsureTenantGroupRequest)(nil),              // 14: namespace.cloud.iam.v1beta.EnsureTenantGroupRequest
-	(*TenantGroupResponse)(nil),                   // 15: namespace.cloud.iam.v1beta.TenantGroupResponse
-	(*TenantGroupPolicy)(nil),                     // 16: namespace.cloud.iam.v1beta.TenantGroupPolicy
-	(*ListTenantGroupsRequest)(nil),               // 17: namespace.cloud.iam.v1beta.ListTenantGroupsRequest
-	(*ListTenantGroupsResponse)(nil),              // 18: namespace.cloud.iam.v1beta.ListTenantGroupsResponse
-	(*TenantGroupReference)(nil),                  // 19: namespace.cloud.iam.v1beta.TenantGroupReference
-	(*DescribeTenantGroupResponse)(nil),           // 20: namespace.cloud.iam.v1beta.DescribeTenantGroupResponse
-	(*TenantPolicy_ExpirationPolicy)(nil),         // 21: namespace.cloud.iam.v1beta.TenantPolicy.ExpirationPolicy
-	(*ListTenantGroupsResponse_TenantGroup)(nil),  // 22: namespace.cloud.iam.v1beta.ListTenantGroupsResponse.TenantGroup
-	(*stdlib.Label)(nil),                          // 23: namespace.stdlib.Label
-	(*timestamppb.Timestamp)(nil),                 // 24: google.protobuf.Timestamp
-	(*TenantTokenPolicy)(nil),                     // 25: namespace.cloud.iam.v1beta.TenantTokenPolicy
-	(*AccessPolicy)(nil),                          // 26: namespace.cloud.iam.v1beta.AccessPolicy
-	(*IssueTenantTokenRequest)(nil),               // 27: namespace.cloud.iam.v1beta.IssueTenantTokenRequest
-	(*emptypb.Empty)(nil),                         // 28: google.protobuf.Empty
-	(*IssueTenantTokenResponse)(nil),              // 29: namespace.cloud.iam.v1beta.IssueTenantTokenResponse
+	(*CreateTenantRequest)(nil),                      // 0: namespace.cloud.iam.v1beta.CreateTenantRequest
+	(*UpdateTenantRequest)(nil),                      // 1: namespace.cloud.iam.v1beta.UpdateTenantRequest
+	(*UpdatePoliciesRequest)(nil),                    // 2: namespace.cloud.iam.v1beta.UpdatePoliciesRequest
+	(*EnsureTenantForExternalAccountRequest)(nil),    // 3: namespace.cloud.iam.v1beta.EnsureTenantForExternalAccountRequest
+	(*DescribePoliciesRequest)(nil),                  // 4: namespace.cloud.iam.v1beta.DescribePoliciesRequest
+	(*DescribePoliciesResponse)(nil),                 // 5: namespace.cloud.iam.v1beta.DescribePoliciesResponse
+	(*TenantPolicy)(nil),                             // 6: namespace.cloud.iam.v1beta.TenantPolicy
+	(*TenantResponse)(nil),                           // 7: namespace.cloud.iam.v1beta.TenantResponse
+	(*Tenant)(nil),                                   // 8: namespace.cloud.iam.v1beta.Tenant
+	(*TenantReference)(nil),                          // 9: namespace.cloud.iam.v1beta.TenantReference
+	(*ListTenantsRequest)(nil),                       // 10: namespace.cloud.iam.v1beta.ListTenantsRequest
+	(*ListTenantsResponse)(nil),                      // 11: namespace.cloud.iam.v1beta.ListTenantsResponse
+	(*IssueTenantClientCertificateRequest)(nil),      // 12: namespace.cloud.iam.v1beta.IssueTenantClientCertificateRequest
+	(*IssueTenantClientCertificateResponse)(nil),     // 13: namespace.cloud.iam.v1beta.IssueTenantClientCertificateResponse
+	(*ExchangeTenantTokenForClientCertRequest)(nil),  // 14: namespace.cloud.iam.v1beta.ExchangeTenantTokenForClientCertRequest
+	(*ExchangeTenantTokenForClientCertResponse)(nil), // 15: namespace.cloud.iam.v1beta.ExchangeTenantTokenForClientCertResponse
+	(*EnsureTenantGroupRequest)(nil),                 // 16: namespace.cloud.iam.v1beta.EnsureTenantGroupRequest
+	(*TenantGroupResponse)(nil),                      // 17: namespace.cloud.iam.v1beta.TenantGroupResponse
+	(*TenantGroupPolicy)(nil),                        // 18: namespace.cloud.iam.v1beta.TenantGroupPolicy
+	(*ListTenantGroupsRequest)(nil),                  // 19: namespace.cloud.iam.v1beta.ListTenantGroupsRequest
+	(*ListTenantGroupsResponse)(nil),                 // 20: namespace.cloud.iam.v1beta.ListTenantGroupsResponse
+	(*TenantGroupReference)(nil),                     // 21: namespace.cloud.iam.v1beta.TenantGroupReference
+	(*DescribeTenantGroupResponse)(nil),              // 22: namespace.cloud.iam.v1beta.DescribeTenantGroupResponse
+	(*TenantPolicy_ExpirationPolicy)(nil),            // 23: namespace.cloud.iam.v1beta.TenantPolicy.ExpirationPolicy
+	(*ListTenantGroupsResponse_TenantGroup)(nil),     // 24: namespace.cloud.iam.v1beta.ListTenantGroupsResponse.TenantGroup
+	(*stdlib.Label)(nil),                             // 25: namespace.stdlib.Label
+	(*timestamppb.Timestamp)(nil),                    // 26: google.protobuf.Timestamp
+	(*TenantTokenPolicy)(nil),                        // 27: namespace.cloud.iam.v1beta.TenantTokenPolicy
+	(*AccessPolicy)(nil),                             // 28: namespace.cloud.iam.v1beta.AccessPolicy
+	(*Permission)(nil),                               // 29: namespace.cloud.iam.v1beta.Permission
+	(*IssueTenantTokenRequest)(nil),                  // 30: namespace.cloud.iam.v1beta.IssueTenantTokenRequest
+	(*emptypb.Empty)(nil),                            // 31: google.protobuf.Empty
+	(*IssueTenantTokenResponse)(nil),                 // 32: namespace.cloud.iam.v1beta.IssueTenantTokenResponse
 }
 var file_proto_namespace_cloud_iam_v1beta_tenants_proto_depIdxs = []int32{
 	6,  // 0: namespace.cloud.iam.v1beta.CreateTenantRequest.policies:type_name -> namespace.cloud.iam.v1beta.TenantPolicy
-	23, // 1: namespace.cloud.iam.v1beta.CreateTenantRequest.labels:type_name -> namespace.stdlib.Label
+	25, // 1: namespace.cloud.iam.v1beta.CreateTenantRequest.labels:type_name -> namespace.stdlib.Label
 	6,  // 2: namespace.cloud.iam.v1beta.UpdateTenantRequest.policies:type_name -> namespace.cloud.iam.v1beta.TenantPolicy
-	23, // 3: namespace.cloud.iam.v1beta.UpdateTenantRequest.labels:type_name -> namespace.stdlib.Label
+	25, // 3: namespace.cloud.iam.v1beta.UpdateTenantRequest.labels:type_name -> namespace.stdlib.Label
 	6,  // 4: namespace.cloud.iam.v1beta.UpdatePoliciesRequest.policies:type_name -> namespace.cloud.iam.v1beta.TenantPolicy
 	6,  // 5: namespace.cloud.iam.v1beta.EnsureTenantForExternalAccountRequest.policies:type_name -> namespace.cloud.iam.v1beta.TenantPolicy
-	23, // 6: namespace.cloud.iam.v1beta.EnsureTenantForExternalAccountRequest.labels:type_name -> namespace.stdlib.Label
+	25, // 6: namespace.cloud.iam.v1beta.EnsureTenantForExternalAccountRequest.labels:type_name -> namespace.stdlib.Label
 	6,  // 7: namespace.cloud.iam.v1beta.DescribePoliciesResponse.policies:type_name -> namespace.cloud.iam.v1beta.TenantPolicy
-	21, // 8: namespace.cloud.iam.v1beta.TenantPolicy.expiration_policy:type_name -> namespace.cloud.iam.v1beta.TenantPolicy.ExpirationPolicy
+	23, // 8: namespace.cloud.iam.v1beta.TenantPolicy.expiration_policy:type_name -> namespace.cloud.iam.v1beta.TenantPolicy.ExpirationPolicy
 	8,  // 9: namespace.cloud.iam.v1beta.TenantResponse.tenant:type_name -> namespace.cloud.iam.v1beta.Tenant
-	24, // 10: namespace.cloud.iam.v1beta.Tenant.created_at:type_name -> google.protobuf.Timestamp
-	23, // 11: namespace.cloud.iam.v1beta.Tenant.labels:type_name -> namespace.stdlib.Label
+	26, // 10: namespace.cloud.iam.v1beta.Tenant.created_at:type_name -> google.protobuf.Timestamp
+	25, // 11: namespace.cloud.iam.v1beta.Tenant.labels:type_name -> namespace.stdlib.Label
 	8,  // 12: namespace.cloud.iam.v1beta.ListTenantsResponse.tenants:type_name -> namespace.cloud.iam.v1beta.Tenant
-	25, // 13: namespace.cloud.iam.v1beta.IssueTenantClientCertificateRequest.policies:type_name -> namespace.cloud.iam.v1beta.TenantTokenPolicy
-	26, // 14: namespace.cloud.iam.v1beta.IssueTenantClientCertificateRequest.access:type_name -> namespace.cloud.iam.v1beta.AccessPolicy
-	16, // 15: namespace.cloud.iam.v1beta.EnsureTenantGroupRequest.policies:type_name -> namespace.cloud.iam.v1beta.TenantGroupPolicy
-	22, // 16: namespace.cloud.iam.v1beta.ListTenantGroupsResponse.tenant_groups:type_name -> namespace.cloud.iam.v1beta.ListTenantGroupsResponse.TenantGroup
-	16, // 17: namespace.cloud.iam.v1beta.DescribeTenantGroupResponse.policies:type_name -> namespace.cloud.iam.v1beta.TenantGroupPolicy
-	16, // 18: namespace.cloud.iam.v1beta.DescribeTenantGroupResponse.versions:type_name -> namespace.cloud.iam.v1beta.TenantGroupPolicy
-	24, // 19: namespace.cloud.iam.v1beta.TenantPolicy.ExpirationPolicy.expires_at:type_name -> google.protobuf.Timestamp
-	16, // 20: namespace.cloud.iam.v1beta.ListTenantGroupsResponse.TenantGroup.policies:type_name -> namespace.cloud.iam.v1beta.TenantGroupPolicy
-	16, // 21: namespace.cloud.iam.v1beta.ListTenantGroupsResponse.TenantGroup.versions:type_name -> namespace.cloud.iam.v1beta.TenantGroupPolicy
-	0,  // 22: namespace.cloud.iam.v1beta.TenantService.CreateTenant:input_type -> namespace.cloud.iam.v1beta.CreateTenantRequest
-	1,  // 23: namespace.cloud.iam.v1beta.TenantService.UpdateTenant:input_type -> namespace.cloud.iam.v1beta.UpdateTenantRequest
-	4,  // 24: namespace.cloud.iam.v1beta.TenantService.DescribePolicies:input_type -> namespace.cloud.iam.v1beta.DescribePoliciesRequest
-	2,  // 25: namespace.cloud.iam.v1beta.TenantService.UpdatePolicies:input_type -> namespace.cloud.iam.v1beta.UpdatePoliciesRequest
-	3,  // 26: namespace.cloud.iam.v1beta.TenantService.EnsureTenantForExternalAccount:input_type -> namespace.cloud.iam.v1beta.EnsureTenantForExternalAccountRequest
-	9,  // 27: namespace.cloud.iam.v1beta.TenantService.RemoveTenant:input_type -> namespace.cloud.iam.v1beta.TenantReference
-	10, // 28: namespace.cloud.iam.v1beta.TenantService.ListTenants:input_type -> namespace.cloud.iam.v1beta.ListTenantsRequest
-	27, // 29: namespace.cloud.iam.v1beta.TenantService.IssueTenantToken:input_type -> namespace.cloud.iam.v1beta.IssueTenantTokenRequest
-	12, // 30: namespace.cloud.iam.v1beta.TenantService.IssueTenantClientCertificate:input_type -> namespace.cloud.iam.v1beta.IssueTenantClientCertificateRequest
-	9,  // 31: namespace.cloud.iam.v1beta.TenantService.SuspendTenant:input_type -> namespace.cloud.iam.v1beta.TenantReference
-	9,  // 32: namespace.cloud.iam.v1beta.TenantService.ResumeTenant:input_type -> namespace.cloud.iam.v1beta.TenantReference
-	14, // 33: namespace.cloud.iam.v1beta.TenantService.EnsureTenantGroup:input_type -> namespace.cloud.iam.v1beta.EnsureTenantGroupRequest
-	17, // 34: namespace.cloud.iam.v1beta.TenantService.ListTenantGroups:input_type -> namespace.cloud.iam.v1beta.ListTenantGroupsRequest
-	19, // 35: namespace.cloud.iam.v1beta.TenantService.DescribeTenantGroup:input_type -> namespace.cloud.iam.v1beta.TenantGroupReference
-	19, // 36: namespace.cloud.iam.v1beta.TenantService.DeleteTenantGroup:input_type -> namespace.cloud.iam.v1beta.TenantGroupReference
-	7,  // 37: namespace.cloud.iam.v1beta.TenantService.CreateTenant:output_type -> namespace.cloud.iam.v1beta.TenantResponse
-	7,  // 38: namespace.cloud.iam.v1beta.TenantService.UpdateTenant:output_type -> namespace.cloud.iam.v1beta.TenantResponse
-	5,  // 39: namespace.cloud.iam.v1beta.TenantService.DescribePolicies:output_type -> namespace.cloud.iam.v1beta.DescribePoliciesResponse
-	28, // 40: namespace.cloud.iam.v1beta.TenantService.UpdatePolicies:output_type -> google.protobuf.Empty
-	7,  // 41: namespace.cloud.iam.v1beta.TenantService.EnsureTenantForExternalAccount:output_type -> namespace.cloud.iam.v1beta.TenantResponse
-	28, // 42: namespace.cloud.iam.v1beta.TenantService.RemoveTenant:output_type -> google.protobuf.Empty
-	11, // 43: namespace.cloud.iam.v1beta.TenantService.ListTenants:output_type -> namespace.cloud.iam.v1beta.ListTenantsResponse
-	29, // 44: namespace.cloud.iam.v1beta.TenantService.IssueTenantToken:output_type -> namespace.cloud.iam.v1beta.IssueTenantTokenResponse
-	13, // 45: namespace.cloud.iam.v1beta.TenantService.IssueTenantClientCertificate:output_type -> namespace.cloud.iam.v1beta.IssueTenantClientCertificateResponse
-	28, // 46: namespace.cloud.iam.v1beta.TenantService.SuspendTenant:output_type -> google.protobuf.Empty
-	28, // 47: namespace.cloud.iam.v1beta.TenantService.ResumeTenant:output_type -> google.protobuf.Empty
-	15, // 48: namespace.cloud.iam.v1beta.TenantService.EnsureTenantGroup:output_type -> namespace.cloud.iam.v1beta.TenantGroupResponse
-	18, // 49: namespace.cloud.iam.v1beta.TenantService.ListTenantGroups:output_type -> namespace.cloud.iam.v1beta.ListTenantGroupsResponse
-	20, // 50: namespace.cloud.iam.v1beta.TenantService.DescribeTenantGroup:output_type -> namespace.cloud.iam.v1beta.DescribeTenantGroupResponse
-	28, // 51: namespace.cloud.iam.v1beta.TenantService.DeleteTenantGroup:output_type -> google.protobuf.Empty
-	37, // [37:52] is the sub-list for method output_type
-	22, // [22:37] is the sub-list for method input_type
-	22, // [22:22] is the sub-list for extension type_name
-	22, // [22:22] is the sub-list for extension extendee
-	0,  // [0:22] is the sub-list for field type_name
+	27, // 13: namespace.cloud.iam.v1beta.IssueTenantClientCertificateRequest.policies:type_name -> namespace.cloud.iam.v1beta.TenantTokenPolicy
+	28, // 14: namespace.cloud.iam.v1beta.IssueTenantClientCertificateRequest.access:type_name -> namespace.cloud.iam.v1beta.AccessPolicy
+	29, // 15: namespace.cloud.iam.v1beta.ExchangeTenantTokenForClientCertRequest.permissions:type_name -> namespace.cloud.iam.v1beta.Permission
+	18, // 16: namespace.cloud.iam.v1beta.EnsureTenantGroupRequest.policies:type_name -> namespace.cloud.iam.v1beta.TenantGroupPolicy
+	24, // 17: namespace.cloud.iam.v1beta.ListTenantGroupsResponse.tenant_groups:type_name -> namespace.cloud.iam.v1beta.ListTenantGroupsResponse.TenantGroup
+	18, // 18: namespace.cloud.iam.v1beta.DescribeTenantGroupResponse.policies:type_name -> namespace.cloud.iam.v1beta.TenantGroupPolicy
+	18, // 19: namespace.cloud.iam.v1beta.DescribeTenantGroupResponse.versions:type_name -> namespace.cloud.iam.v1beta.TenantGroupPolicy
+	26, // 20: namespace.cloud.iam.v1beta.TenantPolicy.ExpirationPolicy.expires_at:type_name -> google.protobuf.Timestamp
+	18, // 21: namespace.cloud.iam.v1beta.ListTenantGroupsResponse.TenantGroup.policies:type_name -> namespace.cloud.iam.v1beta.TenantGroupPolicy
+	18, // 22: namespace.cloud.iam.v1beta.ListTenantGroupsResponse.TenantGroup.versions:type_name -> namespace.cloud.iam.v1beta.TenantGroupPolicy
+	0,  // 23: namespace.cloud.iam.v1beta.TenantService.CreateTenant:input_type -> namespace.cloud.iam.v1beta.CreateTenantRequest
+	1,  // 24: namespace.cloud.iam.v1beta.TenantService.UpdateTenant:input_type -> namespace.cloud.iam.v1beta.UpdateTenantRequest
+	4,  // 25: namespace.cloud.iam.v1beta.TenantService.DescribePolicies:input_type -> namespace.cloud.iam.v1beta.DescribePoliciesRequest
+	2,  // 26: namespace.cloud.iam.v1beta.TenantService.UpdatePolicies:input_type -> namespace.cloud.iam.v1beta.UpdatePoliciesRequest
+	3,  // 27: namespace.cloud.iam.v1beta.TenantService.EnsureTenantForExternalAccount:input_type -> namespace.cloud.iam.v1beta.EnsureTenantForExternalAccountRequest
+	9,  // 28: namespace.cloud.iam.v1beta.TenantService.RemoveTenant:input_type -> namespace.cloud.iam.v1beta.TenantReference
+	10, // 29: namespace.cloud.iam.v1beta.TenantService.ListTenants:input_type -> namespace.cloud.iam.v1beta.ListTenantsRequest
+	30, // 30: namespace.cloud.iam.v1beta.TenantService.IssueTenantToken:input_type -> namespace.cloud.iam.v1beta.IssueTenantTokenRequest
+	12, // 31: namespace.cloud.iam.v1beta.TenantService.IssueTenantClientCertificate:input_type -> namespace.cloud.iam.v1beta.IssueTenantClientCertificateRequest
+	14, // 32: namespace.cloud.iam.v1beta.TenantService.ExchangeTenantTokenForClientCert:input_type -> namespace.cloud.iam.v1beta.ExchangeTenantTokenForClientCertRequest
+	9,  // 33: namespace.cloud.iam.v1beta.TenantService.SuspendTenant:input_type -> namespace.cloud.iam.v1beta.TenantReference
+	9,  // 34: namespace.cloud.iam.v1beta.TenantService.ResumeTenant:input_type -> namespace.cloud.iam.v1beta.TenantReference
+	16, // 35: namespace.cloud.iam.v1beta.TenantService.EnsureTenantGroup:input_type -> namespace.cloud.iam.v1beta.EnsureTenantGroupRequest
+	19, // 36: namespace.cloud.iam.v1beta.TenantService.ListTenantGroups:input_type -> namespace.cloud.iam.v1beta.ListTenantGroupsRequest
+	21, // 37: namespace.cloud.iam.v1beta.TenantService.DescribeTenantGroup:input_type -> namespace.cloud.iam.v1beta.TenantGroupReference
+	21, // 38: namespace.cloud.iam.v1beta.TenantService.DeleteTenantGroup:input_type -> namespace.cloud.iam.v1beta.TenantGroupReference
+	7,  // 39: namespace.cloud.iam.v1beta.TenantService.CreateTenant:output_type -> namespace.cloud.iam.v1beta.TenantResponse
+	7,  // 40: namespace.cloud.iam.v1beta.TenantService.UpdateTenant:output_type -> namespace.cloud.iam.v1beta.TenantResponse
+	5,  // 41: namespace.cloud.iam.v1beta.TenantService.DescribePolicies:output_type -> namespace.cloud.iam.v1beta.DescribePoliciesResponse
+	31, // 42: namespace.cloud.iam.v1beta.TenantService.UpdatePolicies:output_type -> google.protobuf.Empty
+	7,  // 43: namespace.cloud.iam.v1beta.TenantService.EnsureTenantForExternalAccount:output_type -> namespace.cloud.iam.v1beta.TenantResponse
+	31, // 44: namespace.cloud.iam.v1beta.TenantService.RemoveTenant:output_type -> google.protobuf.Empty
+	11, // 45: namespace.cloud.iam.v1beta.TenantService.ListTenants:output_type -> namespace.cloud.iam.v1beta.ListTenantsResponse
+	32, // 46: namespace.cloud.iam.v1beta.TenantService.IssueTenantToken:output_type -> namespace.cloud.iam.v1beta.IssueTenantTokenResponse
+	13, // 47: namespace.cloud.iam.v1beta.TenantService.IssueTenantClientCertificate:output_type -> namespace.cloud.iam.v1beta.IssueTenantClientCertificateResponse
+	15, // 48: namespace.cloud.iam.v1beta.TenantService.ExchangeTenantTokenForClientCert:output_type -> namespace.cloud.iam.v1beta.ExchangeTenantTokenForClientCertResponse
+	31, // 49: namespace.cloud.iam.v1beta.TenantService.SuspendTenant:output_type -> google.protobuf.Empty
+	31, // 50: namespace.cloud.iam.v1beta.TenantService.ResumeTenant:output_type -> google.protobuf.Empty
+	17, // 51: namespace.cloud.iam.v1beta.TenantService.EnsureTenantGroup:output_type -> namespace.cloud.iam.v1beta.TenantGroupResponse
+	20, // 52: namespace.cloud.iam.v1beta.TenantService.ListTenantGroups:output_type -> namespace.cloud.iam.v1beta.ListTenantGroupsResponse
+	22, // 53: namespace.cloud.iam.v1beta.TenantService.DescribeTenantGroup:output_type -> namespace.cloud.iam.v1beta.DescribeTenantGroupResponse
+	31, // 54: namespace.cloud.iam.v1beta.TenantService.DeleteTenantGroup:output_type -> google.protobuf.Empty
+	39, // [39:55] is the sub-list for method output_type
+	23, // [23:39] is the sub-list for method input_type
+	23, // [23:23] is the sub-list for extension type_name
+	23, // [23:23] is the sub-list for extension extendee
+	0,  // [0:23] is the sub-list for field type_name
 }
 
 func init() { file_proto_namespace_cloud_iam_v1beta_tenants_proto_init() }
@@ -1705,7 +1819,7 @@ func file_proto_namespace_cloud_iam_v1beta_tenants_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_proto_namespace_cloud_iam_v1beta_tenants_proto_rawDesc), len(file_proto_namespace_cloud_iam_v1beta_tenants_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   23,
+			NumMessages:   25,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

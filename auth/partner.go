@@ -14,10 +14,6 @@ func TenantTokenSource(client iam.Client, tenantId string) api.TokenAndCertifica
 	return iamTokenSource{client, tenantId}
 }
 
-func TenantCertificateSource(client iam.Client, tenantId string) api.TokenAndCertificateSource {
-	return iamTokenSource{client, tenantId}
-}
-
 type iamTokenSource struct {
 	client   iam.Client
 	tenantId string

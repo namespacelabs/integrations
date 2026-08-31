@@ -20,21 +20,22 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	TenantService_CreateTenant_FullMethodName                   = "/namespace.cloud.iam.v1beta.TenantService/CreateTenant"
-	TenantService_UpdateTenant_FullMethodName                   = "/namespace.cloud.iam.v1beta.TenantService/UpdateTenant"
-	TenantService_DescribePolicies_FullMethodName               = "/namespace.cloud.iam.v1beta.TenantService/DescribePolicies"
-	TenantService_UpdatePolicies_FullMethodName                 = "/namespace.cloud.iam.v1beta.TenantService/UpdatePolicies"
-	TenantService_EnsureTenantForExternalAccount_FullMethodName = "/namespace.cloud.iam.v1beta.TenantService/EnsureTenantForExternalAccount"
-	TenantService_RemoveTenant_FullMethodName                   = "/namespace.cloud.iam.v1beta.TenantService/RemoveTenant"
-	TenantService_ListTenants_FullMethodName                    = "/namespace.cloud.iam.v1beta.TenantService/ListTenants"
-	TenantService_IssueTenantToken_FullMethodName               = "/namespace.cloud.iam.v1beta.TenantService/IssueTenantToken"
-	TenantService_IssueTenantClientCertificate_FullMethodName   = "/namespace.cloud.iam.v1beta.TenantService/IssueTenantClientCertificate"
-	TenantService_SuspendTenant_FullMethodName                  = "/namespace.cloud.iam.v1beta.TenantService/SuspendTenant"
-	TenantService_ResumeTenant_FullMethodName                   = "/namespace.cloud.iam.v1beta.TenantService/ResumeTenant"
-	TenantService_EnsureTenantGroup_FullMethodName              = "/namespace.cloud.iam.v1beta.TenantService/EnsureTenantGroup"
-	TenantService_ListTenantGroups_FullMethodName               = "/namespace.cloud.iam.v1beta.TenantService/ListTenantGroups"
-	TenantService_DescribeTenantGroup_FullMethodName            = "/namespace.cloud.iam.v1beta.TenantService/DescribeTenantGroup"
-	TenantService_DeleteTenantGroup_FullMethodName              = "/namespace.cloud.iam.v1beta.TenantService/DeleteTenantGroup"
+	TenantService_CreateTenant_FullMethodName                     = "/namespace.cloud.iam.v1beta.TenantService/CreateTenant"
+	TenantService_UpdateTenant_FullMethodName                     = "/namespace.cloud.iam.v1beta.TenantService/UpdateTenant"
+	TenantService_DescribePolicies_FullMethodName                 = "/namespace.cloud.iam.v1beta.TenantService/DescribePolicies"
+	TenantService_UpdatePolicies_FullMethodName                   = "/namespace.cloud.iam.v1beta.TenantService/UpdatePolicies"
+	TenantService_EnsureTenantForExternalAccount_FullMethodName   = "/namespace.cloud.iam.v1beta.TenantService/EnsureTenantForExternalAccount"
+	TenantService_RemoveTenant_FullMethodName                     = "/namespace.cloud.iam.v1beta.TenantService/RemoveTenant"
+	TenantService_ListTenants_FullMethodName                      = "/namespace.cloud.iam.v1beta.TenantService/ListTenants"
+	TenantService_IssueTenantToken_FullMethodName                 = "/namespace.cloud.iam.v1beta.TenantService/IssueTenantToken"
+	TenantService_IssueTenantClientCertificate_FullMethodName     = "/namespace.cloud.iam.v1beta.TenantService/IssueTenantClientCertificate"
+	TenantService_ExchangeTenantTokenForClientCert_FullMethodName = "/namespace.cloud.iam.v1beta.TenantService/ExchangeTenantTokenForClientCert"
+	TenantService_SuspendTenant_FullMethodName                    = "/namespace.cloud.iam.v1beta.TenantService/SuspendTenant"
+	TenantService_ResumeTenant_FullMethodName                     = "/namespace.cloud.iam.v1beta.TenantService/ResumeTenant"
+	TenantService_EnsureTenantGroup_FullMethodName                = "/namespace.cloud.iam.v1beta.TenantService/EnsureTenantGroup"
+	TenantService_ListTenantGroups_FullMethodName                 = "/namespace.cloud.iam.v1beta.TenantService/ListTenantGroups"
+	TenantService_DescribeTenantGroup_FullMethodName              = "/namespace.cloud.iam.v1beta.TenantService/DescribeTenantGroup"
+	TenantService_DeleteTenantGroup_FullMethodName                = "/namespace.cloud.iam.v1beta.TenantService/DeleteTenantGroup"
 )
 
 // TenantServiceClient is the client API for TenantService service.
@@ -244,6 +245,9 @@ type TenantServiceClient interface {
 	// `IssueTenantClientCertificate` call are validated to verify they are
 	// capable of requesting credentials.
 	IssueTenantClientCertificate(ctx context.Context, in *IssueTenantClientCertificateRequest, opts ...grpc.CallOption) (*IssueTenantClientCertificateResponse, error)
+	// Exchanges tenant Bearer credentials for an X.509 client certificate with
+	// the same tenant identity and no broader permissions.
+	ExchangeTenantTokenForClientCert(ctx context.Context, in *ExchangeTenantTokenForClientCertRequest, opts ...grpc.CallOption) (*ExchangeTenantTokenForClientCertResponse, error)
 	// Suspending a Tenant prevents it from creating new resources, but does not
 	// immediately terminate resources it owns that may be running. Suspending a
 	// tenant is a useful operational utility that can be used to cordon a
@@ -375,6 +379,16 @@ func (c *tenantServiceClient) IssueTenantClientCertificate(ctx context.Context, 
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(IssueTenantClientCertificateResponse)
 	err := c.cc.Invoke(ctx, TenantService_IssueTenantClientCertificate_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *tenantServiceClient) ExchangeTenantTokenForClientCert(ctx context.Context, in *ExchangeTenantTokenForClientCertRequest, opts ...grpc.CallOption) (*ExchangeTenantTokenForClientCertResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ExchangeTenantTokenForClientCertResponse)
+	err := c.cc.Invoke(ctx, TenantService_ExchangeTenantTokenForClientCert_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -648,6 +662,9 @@ type TenantServiceServer interface {
 	// `IssueTenantClientCertificate` call are validated to verify they are
 	// capable of requesting credentials.
 	IssueTenantClientCertificate(context.Context, *IssueTenantClientCertificateRequest) (*IssueTenantClientCertificateResponse, error)
+	// Exchanges tenant Bearer credentials for an X.509 client certificate with
+	// the same tenant identity and no broader permissions.
+	ExchangeTenantTokenForClientCert(context.Context, *ExchangeTenantTokenForClientCertRequest) (*ExchangeTenantTokenForClientCertResponse, error)
 	// Suspending a Tenant prevents it from creating new resources, but does not
 	// immediately terminate resources it owns that may be running. Suspending a
 	// tenant is a useful operational utility that can be used to cordon a
@@ -721,6 +738,9 @@ func (UnimplementedTenantServiceServer) IssueTenantToken(context.Context, *Issue
 }
 func (UnimplementedTenantServiceServer) IssueTenantClientCertificate(context.Context, *IssueTenantClientCertificateRequest) (*IssueTenantClientCertificateResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method IssueTenantClientCertificate not implemented")
+}
+func (UnimplementedTenantServiceServer) ExchangeTenantTokenForClientCert(context.Context, *ExchangeTenantTokenForClientCertRequest) (*ExchangeTenantTokenForClientCertResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method ExchangeTenantTokenForClientCert not implemented")
 }
 func (UnimplementedTenantServiceServer) SuspendTenant(context.Context, *TenantReference) (*emptypb.Empty, error) {
 	return nil, status.Error(codes.Unimplemented, "method SuspendTenant not implemented")
@@ -923,6 +943,24 @@ func _TenantService_IssueTenantClientCertificate_Handler(srv interface{}, ctx co
 	return interceptor(ctx, in, info, handler)
 }
 
+func _TenantService_ExchangeTenantTokenForClientCert_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ExchangeTenantTokenForClientCertRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TenantServiceServer).ExchangeTenantTokenForClientCert(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: TenantService_ExchangeTenantTokenForClientCert_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TenantServiceServer).ExchangeTenantTokenForClientCert(ctx, req.(*ExchangeTenantTokenForClientCertRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _TenantService_SuspendTenant_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(TenantReference)
 	if err := dec(in); err != nil {
@@ -1073,6 +1111,10 @@ var TenantService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "IssueTenantClientCertificate",
 			Handler:    _TenantService_IssueTenantClientCertificate_Handler,
+		},
+		{
+			MethodName: "ExchangeTenantTokenForClientCert",
+			Handler:    _TenantService_ExchangeTenantTokenForClientCert_Handler,
 		},
 		{
 			MethodName: "SuspendTenant",
