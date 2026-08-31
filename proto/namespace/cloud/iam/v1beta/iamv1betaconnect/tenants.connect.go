@@ -61,6 +61,9 @@ const (
 	// TenantServiceIssueTenantClientCertificateProcedure is the fully-qualified name of the
 	// TenantService's IssueTenantClientCertificate RPC.
 	TenantServiceIssueTenantClientCertificateProcedure = "/namespace.cloud.iam.v1beta.TenantService/IssueTenantClientCertificate"
+	// TenantServiceExchangeTenantTokenForClientCertProcedure is the fully-qualified name of the
+	// TenantService's ExchangeTenantTokenForClientCert RPC.
+	TenantServiceExchangeTenantTokenForClientCertProcedure = "/namespace.cloud.iam.v1beta.TenantService/ExchangeTenantTokenForClientCert"
 	// TenantServiceSuspendTenantProcedure is the fully-qualified name of the TenantService's
 	// SuspendTenant RPC.
 	TenantServiceSuspendTenantProcedure = "/namespace.cloud.iam.v1beta.TenantService/SuspendTenant"
@@ -83,22 +86,23 @@ const (
 
 // These variables are the protoreflect.Descriptor objects for the RPCs defined in this package.
 var (
-	tenantServiceServiceDescriptor                              = v1beta.File_proto_namespace_cloud_iam_v1beta_tenants_proto.Services().ByName("TenantService")
-	tenantServiceCreateTenantMethodDescriptor                   = tenantServiceServiceDescriptor.Methods().ByName("CreateTenant")
-	tenantServiceUpdateTenantMethodDescriptor                   = tenantServiceServiceDescriptor.Methods().ByName("UpdateTenant")
-	tenantServiceDescribePoliciesMethodDescriptor               = tenantServiceServiceDescriptor.Methods().ByName("DescribePolicies")
-	tenantServiceUpdatePoliciesMethodDescriptor                 = tenantServiceServiceDescriptor.Methods().ByName("UpdatePolicies")
-	tenantServiceEnsureTenantForExternalAccountMethodDescriptor = tenantServiceServiceDescriptor.Methods().ByName("EnsureTenantForExternalAccount")
-	tenantServiceRemoveTenantMethodDescriptor                   = tenantServiceServiceDescriptor.Methods().ByName("RemoveTenant")
-	tenantServiceListTenantsMethodDescriptor                    = tenantServiceServiceDescriptor.Methods().ByName("ListTenants")
-	tenantServiceIssueTenantTokenMethodDescriptor               = tenantServiceServiceDescriptor.Methods().ByName("IssueTenantToken")
-	tenantServiceIssueTenantClientCertificateMethodDescriptor   = tenantServiceServiceDescriptor.Methods().ByName("IssueTenantClientCertificate")
-	tenantServiceSuspendTenantMethodDescriptor                  = tenantServiceServiceDescriptor.Methods().ByName("SuspendTenant")
-	tenantServiceResumeTenantMethodDescriptor                   = tenantServiceServiceDescriptor.Methods().ByName("ResumeTenant")
-	tenantServiceEnsureTenantGroupMethodDescriptor              = tenantServiceServiceDescriptor.Methods().ByName("EnsureTenantGroup")
-	tenantServiceListTenantGroupsMethodDescriptor               = tenantServiceServiceDescriptor.Methods().ByName("ListTenantGroups")
-	tenantServiceDescribeTenantGroupMethodDescriptor            = tenantServiceServiceDescriptor.Methods().ByName("DescribeTenantGroup")
-	tenantServiceDeleteTenantGroupMethodDescriptor              = tenantServiceServiceDescriptor.Methods().ByName("DeleteTenantGroup")
+	tenantServiceServiceDescriptor                                = v1beta.File_proto_namespace_cloud_iam_v1beta_tenants_proto.Services().ByName("TenantService")
+	tenantServiceCreateTenantMethodDescriptor                     = tenantServiceServiceDescriptor.Methods().ByName("CreateTenant")
+	tenantServiceUpdateTenantMethodDescriptor                     = tenantServiceServiceDescriptor.Methods().ByName("UpdateTenant")
+	tenantServiceDescribePoliciesMethodDescriptor                 = tenantServiceServiceDescriptor.Methods().ByName("DescribePolicies")
+	tenantServiceUpdatePoliciesMethodDescriptor                   = tenantServiceServiceDescriptor.Methods().ByName("UpdatePolicies")
+	tenantServiceEnsureTenantForExternalAccountMethodDescriptor   = tenantServiceServiceDescriptor.Methods().ByName("EnsureTenantForExternalAccount")
+	tenantServiceRemoveTenantMethodDescriptor                     = tenantServiceServiceDescriptor.Methods().ByName("RemoveTenant")
+	tenantServiceListTenantsMethodDescriptor                      = tenantServiceServiceDescriptor.Methods().ByName("ListTenants")
+	tenantServiceIssueTenantTokenMethodDescriptor                 = tenantServiceServiceDescriptor.Methods().ByName("IssueTenantToken")
+	tenantServiceIssueTenantClientCertificateMethodDescriptor     = tenantServiceServiceDescriptor.Methods().ByName("IssueTenantClientCertificate")
+	tenantServiceExchangeTenantTokenForClientCertMethodDescriptor = tenantServiceServiceDescriptor.Methods().ByName("ExchangeTenantTokenForClientCert")
+	tenantServiceSuspendTenantMethodDescriptor                    = tenantServiceServiceDescriptor.Methods().ByName("SuspendTenant")
+	tenantServiceResumeTenantMethodDescriptor                     = tenantServiceServiceDescriptor.Methods().ByName("ResumeTenant")
+	tenantServiceEnsureTenantGroupMethodDescriptor                = tenantServiceServiceDescriptor.Methods().ByName("EnsureTenantGroup")
+	tenantServiceListTenantGroupsMethodDescriptor                 = tenantServiceServiceDescriptor.Methods().ByName("ListTenantGroups")
+	tenantServiceDescribeTenantGroupMethodDescriptor              = tenantServiceServiceDescriptor.Methods().ByName("DescribeTenantGroup")
+	tenantServiceDeleteTenantGroupMethodDescriptor                = tenantServiceServiceDescriptor.Methods().ByName("DeleteTenantGroup")
 )
 
 // TenantServiceClient is a client for the namespace.cloud.iam.v1beta.TenantService service.
@@ -174,6 +178,9 @@ type TenantServiceClient interface {
 	// `IssueTenantClientCertificate` call are validated to verify they are
 	// capable of requesting credentials.
 	IssueTenantClientCertificate(context.Context, *connect.Request[v1beta.IssueTenantClientCertificateRequest]) (*connect.Response[v1beta.IssueTenantClientCertificateResponse], error)
+	// Exchanges tenant Bearer credentials for an X.509 client certificate with
+	// the same tenant identity and no broader permissions.
+	ExchangeTenantTokenForClientCert(context.Context, *connect.Request[v1beta.ExchangeTenantTokenForClientCertRequest]) (*connect.Response[v1beta.ExchangeTenantTokenForClientCertResponse], error)
 	// Suspending a Tenant prevents it from creating new resources, but does not
 	// immediately terminate resources it owns that may be running. Suspending a
 	// tenant is a useful operational utility that can be used to cordon a
@@ -277,6 +284,12 @@ func NewTenantServiceClient(httpClient connect.HTTPClient, baseURL string, opts 
 			connect.WithSchema(tenantServiceIssueTenantClientCertificateMethodDescriptor),
 			connect.WithClientOptions(opts...),
 		),
+		exchangeTenantTokenForClientCert: connect.NewClient[v1beta.ExchangeTenantTokenForClientCertRequest, v1beta.ExchangeTenantTokenForClientCertResponse](
+			httpClient,
+			baseURL+TenantServiceExchangeTenantTokenForClientCertProcedure,
+			connect.WithSchema(tenantServiceExchangeTenantTokenForClientCertMethodDescriptor),
+			connect.WithClientOptions(opts...),
+		),
 		suspendTenant: connect.NewClient[v1beta.TenantReference, emptypb.Empty](
 			httpClient,
 			baseURL+TenantServiceSuspendTenantProcedure,
@@ -318,21 +331,22 @@ func NewTenantServiceClient(httpClient connect.HTTPClient, baseURL string, opts 
 
 // tenantServiceClient implements TenantServiceClient.
 type tenantServiceClient struct {
-	createTenant                   *connect.Client[v1beta.CreateTenantRequest, v1beta.TenantResponse]
-	updateTenant                   *connect.Client[v1beta.UpdateTenantRequest, v1beta.TenantResponse]
-	describePolicies               *connect.Client[v1beta.DescribePoliciesRequest, v1beta.DescribePoliciesResponse]
-	updatePolicies                 *connect.Client[v1beta.UpdatePoliciesRequest, emptypb.Empty]
-	ensureTenantForExternalAccount *connect.Client[v1beta.EnsureTenantForExternalAccountRequest, v1beta.TenantResponse]
-	removeTenant                   *connect.Client[v1beta.TenantReference, emptypb.Empty]
-	listTenants                    *connect.Client[v1beta.ListTenantsRequest, v1beta.ListTenantsResponse]
-	issueTenantToken               *connect.Client[v1beta.IssueTenantTokenRequest, v1beta.IssueTenantTokenResponse]
-	issueTenantClientCertificate   *connect.Client[v1beta.IssueTenantClientCertificateRequest, v1beta.IssueTenantClientCertificateResponse]
-	suspendTenant                  *connect.Client[v1beta.TenantReference, emptypb.Empty]
-	resumeTenant                   *connect.Client[v1beta.TenantReference, emptypb.Empty]
-	ensureTenantGroup              *connect.Client[v1beta.EnsureTenantGroupRequest, v1beta.TenantGroupResponse]
-	listTenantGroups               *connect.Client[v1beta.ListTenantGroupsRequest, v1beta.ListTenantGroupsResponse]
-	describeTenantGroup            *connect.Client[v1beta.TenantGroupReference, v1beta.DescribeTenantGroupResponse]
-	deleteTenantGroup              *connect.Client[v1beta.TenantGroupReference, emptypb.Empty]
+	createTenant                     *connect.Client[v1beta.CreateTenantRequest, v1beta.TenantResponse]
+	updateTenant                     *connect.Client[v1beta.UpdateTenantRequest, v1beta.TenantResponse]
+	describePolicies                 *connect.Client[v1beta.DescribePoliciesRequest, v1beta.DescribePoliciesResponse]
+	updatePolicies                   *connect.Client[v1beta.UpdatePoliciesRequest, emptypb.Empty]
+	ensureTenantForExternalAccount   *connect.Client[v1beta.EnsureTenantForExternalAccountRequest, v1beta.TenantResponse]
+	removeTenant                     *connect.Client[v1beta.TenantReference, emptypb.Empty]
+	listTenants                      *connect.Client[v1beta.ListTenantsRequest, v1beta.ListTenantsResponse]
+	issueTenantToken                 *connect.Client[v1beta.IssueTenantTokenRequest, v1beta.IssueTenantTokenResponse]
+	issueTenantClientCertificate     *connect.Client[v1beta.IssueTenantClientCertificateRequest, v1beta.IssueTenantClientCertificateResponse]
+	exchangeTenantTokenForClientCert *connect.Client[v1beta.ExchangeTenantTokenForClientCertRequest, v1beta.ExchangeTenantTokenForClientCertResponse]
+	suspendTenant                    *connect.Client[v1beta.TenantReference, emptypb.Empty]
+	resumeTenant                     *connect.Client[v1beta.TenantReference, emptypb.Empty]
+	ensureTenantGroup                *connect.Client[v1beta.EnsureTenantGroupRequest, v1beta.TenantGroupResponse]
+	listTenantGroups                 *connect.Client[v1beta.ListTenantGroupsRequest, v1beta.ListTenantGroupsResponse]
+	describeTenantGroup              *connect.Client[v1beta.TenantGroupReference, v1beta.DescribeTenantGroupResponse]
+	deleteTenantGroup                *connect.Client[v1beta.TenantGroupReference, emptypb.Empty]
 }
 
 // CreateTenant calls namespace.cloud.iam.v1beta.TenantService.CreateTenant.
@@ -380,6 +394,12 @@ func (c *tenantServiceClient) IssueTenantToken(ctx context.Context, req *connect
 // namespace.cloud.iam.v1beta.TenantService.IssueTenantClientCertificate.
 func (c *tenantServiceClient) IssueTenantClientCertificate(ctx context.Context, req *connect.Request[v1beta.IssueTenantClientCertificateRequest]) (*connect.Response[v1beta.IssueTenantClientCertificateResponse], error) {
 	return c.issueTenantClientCertificate.CallUnary(ctx, req)
+}
+
+// ExchangeTenantTokenForClientCert calls
+// namespace.cloud.iam.v1beta.TenantService.ExchangeTenantTokenForClientCert.
+func (c *tenantServiceClient) ExchangeTenantTokenForClientCert(ctx context.Context, req *connect.Request[v1beta.ExchangeTenantTokenForClientCertRequest]) (*connect.Response[v1beta.ExchangeTenantTokenForClientCertResponse], error) {
+	return c.exchangeTenantTokenForClientCert.CallUnary(ctx, req)
 }
 
 // SuspendTenant calls namespace.cloud.iam.v1beta.TenantService.SuspendTenant.
@@ -486,6 +506,9 @@ type TenantServiceHandler interface {
 	// `IssueTenantClientCertificate` call are validated to verify they are
 	// capable of requesting credentials.
 	IssueTenantClientCertificate(context.Context, *connect.Request[v1beta.IssueTenantClientCertificateRequest]) (*connect.Response[v1beta.IssueTenantClientCertificateResponse], error)
+	// Exchanges tenant Bearer credentials for an X.509 client certificate with
+	// the same tenant identity and no broader permissions.
+	ExchangeTenantTokenForClientCert(context.Context, *connect.Request[v1beta.ExchangeTenantTokenForClientCertRequest]) (*connect.Response[v1beta.ExchangeTenantTokenForClientCertResponse], error)
 	// Suspending a Tenant prevents it from creating new resources, but does not
 	// immediately terminate resources it owns that may be running. Suspending a
 	// tenant is a useful operational utility that can be used to cordon a
@@ -585,6 +608,12 @@ func NewTenantServiceHandler(svc TenantServiceHandler, opts ...connect.HandlerOp
 		connect.WithSchema(tenantServiceIssueTenantClientCertificateMethodDescriptor),
 		connect.WithHandlerOptions(opts...),
 	)
+	tenantServiceExchangeTenantTokenForClientCertHandler := connect.NewUnaryHandler(
+		TenantServiceExchangeTenantTokenForClientCertProcedure,
+		svc.ExchangeTenantTokenForClientCert,
+		connect.WithSchema(tenantServiceExchangeTenantTokenForClientCertMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
+	)
 	tenantServiceSuspendTenantHandler := connect.NewUnaryHandler(
 		TenantServiceSuspendTenantProcedure,
 		svc.SuspendTenant,
@@ -641,6 +670,8 @@ func NewTenantServiceHandler(svc TenantServiceHandler, opts ...connect.HandlerOp
 			tenantServiceIssueTenantTokenHandler.ServeHTTP(w, r)
 		case TenantServiceIssueTenantClientCertificateProcedure:
 			tenantServiceIssueTenantClientCertificateHandler.ServeHTTP(w, r)
+		case TenantServiceExchangeTenantTokenForClientCertProcedure:
+			tenantServiceExchangeTenantTokenForClientCertHandler.ServeHTTP(w, r)
 		case TenantServiceSuspendTenantProcedure:
 			tenantServiceSuspendTenantHandler.ServeHTTP(w, r)
 		case TenantServiceResumeTenantProcedure:
@@ -696,6 +727,10 @@ func (UnimplementedTenantServiceHandler) IssueTenantToken(context.Context, *conn
 
 func (UnimplementedTenantServiceHandler) IssueTenantClientCertificate(context.Context, *connect.Request[v1beta.IssueTenantClientCertificateRequest]) (*connect.Response[v1beta.IssueTenantClientCertificateResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("namespace.cloud.iam.v1beta.TenantService.IssueTenantClientCertificate is not implemented"))
+}
+
+func (UnimplementedTenantServiceHandler) ExchangeTenantTokenForClientCert(context.Context, *connect.Request[v1beta.ExchangeTenantTokenForClientCertRequest]) (*connect.Response[v1beta.ExchangeTenantTokenForClientCertResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("namespace.cloud.iam.v1beta.TenantService.ExchangeTenantTokenForClientCert is not implemented"))
 }
 
 func (UnimplementedTenantServiceHandler) SuspendTenant(context.Context, *connect.Request[v1beta.TenantReference]) (*connect.Response[emptypb.Empty], error) {
