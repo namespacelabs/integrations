@@ -19,7 +19,7 @@ import (
 	"namespacelabs.dev/integrations/proto/namespace/cloud/iam/v1beta/iamv1betaconnect"
 )
 
-func TestTenantCertificateSource(t *testing.T) {
+func TestTenantCertificateSourceExchangesTenantToken(t *testing.T) {
 	tokenSource := &testTokenSource{token: "nsct_test"}
 	handler := &tenantCertificateHandler{t: t, expectedToken: tokenSource.token}
 	path, serverHandler := iamv1betaconnect.NewTenantServiceHandler(handler)
