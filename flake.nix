@@ -21,7 +21,7 @@
         buildInputs = with pkgs;
           [
             buf
-            go_1_24
+            go_1_25
             gopls
             go-outline
             go-tools
