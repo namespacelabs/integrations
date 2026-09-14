@@ -87,6 +87,8 @@ type UsageServiceClient interface {
 	// Execution is constrained to 30 seconds, but supports downloading any
 	// number of records within that window.
 	GenerateReport(context.Context, *connect.Request[v1beta.GenerateReportRequest]) (*connect.ServerStreamForClient[v1beta.GenerateReportResponse], error)
+	// Returns a point-in-time view of active compute resources and limits, grouped by
+	// concurrency pool. Pools can overlap, so clients should not sum their usage.
 	GetConcurrency(context.Context, *connect.Request[v1beta.GetConcurrencyRequest]) (*connect.Response[v1beta.GetConcurrencyResponse], error)
 }
 
@@ -204,6 +206,8 @@ type UsageServiceHandler interface {
 	// Execution is constrained to 30 seconds, but supports downloading any
 	// number of records within that window.
 	GenerateReport(context.Context, *connect.Request[v1beta.GenerateReportRequest], *connect.ServerStream[v1beta.GenerateReportResponse]) error
+	// Returns a point-in-time view of active compute resources and limits, grouped by
+	// concurrency pool. Pools can overlap, so clients should not sum their usage.
 	GetConcurrency(context.Context, *connect.Request[v1beta.GetConcurrencyRequest]) (*connect.Response[v1beta.GetConcurrencyResponse], error)
 }
 

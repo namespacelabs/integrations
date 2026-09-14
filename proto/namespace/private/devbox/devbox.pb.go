@@ -373,6 +373,61 @@ func (AcquireLeaseResponse_LeaseOutcome) EnumDescriptor() ([]byte, []int) {
 	return file_proto_namespace_private_devbox_devbox_proto_rawDescGZIP(), []int{22, 0}
 }
 
+type DevboxTemplateSpec_Type int32
+
+const (
+	DevboxTemplateSpec_TYPE_UNSPECIFIED       DevboxTemplateSpec_Type = 0
+	DevboxTemplateSpec_TYPE_GENERAL           DevboxTemplateSpec_Type = 1
+	DevboxTemplateSpec_TYPE_MANAGED_BY_CLAUDE DevboxTemplateSpec_Type = 4
+	DevboxTemplateSpec_TYPE_MANAGED_BY_CURSOR DevboxTemplateSpec_Type = 2
+	DevboxTemplateSpec_TYPE_MANAGED_BY_DEVIN  DevboxTemplateSpec_Type = 3
+)
+
+// Enum value maps for DevboxTemplateSpec_Type.
+var (
+	DevboxTemplateSpec_Type_name = map[int32]string{
+		0: "TYPE_UNSPECIFIED",
+		1: "TYPE_GENERAL",
+		4: "TYPE_MANAGED_BY_CLAUDE",
+		2: "TYPE_MANAGED_BY_CURSOR",
+		3: "TYPE_MANAGED_BY_DEVIN",
+	}
+	DevboxTemplateSpec_Type_value = map[string]int32{
+		"TYPE_UNSPECIFIED":       0,
+		"TYPE_GENERAL":           1,
+		"TYPE_MANAGED_BY_CLAUDE": 4,
+		"TYPE_MANAGED_BY_CURSOR": 2,
+		"TYPE_MANAGED_BY_DEVIN":  3,
+	}
+)
+
+func (x DevboxTemplateSpec_Type) Enum() *DevboxTemplateSpec_Type {
+	p := new(DevboxTemplateSpec_Type)
+	*p = x
+	return p
+}
+
+func (x DevboxTemplateSpec_Type) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (DevboxTemplateSpec_Type) Descriptor() protoreflect.EnumDescriptor {
+	return file_proto_namespace_private_devbox_devbox_proto_enumTypes[7].Descriptor()
+}
+
+func (DevboxTemplateSpec_Type) Type() protoreflect.EnumType {
+	return &file_proto_namespace_private_devbox_devbox_proto_enumTypes[7]
+}
+
+func (x DevboxTemplateSpec_Type) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use DevboxTemplateSpec_Type.Descriptor instead.
+func (DevboxTemplateSpec_Type) EnumDescriptor() ([]byte, []int) {
+	return file_proto_namespace_private_devbox_devbox_proto_rawDescGZIP(), []int{31, 0}
+}
+
 type ListTemplatesRequest_OrderBy int32
 
 const (
@@ -406,11 +461,11 @@ func (x ListTemplatesRequest_OrderBy) String() string {
 }
 
 func (ListTemplatesRequest_OrderBy) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_namespace_private_devbox_devbox_proto_enumTypes[7].Descriptor()
+	return file_proto_namespace_private_devbox_devbox_proto_enumTypes[8].Descriptor()
 }
 
 func (ListTemplatesRequest_OrderBy) Type() protoreflect.EnumType {
-	return &file_proto_namespace_private_devbox_devbox_proto_enumTypes[7]
+	return &file_proto_namespace_private_devbox_devbox_proto_enumTypes[8]
 }
 
 func (x ListTemplatesRequest_OrderBy) Number() protoreflect.EnumNumber {
@@ -455,11 +510,11 @@ func (x VersionControlSpec_CheckoutMethod) String() string {
 }
 
 func (VersionControlSpec_CheckoutMethod) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_namespace_private_devbox_devbox_proto_enumTypes[8].Descriptor()
+	return file_proto_namespace_private_devbox_devbox_proto_enumTypes[9].Descriptor()
 }
 
 func (VersionControlSpec_CheckoutMethod) Type() protoreflect.EnumType {
-	return &file_proto_namespace_private_devbox_devbox_proto_enumTypes[8]
+	return &file_proto_namespace_private_devbox_devbox_proto_enumTypes[9]
 }
 
 func (x VersionControlSpec_CheckoutMethod) Number() protoreflect.EnumNumber {
@@ -501,11 +556,11 @@ func (x Image_Flag) String() string {
 }
 
 func (Image_Flag) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_namespace_private_devbox_devbox_proto_enumTypes[9].Descriptor()
+	return file_proto_namespace_private_devbox_devbox_proto_enumTypes[10].Descriptor()
 }
 
 func (Image_Flag) Type() protoreflect.EnumType {
-	return &file_proto_namespace_private_devbox_devbox_proto_enumTypes[9]
+	return &file_proto_namespace_private_devbox_devbox_proto_enumTypes[10]
 }
 
 func (x Image_Flag) Number() protoreflect.EnumNumber {
@@ -559,11 +614,11 @@ func (x OptimizeImageResponseChunk_Status) String() string {
 }
 
 func (OptimizeImageResponseChunk_Status) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_namespace_private_devbox_devbox_proto_enumTypes[10].Descriptor()
+	return file_proto_namespace_private_devbox_devbox_proto_enumTypes[11].Descriptor()
 }
 
 func (OptimizeImageResponseChunk_Status) Type() protoreflect.EnumType {
-	return &file_proto_namespace_private_devbox_devbox_proto_enumTypes[10]
+	return &file_proto_namespace_private_devbox_devbox_proto_enumTypes[11]
 }
 
 func (x OptimizeImageResponseChunk_Status) Number() protoreflect.EnumNumber {
@@ -740,8 +795,13 @@ type CreateRequest struct {
 	Environment []*BlueprintSpec_EnvVar `protobuf:"bytes,24,rep,name=environment,proto3" json:"environment,omitempty"`
 	// If unset, inherits DevboxDefaults.network_policy. Set to an empty
 	// NetworkPolicySpec{} to opt out of inheritance.
-	NetworkPolicy        *NetworkPolicySpec            `protobuf:"bytes,25,opt,name=network_policy,json=networkPolicy,proto3" json:"network_policy,omitempty"`
-	Ports                []*PortSpec                   `protobuf:"bytes,26,rep,name=ports,proto3" json:"ports,omitempty"`
+	NetworkPolicy *NetworkPolicySpec `protobuf:"bytes,25,opt,name=network_policy,json=networkPolicy,proto3" json:"network_policy,omitempty"`
+	Ports         []*PortSpec        `protobuf:"bytes,26,rep,name=ports,proto3" json:"ports,omitempty"`
+	// Labels attached to the devbox. Label names using Namespace-reserved
+	// prefixes are only accepted by trusted internal callers.
+	Labels []*stdlib.Label `protobuf:"bytes,27,rep,name=labels,proto3" json:"labels,omitempty"`
+	// Script to run once when the devbox is first initialized.
+	InitScript           string                        `protobuf:"bytes,28,opt,name=init_script,json=initScript,proto3" json:"init_script,omitempty"`
 	Activate             bool                          `protobuf:"varint,6,opt,name=activate,proto3" json:"activate,omitempty"`
 	ActivateExperimental *ActivateRequest_Experimental `protobuf:"bytes,7,opt,name=activate_experimental,json=activateExperimental,proto3" json:"activate_experimental,omitempty"`
 	unknownFields        protoimpl.UnknownFields
@@ -940,6 +1000,20 @@ func (x *CreateRequest) GetPorts() []*PortSpec {
 	return nil
 }
 
+func (x *CreateRequest) GetLabels() []*stdlib.Label {
+	if x != nil {
+		return x.Labels
+	}
+	return nil
+}
+
+func (x *CreateRequest) GetInitScript() string {
+	if x != nil {
+		return x.InitScript
+	}
+	return ""
+}
+
 func (x *CreateRequest) GetActivate() bool {
 	if x != nil {
 		return x.Activate
@@ -962,6 +1036,7 @@ type CreateFromTemplateRequest struct {
 	ActivateExperimental *ActivateRequest_Experimental        `protobuf:"bytes,4,opt,name=activate_experimental,json=activateExperimental,proto3" json:"activate_experimental,omitempty"`
 	DocumentedPurpose    string                               `protobuf:"bytes,5,opt,name=documented_purpose,json=documentedPurpose,proto3" json:"documented_purpose,omitempty"`
 	Overrides            *CreateFromTemplateRequest_Overrides `protobuf:"bytes,6,opt,name=overrides,proto3" json:"overrides,omitempty"`
+	Labels               []*stdlib.Label                      `protobuf:"bytes,7,rep,name=labels,proto3" json:"labels,omitempty"`
 	unknownFields        protoimpl.UnknownFields
 	sizeCache            protoimpl.SizeCache
 }
@@ -1038,6 +1113,13 @@ func (x *CreateFromTemplateRequest) GetOverrides() *CreateFromTemplateRequest_Ov
 	return nil
 }
 
+func (x *CreateFromTemplateRequest) GetLabels() []*stdlib.Label {
+	if x != nil {
+		return x.Labels
+	}
+	return nil
+}
+
 type CreateFromDevboxRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// Name for the new devbox.
@@ -1051,6 +1133,7 @@ type CreateFromDevboxRequest struct {
 	SnapshotId string `protobuf:"bytes,4,opt,name=snapshot_id,json=snapshotId,proto3" json:"snapshot_id,omitempty"`
 	// Free-form description of what this devbox is for. Not inherited from the source devbox.
 	DocumentedPurpose    string                        `protobuf:"bytes,6,opt,name=documented_purpose,json=documentedPurpose,proto3" json:"documented_purpose,omitempty"`
+	Labels               []*stdlib.Label               `protobuf:"bytes,7,rep,name=labels,proto3" json:"labels,omitempty"`
 	ActivateExperimental *ActivateRequest_Experimental `protobuf:"bytes,5,opt,name=activate_experimental,json=activateExperimental,proto3" json:"activate_experimental,omitempty"`
 	unknownFields        protoimpl.UnknownFields
 	sizeCache            protoimpl.SizeCache
@@ -1119,6 +1202,13 @@ func (x *CreateFromDevboxRequest) GetDocumentedPurpose() string {
 		return x.DocumentedPurpose
 	}
 	return ""
+}
+
+func (x *CreateFromDevboxRequest) GetLabels() []*stdlib.Label {
+	if x != nil {
+		return x.Labels
+	}
+	return nil
 }
 
 func (x *CreateFromDevboxRequest) GetActivateExperimental() *ActivateRequest_Experimental {
@@ -1613,7 +1703,10 @@ type ListRequest struct {
 	// legacy behavior) and `pagination_cursor` in the response is never set.
 	// If > 0, the server returns at most `max_entries` and sets
 	// `pagination_cursor` in the response if more results exist.
-	MaxEntries    int64 `protobuf:"varint,7,opt,name=max_entries,json=maxEntries,proto3" json:"max_entries,omitempty"`
+	MaxEntries int64 `protobuf:"varint,7,opt,name=max_entries,json=maxEntries,proto3" json:"max_entries,omitempty"`
+	// Only return devboxes that match the specified filters. Multiple filters
+	// use the same matching semantics as Compute ListInstances.
+	MatchLabels   []*stdlib.LabelFilterEntry `protobuf:"bytes,8,rep,name=match_labels,json=matchLabels,proto3" json:"match_labels,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1695,6 +1788,13 @@ func (x *ListRequest) GetMaxEntries() int64 {
 		return x.MaxEntries
 	}
 	return 0
+}
+
+func (x *ListRequest) GetMatchLabels() []*stdlib.LabelFilterEntry {
+	if x != nil {
+		return x.MatchLabels
+	}
+	return nil
 }
 
 type ListResponse struct {
@@ -2427,6 +2527,7 @@ type DevBox struct {
 	// the devbox has never been leased.
 	PoolLease     *PoolLease         `protobuf:"bytes,29,opt,name=pool_lease,json=poolLease,proto3" json:"pool_lease,omitempty"`
 	NetworkPolicy *NetworkPolicySpec `protobuf:"bytes,30,opt,name=network_policy,json=networkPolicy,proto3" json:"network_policy,omitempty"`
+	Labels        []*stdlib.Label    `protobuf:"bytes,33,rep,name=labels,proto3" json:"labels,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -2675,6 +2776,13 @@ func (x *DevBox) GetPoolLease() *PoolLease {
 func (x *DevBox) GetNetworkPolicy() *NetworkPolicySpec {
 	if x != nil {
 		return x.NetworkPolicy
+	}
+	return nil
+}
+
+func (x *DevBox) GetLabels() []*stdlib.Label {
+	if x != nil {
+		return x.Labels
 	}
 	return nil
 }
@@ -2930,8 +3038,12 @@ type DevboxTemplateSpec struct {
 	AccessMode                AccessMode                       `protobuf:"varint,13,opt,name=access_mode,json=accessMode,proto3,enum=namespace.private.devbox.v1beta.AccessMode" json:"access_mode,omitempty"`
 	Features                  *Features                        `protobuf:"bytes,14,opt,name=features,proto3" json:"features,omitempty"`
 	Ports                     []*PortSpec                      `protobuf:"bytes,15,rep,name=ports,proto3" json:"ports,omitempty"`
-	unknownFields             protoimpl.UnknownFields
-	sizeCache                 protoimpl.SizeCache
+	Type                      DevboxTemplateSpec_Type          `protobuf:"varint,16,opt,name=type,proto3,enum=namespace.private.devbox.v1beta.DevboxTemplateSpec_Type" json:"type,omitempty"`
+	Sessions                  []*BlueprintSpec_SessionSpec     `protobuf:"bytes,17,rep,name=sessions,proto3" json:"sessions,omitempty"`
+	// Script to run once when a devbox created from this template is first initialized.
+	InitScript    string `protobuf:"bytes,18,opt,name=init_script,json=initScript,proto3" json:"init_script,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *DevboxTemplateSpec) Reset() {
@@ -3067,6 +3179,27 @@ func (x *DevboxTemplateSpec) GetPorts() []*PortSpec {
 		return x.Ports
 	}
 	return nil
+}
+
+func (x *DevboxTemplateSpec) GetType() DevboxTemplateSpec_Type {
+	if x != nil {
+		return x.Type
+	}
+	return DevboxTemplateSpec_TYPE_UNSPECIFIED
+}
+
+func (x *DevboxTemplateSpec) GetSessions() []*BlueprintSpec_SessionSpec {
+	if x != nil {
+		return x.Sessions
+	}
+	return nil
+}
+
+func (x *DevboxTemplateSpec) GetInitScript() string {
+	if x != nil {
+		return x.InitScript
+	}
+	return ""
 }
 
 type DevboxTemplate struct {
@@ -6509,6 +6642,7 @@ type ActivateRequest_Experimental struct {
 	EnableDbus     bool                                        `protobuf:"varint,7,opt,name=enable_dbus,json=enableDbus,proto3" json:"enable_dbus,omitempty"`
 	DevinOutposts  *ActivateRequest_Experimental_DevinOutposts `protobuf:"bytes,8,opt,name=devin_outposts,json=devinOutposts,proto3" json:"devin_outposts,omitempty"`
 	CursorWorker   *ActivateRequest_Experimental_CursorWorker  `protobuf:"bytes,9,opt,name=cursor_worker,json=cursorWorker,proto3" json:"cursor_worker,omitempty"`
+	ClaudeAgent    *ActivateRequest_Experimental_ClaudeAgent   `protobuf:"bytes,10,opt,name=claude_agent,json=claudeAgent,proto3" json:"claude_agent,omitempty"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
 }
@@ -6581,6 +6715,13 @@ func (x *ActivateRequest_Experimental) GetDevinOutposts() *ActivateRequest_Exper
 func (x *ActivateRequest_Experimental) GetCursorWorker() *ActivateRequest_Experimental_CursorWorker {
 	if x != nil {
 		return x.CursorWorker
+	}
+	return nil
+}
+
+func (x *ActivateRequest_Experimental) GetClaudeAgent() *ActivateRequest_Experimental_ClaudeAgent {
+	if x != nil {
+		return x.ClaudeAgent
 	}
 	return nil
 }
@@ -6721,6 +6862,42 @@ func (x *ActivateRequest_Experimental_CursorWorker) GetRequestId() string {
 	return ""
 }
 
+type ActivateRequest_Experimental_ClaudeAgent struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ActivateRequest_Experimental_ClaudeAgent) Reset() {
+	*x = ActivateRequest_Experimental_ClaudeAgent{}
+	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[97]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ActivateRequest_Experimental_ClaudeAgent) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ActivateRequest_Experimental_ClaudeAgent) ProtoMessage() {}
+
+func (x *ActivateRequest_Experimental_ClaudeAgent) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[97]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ActivateRequest_Experimental_ClaudeAgent.ProtoReflect.Descriptor instead.
+func (*ActivateRequest_Experimental_ClaudeAgent) Descriptor() ([]byte, []int) {
+	return file_proto_namespace_private_devbox_devbox_proto_rawDescGZIP(), []int{6, 0, 2}
+}
+
 type ActivateResponse_InstanceMetadataSummary struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	IngressDomain string                 `protobuf:"bytes,1,opt,name=ingress_domain,json=ingressDomain,proto3" json:"ingress_domain,omitempty"`
@@ -6730,7 +6907,7 @@ type ActivateResponse_InstanceMetadataSummary struct {
 
 func (x *ActivateResponse_InstanceMetadataSummary) Reset() {
 	*x = ActivateResponse_InstanceMetadataSummary{}
-	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[97]
+	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[98]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6742,7 +6919,7 @@ func (x *ActivateResponse_InstanceMetadataSummary) String() string {
 func (*ActivateResponse_InstanceMetadataSummary) ProtoMessage() {}
 
 func (x *ActivateResponse_InstanceMetadataSummary) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[97]
+	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[98]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6776,7 +6953,7 @@ type GetUsageRequest_Date struct {
 
 func (x *GetUsageRequest_Date) Reset() {
 	*x = GetUsageRequest_Date{}
-	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[98]
+	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[99]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6788,7 +6965,7 @@ func (x *GetUsageRequest_Date) String() string {
 func (*GetUsageRequest_Date) ProtoMessage() {}
 
 func (x *GetUsageRequest_Date) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[98]
+	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[99]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6843,7 +7020,7 @@ type GetUsageResponse_DataPoint struct {
 
 func (x *GetUsageResponse_DataPoint) Reset() {
 	*x = GetUsageResponse_DataPoint{}
-	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[99]
+	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[100]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6855,7 +7032,7 @@ func (x *GetUsageResponse_DataPoint) String() string {
 func (*GetUsageResponse_DataPoint) ProtoMessage() {}
 
 func (x *GetUsageResponse_DataPoint) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[99]
+	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[100]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6917,7 +7094,7 @@ type DevBox_ResolvedImage struct {
 
 func (x *DevBox_ResolvedImage) Reset() {
 	*x = DevBox_ResolvedImage{}
-	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[100]
+	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[101]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6929,7 +7106,7 @@ func (x *DevBox_ResolvedImage) String() string {
 func (*DevBox_ResolvedImage) ProtoMessage() {}
 
 func (x *DevBox_ResolvedImage) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[100]
+	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[101]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6976,7 +7153,7 @@ type DevboxTemplateSpec_InstanceSpec struct {
 
 func (x *DevboxTemplateSpec_InstanceSpec) Reset() {
 	*x = DevboxTemplateSpec_InstanceSpec{}
-	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[101]
+	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[102]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6988,7 +7165,7 @@ func (x *DevboxTemplateSpec_InstanceSpec) String() string {
 func (*DevboxTemplateSpec_InstanceSpec) ProtoMessage() {}
 
 func (x *DevboxTemplateSpec_InstanceSpec) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[101]
+	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[102]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7019,16 +7196,17 @@ func (x *DevboxTemplateSpec_InstanceSpec) GetLinux() *DevboxTemplateSpec_Instanc
 }
 
 type DevboxTemplateSpec_Experimental struct {
-	state         protoimpl.MessageState                            `protogen:"open.v1"`
-	DevinOutpost  *DevboxTemplateSpec_Experimental_DevinOutpostSpec `protobuf:"bytes,1,opt,name=devin_outpost,json=devinOutpost,proto3" json:"devin_outpost,omitempty"`
-	CursorWorker  *DevboxTemplateSpec_Experimental_CursorWorkerSpec `protobuf:"bytes,2,opt,name=cursor_worker,json=cursorWorker,proto3" json:"cursor_worker,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state             protoimpl.MessageState                                 `protogen:"open.v1"`
+	DevinOutpost      *DevboxTemplateSpec_Experimental_DevinOutpostSpec      `protobuf:"bytes,1,opt,name=devin_outpost,json=devinOutpost,proto3" json:"devin_outpost,omitempty"`
+	CursorWorker      *DevboxTemplateSpec_Experimental_CursorWorkerSpec      `protobuf:"bytes,2,opt,name=cursor_worker,json=cursorWorker,proto3" json:"cursor_worker,omitempty"`
+	ClaudeEnvironment *DevboxTemplateSpec_Experimental_ClaudeEnvironmentSpec `protobuf:"bytes,3,opt,name=claude_environment,json=claudeEnvironment,proto3" json:"claude_environment,omitempty"`
+	unknownFields     protoimpl.UnknownFields
+	sizeCache         protoimpl.SizeCache
 }
 
 func (x *DevboxTemplateSpec_Experimental) Reset() {
 	*x = DevboxTemplateSpec_Experimental{}
-	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[102]
+	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[103]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -7040,7 +7218,7 @@ func (x *DevboxTemplateSpec_Experimental) String() string {
 func (*DevboxTemplateSpec_Experimental) ProtoMessage() {}
 
 func (x *DevboxTemplateSpec_Experimental) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[102]
+	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[103]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7070,6 +7248,13 @@ func (x *DevboxTemplateSpec_Experimental) GetCursorWorker() *DevboxTemplateSpec_
 	return nil
 }
 
+func (x *DevboxTemplateSpec_Experimental) GetClaudeEnvironment() *DevboxTemplateSpec_Experimental_ClaudeEnvironmentSpec {
+	if x != nil {
+		return x.ClaudeEnvironment
+	}
+	return nil
+}
+
 type DevboxTemplateSpec_InstanceSpec_LinuxInstanceSpec struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	ImageRef      string                 `protobuf:"bytes,1,opt,name=image_ref,json=imageRef,proto3" json:"image_ref,omitempty"`
@@ -7080,7 +7265,7 @@ type DevboxTemplateSpec_InstanceSpec_LinuxInstanceSpec struct {
 
 func (x *DevboxTemplateSpec_InstanceSpec_LinuxInstanceSpec) Reset() {
 	*x = DevboxTemplateSpec_InstanceSpec_LinuxInstanceSpec{}
-	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[103]
+	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[104]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -7092,7 +7277,7 @@ func (x *DevboxTemplateSpec_InstanceSpec_LinuxInstanceSpec) String() string {
 func (*DevboxTemplateSpec_InstanceSpec_LinuxInstanceSpec) ProtoMessage() {}
 
 func (x *DevboxTemplateSpec_InstanceSpec_LinuxInstanceSpec) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[103]
+	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[104]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7132,7 +7317,7 @@ type DevboxTemplateSpec_Experimental_DevinOutpostSpec struct {
 
 func (x *DevboxTemplateSpec_Experimental_DevinOutpostSpec) Reset() {
 	*x = DevboxTemplateSpec_Experimental_DevinOutpostSpec{}
-	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[104]
+	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[105]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -7144,7 +7329,7 @@ func (x *DevboxTemplateSpec_Experimental_DevinOutpostSpec) String() string {
 func (*DevboxTemplateSpec_Experimental_DevinOutpostSpec) ProtoMessage() {}
 
 func (x *DevboxTemplateSpec_Experimental_DevinOutpostSpec) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[104]
+	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[105]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7176,14 +7361,14 @@ func (x *DevboxTemplateSpec_Experimental_DevinOutpostSpec) GetOutpostId() string
 
 type DevboxTemplateSpec_Experimental_CursorWorkerSpec struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	PoolNames     []string               `protobuf:"bytes,1,rep,name=pool_names,json=poolNames,proto3" json:"pool_names,omitempty"`
+	PoolName      string                 `protobuf:"bytes,1,opt,name=pool_name,json=poolName,proto3" json:"pool_name,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *DevboxTemplateSpec_Experimental_CursorWorkerSpec) Reset() {
 	*x = DevboxTemplateSpec_Experimental_CursorWorkerSpec{}
-	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[105]
+	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[106]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -7195,7 +7380,7 @@ func (x *DevboxTemplateSpec_Experimental_CursorWorkerSpec) String() string {
 func (*DevboxTemplateSpec_Experimental_CursorWorkerSpec) ProtoMessage() {}
 
 func (x *DevboxTemplateSpec_Experimental_CursorWorkerSpec) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[105]
+	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[106]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7211,25 +7396,82 @@ func (*DevboxTemplateSpec_Experimental_CursorWorkerSpec) Descriptor() ([]byte, [
 	return file_proto_namespace_private_devbox_devbox_proto_rawDescGZIP(), []int{31, 1, 1}
 }
 
-func (x *DevboxTemplateSpec_Experimental_CursorWorkerSpec) GetPoolNames() []string {
+func (x *DevboxTemplateSpec_Experimental_CursorWorkerSpec) GetPoolName() string {
 	if x != nil {
-		return x.PoolNames
+		return x.PoolName
 	}
-	return nil
+	return ""
 }
 
+type DevboxTemplateSpec_Experimental_ClaudeEnvironmentSpec struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	EnvironmentId string                 `protobuf:"bytes,1,opt,name=environment_id,json=environmentId,proto3" json:"environment_id,omitempty"`
+	WebhookId     string                 `protobuf:"bytes,2,opt,name=webhook_id,json=webhookId,proto3" json:"webhook_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DevboxTemplateSpec_Experimental_ClaudeEnvironmentSpec) Reset() {
+	*x = DevboxTemplateSpec_Experimental_ClaudeEnvironmentSpec{}
+	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[107]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DevboxTemplateSpec_Experimental_ClaudeEnvironmentSpec) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DevboxTemplateSpec_Experimental_ClaudeEnvironmentSpec) ProtoMessage() {}
+
+func (x *DevboxTemplateSpec_Experimental_ClaudeEnvironmentSpec) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[107]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DevboxTemplateSpec_Experimental_ClaudeEnvironmentSpec.ProtoReflect.Descriptor instead.
+func (*DevboxTemplateSpec_Experimental_ClaudeEnvironmentSpec) Descriptor() ([]byte, []int) {
+	return file_proto_namespace_private_devbox_devbox_proto_rawDescGZIP(), []int{31, 1, 2}
+}
+
+func (x *DevboxTemplateSpec_Experimental_ClaudeEnvironmentSpec) GetEnvironmentId() string {
+	if x != nil {
+		return x.EnvironmentId
+	}
+	return ""
+}
+
+func (x *DevboxTemplateSpec_Experimental_ClaudeEnvironmentSpec) GetWebhookId() string {
+	if x != nil {
+		return x.WebhookId
+	}
+	return ""
+}
+
+// Transient integration setup values that must not be persisted in DevboxTemplateSpec.
+// Credentials are stored as tenant Vault secrets and never returned.
 type CreateTemplateRequest_Experimental struct {
-	state             protoimpl.MessageState `protogen:"open.v1"`
-	DevinConnectCode  string                 `protobuf:"bytes,1,opt,name=devin_connect_code,json=devinConnectCode,proto3" json:"devin_connect_code,omitempty"`
-	DevinConnectState string                 `protobuf:"bytes,2,opt,name=devin_connect_state,json=devinConnectState,proto3" json:"devin_connect_state,omitempty"`
-	CursorApiKey      string                 `protobuf:"bytes,3,opt,name=cursor_api_key,json=cursorApiKey,proto3" json:"cursor_api_key,omitempty"`
-	unknownFields     protoimpl.UnknownFields
-	sizeCache         protoimpl.SizeCache
+	state                   protoimpl.MessageState `protogen:"open.v1"`
+	DevinConnectCode        string                 `protobuf:"bytes,1,opt,name=devin_connect_code,json=devinConnectCode,proto3" json:"devin_connect_code,omitempty"`
+	DevinConnectState       string                 `protobuf:"bytes,2,opt,name=devin_connect_state,json=devinConnectState,proto3" json:"devin_connect_state,omitempty"`
+	CursorApiKey            string                 `protobuf:"bytes,3,opt,name=cursor_api_key,json=cursorApiKey,proto3" json:"cursor_api_key,omitempty"`
+	ClaudeApiKey            string                 `protobuf:"bytes,4,opt,name=claude_api_key,json=claudeApiKey,proto3" json:"claude_api_key,omitempty"`
+	ClaudeEnvironmentKey    string                 `protobuf:"bytes,5,opt,name=claude_environment_key,json=claudeEnvironmentKey,proto3" json:"claude_environment_key,omitempty"`
+	ClaudeWebhookSigningKey string                 `protobuf:"bytes,6,opt,name=claude_webhook_signing_key,json=claudeWebhookSigningKey,proto3" json:"claude_webhook_signing_key,omitempty"`
+	unknownFields           protoimpl.UnknownFields
+	sizeCache               protoimpl.SizeCache
 }
 
 func (x *CreateTemplateRequest_Experimental) Reset() {
 	*x = CreateTemplateRequest_Experimental{}
-	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[106]
+	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[108]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -7241,7 +7483,7 @@ func (x *CreateTemplateRequest_Experimental) String() string {
 func (*CreateTemplateRequest_Experimental) ProtoMessage() {}
 
 func (x *CreateTemplateRequest_Experimental) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[106]
+	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[108]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7278,18 +7520,44 @@ func (x *CreateTemplateRequest_Experimental) GetCursorApiKey() string {
 	return ""
 }
 
+func (x *CreateTemplateRequest_Experimental) GetClaudeApiKey() string {
+	if x != nil {
+		return x.ClaudeApiKey
+	}
+	return ""
+}
+
+func (x *CreateTemplateRequest_Experimental) GetClaudeEnvironmentKey() string {
+	if x != nil {
+		return x.ClaudeEnvironmentKey
+	}
+	return ""
+}
+
+func (x *CreateTemplateRequest_Experimental) GetClaudeWebhookSigningKey() string {
+	if x != nil {
+		return x.ClaudeWebhookSigningKey
+	}
+	return ""
+}
+
+// Transient integration setup values that must not be persisted in DevboxTemplateSpec.
+// Credentials are stored as tenant Vault secrets and never returned.
 type UpdateTemplateRequest_Experimental struct {
-	state             protoimpl.MessageState `protogen:"open.v1"`
-	DevinConnectCode  string                 `protobuf:"bytes,1,opt,name=devin_connect_code,json=devinConnectCode,proto3" json:"devin_connect_code,omitempty"`
-	DevinConnectState string                 `protobuf:"bytes,2,opt,name=devin_connect_state,json=devinConnectState,proto3" json:"devin_connect_state,omitempty"`
-	CursorApiKey      string                 `protobuf:"bytes,3,opt,name=cursor_api_key,json=cursorApiKey,proto3" json:"cursor_api_key,omitempty"`
-	unknownFields     protoimpl.UnknownFields
-	sizeCache         protoimpl.SizeCache
+	state                   protoimpl.MessageState `protogen:"open.v1"`
+	DevinConnectCode        string                 `protobuf:"bytes,1,opt,name=devin_connect_code,json=devinConnectCode,proto3" json:"devin_connect_code,omitempty"`
+	DevinConnectState       string                 `protobuf:"bytes,2,opt,name=devin_connect_state,json=devinConnectState,proto3" json:"devin_connect_state,omitempty"`
+	CursorApiKey            string                 `protobuf:"bytes,3,opt,name=cursor_api_key,json=cursorApiKey,proto3" json:"cursor_api_key,omitempty"`
+	ClaudeApiKey            string                 `protobuf:"bytes,4,opt,name=claude_api_key,json=claudeApiKey,proto3" json:"claude_api_key,omitempty"`
+	ClaudeEnvironmentKey    string                 `protobuf:"bytes,5,opt,name=claude_environment_key,json=claudeEnvironmentKey,proto3" json:"claude_environment_key,omitempty"`
+	ClaudeWebhookSigningKey string                 `protobuf:"bytes,6,opt,name=claude_webhook_signing_key,json=claudeWebhookSigningKey,proto3" json:"claude_webhook_signing_key,omitempty"`
+	unknownFields           protoimpl.UnknownFields
+	sizeCache               protoimpl.SizeCache
 }
 
 func (x *UpdateTemplateRequest_Experimental) Reset() {
 	*x = UpdateTemplateRequest_Experimental{}
-	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[107]
+	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[109]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -7301,7 +7569,7 @@ func (x *UpdateTemplateRequest_Experimental) String() string {
 func (*UpdateTemplateRequest_Experimental) ProtoMessage() {}
 
 func (x *UpdateTemplateRequest_Experimental) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[107]
+	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[109]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7338,6 +7606,27 @@ func (x *UpdateTemplateRequest_Experimental) GetCursorApiKey() string {
 	return ""
 }
 
+func (x *UpdateTemplateRequest_Experimental) GetClaudeApiKey() string {
+	if x != nil {
+		return x.ClaudeApiKey
+	}
+	return ""
+}
+
+func (x *UpdateTemplateRequest_Experimental) GetClaudeEnvironmentKey() string {
+	if x != nil {
+		return x.ClaudeEnvironmentKey
+	}
+	return ""
+}
+
+func (x *UpdateTemplateRequest_Experimental) GetClaudeWebhookSigningKey() string {
+	if x != nil {
+		return x.ClaudeWebhookSigningKey
+	}
+	return ""
+}
+
 type BlueprintSpec_PortForward struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Port          int32                  `protobuf:"varint,1,opt,name=port,proto3" json:"port,omitempty"`
@@ -7348,7 +7637,7 @@ type BlueprintSpec_PortForward struct {
 
 func (x *BlueprintSpec_PortForward) Reset() {
 	*x = BlueprintSpec_PortForward{}
-	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[108]
+	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[110]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -7360,7 +7649,7 @@ func (x *BlueprintSpec_PortForward) String() string {
 func (*BlueprintSpec_PortForward) ProtoMessage() {}
 
 func (x *BlueprintSpec_PortForward) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[108]
+	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[110]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7401,7 +7690,7 @@ type BlueprintSpec_EnvVar struct {
 
 func (x *BlueprintSpec_EnvVar) Reset() {
 	*x = BlueprintSpec_EnvVar{}
-	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[109]
+	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[111]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -7413,7 +7702,7 @@ func (x *BlueprintSpec_EnvVar) String() string {
 func (*BlueprintSpec_EnvVar) ProtoMessage() {}
 
 func (x *BlueprintSpec_EnvVar) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[109]
+	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[111]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7460,7 +7749,7 @@ type BlueprintSpec_Op struct {
 
 func (x *BlueprintSpec_Op) Reset() {
 	*x = BlueprintSpec_Op{}
-	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[110]
+	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[112]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -7472,7 +7761,7 @@ func (x *BlueprintSpec_Op) String() string {
 func (*BlueprintSpec_Op) ProtoMessage() {}
 
 func (x *BlueprintSpec_Op) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[110]
+	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[112]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7512,7 +7801,7 @@ type BlueprintSpec_UserOrUid struct {
 
 func (x *BlueprintSpec_UserOrUid) Reset() {
 	*x = BlueprintSpec_UserOrUid{}
-	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[111]
+	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[113]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -7524,7 +7813,7 @@ func (x *BlueprintSpec_UserOrUid) String() string {
 func (*BlueprintSpec_UserOrUid) ProtoMessage() {}
 
 func (x *BlueprintSpec_UserOrUid) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[111]
+	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[113]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7564,7 +7853,7 @@ type BlueprintSpec_Volume struct {
 
 func (x *BlueprintSpec_Volume) Reset() {
 	*x = BlueprintSpec_Volume{}
-	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[112]
+	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[114]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -7576,7 +7865,7 @@ func (x *BlueprintSpec_Volume) String() string {
 func (*BlueprintSpec_Volume) ProtoMessage() {}
 
 func (x *BlueprintSpec_Volume) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[112]
+	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[114]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7617,7 +7906,7 @@ type BlueprintSpec_SessionSpec struct {
 
 func (x *BlueprintSpec_SessionSpec) Reset() {
 	*x = BlueprintSpec_SessionSpec{}
-	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[113]
+	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[115]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -7629,7 +7918,7 @@ func (x *BlueprintSpec_SessionSpec) String() string {
 func (*BlueprintSpec_SessionSpec) ProtoMessage() {}
 
 func (x *BlueprintSpec_SessionSpec) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[113]
+	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[115]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7676,7 +7965,7 @@ type BlueprintSpec_Op_RunCommand struct {
 
 func (x *BlueprintSpec_Op_RunCommand) Reset() {
 	*x = BlueprintSpec_Op_RunCommand{}
-	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[114]
+	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[116]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -7688,7 +7977,7 @@ func (x *BlueprintSpec_Op_RunCommand) String() string {
 func (*BlueprintSpec_Op_RunCommand) ProtoMessage() {}
 
 func (x *BlueprintSpec_Op_RunCommand) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[114]
+	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[116]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7727,7 +8016,7 @@ type BlueprintSpec_Op_RunScript struct {
 
 func (x *BlueprintSpec_Op_RunScript) Reset() {
 	*x = BlueprintSpec_Op_RunScript{}
-	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[115]
+	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[117]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -7739,7 +8028,7 @@ func (x *BlueprintSpec_Op_RunScript) String() string {
 func (*BlueprintSpec_Op_RunScript) ProtoMessage() {}
 
 func (x *BlueprintSpec_Op_RunScript) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[115]
+	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[117]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7773,7 +8062,7 @@ type MetadataResponse_Site struct {
 
 func (x *MetadataResponse_Site) Reset() {
 	*x = MetadataResponse_Site{}
-	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[117]
+	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[119]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -7785,7 +8074,7 @@ func (x *MetadataResponse_Site) String() string {
 func (*MetadataResponse_Site) ProtoMessage() {}
 
 func (x *MetadataResponse_Site) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[117]
+	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[119]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7838,7 +8127,7 @@ type FeatureSpec_RunScript struct {
 
 func (x *FeatureSpec_RunScript) Reset() {
 	*x = FeatureSpec_RunScript{}
-	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[118]
+	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[120]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -7850,7 +8139,7 @@ func (x *FeatureSpec_RunScript) String() string {
 func (*FeatureSpec_RunScript) ProtoMessage() {}
 
 func (x *FeatureSpec_RunScript) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[118]
+	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[120]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7905,7 +8194,7 @@ type FeatureSpec_SessionSpec struct {
 
 func (x *FeatureSpec_SessionSpec) Reset() {
 	*x = FeatureSpec_SessionSpec{}
-	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[119]
+	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[121]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -7917,7 +8206,7 @@ func (x *FeatureSpec_SessionSpec) String() string {
 func (*FeatureSpec_SessionSpec) ProtoMessage() {}
 
 func (x *FeatureSpec_SessionSpec) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[119]
+	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[121]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7964,7 +8253,7 @@ type FeatureSpec_ExportedPort struct {
 
 func (x *FeatureSpec_ExportedPort) Reset() {
 	*x = FeatureSpec_ExportedPort{}
-	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[120]
+	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[122]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -7976,7 +8265,7 @@ func (x *FeatureSpec_ExportedPort) String() string {
 func (*FeatureSpec_ExportedPort) ProtoMessage() {}
 
 func (x *FeatureSpec_ExportedPort) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[120]
+	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[122]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8018,7 +8307,7 @@ type NetworkPolicySpec_EgressDomains struct {
 
 func (x *NetworkPolicySpec_EgressDomains) Reset() {
 	*x = NetworkPolicySpec_EgressDomains{}
-	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[121]
+	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[123]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -8030,7 +8319,7 @@ func (x *NetworkPolicySpec_EgressDomains) String() string {
 func (*NetworkPolicySpec_EgressDomains) ProtoMessage() {}
 
 func (x *NetworkPolicySpec_EgressDomains) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[121]
+	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[123]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8069,7 +8358,7 @@ type NetworkPolicySpec_EgressPolicy struct {
 
 func (x *NetworkPolicySpec_EgressPolicy) Reset() {
 	*x = NetworkPolicySpec_EgressPolicy{}
-	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[122]
+	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[124]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -8081,7 +8370,7 @@ func (x *NetworkPolicySpec_EgressPolicy) String() string {
 func (*NetworkPolicySpec_EgressPolicy) ProtoMessage() {}
 
 func (x *NetworkPolicySpec_EgressPolicy) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[122]
+	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[124]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8116,7 +8405,7 @@ type Integrations_TailscaleIntegration struct {
 
 func (x *Integrations_TailscaleIntegration) Reset() {
 	*x = Integrations_TailscaleIntegration{}
-	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[123]
+	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[125]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -8128,7 +8417,7 @@ func (x *Integrations_TailscaleIntegration) String() string {
 func (*Integrations_TailscaleIntegration) ProtoMessage() {}
 
 func (x *Integrations_TailscaleIntegration) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[123]
+	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[125]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8161,7 +8450,7 @@ type Integrations_ClaudeIntegration struct {
 
 func (x *Integrations_ClaudeIntegration) Reset() {
 	*x = Integrations_ClaudeIntegration{}
-	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[124]
+	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[126]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -8173,7 +8462,7 @@ func (x *Integrations_ClaudeIntegration) String() string {
 func (*Integrations_ClaudeIntegration) ProtoMessage() {}
 
 func (x *Integrations_ClaudeIntegration) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[124]
+	mi := &file_proto_namespace_private_devbox_devbox_proto_msgTypes[126]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8207,7 +8496,7 @@ var File_proto_namespace_private_devbox_devbox_proto protoreflect.FileDescriptor
 
 const file_proto_namespace_private_devbox_devbox_proto_rawDesc = "" +
 	"\n" +
-	"+proto/namespace/private/devbox/devbox.proto\x12\x1fnamespace.private.devbox.v1beta\x1a\x1egoogle/protobuf/duration.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1egoogle/protobuf/wrappers.proto\x1a%proto/namespace/stdlib/matchers.proto\x1a2proto/namespace/cloud/compute/v1beta/compute.proto\x1a2proto/namespace/cloud/compute/v1beta/storage.proto\"\xbe\x02\n" +
+	"+proto/namespace/private/devbox/devbox.proto\x12\x1fnamespace.private.devbox.v1beta\x1a\x1egoogle/protobuf/duration.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1egoogle/protobuf/wrappers.proto\x1a#proto/namespace/stdlib/labels.proto\x1a%proto/namespace/stdlib/matchers.proto\x1a2proto/namespace/cloud/compute/v1beta/compute.proto\x1a2proto/namespace/cloud/compute/v1beta/storage.proto\"\xbe\x02\n" +
 	"\x0eHttpAccessMode\x12Q\n" +
 	"\x05owner\x18\x01 \x01(\v2;.namespace.private.devbox.v1beta.HttpAccessMode.OwnerAccessR\x05owner\x12T\n" +
 	"\x06tenant\x18\x02 \x01(\v2<.namespace.private.devbox.v1beta.HttpAccessMode.TenantAccessR\x06tenant\x12T\n" +
@@ -8222,7 +8511,7 @@ const file_proto_namespace_private_devbox_devbox_proto_rawDesc = "" +
 	"\x04Kind\x12\x14\n" +
 	"\x10KIND_UNSPECIFIED\x10\x00\x12\x15\n" +
 	"\x11KIND_PORT_FORWARD\x10\x01\x12\x15\n" +
-	"\x11KIND_HTTP_INGRESS\x10\x02\"\x88\f\n" +
+	"\x11KIND_HTTP_INGRESS\x10\x02\"\xda\f\n" +
 	"\rCreateRequest\x12\x12\n" +
 	"\x04name\x18\x01 \x01(\tR\x04name\x12\x1b\n" +
 	"\timage_ref\x18\x02 \x01(\tR\bimageRef\x12T\n" +
@@ -8254,9 +8543,12 @@ const file_proto_namespace_private_devbox_devbox_proto_rawDesc = "" +
 	"privileged\x12W\n" +
 	"\venvironment\x18\x18 \x03(\v25.namespace.private.devbox.v1beta.BlueprintSpec.EnvVarR\venvironment\x12Y\n" +
 	"\x0enetwork_policy\x18\x19 \x01(\v22.namespace.private.devbox.v1beta.NetworkPolicySpecR\rnetworkPolicy\x12?\n" +
-	"\x05ports\x18\x1a \x03(\v2).namespace.private.devbox.v1beta.PortSpecR\x05ports\x12\x1a\n" +
+	"\x05ports\x18\x1a \x03(\v2).namespace.private.devbox.v1beta.PortSpecR\x05ports\x12/\n" +
+	"\x06labels\x18\x1b \x03(\v2\x17.namespace.stdlib.LabelR\x06labels\x12\x1f\n" +
+	"\vinit_script\x18\x1c \x01(\tR\n" +
+	"initScript\x12\x1a\n" +
 	"\bactivate\x18\x06 \x01(\bR\bactivate\x12r\n" +
-	"\x15activate_experimental\x18\a \x01(\v2=.namespace.private.devbox.v1beta.ActivateRequest.ExperimentalR\x14activateExperimentalJ\x04\b\x04\x10\x05R\rstartup_bytes\"\xe2\x03\n" +
+	"\x15activate_experimental\x18\a \x01(\v2=.namespace.private.devbox.v1beta.ActivateRequest.ExperimentalR\x14activateExperimentalJ\x04\b\x04\x10\x05R\rstartup_bytes\"\x93\x04\n" +
 	"\x19CreateFromTemplateRequest\x12\x12\n" +
 	"\x04name\x18\x01 \x01(\tR\x04name\x12\x1f\n" +
 	"\vtemplate_id\x18\x02 \x01(\tR\n" +
@@ -8264,11 +8556,12 @@ const file_proto_namespace_private_devbox_devbox_proto_rawDesc = "" +
 	"\bactivate\x18\x03 \x01(\bR\bactivate\x12r\n" +
 	"\x15activate_experimental\x18\x04 \x01(\v2=.namespace.private.devbox.v1beta.ActivateRequest.ExperimentalR\x14activateExperimental\x12-\n" +
 	"\x12documented_purpose\x18\x05 \x01(\tR\x11documentedPurpose\x12b\n" +
-	"\toverrides\x18\x06 \x01(\v2D.namespace.private.devbox.v1beta.CreateFromTemplateRequest.OverridesR\toverrides\x1am\n" +
+	"\toverrides\x18\x06 \x01(\v2D.namespace.private.devbox.v1beta.CreateFromTemplateRequest.OverridesR\toverrides\x12/\n" +
+	"\x06labels\x18\a \x03(\v2\x17.namespace.stdlib.LabelR\x06labels\x1am\n" +
 	"\tOverrides\x12\x12\n" +
 	"\x04site\x18\x01 \x01(\tR\x04site\x12L\n" +
 	"\vaccess_mode\x18\x02 \x01(\x0e2+.namespace.private.devbox.v1beta.AccessModeR\n" +
-	"accessMode\"\xe8\x02\n" +
+	"accessMode\"\x99\x03\n" +
 	"\x17CreateFromDevboxRequest\x12\x12\n" +
 	"\x04name\x18\x01 \x01(\tR\x04name\x12\x1f\n" +
 	"\vfrom_devbox\x18\x02 \x01(\tR\n" +
@@ -8276,12 +8569,13 @@ const file_proto_namespace_private_devbox_devbox_proto_rawDesc = "" +
 	"\x0einstance_shape\x18\x03 \x01(\v2-.namespace.cloud.compute.v1beta.InstanceShapeR\rinstanceShape\x12\x1f\n" +
 	"\vsnapshot_id\x18\x04 \x01(\tR\n" +
 	"snapshotId\x12-\n" +
-	"\x12documented_purpose\x18\x06 \x01(\tR\x11documentedPurpose\x12r\n" +
+	"\x12documented_purpose\x18\x06 \x01(\tR\x11documentedPurpose\x12/\n" +
+	"\x06labels\x18\a \x03(\v2\x17.namespace.stdlib.LabelR\x06labels\x12r\n" +
 	"\x15activate_experimental\x18\x05 \x01(\v2=.namespace.private.devbox.v1beta.ActivateRequest.ExperimentalR\x14activateExperimental\"r\n" +
 	"\x0eCreateResponse\x12?\n" +
 	"\x06devbox\x18\x01 \x01(\v2'.namespace.private.devbox.v1beta.DevBoxR\x06devbox\x12\x1f\n" +
 	"\vinstance_id\x18\x02 \x01(\tR\n" +
-	"instanceId\"\x87\b\n" +
+	"instanceId\"\x84\t\n" +
 	"\x0fActivateRequest\x12\x12\n" +
 	"\x04name\x18\x01 \x01(\tR\x04name\x12a\n" +
 	"\fexperimental\x18\x02 \x01(\v2=.namespace.private.devbox.v1beta.ActivateRequest.ExperimentalR\fexperimental\x126\n" +
@@ -8290,7 +8584,7 @@ const file_proto_namespace_private_devbox_devbox_proto_rawDesc = "" +
 	"\x10from_snapshot_id\x18\x05 \x01(\tR\x0efromSnapshotId\x12\x0e\n" +
 	"\x02id\x18\x06 \x01(\tR\x02id\x12\x1c\n" +
 	"\n" +
-	"id_or_name\x18\a \x01(\tR\bidOrName\x1a\xbe\x05\n" +
+	"id_or_name\x18\a \x01(\tR\bidOrName\x1a\xbb\x06\n" +
 	"\fExperimental\x12%\n" +
 	"\x0eagent_imageref\x18\x02 \x01(\tR\ragentImageref\x12#\n" +
 	"\rbake_imageref\x18\x03 \x01(\tR\fbakeImageref\x12'\n" +
@@ -8298,7 +8592,9 @@ const file_proto_namespace_private_devbox_devbox_proto_rawDesc = "" +
 	"\venable_dbus\x18\a \x01(\bR\n" +
 	"enableDbus\x12r\n" +
 	"\x0edevin_outposts\x18\b \x01(\v2K.namespace.private.devbox.v1beta.ActivateRequest.Experimental.DevinOutpostsR\rdevinOutposts\x12o\n" +
-	"\rcursor_worker\x18\t \x01(\v2J.namespace.private.devbox.v1beta.ActivateRequest.Experimental.CursorWorkerR\fcursorWorker\x1a\x93\x01\n" +
+	"\rcursor_worker\x18\t \x01(\v2J.namespace.private.devbox.v1beta.ActivateRequest.Experimental.CursorWorkerR\fcursorWorker\x12l\n" +
+	"\fclaude_agent\x18\n" +
+	" \x01(\v2I.namespace.private.devbox.v1beta.ActivateRequest.Experimental.ClaudeAgentR\vclaudeAgent\x1a\x93\x01\n" +
 	"\rDevinOutposts\x12#\n" +
 	"\rconnect_token\x18\x01 \x01(\tR\fconnectToken\x12\x1d\n" +
 	"\n" +
@@ -8310,7 +8606,8 @@ const file_proto_namespace_private_devbox_devbox_proto_rawDesc = "" +
 	"\tworker_id\x18\x02 \x01(\tR\bworkerId\x12\x1b\n" +
 	"\tpool_name\x18\x03 \x01(\tR\bpoolName\x12\x1d\n" +
 	"\n" +
-	"request_id\x18\x04 \x01(\tR\trequestIdJ\x04\b\x01\x10\x02J\x04\b\x04\x10\x05J\x04\b\x05\x10\x06\"\xe6\x02\n" +
+	"request_id\x18\x04 \x01(\tR\trequestId\x1a\r\n" +
+	"\vClaudeAgentJ\x04\b\x01\x10\x02J\x04\b\x04\x10\x05J\x04\b\x05\x10\x06\"\xe6\x02\n" +
 	"\x10ActivateResponse\x12\x1f\n" +
 	"\vinstance_id\x18\x01 \x01(\tR\n" +
 	"instanceId\x12?\n" +
@@ -8341,7 +8638,7 @@ const file_proto_namespace_private_devbox_devbox_proto_rawDesc = "" +
 	"\fStopResponse\x12?\n" +
 	"\x06devbox\x18\x01 \x01(\v2'.namespace.private.devbox.v1beta.DevBoxR\x06devbox\x12\x1f\n" +
 	"\vinstance_id\x18\x02 \x01(\tR\n" +
-	"instanceId\"\xc1\x05\n" +
+	"instanceId\"\x88\x06\n" +
 	"\vListRequest\x12+\n" +
 	"\x11pagination_cursor\x18\x01 \x01(\fR\x10paginationCursor\x12D\n" +
 	"\rmatch_creator\x18\x02 \x01(\v2\x1f.namespace.stdlib.StringMatcherR\fmatchCreator\x12I\n" +
@@ -8350,7 +8647,8 @@ const file_proto_namespace_private_devbox_devbox_proto_rawDesc = "" +
 	"\border_by\x18\x05 \x01(\x0e24.namespace.private.devbox.v1beta.ListRequest.OrderByR\aorderBy\x12e\n" +
 	"\x0fmatch_ephemeral\x18\x06 \x01(\x0e2<.namespace.private.devbox.v1beta.ListRequest.EphemeralFilterR\x0ematchEphemeral\x12\x1f\n" +
 	"\vmax_entries\x18\a \x01(\x03R\n" +
-	"maxEntries\"S\n" +
+	"maxEntries\x12E\n" +
+	"\fmatch_labels\x18\b \x03(\v2\".namespace.stdlib.LabelFilterEntryR\vmatchLabels\"S\n" +
 	"\aOrderBy\x12\x14\n" +
 	"\x10ORDER_BY_UNKNOWN\x10\x00\x12\x19\n" +
 	"\x15ORDER_BY_LAST_USED_AT\x10\x01\x12\x17\n" +
@@ -8425,7 +8723,7 @@ const file_proto_namespace_private_devbox_devbox_proto_rawDesc = "" +
 	"\vacquired_at\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
 	"acquiredAt\x12;\n" +
 	"\vreleased_at\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
-	"releasedAt\"\xfb\x0e\n" +
+	"releasedAt\"\xac\x0f\n" +
 	"\x06DevBox\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x129\n" +
@@ -8466,7 +8764,8 @@ const file_proto_namespace_private_devbox_devbox_proto_rawDesc = "" +
 	"\tephemeral\x18\x1c \x01(\v2..namespace.private.devbox.v1beta.EphemeralSpecR\tephemeral\x12I\n" +
 	"\n" +
 	"pool_lease\x18\x1d \x01(\v2*.namespace.private.devbox.v1beta.PoolLeaseR\tpoolLease\x12Y\n" +
-	"\x0enetwork_policy\x18\x1e \x01(\v22.namespace.private.devbox.v1beta.NetworkPolicySpecR\rnetworkPolicy\x1aM\n" +
+	"\x0enetwork_policy\x18\x1e \x01(\v22.namespace.private.devbox.v1beta.NetworkPolicySpecR\rnetworkPolicy\x12/\n" +
+	"\x06labels\x18! \x03(\v2\x17.namespace.stdlib.LabelR\x06labels\x1aM\n" +
 	"\rResolvedImage\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12\x18\n" +
@@ -8486,7 +8785,7 @@ const file_proto_namespace_private_devbox_devbox_proto_rawDesc = "" +
 	"\x04name\x18\x04 \x01(\tR\x04name\x12D\n" +
 	"\x06source\x18\x05 \x01(\v2,.namespace.private.devbox.v1beta.ImageSourceR\x06source\"h\n" +
 	"\rEphemeralSpec\x12W\n" +
-	"\x1astopped_retention_duration\x18\x01 \x01(\v2\x19.google.protobuf.DurationR\x18stoppedRetentionDuration\"\xdf\r\n" +
+	"\x1astopped_retention_duration\x18\x01 \x01(\v2\x19.google.protobuf.DurationR\x18stoppedRetentionDuration\"\x8f\x12\n" +
 	"\x12DevboxTemplateSpec\x12\x12\n" +
 	"\x04name\x18\x01 \x01(\tR\x04name\x12\\\n" +
 	"\binstance\x18\x02 \x01(\v2@.namespace.private.devbox.v1beta.DevboxTemplateSpec.InstanceSpecR\binstance\x120\n" +
@@ -8504,24 +8803,38 @@ const file_proto_namespace_private_devbox_devbox_proto_rawDesc = "" +
 	"\vaccess_mode\x18\r \x01(\x0e2+.namespace.private.devbox.v1beta.AccessModeR\n" +
 	"accessMode\x12E\n" +
 	"\bfeatures\x18\x0e \x01(\v2).namespace.private.devbox.v1beta.FeaturesR\bfeatures\x12?\n" +
-	"\x05ports\x18\x0f \x03(\v2).namespace.private.devbox.v1beta.PortSpecR\x05ports\x1a\x8e\x02\n" +
+	"\x05ports\x18\x0f \x03(\v2).namespace.private.devbox.v1beta.PortSpecR\x05ports\x12L\n" +
+	"\x04type\x18\x10 \x01(\x0e28.namespace.private.devbox.v1beta.DevboxTemplateSpec.TypeR\x04type\x12V\n" +
+	"\bsessions\x18\x11 \x03(\v2:.namespace.private.devbox.v1beta.BlueprintSpec.SessionSpecR\bsessions\x12\x1f\n" +
+	"\vinit_script\x18\x12 \x01(\tR\n" +
+	"initScript\x1a\x8e\x02\n" +
 	"\fInstanceSpec\x12C\n" +
 	"\x05shape\x18\x01 \x01(\v2-.namespace.cloud.compute.v1beta.InstanceShapeR\x05shape\x12h\n" +
 	"\x05linux\x18\x02 \x01(\v2R.namespace.private.devbox.v1beta.DevboxTemplateSpec.InstanceSpec.LinuxInstanceSpecR\x05linux\x1aO\n" +
 	"\x11LinuxInstanceSpec\x12\x1b\n" +
 	"\timage_ref\x18\x01 \x01(\tR\bimageRef\x12\x1d\n" +
 	"\n" +
-	"image_name\x18\x02 \x01(\tR\timageName\x1a\x80\x03\n" +
+	"image_name\x18\x02 \x01(\tR\timageName\x1a\xe5\x04\n" +
 	"\fExperimental\x12v\n" +
 	"\rdevin_outpost\x18\x01 \x01(\v2Q.namespace.private.devbox.v1beta.DevboxTemplateSpec.Experimental.DevinOutpostSpecR\fdevinOutpost\x12v\n" +
-	"\rcursor_worker\x18\x02 \x01(\v2Q.namespace.private.devbox.v1beta.DevboxTemplateSpec.Experimental.CursorWorkerSpecR\fcursorWorker\x1aM\n" +
+	"\rcursor_worker\x18\x02 \x01(\v2Q.namespace.private.devbox.v1beta.DevboxTemplateSpec.Experimental.CursorWorkerSpecR\fcursorWorker\x12\x85\x01\n" +
+	"\x12claude_environment\x18\x03 \x01(\v2V.namespace.private.devbox.v1beta.DevboxTemplateSpec.Experimental.ClaudeEnvironmentSpecR\x11claudeEnvironment\x1aM\n" +
 	"\x10DevinOutpostSpec\x12\x1a\n" +
 	"\bendpoint\x18\x01 \x01(\tR\bendpoint\x12\x1d\n" +
 	"\n" +
-	"outpost_id\x18\x02 \x01(\tR\toutpostId\x1a1\n" +
-	"\x10CursorWorkerSpec\x12\x1d\n" +
+	"outpost_id\x18\x02 \x01(\tR\toutpostId\x1a/\n" +
+	"\x10CursorWorkerSpec\x12\x1b\n" +
+	"\tpool_name\x18\x01 \x01(\tR\bpoolName\x1a]\n" +
+	"\x15ClaudeEnvironmentSpec\x12%\n" +
+	"\x0eenvironment_id\x18\x01 \x01(\tR\renvironmentId\x12\x1d\n" +
 	"\n" +
-	"pool_names\x18\x01 \x03(\tR\tpoolNames\"\xf9\x01\n" +
+	"webhook_id\x18\x02 \x01(\tR\twebhookId\"\x81\x01\n" +
+	"\x04Type\x12\x14\n" +
+	"\x10TYPE_UNSPECIFIED\x10\x00\x12\x10\n" +
+	"\fTYPE_GENERAL\x10\x01\x12\x1a\n" +
+	"\x16TYPE_MANAGED_BY_CLAUDE\x10\x04\x12\x1a\n" +
+	"\x16TYPE_MANAGED_BY_CURSOR\x10\x02\x12\x19\n" +
+	"\x15TYPE_MANAGED_BY_DEVIN\x10\x03\"\xf9\x01\n" +
 	"\x0eDevboxTemplate\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x18\n" +
 	"\aversion\x18\x02 \x01(\x03R\aversion\x129\n" +
@@ -8529,24 +8842,30 @@ const file_proto_namespace_private_devbox_devbox_proto_rawDesc = "" +
 	"created_at\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\x129\n" +
 	"\n" +
 	"updated_at\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\tupdatedAt\x12G\n" +
-	"\x04spec\x18\x05 \x01(\v23.namespace.private.devbox.v1beta.DevboxTemplateSpecR\x04spec\"\xde\x02\n" +
+	"\x04spec\x18\x05 \x01(\v23.namespace.private.devbox.v1beta.DevboxTemplateSpecR\x04spec\"\xf7\x03\n" +
 	"\x15CreateTemplateRequest\x12G\n" +
 	"\x04spec\x18\x01 \x01(\v23.namespace.private.devbox.v1beta.DevboxTemplateSpecR\x04spec\x12g\n" +
-	"\fexperimental\x18\x02 \x01(\v2C.namespace.private.devbox.v1beta.CreateTemplateRequest.ExperimentalR\fexperimental\x1a\x92\x01\n" +
+	"\fexperimental\x18\x02 \x01(\v2C.namespace.private.devbox.v1beta.CreateTemplateRequest.ExperimentalR\fexperimental\x1a\xab\x02\n" +
 	"\fExperimental\x12,\n" +
 	"\x12devin_connect_code\x18\x01 \x01(\tR\x10devinConnectCode\x12.\n" +
 	"\x13devin_connect_state\x18\x02 \x01(\tR\x11devinConnectState\x12$\n" +
-	"\x0ecursor_api_key\x18\x03 \x01(\tR\fcursorApiKey\"e\n" +
+	"\x0ecursor_api_key\x18\x03 \x01(\tR\fcursorApiKey\x12$\n" +
+	"\x0eclaude_api_key\x18\x04 \x01(\tR\fclaudeApiKey\x124\n" +
+	"\x16claude_environment_key\x18\x05 \x01(\tR\x14claudeEnvironmentKey\x12;\n" +
+	"\x1aclaude_webhook_signing_key\x18\x06 \x01(\tR\x17claudeWebhookSigningKey\"e\n" +
 	"\x16CreateTemplateResponse\x12K\n" +
-	"\btemplate\x18\x01 \x01(\v2/.namespace.private.devbox.v1beta.DevboxTemplateR\btemplate\"\xee\x02\n" +
+	"\btemplate\x18\x01 \x01(\v2/.namespace.private.devbox.v1beta.DevboxTemplateR\btemplate\"\x87\x04\n" +
 	"\x15UpdateTemplateRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12G\n" +
 	"\x04spec\x18\x02 \x01(\v23.namespace.private.devbox.v1beta.DevboxTemplateSpecR\x04spec\x12g\n" +
-	"\fexperimental\x18\x03 \x01(\v2C.namespace.private.devbox.v1beta.UpdateTemplateRequest.ExperimentalR\fexperimental\x1a\x92\x01\n" +
+	"\fexperimental\x18\x03 \x01(\v2C.namespace.private.devbox.v1beta.UpdateTemplateRequest.ExperimentalR\fexperimental\x1a\xab\x02\n" +
 	"\fExperimental\x12,\n" +
 	"\x12devin_connect_code\x18\x01 \x01(\tR\x10devinConnectCode\x12.\n" +
 	"\x13devin_connect_state\x18\x02 \x01(\tR\x11devinConnectState\x12$\n" +
-	"\x0ecursor_api_key\x18\x03 \x01(\tR\fcursorApiKey\"e\n" +
+	"\x0ecursor_api_key\x18\x03 \x01(\tR\fcursorApiKey\x12$\n" +
+	"\x0eclaude_api_key\x18\x04 \x01(\tR\fclaudeApiKey\x124\n" +
+	"\x16claude_environment_key\x18\x05 \x01(\tR\x14claudeEnvironmentKey\x12;\n" +
+	"\x1aclaude_webhook_signing_key\x18\x06 \x01(\tR\x17claudeWebhookSigningKey\"e\n" +
 	"\x16UpdateTemplateResponse\x12K\n" +
 	"\btemplate\x18\x01 \x01(\v2/.namespace.private.devbox.v1beta.DevboxTemplateR\btemplate\"*\n" +
 	"\x14FetchTemplateRequest\x12\x12\n" +
@@ -8896,388 +9215,402 @@ func file_proto_namespace_private_devbox_devbox_proto_rawDescGZIP() []byte {
 	return file_proto_namespace_private_devbox_devbox_proto_rawDescData
 }
 
-var file_proto_namespace_private_devbox_devbox_proto_enumTypes = make([]protoimpl.EnumInfo, 11)
-var file_proto_namespace_private_devbox_devbox_proto_msgTypes = make([]protoimpl.MessageInfo, 125)
+var file_proto_namespace_private_devbox_devbox_proto_enumTypes = make([]protoimpl.EnumInfo, 12)
+var file_proto_namespace_private_devbox_devbox_proto_msgTypes = make([]protoimpl.MessageInfo, 127)
 var file_proto_namespace_private_devbox_devbox_proto_goTypes = []any{
-	(AccessMode)(0),                                           // 0: namespace.private.devbox.v1beta.AccessMode
-	(PortSpec_Kind)(0),                                        // 1: namespace.private.devbox.v1beta.PortSpec.Kind
-	(ActivateResponseChunk_Status)(0),                         // 2: namespace.private.devbox.v1beta.ActivateResponseChunk.Status
-	(ListRequest_OrderBy)(0),                                  // 3: namespace.private.devbox.v1beta.ListRequest.OrderBy
-	(ListRequest_EphemeralFilter)(0),                          // 4: namespace.private.devbox.v1beta.ListRequest.EphemeralFilter
-	(ListSnapshotsRequest_OrderBy)(0),                         // 5: namespace.private.devbox.v1beta.ListSnapshotsRequest.OrderBy
-	(AcquireLeaseResponse_LeaseOutcome)(0),                    // 6: namespace.private.devbox.v1beta.AcquireLeaseResponse.LeaseOutcome
-	(ListTemplatesRequest_OrderBy)(0),                         // 7: namespace.private.devbox.v1beta.ListTemplatesRequest.OrderBy
-	(VersionControlSpec_CheckoutMethod)(0),                    // 8: namespace.private.devbox.v1beta.VersionControlSpec.CheckoutMethod
-	(Image_Flag)(0),                                           // 9: namespace.private.devbox.v1beta.Image.Flag
-	(OptimizeImageResponseChunk_Status)(0),                    // 10: namespace.private.devbox.v1beta.OptimizeImageResponseChunk.Status
-	(*HttpAccessMode)(nil),                                    // 11: namespace.private.devbox.v1beta.HttpAccessMode
-	(*PortSpec)(nil),                                          // 12: namespace.private.devbox.v1beta.PortSpec
-	(*CreateRequest)(nil),                                     // 13: namespace.private.devbox.v1beta.CreateRequest
-	(*CreateFromTemplateRequest)(nil),                         // 14: namespace.private.devbox.v1beta.CreateFromTemplateRequest
-	(*CreateFromDevboxRequest)(nil),                           // 15: namespace.private.devbox.v1beta.CreateFromDevboxRequest
-	(*CreateResponse)(nil),                                    // 16: namespace.private.devbox.v1beta.CreateResponse
-	(*ActivateRequest)(nil),                                   // 17: namespace.private.devbox.v1beta.ActivateRequest
-	(*ActivateResponse)(nil),                                  // 18: namespace.private.devbox.v1beta.ActivateResponse
-	(*ActivateResponseChunk)(nil),                             // 19: namespace.private.devbox.v1beta.ActivateResponseChunk
-	(*ExpireRequest)(nil),                                     // 20: namespace.private.devbox.v1beta.ExpireRequest
-	(*ExpireResponse)(nil),                                    // 21: namespace.private.devbox.v1beta.ExpireResponse
-	(*StopRequest)(nil),                                       // 22: namespace.private.devbox.v1beta.StopRequest
-	(*StopResponse)(nil),                                      // 23: namespace.private.devbox.v1beta.StopResponse
-	(*ListRequest)(nil),                                       // 24: namespace.private.devbox.v1beta.ListRequest
-	(*ListResponse)(nil),                                      // 25: namespace.private.devbox.v1beta.ListResponse
-	(*GetUsageRequest)(nil),                                   // 26: namespace.private.devbox.v1beta.GetUsageRequest
-	(*GetUsageResponse)(nil),                                  // 27: namespace.private.devbox.v1beta.GetUsageResponse
-	(*FetchRequest)(nil),                                      // 28: namespace.private.devbox.v1beta.FetchRequest
-	(*FetchResponse)(nil),                                     // 29: namespace.private.devbox.v1beta.FetchResponse
-	(*ListSnapshotsRequest)(nil),                              // 30: namespace.private.devbox.v1beta.ListSnapshotsRequest
-	(*ListSnapshotsResponse)(nil),                             // 31: namespace.private.devbox.v1beta.ListSnapshotsResponse
-	(*AcquireLeaseRequest)(nil),                               // 32: namespace.private.devbox.v1beta.AcquireLeaseRequest
-	(*AcquireLeaseResponse)(nil),                              // 33: namespace.private.devbox.v1beta.AcquireLeaseResponse
-	(*ReleaseLeaseRequest)(nil),                               // 34: namespace.private.devbox.v1beta.ReleaseLeaseRequest
-	(*ReleaseLeaseResponse)(nil),                              // 35: namespace.private.devbox.v1beta.ReleaseLeaseResponse
-	(*PoolLease)(nil),                                         // 36: namespace.private.devbox.v1beta.PoolLease
-	(*DevBox)(nil),                                            // 37: namespace.private.devbox.v1beta.DevBox
-	(*BlueprintRef)(nil),                                      // 38: namespace.private.devbox.v1beta.BlueprintRef
-	(*ImageSource)(nil),                                       // 39: namespace.private.devbox.v1beta.ImageSource
-	(*WireImageRequest)(nil),                                  // 40: namespace.private.devbox.v1beta.WireImageRequest
-	(*EphemeralSpec)(nil),                                     // 41: namespace.private.devbox.v1beta.EphemeralSpec
-	(*DevboxTemplateSpec)(nil),                                // 42: namespace.private.devbox.v1beta.DevboxTemplateSpec
-	(*DevboxTemplate)(nil),                                    // 43: namespace.private.devbox.v1beta.DevboxTemplate
-	(*CreateTemplateRequest)(nil),                             // 44: namespace.private.devbox.v1beta.CreateTemplateRequest
-	(*CreateTemplateResponse)(nil),                            // 45: namespace.private.devbox.v1beta.CreateTemplateResponse
-	(*UpdateTemplateRequest)(nil),                             // 46: namespace.private.devbox.v1beta.UpdateTemplateRequest
-	(*UpdateTemplateResponse)(nil),                            // 47: namespace.private.devbox.v1beta.UpdateTemplateResponse
-	(*FetchTemplateRequest)(nil),                              // 48: namespace.private.devbox.v1beta.FetchTemplateRequest
-	(*FetchTemplateResponse)(nil),                             // 49: namespace.private.devbox.v1beta.FetchTemplateResponse
-	(*ListTemplatesRequest)(nil),                              // 50: namespace.private.devbox.v1beta.ListTemplatesRequest
-	(*ListTemplatesResponse)(nil),                             // 51: namespace.private.devbox.v1beta.ListTemplatesResponse
-	(*ExpireTemplateRequest)(nil),                             // 52: namespace.private.devbox.v1beta.ExpireTemplateRequest
-	(*ExpireTemplateResponse)(nil),                            // 53: namespace.private.devbox.v1beta.ExpireTemplateResponse
-	(*BeginDevinOutpostConnectRequest)(nil),                   // 54: namespace.private.devbox.v1beta.BeginDevinOutpostConnectRequest
-	(*BeginDevinOutpostConnectResponse)(nil),                  // 55: namespace.private.devbox.v1beta.BeginDevinOutpostConnectResponse
-	(*VersionControlAuthor)(nil),                              // 56: namespace.private.devbox.v1beta.VersionControlAuthor
-	(*VersionControlSpec)(nil),                                // 57: namespace.private.devbox.v1beta.VersionControlSpec
-	(*BlueprintSpec)(nil),                                     // 58: namespace.private.devbox.v1beta.BlueprintSpec
-	(*WireImageResponse)(nil),                                 // 59: namespace.private.devbox.v1beta.WireImageResponse
-	(*ExpireImageRequest)(nil),                                // 60: namespace.private.devbox.v1beta.ExpireImageRequest
-	(*ExpireImageResponse)(nil),                               // 61: namespace.private.devbox.v1beta.ExpireImageResponse
-	(*ListImagesRequest)(nil),                                 // 62: namespace.private.devbox.v1beta.ListImagesRequest
-	(*ListImagesResponse)(nil),                                // 63: namespace.private.devbox.v1beta.ListImagesResponse
-	(*Image)(nil),                                             // 64: namespace.private.devbox.v1beta.Image
-	(*OptimizeImageRequest)(nil),                              // 65: namespace.private.devbox.v1beta.OptimizeImageRequest
-	(*OptimizeImageResponseChunk)(nil),                        // 66: namespace.private.devbox.v1beta.OptimizeImageResponseChunk
-	(*InspectImageRequest)(nil),                               // 67: namespace.private.devbox.v1beta.InspectImageRequest
-	(*InspectImageResponse)(nil),                              // 68: namespace.private.devbox.v1beta.InspectImageResponse
-	(*DescribeImageRequest)(nil),                              // 69: namespace.private.devbox.v1beta.DescribeImageRequest
-	(*DescribeImageResponse)(nil),                             // 70: namespace.private.devbox.v1beta.DescribeImageResponse
-	(*ListComposableFeaturesRequest)(nil),                     // 71: namespace.private.devbox.v1beta.ListComposableFeaturesRequest
-	(*ListComposableFeaturesResponse)(nil),                    // 72: namespace.private.devbox.v1beta.ListComposableFeaturesResponse
-	(*ComposableFeature)(nil),                                 // 73: namespace.private.devbox.v1beta.ComposableFeature
-	(*RegisterComposableFeatureRequest)(nil),                  // 74: namespace.private.devbox.v1beta.RegisterComposableFeatureRequest
-	(*RegisterComposableFeatureResponse)(nil),                 // 75: namespace.private.devbox.v1beta.RegisterComposableFeatureResponse
-	(*RemoveComposableFeatureRequest)(nil),                    // 76: namespace.private.devbox.v1beta.RemoveComposableFeatureRequest
-	(*RemoveComposableFeatureResponse)(nil),                   // 77: namespace.private.devbox.v1beta.RemoveComposableFeatureResponse
-	(*MetadataRequest)(nil),                                   // 78: namespace.private.devbox.v1beta.MetadataRequest
-	(*MetadataResponse)(nil),                                  // 79: namespace.private.devbox.v1beta.MetadataResponse
-	(*FeatureSpec)(nil),                                       // 80: namespace.private.devbox.v1beta.FeatureSpec
-	(*UpdateRequest)(nil),                                     // 81: namespace.private.devbox.v1beta.UpdateRequest
-	(*UpdateResponse)(nil),                                    // 82: namespace.private.devbox.v1beta.UpdateResponse
-	(*DevboxDefaults)(nil),                                    // 83: namespace.private.devbox.v1beta.DevboxDefaults
-	(*UpdateDefaultsRequest)(nil),                             // 84: namespace.private.devbox.v1beta.UpdateDefaultsRequest
-	(*UpdateDefaultsResponse)(nil),                            // 85: namespace.private.devbox.v1beta.UpdateDefaultsResponse
-	(*FetchDefaultsRequest)(nil),                              // 86: namespace.private.devbox.v1beta.FetchDefaultsRequest
-	(*FetchDefaultsResponse)(nil),                             // 87: namespace.private.devbox.v1beta.FetchDefaultsResponse
-	(*CreateRepositoryRequest)(nil),                           // 88: namespace.private.devbox.v1beta.CreateRepositoryRequest
-	(*CreateRepositoryResponse)(nil),                          // 89: namespace.private.devbox.v1beta.CreateRepositoryResponse
-	(*Features)(nil),                                          // 90: namespace.private.devbox.v1beta.Features
-	(*NetworkPolicySpec)(nil),                                 // 91: namespace.private.devbox.v1beta.NetworkPolicySpec
-	(*Integrations)(nil),                                      // 92: namespace.private.devbox.v1beta.Integrations
-	(*CreateIntegrationRequest)(nil),                          // 93: namespace.private.devbox.v1beta.CreateIntegrationRequest
-	(*CreateIntegrationResponse)(nil),                         // 94: namespace.private.devbox.v1beta.CreateIntegrationResponse
-	(*ListIntegrationsRequest)(nil),                           // 95: namespace.private.devbox.v1beta.ListIntegrationsRequest
-	(*ListIntegrationsResponse)(nil),                          // 96: namespace.private.devbox.v1beta.ListIntegrationsResponse
-	(*DeleteIntegrationRequest)(nil),                          // 97: namespace.private.devbox.v1beta.DeleteIntegrationRequest
-	(*DeleteIntegrationResponse)(nil),                         // 98: namespace.private.devbox.v1beta.DeleteIntegrationResponse
-	(*Integration)(nil),                                       // 99: namespace.private.devbox.v1beta.Integration
-	(*ClaudeIntegrationSpec)(nil),                             // 100: namespace.private.devbox.v1beta.ClaudeIntegrationSpec
-	(*HttpAccessMode_OwnerAccess)(nil),                        // 101: namespace.private.devbox.v1beta.HttpAccessMode.OwnerAccess
-	(*HttpAccessMode_TenantAccess)(nil),                       // 102: namespace.private.devbox.v1beta.HttpAccessMode.TenantAccess
-	(*HttpAccessMode_PublicAccess)(nil),                       // 103: namespace.private.devbox.v1beta.HttpAccessMode.PublicAccess
-	(*CreateFromTemplateRequest_Overrides)(nil),               // 104: namespace.private.devbox.v1beta.CreateFromTemplateRequest.Overrides
-	(*ActivateRequest_Experimental)(nil),                      // 105: namespace.private.devbox.v1beta.ActivateRequest.Experimental
-	(*ActivateRequest_Experimental_DevinOutposts)(nil),        // 106: namespace.private.devbox.v1beta.ActivateRequest.Experimental.DevinOutposts
-	(*ActivateRequest_Experimental_CursorWorker)(nil),         // 107: namespace.private.devbox.v1beta.ActivateRequest.Experimental.CursorWorker
-	(*ActivateResponse_InstanceMetadataSummary)(nil),          // 108: namespace.private.devbox.v1beta.ActivateResponse.InstanceMetadataSummary
-	(*GetUsageRequest_Date)(nil),                              // 109: namespace.private.devbox.v1beta.GetUsageRequest.Date
-	(*GetUsageResponse_DataPoint)(nil),                        // 110: namespace.private.devbox.v1beta.GetUsageResponse.DataPoint
-	(*DevBox_ResolvedImage)(nil),                              // 111: namespace.private.devbox.v1beta.DevBox.ResolvedImage
-	(*DevboxTemplateSpec_InstanceSpec)(nil),                   // 112: namespace.private.devbox.v1beta.DevboxTemplateSpec.InstanceSpec
-	(*DevboxTemplateSpec_Experimental)(nil),                   // 113: namespace.private.devbox.v1beta.DevboxTemplateSpec.Experimental
-	(*DevboxTemplateSpec_InstanceSpec_LinuxInstanceSpec)(nil), // 114: namespace.private.devbox.v1beta.DevboxTemplateSpec.InstanceSpec.LinuxInstanceSpec
-	(*DevboxTemplateSpec_Experimental_DevinOutpostSpec)(nil),  // 115: namespace.private.devbox.v1beta.DevboxTemplateSpec.Experimental.DevinOutpostSpec
-	(*DevboxTemplateSpec_Experimental_CursorWorkerSpec)(nil),  // 116: namespace.private.devbox.v1beta.DevboxTemplateSpec.Experimental.CursorWorkerSpec
-	(*CreateTemplateRequest_Experimental)(nil),                // 117: namespace.private.devbox.v1beta.CreateTemplateRequest.Experimental
-	(*UpdateTemplateRequest_Experimental)(nil),                // 118: namespace.private.devbox.v1beta.UpdateTemplateRequest.Experimental
-	(*BlueprintSpec_PortForward)(nil),                         // 119: namespace.private.devbox.v1beta.BlueprintSpec.PortForward
-	(*BlueprintSpec_EnvVar)(nil),                              // 120: namespace.private.devbox.v1beta.BlueprintSpec.EnvVar
-	(*BlueprintSpec_Op)(nil),                                  // 121: namespace.private.devbox.v1beta.BlueprintSpec.Op
-	(*BlueprintSpec_UserOrUid)(nil),                           // 122: namespace.private.devbox.v1beta.BlueprintSpec.UserOrUid
-	(*BlueprintSpec_Volume)(nil),                              // 123: namespace.private.devbox.v1beta.BlueprintSpec.Volume
-	(*BlueprintSpec_SessionSpec)(nil),                         // 124: namespace.private.devbox.v1beta.BlueprintSpec.SessionSpec
-	(*BlueprintSpec_Op_RunCommand)(nil),                       // 125: namespace.private.devbox.v1beta.BlueprintSpec.Op.RunCommand
-	(*BlueprintSpec_Op_RunScript)(nil),                        // 126: namespace.private.devbox.v1beta.BlueprintSpec.Op.RunScript
-	nil,                                                       // 127: namespace.private.devbox.v1beta.InspectImageResponse.EnvEntry
-	(*MetadataResponse_Site)(nil),                             // 128: namespace.private.devbox.v1beta.MetadataResponse.Site
-	(*FeatureSpec_RunScript)(nil),                             // 129: namespace.private.devbox.v1beta.FeatureSpec.RunScript
-	(*FeatureSpec_SessionSpec)(nil),                           // 130: namespace.private.devbox.v1beta.FeatureSpec.SessionSpec
-	(*FeatureSpec_ExportedPort)(nil),                          // 131: namespace.private.devbox.v1beta.FeatureSpec.ExportedPort
-	(*NetworkPolicySpec_EgressDomains)(nil),                   // 132: namespace.private.devbox.v1beta.NetworkPolicySpec.EgressDomains
-	(*NetworkPolicySpec_EgressPolicy)(nil),                    // 133: namespace.private.devbox.v1beta.NetworkPolicySpec.EgressPolicy
-	(*Integrations_TailscaleIntegration)(nil),                 // 134: namespace.private.devbox.v1beta.Integrations.TailscaleIntegration
-	(*Integrations_ClaudeIntegration)(nil),                    // 135: namespace.private.devbox.v1beta.Integrations.ClaudeIntegration
-	(*v1beta.InstanceShape)(nil),                              // 136: namespace.cloud.compute.v1beta.InstanceShape
-	(*durationpb.Duration)(nil),                               // 137: google.protobuf.Duration
-	(*wrapperspb.BoolValue)(nil),                              // 138: google.protobuf.BoolValue
-	(*v1beta.InstanceMetadata)(nil),                           // 139: namespace.cloud.compute.v1beta.InstanceMetadata
-	(*stdlib.StringMatcher)(nil),                              // 140: namespace.stdlib.StringMatcher
-	(*v1beta.PersistentVolumeSnapshot)(nil),                   // 141: namespace.cloud.compute.v1beta.PersistentVolumeSnapshot
-	(*timestamppb.Timestamp)(nil),                             // 142: google.protobuf.Timestamp
-	(*wrapperspb.StringValue)(nil),                            // 143: google.protobuf.StringValue
-	(*emptypb.Empty)(nil),                                     // 144: google.protobuf.Empty
+	(AccessMode)(0),                                               // 0: namespace.private.devbox.v1beta.AccessMode
+	(PortSpec_Kind)(0),                                            // 1: namespace.private.devbox.v1beta.PortSpec.Kind
+	(ActivateResponseChunk_Status)(0),                             // 2: namespace.private.devbox.v1beta.ActivateResponseChunk.Status
+	(ListRequest_OrderBy)(0),                                      // 3: namespace.private.devbox.v1beta.ListRequest.OrderBy
+	(ListRequest_EphemeralFilter)(0),                              // 4: namespace.private.devbox.v1beta.ListRequest.EphemeralFilter
+	(ListSnapshotsRequest_OrderBy)(0),                             // 5: namespace.private.devbox.v1beta.ListSnapshotsRequest.OrderBy
+	(AcquireLeaseResponse_LeaseOutcome)(0),                        // 6: namespace.private.devbox.v1beta.AcquireLeaseResponse.LeaseOutcome
+	(DevboxTemplateSpec_Type)(0),                                  // 7: namespace.private.devbox.v1beta.DevboxTemplateSpec.Type
+	(ListTemplatesRequest_OrderBy)(0),                             // 8: namespace.private.devbox.v1beta.ListTemplatesRequest.OrderBy
+	(VersionControlSpec_CheckoutMethod)(0),                        // 9: namespace.private.devbox.v1beta.VersionControlSpec.CheckoutMethod
+	(Image_Flag)(0),                                               // 10: namespace.private.devbox.v1beta.Image.Flag
+	(OptimizeImageResponseChunk_Status)(0),                        // 11: namespace.private.devbox.v1beta.OptimizeImageResponseChunk.Status
+	(*HttpAccessMode)(nil),                                        // 12: namespace.private.devbox.v1beta.HttpAccessMode
+	(*PortSpec)(nil),                                              // 13: namespace.private.devbox.v1beta.PortSpec
+	(*CreateRequest)(nil),                                         // 14: namespace.private.devbox.v1beta.CreateRequest
+	(*CreateFromTemplateRequest)(nil),                             // 15: namespace.private.devbox.v1beta.CreateFromTemplateRequest
+	(*CreateFromDevboxRequest)(nil),                               // 16: namespace.private.devbox.v1beta.CreateFromDevboxRequest
+	(*CreateResponse)(nil),                                        // 17: namespace.private.devbox.v1beta.CreateResponse
+	(*ActivateRequest)(nil),                                       // 18: namespace.private.devbox.v1beta.ActivateRequest
+	(*ActivateResponse)(nil),                                      // 19: namespace.private.devbox.v1beta.ActivateResponse
+	(*ActivateResponseChunk)(nil),                                 // 20: namespace.private.devbox.v1beta.ActivateResponseChunk
+	(*ExpireRequest)(nil),                                         // 21: namespace.private.devbox.v1beta.ExpireRequest
+	(*ExpireResponse)(nil),                                        // 22: namespace.private.devbox.v1beta.ExpireResponse
+	(*StopRequest)(nil),                                           // 23: namespace.private.devbox.v1beta.StopRequest
+	(*StopResponse)(nil),                                          // 24: namespace.private.devbox.v1beta.StopResponse
+	(*ListRequest)(nil),                                           // 25: namespace.private.devbox.v1beta.ListRequest
+	(*ListResponse)(nil),                                          // 26: namespace.private.devbox.v1beta.ListResponse
+	(*GetUsageRequest)(nil),                                       // 27: namespace.private.devbox.v1beta.GetUsageRequest
+	(*GetUsageResponse)(nil),                                      // 28: namespace.private.devbox.v1beta.GetUsageResponse
+	(*FetchRequest)(nil),                                          // 29: namespace.private.devbox.v1beta.FetchRequest
+	(*FetchResponse)(nil),                                         // 30: namespace.private.devbox.v1beta.FetchResponse
+	(*ListSnapshotsRequest)(nil),                                  // 31: namespace.private.devbox.v1beta.ListSnapshotsRequest
+	(*ListSnapshotsResponse)(nil),                                 // 32: namespace.private.devbox.v1beta.ListSnapshotsResponse
+	(*AcquireLeaseRequest)(nil),                                   // 33: namespace.private.devbox.v1beta.AcquireLeaseRequest
+	(*AcquireLeaseResponse)(nil),                                  // 34: namespace.private.devbox.v1beta.AcquireLeaseResponse
+	(*ReleaseLeaseRequest)(nil),                                   // 35: namespace.private.devbox.v1beta.ReleaseLeaseRequest
+	(*ReleaseLeaseResponse)(nil),                                  // 36: namespace.private.devbox.v1beta.ReleaseLeaseResponse
+	(*PoolLease)(nil),                                             // 37: namespace.private.devbox.v1beta.PoolLease
+	(*DevBox)(nil),                                                // 38: namespace.private.devbox.v1beta.DevBox
+	(*BlueprintRef)(nil),                                          // 39: namespace.private.devbox.v1beta.BlueprintRef
+	(*ImageSource)(nil),                                           // 40: namespace.private.devbox.v1beta.ImageSource
+	(*WireImageRequest)(nil),                                      // 41: namespace.private.devbox.v1beta.WireImageRequest
+	(*EphemeralSpec)(nil),                                         // 42: namespace.private.devbox.v1beta.EphemeralSpec
+	(*DevboxTemplateSpec)(nil),                                    // 43: namespace.private.devbox.v1beta.DevboxTemplateSpec
+	(*DevboxTemplate)(nil),                                        // 44: namespace.private.devbox.v1beta.DevboxTemplate
+	(*CreateTemplateRequest)(nil),                                 // 45: namespace.private.devbox.v1beta.CreateTemplateRequest
+	(*CreateTemplateResponse)(nil),                                // 46: namespace.private.devbox.v1beta.CreateTemplateResponse
+	(*UpdateTemplateRequest)(nil),                                 // 47: namespace.private.devbox.v1beta.UpdateTemplateRequest
+	(*UpdateTemplateResponse)(nil),                                // 48: namespace.private.devbox.v1beta.UpdateTemplateResponse
+	(*FetchTemplateRequest)(nil),                                  // 49: namespace.private.devbox.v1beta.FetchTemplateRequest
+	(*FetchTemplateResponse)(nil),                                 // 50: namespace.private.devbox.v1beta.FetchTemplateResponse
+	(*ListTemplatesRequest)(nil),                                  // 51: namespace.private.devbox.v1beta.ListTemplatesRequest
+	(*ListTemplatesResponse)(nil),                                 // 52: namespace.private.devbox.v1beta.ListTemplatesResponse
+	(*ExpireTemplateRequest)(nil),                                 // 53: namespace.private.devbox.v1beta.ExpireTemplateRequest
+	(*ExpireTemplateResponse)(nil),                                // 54: namespace.private.devbox.v1beta.ExpireTemplateResponse
+	(*BeginDevinOutpostConnectRequest)(nil),                       // 55: namespace.private.devbox.v1beta.BeginDevinOutpostConnectRequest
+	(*BeginDevinOutpostConnectResponse)(nil),                      // 56: namespace.private.devbox.v1beta.BeginDevinOutpostConnectResponse
+	(*VersionControlAuthor)(nil),                                  // 57: namespace.private.devbox.v1beta.VersionControlAuthor
+	(*VersionControlSpec)(nil),                                    // 58: namespace.private.devbox.v1beta.VersionControlSpec
+	(*BlueprintSpec)(nil),                                         // 59: namespace.private.devbox.v1beta.BlueprintSpec
+	(*WireImageResponse)(nil),                                     // 60: namespace.private.devbox.v1beta.WireImageResponse
+	(*ExpireImageRequest)(nil),                                    // 61: namespace.private.devbox.v1beta.ExpireImageRequest
+	(*ExpireImageResponse)(nil),                                   // 62: namespace.private.devbox.v1beta.ExpireImageResponse
+	(*ListImagesRequest)(nil),                                     // 63: namespace.private.devbox.v1beta.ListImagesRequest
+	(*ListImagesResponse)(nil),                                    // 64: namespace.private.devbox.v1beta.ListImagesResponse
+	(*Image)(nil),                                                 // 65: namespace.private.devbox.v1beta.Image
+	(*OptimizeImageRequest)(nil),                                  // 66: namespace.private.devbox.v1beta.OptimizeImageRequest
+	(*OptimizeImageResponseChunk)(nil),                            // 67: namespace.private.devbox.v1beta.OptimizeImageResponseChunk
+	(*InspectImageRequest)(nil),                                   // 68: namespace.private.devbox.v1beta.InspectImageRequest
+	(*InspectImageResponse)(nil),                                  // 69: namespace.private.devbox.v1beta.InspectImageResponse
+	(*DescribeImageRequest)(nil),                                  // 70: namespace.private.devbox.v1beta.DescribeImageRequest
+	(*DescribeImageResponse)(nil),                                 // 71: namespace.private.devbox.v1beta.DescribeImageResponse
+	(*ListComposableFeaturesRequest)(nil),                         // 72: namespace.private.devbox.v1beta.ListComposableFeaturesRequest
+	(*ListComposableFeaturesResponse)(nil),                        // 73: namespace.private.devbox.v1beta.ListComposableFeaturesResponse
+	(*ComposableFeature)(nil),                                     // 74: namespace.private.devbox.v1beta.ComposableFeature
+	(*RegisterComposableFeatureRequest)(nil),                      // 75: namespace.private.devbox.v1beta.RegisterComposableFeatureRequest
+	(*RegisterComposableFeatureResponse)(nil),                     // 76: namespace.private.devbox.v1beta.RegisterComposableFeatureResponse
+	(*RemoveComposableFeatureRequest)(nil),                        // 77: namespace.private.devbox.v1beta.RemoveComposableFeatureRequest
+	(*RemoveComposableFeatureResponse)(nil),                       // 78: namespace.private.devbox.v1beta.RemoveComposableFeatureResponse
+	(*MetadataRequest)(nil),                                       // 79: namespace.private.devbox.v1beta.MetadataRequest
+	(*MetadataResponse)(nil),                                      // 80: namespace.private.devbox.v1beta.MetadataResponse
+	(*FeatureSpec)(nil),                                           // 81: namespace.private.devbox.v1beta.FeatureSpec
+	(*UpdateRequest)(nil),                                         // 82: namespace.private.devbox.v1beta.UpdateRequest
+	(*UpdateResponse)(nil),                                        // 83: namespace.private.devbox.v1beta.UpdateResponse
+	(*DevboxDefaults)(nil),                                        // 84: namespace.private.devbox.v1beta.DevboxDefaults
+	(*UpdateDefaultsRequest)(nil),                                 // 85: namespace.private.devbox.v1beta.UpdateDefaultsRequest
+	(*UpdateDefaultsResponse)(nil),                                // 86: namespace.private.devbox.v1beta.UpdateDefaultsResponse
+	(*FetchDefaultsRequest)(nil),                                  // 87: namespace.private.devbox.v1beta.FetchDefaultsRequest
+	(*FetchDefaultsResponse)(nil),                                 // 88: namespace.private.devbox.v1beta.FetchDefaultsResponse
+	(*CreateRepositoryRequest)(nil),                               // 89: namespace.private.devbox.v1beta.CreateRepositoryRequest
+	(*CreateRepositoryResponse)(nil),                              // 90: namespace.private.devbox.v1beta.CreateRepositoryResponse
+	(*Features)(nil),                                              // 91: namespace.private.devbox.v1beta.Features
+	(*NetworkPolicySpec)(nil),                                     // 92: namespace.private.devbox.v1beta.NetworkPolicySpec
+	(*Integrations)(nil),                                          // 93: namespace.private.devbox.v1beta.Integrations
+	(*CreateIntegrationRequest)(nil),                              // 94: namespace.private.devbox.v1beta.CreateIntegrationRequest
+	(*CreateIntegrationResponse)(nil),                             // 95: namespace.private.devbox.v1beta.CreateIntegrationResponse
+	(*ListIntegrationsRequest)(nil),                               // 96: namespace.private.devbox.v1beta.ListIntegrationsRequest
+	(*ListIntegrationsResponse)(nil),                              // 97: namespace.private.devbox.v1beta.ListIntegrationsResponse
+	(*DeleteIntegrationRequest)(nil),                              // 98: namespace.private.devbox.v1beta.DeleteIntegrationRequest
+	(*DeleteIntegrationResponse)(nil),                             // 99: namespace.private.devbox.v1beta.DeleteIntegrationResponse
+	(*Integration)(nil),                                           // 100: namespace.private.devbox.v1beta.Integration
+	(*ClaudeIntegrationSpec)(nil),                                 // 101: namespace.private.devbox.v1beta.ClaudeIntegrationSpec
+	(*HttpAccessMode_OwnerAccess)(nil),                            // 102: namespace.private.devbox.v1beta.HttpAccessMode.OwnerAccess
+	(*HttpAccessMode_TenantAccess)(nil),                           // 103: namespace.private.devbox.v1beta.HttpAccessMode.TenantAccess
+	(*HttpAccessMode_PublicAccess)(nil),                           // 104: namespace.private.devbox.v1beta.HttpAccessMode.PublicAccess
+	(*CreateFromTemplateRequest_Overrides)(nil),                   // 105: namespace.private.devbox.v1beta.CreateFromTemplateRequest.Overrides
+	(*ActivateRequest_Experimental)(nil),                          // 106: namespace.private.devbox.v1beta.ActivateRequest.Experimental
+	(*ActivateRequest_Experimental_DevinOutposts)(nil),            // 107: namespace.private.devbox.v1beta.ActivateRequest.Experimental.DevinOutposts
+	(*ActivateRequest_Experimental_CursorWorker)(nil),             // 108: namespace.private.devbox.v1beta.ActivateRequest.Experimental.CursorWorker
+	(*ActivateRequest_Experimental_ClaudeAgent)(nil),              // 109: namespace.private.devbox.v1beta.ActivateRequest.Experimental.ClaudeAgent
+	(*ActivateResponse_InstanceMetadataSummary)(nil),              // 110: namespace.private.devbox.v1beta.ActivateResponse.InstanceMetadataSummary
+	(*GetUsageRequest_Date)(nil),                                  // 111: namespace.private.devbox.v1beta.GetUsageRequest.Date
+	(*GetUsageResponse_DataPoint)(nil),                            // 112: namespace.private.devbox.v1beta.GetUsageResponse.DataPoint
+	(*DevBox_ResolvedImage)(nil),                                  // 113: namespace.private.devbox.v1beta.DevBox.ResolvedImage
+	(*DevboxTemplateSpec_InstanceSpec)(nil),                       // 114: namespace.private.devbox.v1beta.DevboxTemplateSpec.InstanceSpec
+	(*DevboxTemplateSpec_Experimental)(nil),                       // 115: namespace.private.devbox.v1beta.DevboxTemplateSpec.Experimental
+	(*DevboxTemplateSpec_InstanceSpec_LinuxInstanceSpec)(nil),     // 116: namespace.private.devbox.v1beta.DevboxTemplateSpec.InstanceSpec.LinuxInstanceSpec
+	(*DevboxTemplateSpec_Experimental_DevinOutpostSpec)(nil),      // 117: namespace.private.devbox.v1beta.DevboxTemplateSpec.Experimental.DevinOutpostSpec
+	(*DevboxTemplateSpec_Experimental_CursorWorkerSpec)(nil),      // 118: namespace.private.devbox.v1beta.DevboxTemplateSpec.Experimental.CursorWorkerSpec
+	(*DevboxTemplateSpec_Experimental_ClaudeEnvironmentSpec)(nil), // 119: namespace.private.devbox.v1beta.DevboxTemplateSpec.Experimental.ClaudeEnvironmentSpec
+	(*CreateTemplateRequest_Experimental)(nil),                    // 120: namespace.private.devbox.v1beta.CreateTemplateRequest.Experimental
+	(*UpdateTemplateRequest_Experimental)(nil),                    // 121: namespace.private.devbox.v1beta.UpdateTemplateRequest.Experimental
+	(*BlueprintSpec_PortForward)(nil),                             // 122: namespace.private.devbox.v1beta.BlueprintSpec.PortForward
+	(*BlueprintSpec_EnvVar)(nil),                                  // 123: namespace.private.devbox.v1beta.BlueprintSpec.EnvVar
+	(*BlueprintSpec_Op)(nil),                                      // 124: namespace.private.devbox.v1beta.BlueprintSpec.Op
+	(*BlueprintSpec_UserOrUid)(nil),                               // 125: namespace.private.devbox.v1beta.BlueprintSpec.UserOrUid
+	(*BlueprintSpec_Volume)(nil),                                  // 126: namespace.private.devbox.v1beta.BlueprintSpec.Volume
+	(*BlueprintSpec_SessionSpec)(nil),                             // 127: namespace.private.devbox.v1beta.BlueprintSpec.SessionSpec
+	(*BlueprintSpec_Op_RunCommand)(nil),                           // 128: namespace.private.devbox.v1beta.BlueprintSpec.Op.RunCommand
+	(*BlueprintSpec_Op_RunScript)(nil),                            // 129: namespace.private.devbox.v1beta.BlueprintSpec.Op.RunScript
+	nil,                                                           // 130: namespace.private.devbox.v1beta.InspectImageResponse.EnvEntry
+	(*MetadataResponse_Site)(nil),                                 // 131: namespace.private.devbox.v1beta.MetadataResponse.Site
+	(*FeatureSpec_RunScript)(nil),                                 // 132: namespace.private.devbox.v1beta.FeatureSpec.RunScript
+	(*FeatureSpec_SessionSpec)(nil),                               // 133: namespace.private.devbox.v1beta.FeatureSpec.SessionSpec
+	(*FeatureSpec_ExportedPort)(nil),                              // 134: namespace.private.devbox.v1beta.FeatureSpec.ExportedPort
+	(*NetworkPolicySpec_EgressDomains)(nil),                       // 135: namespace.private.devbox.v1beta.NetworkPolicySpec.EgressDomains
+	(*NetworkPolicySpec_EgressPolicy)(nil),                        // 136: namespace.private.devbox.v1beta.NetworkPolicySpec.EgressPolicy
+	(*Integrations_TailscaleIntegration)(nil),                     // 137: namespace.private.devbox.v1beta.Integrations.TailscaleIntegration
+	(*Integrations_ClaudeIntegration)(nil),                        // 138: namespace.private.devbox.v1beta.Integrations.ClaudeIntegration
+	(*v1beta.InstanceShape)(nil),                                  // 139: namespace.cloud.compute.v1beta.InstanceShape
+	(*durationpb.Duration)(nil),                                   // 140: google.protobuf.Duration
+	(*wrapperspb.BoolValue)(nil),                                  // 141: google.protobuf.BoolValue
+	(*stdlib.Label)(nil),                                          // 142: namespace.stdlib.Label
+	(*v1beta.InstanceMetadata)(nil),                               // 143: namespace.cloud.compute.v1beta.InstanceMetadata
+	(*stdlib.StringMatcher)(nil),                                  // 144: namespace.stdlib.StringMatcher
+	(*stdlib.LabelFilterEntry)(nil),                               // 145: namespace.stdlib.LabelFilterEntry
+	(*v1beta.PersistentVolumeSnapshot)(nil),                       // 146: namespace.cloud.compute.v1beta.PersistentVolumeSnapshot
+	(*timestamppb.Timestamp)(nil),                                 // 147: google.protobuf.Timestamp
+	(*wrapperspb.StringValue)(nil),                                // 148: google.protobuf.StringValue
+	(*emptypb.Empty)(nil),                                         // 149: google.protobuf.Empty
 }
 var file_proto_namespace_private_devbox_devbox_proto_depIdxs = []int32{
-	101, // 0: namespace.private.devbox.v1beta.HttpAccessMode.owner:type_name -> namespace.private.devbox.v1beta.HttpAccessMode.OwnerAccess
-	102, // 1: namespace.private.devbox.v1beta.HttpAccessMode.tenant:type_name -> namespace.private.devbox.v1beta.HttpAccessMode.TenantAccess
-	103, // 2: namespace.private.devbox.v1beta.HttpAccessMode.public:type_name -> namespace.private.devbox.v1beta.HttpAccessMode.PublicAccess
+	102, // 0: namespace.private.devbox.v1beta.HttpAccessMode.owner:type_name -> namespace.private.devbox.v1beta.HttpAccessMode.OwnerAccess
+	103, // 1: namespace.private.devbox.v1beta.HttpAccessMode.tenant:type_name -> namespace.private.devbox.v1beta.HttpAccessMode.TenantAccess
+	104, // 2: namespace.private.devbox.v1beta.HttpAccessMode.public:type_name -> namespace.private.devbox.v1beta.HttpAccessMode.PublicAccess
 	1,   // 3: namespace.private.devbox.v1beta.PortSpec.kind:type_name -> namespace.private.devbox.v1beta.PortSpec.Kind
-	136, // 4: namespace.private.devbox.v1beta.CreateRequest.instance_shape:type_name -> namespace.cloud.compute.v1beta.InstanceShape
-	90,  // 5: namespace.private.devbox.v1beta.CreateRequest.features:type_name -> namespace.private.devbox.v1beta.Features
-	57,  // 6: namespace.private.devbox.v1beta.CreateRequest.version_control:type_name -> namespace.private.devbox.v1beta.VersionControlSpec
-	137, // 7: namespace.private.devbox.v1beta.CreateRequest.busy_ensure_minimum_duration:type_name -> google.protobuf.Duration
+	139, // 4: namespace.private.devbox.v1beta.CreateRequest.instance_shape:type_name -> namespace.cloud.compute.v1beta.InstanceShape
+	91,  // 5: namespace.private.devbox.v1beta.CreateRequest.features:type_name -> namespace.private.devbox.v1beta.Features
+	58,  // 6: namespace.private.devbox.v1beta.CreateRequest.version_control:type_name -> namespace.private.devbox.v1beta.VersionControlSpec
+	140, // 7: namespace.private.devbox.v1beta.CreateRequest.busy_ensure_minimum_duration:type_name -> google.protobuf.Duration
 	0,   // 8: namespace.private.devbox.v1beta.CreateRequest.access_mode:type_name -> namespace.private.devbox.v1beta.AccessMode
-	124, // 9: namespace.private.devbox.v1beta.CreateRequest.sessions:type_name -> namespace.private.devbox.v1beta.BlueprintSpec.SessionSpec
-	92,  // 10: namespace.private.devbox.v1beta.CreateRequest.integrations:type_name -> namespace.private.devbox.v1beta.Integrations
-	41,  // 11: namespace.private.devbox.v1beta.CreateRequest.ephemeral:type_name -> namespace.private.devbox.v1beta.EphemeralSpec
-	138, // 12: namespace.private.devbox.v1beta.CreateRequest.privileged:type_name -> google.protobuf.BoolValue
-	120, // 13: namespace.private.devbox.v1beta.CreateRequest.environment:type_name -> namespace.private.devbox.v1beta.BlueprintSpec.EnvVar
-	91,  // 14: namespace.private.devbox.v1beta.CreateRequest.network_policy:type_name -> namespace.private.devbox.v1beta.NetworkPolicySpec
-	12,  // 15: namespace.private.devbox.v1beta.CreateRequest.ports:type_name -> namespace.private.devbox.v1beta.PortSpec
-	105, // 16: namespace.private.devbox.v1beta.CreateRequest.activate_experimental:type_name -> namespace.private.devbox.v1beta.ActivateRequest.Experimental
-	105, // 17: namespace.private.devbox.v1beta.CreateFromTemplateRequest.activate_experimental:type_name -> namespace.private.devbox.v1beta.ActivateRequest.Experimental
-	104, // 18: namespace.private.devbox.v1beta.CreateFromTemplateRequest.overrides:type_name -> namespace.private.devbox.v1beta.CreateFromTemplateRequest.Overrides
-	136, // 19: namespace.private.devbox.v1beta.CreateFromDevboxRequest.instance_shape:type_name -> namespace.cloud.compute.v1beta.InstanceShape
-	105, // 20: namespace.private.devbox.v1beta.CreateFromDevboxRequest.activate_experimental:type_name -> namespace.private.devbox.v1beta.ActivateRequest.Experimental
-	37,  // 21: namespace.private.devbox.v1beta.CreateResponse.devbox:type_name -> namespace.private.devbox.v1beta.DevBox
-	105, // 22: namespace.private.devbox.v1beta.ActivateRequest.experimental:type_name -> namespace.private.devbox.v1beta.ActivateRequest.Experimental
-	37,  // 23: namespace.private.devbox.v1beta.ActivateResponse.devbox:type_name -> namespace.private.devbox.v1beta.DevBox
-	108, // 24: namespace.private.devbox.v1beta.ActivateResponse.instance_metadata_summary:type_name -> namespace.private.devbox.v1beta.ActivateResponse.InstanceMetadataSummary
-	18,  // 25: namespace.private.devbox.v1beta.ActivateResponseChunk.activation:type_name -> namespace.private.devbox.v1beta.ActivateResponse
-	139, // 26: namespace.private.devbox.v1beta.ActivateResponseChunk.metadata:type_name -> namespace.cloud.compute.v1beta.InstanceMetadata
-	2,   // 27: namespace.private.devbox.v1beta.ActivateResponseChunk.status:type_name -> namespace.private.devbox.v1beta.ActivateResponseChunk.Status
-	37,  // 28: namespace.private.devbox.v1beta.ExpireResponse.devboxes:type_name -> namespace.private.devbox.v1beta.DevBox
-	37,  // 29: namespace.private.devbox.v1beta.StopResponse.devbox:type_name -> namespace.private.devbox.v1beta.DevBox
-	140, // 30: namespace.private.devbox.v1beta.ListRequest.match_creator:type_name -> namespace.stdlib.StringMatcher
-	140, // 31: namespace.private.devbox.v1beta.ListRequest.match_image_name:type_name -> namespace.stdlib.StringMatcher
-	140, // 32: namespace.private.devbox.v1beta.ListRequest.match_image_ref:type_name -> namespace.stdlib.StringMatcher
-	3,   // 33: namespace.private.devbox.v1beta.ListRequest.order_by:type_name -> namespace.private.devbox.v1beta.ListRequest.OrderBy
-	4,   // 34: namespace.private.devbox.v1beta.ListRequest.match_ephemeral:type_name -> namespace.private.devbox.v1beta.ListRequest.EphemeralFilter
-	37,  // 35: namespace.private.devbox.v1beta.ListResponse.devboxes:type_name -> namespace.private.devbox.v1beta.DevBox
-	109, // 36: namespace.private.devbox.v1beta.GetUsageRequest.period_start:type_name -> namespace.private.devbox.v1beta.GetUsageRequest.Date
-	109, // 37: namespace.private.devbox.v1beta.GetUsageRequest.period_end:type_name -> namespace.private.devbox.v1beta.GetUsageRequest.Date
-	110, // 38: namespace.private.devbox.v1beta.GetUsageResponse.per_day:type_name -> namespace.private.devbox.v1beta.GetUsageResponse.DataPoint
-	37,  // 39: namespace.private.devbox.v1beta.FetchResponse.devbox:type_name -> namespace.private.devbox.v1beta.DevBox
-	5,   // 40: namespace.private.devbox.v1beta.ListSnapshotsRequest.order_by:type_name -> namespace.private.devbox.v1beta.ListSnapshotsRequest.OrderBy
-	141, // 41: namespace.private.devbox.v1beta.ListSnapshotsResponse.snapshots:type_name -> namespace.cloud.compute.v1beta.PersistentVolumeSnapshot
-	13,  // 42: namespace.private.devbox.v1beta.AcquireLeaseRequest.create:type_name -> namespace.private.devbox.v1beta.CreateRequest
-	37,  // 43: namespace.private.devbox.v1beta.AcquireLeaseResponse.devbox:type_name -> namespace.private.devbox.v1beta.DevBox
-	6,   // 44: namespace.private.devbox.v1beta.AcquireLeaseResponse.outcome:type_name -> namespace.private.devbox.v1beta.AcquireLeaseResponse.LeaseOutcome
-	142, // 45: namespace.private.devbox.v1beta.PoolLease.acquired_at:type_name -> google.protobuf.Timestamp
-	142, // 46: namespace.private.devbox.v1beta.PoolLease.released_at:type_name -> google.protobuf.Timestamp
-	142, // 47: namespace.private.devbox.v1beta.DevBox.created_at:type_name -> google.protobuf.Timestamp
-	142, // 48: namespace.private.devbox.v1beta.DevBox.last_used_at:type_name -> google.protobuf.Timestamp
-	142, // 49: namespace.private.devbox.v1beta.DevBox.destroyed_at:type_name -> google.protobuf.Timestamp
-	136, // 50: namespace.private.devbox.v1beta.DevBox.instance_shape:type_name -> namespace.cloud.compute.v1beta.InstanceShape
-	38,  // 51: namespace.private.devbox.v1beta.DevBox.blueprint_ref:type_name -> namespace.private.devbox.v1beta.BlueprintRef
-	58,  // 52: namespace.private.devbox.v1beta.DevBox.spec:type_name -> namespace.private.devbox.v1beta.BlueprintSpec
-	119, // 53: namespace.private.devbox.v1beta.DevBox.port_forwards:type_name -> namespace.private.devbox.v1beta.BlueprintSpec.PortForward
-	111, // 54: namespace.private.devbox.v1beta.DevBox.resolved_image:type_name -> namespace.private.devbox.v1beta.DevBox.ResolvedImage
-	137, // 55: namespace.private.devbox.v1beta.DevBox.busy_ensure_minimum_duration:type_name -> google.protobuf.Duration
-	0,   // 56: namespace.private.devbox.v1beta.DevBox.access_mode:type_name -> namespace.private.devbox.v1beta.AccessMode
-	11,  // 57: namespace.private.devbox.v1beta.DevBox.http_access_mode:type_name -> namespace.private.devbox.v1beta.HttpAccessMode
-	124, // 58: namespace.private.devbox.v1beta.DevBox.permanent_sessions:type_name -> namespace.private.devbox.v1beta.BlueprintSpec.SessionSpec
-	92,  // 59: namespace.private.devbox.v1beta.DevBox.integrations:type_name -> namespace.private.devbox.v1beta.Integrations
-	41,  // 60: namespace.private.devbox.v1beta.DevBox.ephemeral:type_name -> namespace.private.devbox.v1beta.EphemeralSpec
-	36,  // 61: namespace.private.devbox.v1beta.DevBox.pool_lease:type_name -> namespace.private.devbox.v1beta.PoolLease
-	91,  // 62: namespace.private.devbox.v1beta.DevBox.network_policy:type_name -> namespace.private.devbox.v1beta.NetworkPolicySpec
-	58,  // 63: namespace.private.devbox.v1beta.WireImageRequest.metadata:type_name -> namespace.private.devbox.v1beta.BlueprintSpec
-	39,  // 64: namespace.private.devbox.v1beta.WireImageRequest.source:type_name -> namespace.private.devbox.v1beta.ImageSource
-	137, // 65: namespace.private.devbox.v1beta.EphemeralSpec.stopped_retention_duration:type_name -> google.protobuf.Duration
-	112, // 66: namespace.private.devbox.v1beta.DevboxTemplateSpec.instance:type_name -> namespace.private.devbox.v1beta.DevboxTemplateSpec.InstanceSpec
-	143, // 67: namespace.private.devbox.v1beta.DevboxTemplateSpec.site:type_name -> google.protobuf.StringValue
-	41,  // 68: namespace.private.devbox.v1beta.DevboxTemplateSpec.ephemeral:type_name -> namespace.private.devbox.v1beta.EphemeralSpec
-	57,  // 69: namespace.private.devbox.v1beta.DevboxTemplateSpec.version_control:type_name -> namespace.private.devbox.v1beta.VersionControlSpec
-	120, // 70: namespace.private.devbox.v1beta.DevboxTemplateSpec.environment:type_name -> namespace.private.devbox.v1beta.BlueprintSpec.EnvVar
-	137, // 71: namespace.private.devbox.v1beta.DevboxTemplateSpec.busy_ensure_minimum_duration:type_name -> google.protobuf.Duration
-	92,  // 72: namespace.private.devbox.v1beta.DevboxTemplateSpec.integrations:type_name -> namespace.private.devbox.v1beta.Integrations
-	91,  // 73: namespace.private.devbox.v1beta.DevboxTemplateSpec.network_policy:type_name -> namespace.private.devbox.v1beta.NetworkPolicySpec
-	113, // 74: namespace.private.devbox.v1beta.DevboxTemplateSpec.experimental:type_name -> namespace.private.devbox.v1beta.DevboxTemplateSpec.Experimental
-	0,   // 75: namespace.private.devbox.v1beta.DevboxTemplateSpec.access_mode:type_name -> namespace.private.devbox.v1beta.AccessMode
-	90,  // 76: namespace.private.devbox.v1beta.DevboxTemplateSpec.features:type_name -> namespace.private.devbox.v1beta.Features
-	12,  // 77: namespace.private.devbox.v1beta.DevboxTemplateSpec.ports:type_name -> namespace.private.devbox.v1beta.PortSpec
-	142, // 78: namespace.private.devbox.v1beta.DevboxTemplate.created_at:type_name -> google.protobuf.Timestamp
-	142, // 79: namespace.private.devbox.v1beta.DevboxTemplate.updated_at:type_name -> google.protobuf.Timestamp
-	42,  // 80: namespace.private.devbox.v1beta.DevboxTemplate.spec:type_name -> namespace.private.devbox.v1beta.DevboxTemplateSpec
-	42,  // 81: namespace.private.devbox.v1beta.CreateTemplateRequest.spec:type_name -> namespace.private.devbox.v1beta.DevboxTemplateSpec
-	117, // 82: namespace.private.devbox.v1beta.CreateTemplateRequest.experimental:type_name -> namespace.private.devbox.v1beta.CreateTemplateRequest.Experimental
-	43,  // 83: namespace.private.devbox.v1beta.CreateTemplateResponse.template:type_name -> namespace.private.devbox.v1beta.DevboxTemplate
-	42,  // 84: namespace.private.devbox.v1beta.UpdateTemplateRequest.spec:type_name -> namespace.private.devbox.v1beta.DevboxTemplateSpec
-	118, // 85: namespace.private.devbox.v1beta.UpdateTemplateRequest.experimental:type_name -> namespace.private.devbox.v1beta.UpdateTemplateRequest.Experimental
-	43,  // 86: namespace.private.devbox.v1beta.UpdateTemplateResponse.template:type_name -> namespace.private.devbox.v1beta.DevboxTemplate
-	43,  // 87: namespace.private.devbox.v1beta.FetchTemplateResponse.template:type_name -> namespace.private.devbox.v1beta.DevboxTemplate
-	7,   // 88: namespace.private.devbox.v1beta.ListTemplatesRequest.order_by:type_name -> namespace.private.devbox.v1beta.ListTemplatesRequest.OrderBy
-	43,  // 89: namespace.private.devbox.v1beta.ListTemplatesResponse.templates:type_name -> namespace.private.devbox.v1beta.DevboxTemplate
-	8,   // 90: namespace.private.devbox.v1beta.VersionControlSpec.checkout_method:type_name -> namespace.private.devbox.v1beta.VersionControlSpec.CheckoutMethod
-	119, // 91: namespace.private.devbox.v1beta.BlueprintSpec.port_forwards:type_name -> namespace.private.devbox.v1beta.BlueprintSpec.PortForward
-	120, // 92: namespace.private.devbox.v1beta.BlueprintSpec.environment:type_name -> namespace.private.devbox.v1beta.BlueprintSpec.EnvVar
-	121, // 93: namespace.private.devbox.v1beta.BlueprintSpec.on_create:type_name -> namespace.private.devbox.v1beta.BlueprintSpec.Op
-	121, // 94: namespace.private.devbox.v1beta.BlueprintSpec.on_startup:type_name -> namespace.private.devbox.v1beta.BlueprintSpec.Op
-	123, // 95: namespace.private.devbox.v1beta.BlueprintSpec.volumes:type_name -> namespace.private.devbox.v1beta.BlueprintSpec.Volume
-	122, // 96: namespace.private.devbox.v1beta.BlueprintSpec.docker_sock_user:type_name -> namespace.private.devbox.v1beta.BlueprintSpec.UserOrUid
-	124, // 97: namespace.private.devbox.v1beta.BlueprintSpec.sessions:type_name -> namespace.private.devbox.v1beta.BlueprintSpec.SessionSpec
-	64,  // 98: namespace.private.devbox.v1beta.WireImageResponse.image:type_name -> namespace.private.devbox.v1beta.Image
-	64,  // 99: namespace.private.devbox.v1beta.ListImagesResponse.image:type_name -> namespace.private.devbox.v1beta.Image
-	142, // 100: namespace.private.devbox.v1beta.Image.created_at:type_name -> google.protobuf.Timestamp
-	58,  // 101: namespace.private.devbox.v1beta.Image.metadata:type_name -> namespace.private.devbox.v1beta.BlueprintSpec
-	9,   // 102: namespace.private.devbox.v1beta.Image.flag:type_name -> namespace.private.devbox.v1beta.Image.Flag
-	39,  // 103: namespace.private.devbox.v1beta.Image.source:type_name -> namespace.private.devbox.v1beta.ImageSource
-	142, // 104: namespace.private.devbox.v1beta.Image.expires_at:type_name -> google.protobuf.Timestamp
-	10,  // 105: namespace.private.devbox.v1beta.OptimizeImageResponseChunk.status:type_name -> namespace.private.devbox.v1beta.OptimizeImageResponseChunk.Status
-	127, // 106: namespace.private.devbox.v1beta.InspectImageResponse.env:type_name -> namespace.private.devbox.v1beta.InspectImageResponse.EnvEntry
-	58,  // 107: namespace.private.devbox.v1beta.InspectImageResponse.spec:type_name -> namespace.private.devbox.v1beta.BlueprintSpec
-	142, // 108: namespace.private.devbox.v1beta.InspectImageResponse.version_created_at:type_name -> google.protobuf.Timestamp
-	64,  // 109: namespace.private.devbox.v1beta.DescribeImageResponse.image:type_name -> namespace.private.devbox.v1beta.Image
-	73,  // 110: namespace.private.devbox.v1beta.ListComposableFeaturesResponse.features:type_name -> namespace.private.devbox.v1beta.ComposableFeature
-	73,  // 111: namespace.private.devbox.v1beta.RegisterComposableFeatureRequest.feature:type_name -> namespace.private.devbox.v1beta.ComposableFeature
-	80,  // 112: namespace.private.devbox.v1beta.RegisterComposableFeatureRequest.spec:type_name -> namespace.private.devbox.v1beta.FeatureSpec
-	128, // 113: namespace.private.devbox.v1beta.MetadataResponse.sites:type_name -> namespace.private.devbox.v1beta.MetadataResponse.Site
-	129, // 114: namespace.private.devbox.v1beta.FeatureSpec.on_create:type_name -> namespace.private.devbox.v1beta.FeatureSpec.RunScript
-	130, // 115: namespace.private.devbox.v1beta.FeatureSpec.sessions:type_name -> namespace.private.devbox.v1beta.FeatureSpec.SessionSpec
-	131, // 116: namespace.private.devbox.v1beta.FeatureSpec.exported_ports:type_name -> namespace.private.devbox.v1beta.FeatureSpec.ExportedPort
-	129, // 117: namespace.private.devbox.v1beta.FeatureSpec.on_startup:type_name -> namespace.private.devbox.v1beta.FeatureSpec.RunScript
-	136, // 118: namespace.private.devbox.v1beta.UpdateRequest.instance_shape:type_name -> namespace.cloud.compute.v1beta.InstanceShape
-	137, // 119: namespace.private.devbox.v1beta.UpdateRequest.busy_ensure_minimum_duration:type_name -> google.protobuf.Duration
-	92,  // 120: namespace.private.devbox.v1beta.UpdateRequest.integrations:type_name -> namespace.private.devbox.v1beta.Integrations
-	138, // 121: namespace.private.devbox.v1beta.UpdateRequest.privileged:type_name -> google.protobuf.BoolValue
-	91,  // 122: namespace.private.devbox.v1beta.UpdateRequest.network_policy:type_name -> namespace.private.devbox.v1beta.NetworkPolicySpec
-	11,  // 123: namespace.private.devbox.v1beta.UpdateRequest.http_access_mode:type_name -> namespace.private.devbox.v1beta.HttpAccessMode
-	37,  // 124: namespace.private.devbox.v1beta.UpdateResponse.devbox:type_name -> namespace.private.devbox.v1beta.DevBox
-	136, // 125: namespace.private.devbox.v1beta.DevboxDefaults.instance_shape:type_name -> namespace.cloud.compute.v1beta.InstanceShape
-	57,  // 126: namespace.private.devbox.v1beta.DevboxDefaults.version_control:type_name -> namespace.private.devbox.v1beta.VersionControlSpec
-	137, // 127: namespace.private.devbox.v1beta.DevboxDefaults.busy_ensure_minimum_duration:type_name -> google.protobuf.Duration
-	0,   // 128: namespace.private.devbox.v1beta.DevboxDefaults.access_mode:type_name -> namespace.private.devbox.v1beta.AccessMode
-	92,  // 129: namespace.private.devbox.v1beta.DevboxDefaults.integrations:type_name -> namespace.private.devbox.v1beta.Integrations
-	91,  // 130: namespace.private.devbox.v1beta.DevboxDefaults.network_policy:type_name -> namespace.private.devbox.v1beta.NetworkPolicySpec
-	83,  // 131: namespace.private.devbox.v1beta.UpdateDefaultsRequest.defaults:type_name -> namespace.private.devbox.v1beta.DevboxDefaults
-	83,  // 132: namespace.private.devbox.v1beta.UpdateDefaultsResponse.defaults:type_name -> namespace.private.devbox.v1beta.DevboxDefaults
-	83,  // 133: namespace.private.devbox.v1beta.FetchDefaultsResponse.defaults:type_name -> namespace.private.devbox.v1beta.DevboxDefaults
-	83,  // 134: namespace.private.devbox.v1beta.FetchDefaultsResponse.by_policy:type_name -> namespace.private.devbox.v1beta.DevboxDefaults
-	132, // 135: namespace.private.devbox.v1beta.NetworkPolicySpec.egress_domains:type_name -> namespace.private.devbox.v1beta.NetworkPolicySpec.EgressDomains
-	133, // 136: namespace.private.devbox.v1beta.NetworkPolicySpec.egress_policy:type_name -> namespace.private.devbox.v1beta.NetworkPolicySpec.EgressPolicy
-	134, // 137: namespace.private.devbox.v1beta.Integrations.tailscale:type_name -> namespace.private.devbox.v1beta.Integrations.TailscaleIntegration
-	135, // 138: namespace.private.devbox.v1beta.Integrations.claude:type_name -> namespace.private.devbox.v1beta.Integrations.ClaudeIntegration
-	100, // 139: namespace.private.devbox.v1beta.CreateIntegrationRequest.claude:type_name -> namespace.private.devbox.v1beta.ClaudeIntegrationSpec
-	99,  // 140: namespace.private.devbox.v1beta.ListIntegrationsResponse.integrations:type_name -> namespace.private.devbox.v1beta.Integration
-	142, // 141: namespace.private.devbox.v1beta.Integration.created_at:type_name -> google.protobuf.Timestamp
-	142, // 142: namespace.private.devbox.v1beta.Integration.updated_at:type_name -> google.protobuf.Timestamp
-	100, // 143: namespace.private.devbox.v1beta.Integration.claude:type_name -> namespace.private.devbox.v1beta.ClaudeIntegrationSpec
-	0,   // 144: namespace.private.devbox.v1beta.CreateFromTemplateRequest.Overrides.access_mode:type_name -> namespace.private.devbox.v1beta.AccessMode
-	106, // 145: namespace.private.devbox.v1beta.ActivateRequest.Experimental.devin_outposts:type_name -> namespace.private.devbox.v1beta.ActivateRequest.Experimental.DevinOutposts
-	107, // 146: namespace.private.devbox.v1beta.ActivateRequest.Experimental.cursor_worker:type_name -> namespace.private.devbox.v1beta.ActivateRequest.Experimental.CursorWorker
-	136, // 147: namespace.private.devbox.v1beta.DevboxTemplateSpec.InstanceSpec.shape:type_name -> namespace.cloud.compute.v1beta.InstanceShape
-	114, // 148: namespace.private.devbox.v1beta.DevboxTemplateSpec.InstanceSpec.linux:type_name -> namespace.private.devbox.v1beta.DevboxTemplateSpec.InstanceSpec.LinuxInstanceSpec
-	115, // 149: namespace.private.devbox.v1beta.DevboxTemplateSpec.Experimental.devin_outpost:type_name -> namespace.private.devbox.v1beta.DevboxTemplateSpec.Experimental.DevinOutpostSpec
-	116, // 150: namespace.private.devbox.v1beta.DevboxTemplateSpec.Experimental.cursor_worker:type_name -> namespace.private.devbox.v1beta.DevboxTemplateSpec.Experimental.CursorWorkerSpec
-	125, // 151: namespace.private.devbox.v1beta.BlueprintSpec.Op.run_command:type_name -> namespace.private.devbox.v1beta.BlueprintSpec.Op.RunCommand
-	126, // 152: namespace.private.devbox.v1beta.BlueprintSpec.Op.run_script:type_name -> namespace.private.devbox.v1beta.BlueprintSpec.Op.RunScript
-	13,  // 153: namespace.private.devbox.v1beta.DevBoxService.Create:input_type -> namespace.private.devbox.v1beta.CreateRequest
-	14,  // 154: namespace.private.devbox.v1beta.DevBoxService.CreateFromTemplate:input_type -> namespace.private.devbox.v1beta.CreateFromTemplateRequest
-	15,  // 155: namespace.private.devbox.v1beta.DevBoxService.CreateFromDevbox:input_type -> namespace.private.devbox.v1beta.CreateFromDevboxRequest
-	17,  // 156: namespace.private.devbox.v1beta.DevBoxService.Activate:input_type -> namespace.private.devbox.v1beta.ActivateRequest
-	17,  // 157: namespace.private.devbox.v1beta.DevBoxService.StreamActivate:input_type -> namespace.private.devbox.v1beta.ActivateRequest
-	81,  // 158: namespace.private.devbox.v1beta.DevBoxService.Update:input_type -> namespace.private.devbox.v1beta.UpdateRequest
-	20,  // 159: namespace.private.devbox.v1beta.DevBoxService.Expire:input_type -> namespace.private.devbox.v1beta.ExpireRequest
-	22,  // 160: namespace.private.devbox.v1beta.DevBoxService.Stop:input_type -> namespace.private.devbox.v1beta.StopRequest
-	24,  // 161: namespace.private.devbox.v1beta.DevBoxService.List:input_type -> namespace.private.devbox.v1beta.ListRequest
-	26,  // 162: namespace.private.devbox.v1beta.DevBoxService.GetUsage:input_type -> namespace.private.devbox.v1beta.GetUsageRequest
-	28,  // 163: namespace.private.devbox.v1beta.DevBoxService.Fetch:input_type -> namespace.private.devbox.v1beta.FetchRequest
-	30,  // 164: namespace.private.devbox.v1beta.DevBoxService.ListSnapshots:input_type -> namespace.private.devbox.v1beta.ListSnapshotsRequest
-	32,  // 165: namespace.private.devbox.v1beta.DevBoxService.AcquireLease:input_type -> namespace.private.devbox.v1beta.AcquireLeaseRequest
-	34,  // 166: namespace.private.devbox.v1beta.DevBoxService.ReleaseLease:input_type -> namespace.private.devbox.v1beta.ReleaseLeaseRequest
-	44,  // 167: namespace.private.devbox.v1beta.DevBoxService.CreateTemplate:input_type -> namespace.private.devbox.v1beta.CreateTemplateRequest
-	46,  // 168: namespace.private.devbox.v1beta.DevBoxService.UpdateTemplate:input_type -> namespace.private.devbox.v1beta.UpdateTemplateRequest
-	48,  // 169: namespace.private.devbox.v1beta.DevBoxService.FetchTemplate:input_type -> namespace.private.devbox.v1beta.FetchTemplateRequest
-	50,  // 170: namespace.private.devbox.v1beta.DevBoxService.ListTemplates:input_type -> namespace.private.devbox.v1beta.ListTemplatesRequest
-	52,  // 171: namespace.private.devbox.v1beta.DevBoxService.ExpireTemplate:input_type -> namespace.private.devbox.v1beta.ExpireTemplateRequest
-	40,  // 172: namespace.private.devbox.v1beta.DevBoxService.WireImage:input_type -> namespace.private.devbox.v1beta.WireImageRequest
-	65,  // 173: namespace.private.devbox.v1beta.DevBoxService.OptimizeImage:input_type -> namespace.private.devbox.v1beta.OptimizeImageRequest
-	60,  // 174: namespace.private.devbox.v1beta.DevBoxService.ExpireImage:input_type -> namespace.private.devbox.v1beta.ExpireImageRequest
-	62,  // 175: namespace.private.devbox.v1beta.DevBoxService.ListImages:input_type -> namespace.private.devbox.v1beta.ListImagesRequest
-	67,  // 176: namespace.private.devbox.v1beta.DevBoxService.InspectImage:input_type -> namespace.private.devbox.v1beta.InspectImageRequest
-	69,  // 177: namespace.private.devbox.v1beta.DevBoxService.DescribeImage:input_type -> namespace.private.devbox.v1beta.DescribeImageRequest
-	71,  // 178: namespace.private.devbox.v1beta.DevBoxService.ListComposableFeatures:input_type -> namespace.private.devbox.v1beta.ListComposableFeaturesRequest
-	74,  // 179: namespace.private.devbox.v1beta.DevBoxService.RegisterComposableFeature:input_type -> namespace.private.devbox.v1beta.RegisterComposableFeatureRequest
-	76,  // 180: namespace.private.devbox.v1beta.DevBoxService.RemoveComposableFeature:input_type -> namespace.private.devbox.v1beta.RemoveComposableFeatureRequest
-	84,  // 181: namespace.private.devbox.v1beta.DevBoxService.UpdateDefaults:input_type -> namespace.private.devbox.v1beta.UpdateDefaultsRequest
-	86,  // 182: namespace.private.devbox.v1beta.DevBoxService.FetchDefaults:input_type -> namespace.private.devbox.v1beta.FetchDefaultsRequest
-	88,  // 183: namespace.private.devbox.v1beta.DevBoxService.CreateRepository:input_type -> namespace.private.devbox.v1beta.CreateRepositoryRequest
-	93,  // 184: namespace.private.devbox.v1beta.DevBoxService.CreateIntegration:input_type -> namespace.private.devbox.v1beta.CreateIntegrationRequest
-	95,  // 185: namespace.private.devbox.v1beta.DevBoxService.ListIntegrations:input_type -> namespace.private.devbox.v1beta.ListIntegrationsRequest
-	97,  // 186: namespace.private.devbox.v1beta.DevBoxService.DeleteIntegration:input_type -> namespace.private.devbox.v1beta.DeleteIntegrationRequest
-	54,  // 187: namespace.private.devbox.v1beta.DevBoxService.BeginDevinOutpostConnect:input_type -> namespace.private.devbox.v1beta.BeginDevinOutpostConnectRequest
-	144, // 188: namespace.private.devbox.v1beta.DevBoxService.Ping:input_type -> google.protobuf.Empty
-	78,  // 189: namespace.private.devbox.v1beta.DevBoxService.Metadata:input_type -> namespace.private.devbox.v1beta.MetadataRequest
-	16,  // 190: namespace.private.devbox.v1beta.DevBoxService.Create:output_type -> namespace.private.devbox.v1beta.CreateResponse
-	16,  // 191: namespace.private.devbox.v1beta.DevBoxService.CreateFromTemplate:output_type -> namespace.private.devbox.v1beta.CreateResponse
-	16,  // 192: namespace.private.devbox.v1beta.DevBoxService.CreateFromDevbox:output_type -> namespace.private.devbox.v1beta.CreateResponse
-	18,  // 193: namespace.private.devbox.v1beta.DevBoxService.Activate:output_type -> namespace.private.devbox.v1beta.ActivateResponse
-	19,  // 194: namespace.private.devbox.v1beta.DevBoxService.StreamActivate:output_type -> namespace.private.devbox.v1beta.ActivateResponseChunk
-	82,  // 195: namespace.private.devbox.v1beta.DevBoxService.Update:output_type -> namespace.private.devbox.v1beta.UpdateResponse
-	21,  // 196: namespace.private.devbox.v1beta.DevBoxService.Expire:output_type -> namespace.private.devbox.v1beta.ExpireResponse
-	23,  // 197: namespace.private.devbox.v1beta.DevBoxService.Stop:output_type -> namespace.private.devbox.v1beta.StopResponse
-	25,  // 198: namespace.private.devbox.v1beta.DevBoxService.List:output_type -> namespace.private.devbox.v1beta.ListResponse
-	27,  // 199: namespace.private.devbox.v1beta.DevBoxService.GetUsage:output_type -> namespace.private.devbox.v1beta.GetUsageResponse
-	29,  // 200: namespace.private.devbox.v1beta.DevBoxService.Fetch:output_type -> namespace.private.devbox.v1beta.FetchResponse
-	31,  // 201: namespace.private.devbox.v1beta.DevBoxService.ListSnapshots:output_type -> namespace.private.devbox.v1beta.ListSnapshotsResponse
-	33,  // 202: namespace.private.devbox.v1beta.DevBoxService.AcquireLease:output_type -> namespace.private.devbox.v1beta.AcquireLeaseResponse
-	35,  // 203: namespace.private.devbox.v1beta.DevBoxService.ReleaseLease:output_type -> namespace.private.devbox.v1beta.ReleaseLeaseResponse
-	45,  // 204: namespace.private.devbox.v1beta.DevBoxService.CreateTemplate:output_type -> namespace.private.devbox.v1beta.CreateTemplateResponse
-	47,  // 205: namespace.private.devbox.v1beta.DevBoxService.UpdateTemplate:output_type -> namespace.private.devbox.v1beta.UpdateTemplateResponse
-	49,  // 206: namespace.private.devbox.v1beta.DevBoxService.FetchTemplate:output_type -> namespace.private.devbox.v1beta.FetchTemplateResponse
-	51,  // 207: namespace.private.devbox.v1beta.DevBoxService.ListTemplates:output_type -> namespace.private.devbox.v1beta.ListTemplatesResponse
-	53,  // 208: namespace.private.devbox.v1beta.DevBoxService.ExpireTemplate:output_type -> namespace.private.devbox.v1beta.ExpireTemplateResponse
-	59,  // 209: namespace.private.devbox.v1beta.DevBoxService.WireImage:output_type -> namespace.private.devbox.v1beta.WireImageResponse
-	66,  // 210: namespace.private.devbox.v1beta.DevBoxService.OptimizeImage:output_type -> namespace.private.devbox.v1beta.OptimizeImageResponseChunk
-	61,  // 211: namespace.private.devbox.v1beta.DevBoxService.ExpireImage:output_type -> namespace.private.devbox.v1beta.ExpireImageResponse
-	63,  // 212: namespace.private.devbox.v1beta.DevBoxService.ListImages:output_type -> namespace.private.devbox.v1beta.ListImagesResponse
-	68,  // 213: namespace.private.devbox.v1beta.DevBoxService.InspectImage:output_type -> namespace.private.devbox.v1beta.InspectImageResponse
-	70,  // 214: namespace.private.devbox.v1beta.DevBoxService.DescribeImage:output_type -> namespace.private.devbox.v1beta.DescribeImageResponse
-	72,  // 215: namespace.private.devbox.v1beta.DevBoxService.ListComposableFeatures:output_type -> namespace.private.devbox.v1beta.ListComposableFeaturesResponse
-	75,  // 216: namespace.private.devbox.v1beta.DevBoxService.RegisterComposableFeature:output_type -> namespace.private.devbox.v1beta.RegisterComposableFeatureResponse
-	77,  // 217: namespace.private.devbox.v1beta.DevBoxService.RemoveComposableFeature:output_type -> namespace.private.devbox.v1beta.RemoveComposableFeatureResponse
-	85,  // 218: namespace.private.devbox.v1beta.DevBoxService.UpdateDefaults:output_type -> namespace.private.devbox.v1beta.UpdateDefaultsResponse
-	87,  // 219: namespace.private.devbox.v1beta.DevBoxService.FetchDefaults:output_type -> namespace.private.devbox.v1beta.FetchDefaultsResponse
-	89,  // 220: namespace.private.devbox.v1beta.DevBoxService.CreateRepository:output_type -> namespace.private.devbox.v1beta.CreateRepositoryResponse
-	94,  // 221: namespace.private.devbox.v1beta.DevBoxService.CreateIntegration:output_type -> namespace.private.devbox.v1beta.CreateIntegrationResponse
-	96,  // 222: namespace.private.devbox.v1beta.DevBoxService.ListIntegrations:output_type -> namespace.private.devbox.v1beta.ListIntegrationsResponse
-	98,  // 223: namespace.private.devbox.v1beta.DevBoxService.DeleteIntegration:output_type -> namespace.private.devbox.v1beta.DeleteIntegrationResponse
-	55,  // 224: namespace.private.devbox.v1beta.DevBoxService.BeginDevinOutpostConnect:output_type -> namespace.private.devbox.v1beta.BeginDevinOutpostConnectResponse
-	144, // 225: namespace.private.devbox.v1beta.DevBoxService.Ping:output_type -> google.protobuf.Empty
-	79,  // 226: namespace.private.devbox.v1beta.DevBoxService.Metadata:output_type -> namespace.private.devbox.v1beta.MetadataResponse
-	190, // [190:227] is the sub-list for method output_type
-	153, // [153:190] is the sub-list for method input_type
-	153, // [153:153] is the sub-list for extension type_name
-	153, // [153:153] is the sub-list for extension extendee
-	0,   // [0:153] is the sub-list for field type_name
+	127, // 9: namespace.private.devbox.v1beta.CreateRequest.sessions:type_name -> namespace.private.devbox.v1beta.BlueprintSpec.SessionSpec
+	93,  // 10: namespace.private.devbox.v1beta.CreateRequest.integrations:type_name -> namespace.private.devbox.v1beta.Integrations
+	42,  // 11: namespace.private.devbox.v1beta.CreateRequest.ephemeral:type_name -> namespace.private.devbox.v1beta.EphemeralSpec
+	141, // 12: namespace.private.devbox.v1beta.CreateRequest.privileged:type_name -> google.protobuf.BoolValue
+	123, // 13: namespace.private.devbox.v1beta.CreateRequest.environment:type_name -> namespace.private.devbox.v1beta.BlueprintSpec.EnvVar
+	92,  // 14: namespace.private.devbox.v1beta.CreateRequest.network_policy:type_name -> namespace.private.devbox.v1beta.NetworkPolicySpec
+	13,  // 15: namespace.private.devbox.v1beta.CreateRequest.ports:type_name -> namespace.private.devbox.v1beta.PortSpec
+	142, // 16: namespace.private.devbox.v1beta.CreateRequest.labels:type_name -> namespace.stdlib.Label
+	106, // 17: namespace.private.devbox.v1beta.CreateRequest.activate_experimental:type_name -> namespace.private.devbox.v1beta.ActivateRequest.Experimental
+	106, // 18: namespace.private.devbox.v1beta.CreateFromTemplateRequest.activate_experimental:type_name -> namespace.private.devbox.v1beta.ActivateRequest.Experimental
+	105, // 19: namespace.private.devbox.v1beta.CreateFromTemplateRequest.overrides:type_name -> namespace.private.devbox.v1beta.CreateFromTemplateRequest.Overrides
+	142, // 20: namespace.private.devbox.v1beta.CreateFromTemplateRequest.labels:type_name -> namespace.stdlib.Label
+	139, // 21: namespace.private.devbox.v1beta.CreateFromDevboxRequest.instance_shape:type_name -> namespace.cloud.compute.v1beta.InstanceShape
+	142, // 22: namespace.private.devbox.v1beta.CreateFromDevboxRequest.labels:type_name -> namespace.stdlib.Label
+	106, // 23: namespace.private.devbox.v1beta.CreateFromDevboxRequest.activate_experimental:type_name -> namespace.private.devbox.v1beta.ActivateRequest.Experimental
+	38,  // 24: namespace.private.devbox.v1beta.CreateResponse.devbox:type_name -> namespace.private.devbox.v1beta.DevBox
+	106, // 25: namespace.private.devbox.v1beta.ActivateRequest.experimental:type_name -> namespace.private.devbox.v1beta.ActivateRequest.Experimental
+	38,  // 26: namespace.private.devbox.v1beta.ActivateResponse.devbox:type_name -> namespace.private.devbox.v1beta.DevBox
+	110, // 27: namespace.private.devbox.v1beta.ActivateResponse.instance_metadata_summary:type_name -> namespace.private.devbox.v1beta.ActivateResponse.InstanceMetadataSummary
+	19,  // 28: namespace.private.devbox.v1beta.ActivateResponseChunk.activation:type_name -> namespace.private.devbox.v1beta.ActivateResponse
+	143, // 29: namespace.private.devbox.v1beta.ActivateResponseChunk.metadata:type_name -> namespace.cloud.compute.v1beta.InstanceMetadata
+	2,   // 30: namespace.private.devbox.v1beta.ActivateResponseChunk.status:type_name -> namespace.private.devbox.v1beta.ActivateResponseChunk.Status
+	38,  // 31: namespace.private.devbox.v1beta.ExpireResponse.devboxes:type_name -> namespace.private.devbox.v1beta.DevBox
+	38,  // 32: namespace.private.devbox.v1beta.StopResponse.devbox:type_name -> namespace.private.devbox.v1beta.DevBox
+	144, // 33: namespace.private.devbox.v1beta.ListRequest.match_creator:type_name -> namespace.stdlib.StringMatcher
+	144, // 34: namespace.private.devbox.v1beta.ListRequest.match_image_name:type_name -> namespace.stdlib.StringMatcher
+	144, // 35: namespace.private.devbox.v1beta.ListRequest.match_image_ref:type_name -> namespace.stdlib.StringMatcher
+	3,   // 36: namespace.private.devbox.v1beta.ListRequest.order_by:type_name -> namespace.private.devbox.v1beta.ListRequest.OrderBy
+	4,   // 37: namespace.private.devbox.v1beta.ListRequest.match_ephemeral:type_name -> namespace.private.devbox.v1beta.ListRequest.EphemeralFilter
+	145, // 38: namespace.private.devbox.v1beta.ListRequest.match_labels:type_name -> namespace.stdlib.LabelFilterEntry
+	38,  // 39: namespace.private.devbox.v1beta.ListResponse.devboxes:type_name -> namespace.private.devbox.v1beta.DevBox
+	111, // 40: namespace.private.devbox.v1beta.GetUsageRequest.period_start:type_name -> namespace.private.devbox.v1beta.GetUsageRequest.Date
+	111, // 41: namespace.private.devbox.v1beta.GetUsageRequest.period_end:type_name -> namespace.private.devbox.v1beta.GetUsageRequest.Date
+	112, // 42: namespace.private.devbox.v1beta.GetUsageResponse.per_day:type_name -> namespace.private.devbox.v1beta.GetUsageResponse.DataPoint
+	38,  // 43: namespace.private.devbox.v1beta.FetchResponse.devbox:type_name -> namespace.private.devbox.v1beta.DevBox
+	5,   // 44: namespace.private.devbox.v1beta.ListSnapshotsRequest.order_by:type_name -> namespace.private.devbox.v1beta.ListSnapshotsRequest.OrderBy
+	146, // 45: namespace.private.devbox.v1beta.ListSnapshotsResponse.snapshots:type_name -> namespace.cloud.compute.v1beta.PersistentVolumeSnapshot
+	14,  // 46: namespace.private.devbox.v1beta.AcquireLeaseRequest.create:type_name -> namespace.private.devbox.v1beta.CreateRequest
+	38,  // 47: namespace.private.devbox.v1beta.AcquireLeaseResponse.devbox:type_name -> namespace.private.devbox.v1beta.DevBox
+	6,   // 48: namespace.private.devbox.v1beta.AcquireLeaseResponse.outcome:type_name -> namespace.private.devbox.v1beta.AcquireLeaseResponse.LeaseOutcome
+	147, // 49: namespace.private.devbox.v1beta.PoolLease.acquired_at:type_name -> google.protobuf.Timestamp
+	147, // 50: namespace.private.devbox.v1beta.PoolLease.released_at:type_name -> google.protobuf.Timestamp
+	147, // 51: namespace.private.devbox.v1beta.DevBox.created_at:type_name -> google.protobuf.Timestamp
+	147, // 52: namespace.private.devbox.v1beta.DevBox.last_used_at:type_name -> google.protobuf.Timestamp
+	147, // 53: namespace.private.devbox.v1beta.DevBox.destroyed_at:type_name -> google.protobuf.Timestamp
+	139, // 54: namespace.private.devbox.v1beta.DevBox.instance_shape:type_name -> namespace.cloud.compute.v1beta.InstanceShape
+	39,  // 55: namespace.private.devbox.v1beta.DevBox.blueprint_ref:type_name -> namespace.private.devbox.v1beta.BlueprintRef
+	59,  // 56: namespace.private.devbox.v1beta.DevBox.spec:type_name -> namespace.private.devbox.v1beta.BlueprintSpec
+	122, // 57: namespace.private.devbox.v1beta.DevBox.port_forwards:type_name -> namespace.private.devbox.v1beta.BlueprintSpec.PortForward
+	113, // 58: namespace.private.devbox.v1beta.DevBox.resolved_image:type_name -> namespace.private.devbox.v1beta.DevBox.ResolvedImage
+	140, // 59: namespace.private.devbox.v1beta.DevBox.busy_ensure_minimum_duration:type_name -> google.protobuf.Duration
+	0,   // 60: namespace.private.devbox.v1beta.DevBox.access_mode:type_name -> namespace.private.devbox.v1beta.AccessMode
+	12,  // 61: namespace.private.devbox.v1beta.DevBox.http_access_mode:type_name -> namespace.private.devbox.v1beta.HttpAccessMode
+	127, // 62: namespace.private.devbox.v1beta.DevBox.permanent_sessions:type_name -> namespace.private.devbox.v1beta.BlueprintSpec.SessionSpec
+	93,  // 63: namespace.private.devbox.v1beta.DevBox.integrations:type_name -> namespace.private.devbox.v1beta.Integrations
+	42,  // 64: namespace.private.devbox.v1beta.DevBox.ephemeral:type_name -> namespace.private.devbox.v1beta.EphemeralSpec
+	37,  // 65: namespace.private.devbox.v1beta.DevBox.pool_lease:type_name -> namespace.private.devbox.v1beta.PoolLease
+	92,  // 66: namespace.private.devbox.v1beta.DevBox.network_policy:type_name -> namespace.private.devbox.v1beta.NetworkPolicySpec
+	142, // 67: namespace.private.devbox.v1beta.DevBox.labels:type_name -> namespace.stdlib.Label
+	59,  // 68: namespace.private.devbox.v1beta.WireImageRequest.metadata:type_name -> namespace.private.devbox.v1beta.BlueprintSpec
+	40,  // 69: namespace.private.devbox.v1beta.WireImageRequest.source:type_name -> namespace.private.devbox.v1beta.ImageSource
+	140, // 70: namespace.private.devbox.v1beta.EphemeralSpec.stopped_retention_duration:type_name -> google.protobuf.Duration
+	114, // 71: namespace.private.devbox.v1beta.DevboxTemplateSpec.instance:type_name -> namespace.private.devbox.v1beta.DevboxTemplateSpec.InstanceSpec
+	148, // 72: namespace.private.devbox.v1beta.DevboxTemplateSpec.site:type_name -> google.protobuf.StringValue
+	42,  // 73: namespace.private.devbox.v1beta.DevboxTemplateSpec.ephemeral:type_name -> namespace.private.devbox.v1beta.EphemeralSpec
+	58,  // 74: namespace.private.devbox.v1beta.DevboxTemplateSpec.version_control:type_name -> namespace.private.devbox.v1beta.VersionControlSpec
+	123, // 75: namespace.private.devbox.v1beta.DevboxTemplateSpec.environment:type_name -> namespace.private.devbox.v1beta.BlueprintSpec.EnvVar
+	140, // 76: namespace.private.devbox.v1beta.DevboxTemplateSpec.busy_ensure_minimum_duration:type_name -> google.protobuf.Duration
+	93,  // 77: namespace.private.devbox.v1beta.DevboxTemplateSpec.integrations:type_name -> namespace.private.devbox.v1beta.Integrations
+	92,  // 78: namespace.private.devbox.v1beta.DevboxTemplateSpec.network_policy:type_name -> namespace.private.devbox.v1beta.NetworkPolicySpec
+	115, // 79: namespace.private.devbox.v1beta.DevboxTemplateSpec.experimental:type_name -> namespace.private.devbox.v1beta.DevboxTemplateSpec.Experimental
+	0,   // 80: namespace.private.devbox.v1beta.DevboxTemplateSpec.access_mode:type_name -> namespace.private.devbox.v1beta.AccessMode
+	91,  // 81: namespace.private.devbox.v1beta.DevboxTemplateSpec.features:type_name -> namespace.private.devbox.v1beta.Features
+	13,  // 82: namespace.private.devbox.v1beta.DevboxTemplateSpec.ports:type_name -> namespace.private.devbox.v1beta.PortSpec
+	7,   // 83: namespace.private.devbox.v1beta.DevboxTemplateSpec.type:type_name -> namespace.private.devbox.v1beta.DevboxTemplateSpec.Type
+	127, // 84: namespace.private.devbox.v1beta.DevboxTemplateSpec.sessions:type_name -> namespace.private.devbox.v1beta.BlueprintSpec.SessionSpec
+	147, // 85: namespace.private.devbox.v1beta.DevboxTemplate.created_at:type_name -> google.protobuf.Timestamp
+	147, // 86: namespace.private.devbox.v1beta.DevboxTemplate.updated_at:type_name -> google.protobuf.Timestamp
+	43,  // 87: namespace.private.devbox.v1beta.DevboxTemplate.spec:type_name -> namespace.private.devbox.v1beta.DevboxTemplateSpec
+	43,  // 88: namespace.private.devbox.v1beta.CreateTemplateRequest.spec:type_name -> namespace.private.devbox.v1beta.DevboxTemplateSpec
+	120, // 89: namespace.private.devbox.v1beta.CreateTemplateRequest.experimental:type_name -> namespace.private.devbox.v1beta.CreateTemplateRequest.Experimental
+	44,  // 90: namespace.private.devbox.v1beta.CreateTemplateResponse.template:type_name -> namespace.private.devbox.v1beta.DevboxTemplate
+	43,  // 91: namespace.private.devbox.v1beta.UpdateTemplateRequest.spec:type_name -> namespace.private.devbox.v1beta.DevboxTemplateSpec
+	121, // 92: namespace.private.devbox.v1beta.UpdateTemplateRequest.experimental:type_name -> namespace.private.devbox.v1beta.UpdateTemplateRequest.Experimental
+	44,  // 93: namespace.private.devbox.v1beta.UpdateTemplateResponse.template:type_name -> namespace.private.devbox.v1beta.DevboxTemplate
+	44,  // 94: namespace.private.devbox.v1beta.FetchTemplateResponse.template:type_name -> namespace.private.devbox.v1beta.DevboxTemplate
+	8,   // 95: namespace.private.devbox.v1beta.ListTemplatesRequest.order_by:type_name -> namespace.private.devbox.v1beta.ListTemplatesRequest.OrderBy
+	44,  // 96: namespace.private.devbox.v1beta.ListTemplatesResponse.templates:type_name -> namespace.private.devbox.v1beta.DevboxTemplate
+	9,   // 97: namespace.private.devbox.v1beta.VersionControlSpec.checkout_method:type_name -> namespace.private.devbox.v1beta.VersionControlSpec.CheckoutMethod
+	122, // 98: namespace.private.devbox.v1beta.BlueprintSpec.port_forwards:type_name -> namespace.private.devbox.v1beta.BlueprintSpec.PortForward
+	123, // 99: namespace.private.devbox.v1beta.BlueprintSpec.environment:type_name -> namespace.private.devbox.v1beta.BlueprintSpec.EnvVar
+	124, // 100: namespace.private.devbox.v1beta.BlueprintSpec.on_create:type_name -> namespace.private.devbox.v1beta.BlueprintSpec.Op
+	124, // 101: namespace.private.devbox.v1beta.BlueprintSpec.on_startup:type_name -> namespace.private.devbox.v1beta.BlueprintSpec.Op
+	126, // 102: namespace.private.devbox.v1beta.BlueprintSpec.volumes:type_name -> namespace.private.devbox.v1beta.BlueprintSpec.Volume
+	125, // 103: namespace.private.devbox.v1beta.BlueprintSpec.docker_sock_user:type_name -> namespace.private.devbox.v1beta.BlueprintSpec.UserOrUid
+	127, // 104: namespace.private.devbox.v1beta.BlueprintSpec.sessions:type_name -> namespace.private.devbox.v1beta.BlueprintSpec.SessionSpec
+	65,  // 105: namespace.private.devbox.v1beta.WireImageResponse.image:type_name -> namespace.private.devbox.v1beta.Image
+	65,  // 106: namespace.private.devbox.v1beta.ListImagesResponse.image:type_name -> namespace.private.devbox.v1beta.Image
+	147, // 107: namespace.private.devbox.v1beta.Image.created_at:type_name -> google.protobuf.Timestamp
+	59,  // 108: namespace.private.devbox.v1beta.Image.metadata:type_name -> namespace.private.devbox.v1beta.BlueprintSpec
+	10,  // 109: namespace.private.devbox.v1beta.Image.flag:type_name -> namespace.private.devbox.v1beta.Image.Flag
+	40,  // 110: namespace.private.devbox.v1beta.Image.source:type_name -> namespace.private.devbox.v1beta.ImageSource
+	147, // 111: namespace.private.devbox.v1beta.Image.expires_at:type_name -> google.protobuf.Timestamp
+	11,  // 112: namespace.private.devbox.v1beta.OptimizeImageResponseChunk.status:type_name -> namespace.private.devbox.v1beta.OptimizeImageResponseChunk.Status
+	130, // 113: namespace.private.devbox.v1beta.InspectImageResponse.env:type_name -> namespace.private.devbox.v1beta.InspectImageResponse.EnvEntry
+	59,  // 114: namespace.private.devbox.v1beta.InspectImageResponse.spec:type_name -> namespace.private.devbox.v1beta.BlueprintSpec
+	147, // 115: namespace.private.devbox.v1beta.InspectImageResponse.version_created_at:type_name -> google.protobuf.Timestamp
+	65,  // 116: namespace.private.devbox.v1beta.DescribeImageResponse.image:type_name -> namespace.private.devbox.v1beta.Image
+	74,  // 117: namespace.private.devbox.v1beta.ListComposableFeaturesResponse.features:type_name -> namespace.private.devbox.v1beta.ComposableFeature
+	74,  // 118: namespace.private.devbox.v1beta.RegisterComposableFeatureRequest.feature:type_name -> namespace.private.devbox.v1beta.ComposableFeature
+	81,  // 119: namespace.private.devbox.v1beta.RegisterComposableFeatureRequest.spec:type_name -> namespace.private.devbox.v1beta.FeatureSpec
+	131, // 120: namespace.private.devbox.v1beta.MetadataResponse.sites:type_name -> namespace.private.devbox.v1beta.MetadataResponse.Site
+	132, // 121: namespace.private.devbox.v1beta.FeatureSpec.on_create:type_name -> namespace.private.devbox.v1beta.FeatureSpec.RunScript
+	133, // 122: namespace.private.devbox.v1beta.FeatureSpec.sessions:type_name -> namespace.private.devbox.v1beta.FeatureSpec.SessionSpec
+	134, // 123: namespace.private.devbox.v1beta.FeatureSpec.exported_ports:type_name -> namespace.private.devbox.v1beta.FeatureSpec.ExportedPort
+	132, // 124: namespace.private.devbox.v1beta.FeatureSpec.on_startup:type_name -> namespace.private.devbox.v1beta.FeatureSpec.RunScript
+	139, // 125: namespace.private.devbox.v1beta.UpdateRequest.instance_shape:type_name -> namespace.cloud.compute.v1beta.InstanceShape
+	140, // 126: namespace.private.devbox.v1beta.UpdateRequest.busy_ensure_minimum_duration:type_name -> google.protobuf.Duration
+	93,  // 127: namespace.private.devbox.v1beta.UpdateRequest.integrations:type_name -> namespace.private.devbox.v1beta.Integrations
+	141, // 128: namespace.private.devbox.v1beta.UpdateRequest.privileged:type_name -> google.protobuf.BoolValue
+	92,  // 129: namespace.private.devbox.v1beta.UpdateRequest.network_policy:type_name -> namespace.private.devbox.v1beta.NetworkPolicySpec
+	12,  // 130: namespace.private.devbox.v1beta.UpdateRequest.http_access_mode:type_name -> namespace.private.devbox.v1beta.HttpAccessMode
+	38,  // 131: namespace.private.devbox.v1beta.UpdateResponse.devbox:type_name -> namespace.private.devbox.v1beta.DevBox
+	139, // 132: namespace.private.devbox.v1beta.DevboxDefaults.instance_shape:type_name -> namespace.cloud.compute.v1beta.InstanceShape
+	58,  // 133: namespace.private.devbox.v1beta.DevboxDefaults.version_control:type_name -> namespace.private.devbox.v1beta.VersionControlSpec
+	140, // 134: namespace.private.devbox.v1beta.DevboxDefaults.busy_ensure_minimum_duration:type_name -> google.protobuf.Duration
+	0,   // 135: namespace.private.devbox.v1beta.DevboxDefaults.access_mode:type_name -> namespace.private.devbox.v1beta.AccessMode
+	93,  // 136: namespace.private.devbox.v1beta.DevboxDefaults.integrations:type_name -> namespace.private.devbox.v1beta.Integrations
+	92,  // 137: namespace.private.devbox.v1beta.DevboxDefaults.network_policy:type_name -> namespace.private.devbox.v1beta.NetworkPolicySpec
+	84,  // 138: namespace.private.devbox.v1beta.UpdateDefaultsRequest.defaults:type_name -> namespace.private.devbox.v1beta.DevboxDefaults
+	84,  // 139: namespace.private.devbox.v1beta.UpdateDefaultsResponse.defaults:type_name -> namespace.private.devbox.v1beta.DevboxDefaults
+	84,  // 140: namespace.private.devbox.v1beta.FetchDefaultsResponse.defaults:type_name -> namespace.private.devbox.v1beta.DevboxDefaults
+	84,  // 141: namespace.private.devbox.v1beta.FetchDefaultsResponse.by_policy:type_name -> namespace.private.devbox.v1beta.DevboxDefaults
+	135, // 142: namespace.private.devbox.v1beta.NetworkPolicySpec.egress_domains:type_name -> namespace.private.devbox.v1beta.NetworkPolicySpec.EgressDomains
+	136, // 143: namespace.private.devbox.v1beta.NetworkPolicySpec.egress_policy:type_name -> namespace.private.devbox.v1beta.NetworkPolicySpec.EgressPolicy
+	137, // 144: namespace.private.devbox.v1beta.Integrations.tailscale:type_name -> namespace.private.devbox.v1beta.Integrations.TailscaleIntegration
+	138, // 145: namespace.private.devbox.v1beta.Integrations.claude:type_name -> namespace.private.devbox.v1beta.Integrations.ClaudeIntegration
+	101, // 146: namespace.private.devbox.v1beta.CreateIntegrationRequest.claude:type_name -> namespace.private.devbox.v1beta.ClaudeIntegrationSpec
+	100, // 147: namespace.private.devbox.v1beta.ListIntegrationsResponse.integrations:type_name -> namespace.private.devbox.v1beta.Integration
+	147, // 148: namespace.private.devbox.v1beta.Integration.created_at:type_name -> google.protobuf.Timestamp
+	147, // 149: namespace.private.devbox.v1beta.Integration.updated_at:type_name -> google.protobuf.Timestamp
+	101, // 150: namespace.private.devbox.v1beta.Integration.claude:type_name -> namespace.private.devbox.v1beta.ClaudeIntegrationSpec
+	0,   // 151: namespace.private.devbox.v1beta.CreateFromTemplateRequest.Overrides.access_mode:type_name -> namespace.private.devbox.v1beta.AccessMode
+	107, // 152: namespace.private.devbox.v1beta.ActivateRequest.Experimental.devin_outposts:type_name -> namespace.private.devbox.v1beta.ActivateRequest.Experimental.DevinOutposts
+	108, // 153: namespace.private.devbox.v1beta.ActivateRequest.Experimental.cursor_worker:type_name -> namespace.private.devbox.v1beta.ActivateRequest.Experimental.CursorWorker
+	109, // 154: namespace.private.devbox.v1beta.ActivateRequest.Experimental.claude_agent:type_name -> namespace.private.devbox.v1beta.ActivateRequest.Experimental.ClaudeAgent
+	139, // 155: namespace.private.devbox.v1beta.DevboxTemplateSpec.InstanceSpec.shape:type_name -> namespace.cloud.compute.v1beta.InstanceShape
+	116, // 156: namespace.private.devbox.v1beta.DevboxTemplateSpec.InstanceSpec.linux:type_name -> namespace.private.devbox.v1beta.DevboxTemplateSpec.InstanceSpec.LinuxInstanceSpec
+	117, // 157: namespace.private.devbox.v1beta.DevboxTemplateSpec.Experimental.devin_outpost:type_name -> namespace.private.devbox.v1beta.DevboxTemplateSpec.Experimental.DevinOutpostSpec
+	118, // 158: namespace.private.devbox.v1beta.DevboxTemplateSpec.Experimental.cursor_worker:type_name -> namespace.private.devbox.v1beta.DevboxTemplateSpec.Experimental.CursorWorkerSpec
+	119, // 159: namespace.private.devbox.v1beta.DevboxTemplateSpec.Experimental.claude_environment:type_name -> namespace.private.devbox.v1beta.DevboxTemplateSpec.Experimental.ClaudeEnvironmentSpec
+	128, // 160: namespace.private.devbox.v1beta.BlueprintSpec.Op.run_command:type_name -> namespace.private.devbox.v1beta.BlueprintSpec.Op.RunCommand
+	129, // 161: namespace.private.devbox.v1beta.BlueprintSpec.Op.run_script:type_name -> namespace.private.devbox.v1beta.BlueprintSpec.Op.RunScript
+	14,  // 162: namespace.private.devbox.v1beta.DevBoxService.Create:input_type -> namespace.private.devbox.v1beta.CreateRequest
+	15,  // 163: namespace.private.devbox.v1beta.DevBoxService.CreateFromTemplate:input_type -> namespace.private.devbox.v1beta.CreateFromTemplateRequest
+	16,  // 164: namespace.private.devbox.v1beta.DevBoxService.CreateFromDevbox:input_type -> namespace.private.devbox.v1beta.CreateFromDevboxRequest
+	18,  // 165: namespace.private.devbox.v1beta.DevBoxService.Activate:input_type -> namespace.private.devbox.v1beta.ActivateRequest
+	18,  // 166: namespace.private.devbox.v1beta.DevBoxService.StreamActivate:input_type -> namespace.private.devbox.v1beta.ActivateRequest
+	82,  // 167: namespace.private.devbox.v1beta.DevBoxService.Update:input_type -> namespace.private.devbox.v1beta.UpdateRequest
+	21,  // 168: namespace.private.devbox.v1beta.DevBoxService.Expire:input_type -> namespace.private.devbox.v1beta.ExpireRequest
+	23,  // 169: namespace.private.devbox.v1beta.DevBoxService.Stop:input_type -> namespace.private.devbox.v1beta.StopRequest
+	25,  // 170: namespace.private.devbox.v1beta.DevBoxService.List:input_type -> namespace.private.devbox.v1beta.ListRequest
+	27,  // 171: namespace.private.devbox.v1beta.DevBoxService.GetUsage:input_type -> namespace.private.devbox.v1beta.GetUsageRequest
+	29,  // 172: namespace.private.devbox.v1beta.DevBoxService.Fetch:input_type -> namespace.private.devbox.v1beta.FetchRequest
+	31,  // 173: namespace.private.devbox.v1beta.DevBoxService.ListSnapshots:input_type -> namespace.private.devbox.v1beta.ListSnapshotsRequest
+	33,  // 174: namespace.private.devbox.v1beta.DevBoxService.AcquireLease:input_type -> namespace.private.devbox.v1beta.AcquireLeaseRequest
+	35,  // 175: namespace.private.devbox.v1beta.DevBoxService.ReleaseLease:input_type -> namespace.private.devbox.v1beta.ReleaseLeaseRequest
+	45,  // 176: namespace.private.devbox.v1beta.DevBoxService.CreateTemplate:input_type -> namespace.private.devbox.v1beta.CreateTemplateRequest
+	47,  // 177: namespace.private.devbox.v1beta.DevBoxService.UpdateTemplate:input_type -> namespace.private.devbox.v1beta.UpdateTemplateRequest
+	49,  // 178: namespace.private.devbox.v1beta.DevBoxService.FetchTemplate:input_type -> namespace.private.devbox.v1beta.FetchTemplateRequest
+	51,  // 179: namespace.private.devbox.v1beta.DevBoxService.ListTemplates:input_type -> namespace.private.devbox.v1beta.ListTemplatesRequest
+	53,  // 180: namespace.private.devbox.v1beta.DevBoxService.ExpireTemplate:input_type -> namespace.private.devbox.v1beta.ExpireTemplateRequest
+	41,  // 181: namespace.private.devbox.v1beta.DevBoxService.WireImage:input_type -> namespace.private.devbox.v1beta.WireImageRequest
+	66,  // 182: namespace.private.devbox.v1beta.DevBoxService.OptimizeImage:input_type -> namespace.private.devbox.v1beta.OptimizeImageRequest
+	61,  // 183: namespace.private.devbox.v1beta.DevBoxService.ExpireImage:input_type -> namespace.private.devbox.v1beta.ExpireImageRequest
+	63,  // 184: namespace.private.devbox.v1beta.DevBoxService.ListImages:input_type -> namespace.private.devbox.v1beta.ListImagesRequest
+	68,  // 185: namespace.private.devbox.v1beta.DevBoxService.InspectImage:input_type -> namespace.private.devbox.v1beta.InspectImageRequest
+	70,  // 186: namespace.private.devbox.v1beta.DevBoxService.DescribeImage:input_type -> namespace.private.devbox.v1beta.DescribeImageRequest
+	72,  // 187: namespace.private.devbox.v1beta.DevBoxService.ListComposableFeatures:input_type -> namespace.private.devbox.v1beta.ListComposableFeaturesRequest
+	75,  // 188: namespace.private.devbox.v1beta.DevBoxService.RegisterComposableFeature:input_type -> namespace.private.devbox.v1beta.RegisterComposableFeatureRequest
+	77,  // 189: namespace.private.devbox.v1beta.DevBoxService.RemoveComposableFeature:input_type -> namespace.private.devbox.v1beta.RemoveComposableFeatureRequest
+	85,  // 190: namespace.private.devbox.v1beta.DevBoxService.UpdateDefaults:input_type -> namespace.private.devbox.v1beta.UpdateDefaultsRequest
+	87,  // 191: namespace.private.devbox.v1beta.DevBoxService.FetchDefaults:input_type -> namespace.private.devbox.v1beta.FetchDefaultsRequest
+	89,  // 192: namespace.private.devbox.v1beta.DevBoxService.CreateRepository:input_type -> namespace.private.devbox.v1beta.CreateRepositoryRequest
+	94,  // 193: namespace.private.devbox.v1beta.DevBoxService.CreateIntegration:input_type -> namespace.private.devbox.v1beta.CreateIntegrationRequest
+	96,  // 194: namespace.private.devbox.v1beta.DevBoxService.ListIntegrations:input_type -> namespace.private.devbox.v1beta.ListIntegrationsRequest
+	98,  // 195: namespace.private.devbox.v1beta.DevBoxService.DeleteIntegration:input_type -> namespace.private.devbox.v1beta.DeleteIntegrationRequest
+	55,  // 196: namespace.private.devbox.v1beta.DevBoxService.BeginDevinOutpostConnect:input_type -> namespace.private.devbox.v1beta.BeginDevinOutpostConnectRequest
+	149, // 197: namespace.private.devbox.v1beta.DevBoxService.Ping:input_type -> google.protobuf.Empty
+	79,  // 198: namespace.private.devbox.v1beta.DevBoxService.Metadata:input_type -> namespace.private.devbox.v1beta.MetadataRequest
+	17,  // 199: namespace.private.devbox.v1beta.DevBoxService.Create:output_type -> namespace.private.devbox.v1beta.CreateResponse
+	17,  // 200: namespace.private.devbox.v1beta.DevBoxService.CreateFromTemplate:output_type -> namespace.private.devbox.v1beta.CreateResponse
+	17,  // 201: namespace.private.devbox.v1beta.DevBoxService.CreateFromDevbox:output_type -> namespace.private.devbox.v1beta.CreateResponse
+	19,  // 202: namespace.private.devbox.v1beta.DevBoxService.Activate:output_type -> namespace.private.devbox.v1beta.ActivateResponse
+	20,  // 203: namespace.private.devbox.v1beta.DevBoxService.StreamActivate:output_type -> namespace.private.devbox.v1beta.ActivateResponseChunk
+	83,  // 204: namespace.private.devbox.v1beta.DevBoxService.Update:output_type -> namespace.private.devbox.v1beta.UpdateResponse
+	22,  // 205: namespace.private.devbox.v1beta.DevBoxService.Expire:output_type -> namespace.private.devbox.v1beta.ExpireResponse
+	24,  // 206: namespace.private.devbox.v1beta.DevBoxService.Stop:output_type -> namespace.private.devbox.v1beta.StopResponse
+	26,  // 207: namespace.private.devbox.v1beta.DevBoxService.List:output_type -> namespace.private.devbox.v1beta.ListResponse
+	28,  // 208: namespace.private.devbox.v1beta.DevBoxService.GetUsage:output_type -> namespace.private.devbox.v1beta.GetUsageResponse
+	30,  // 209: namespace.private.devbox.v1beta.DevBoxService.Fetch:output_type -> namespace.private.devbox.v1beta.FetchResponse
+	32,  // 210: namespace.private.devbox.v1beta.DevBoxService.ListSnapshots:output_type -> namespace.private.devbox.v1beta.ListSnapshotsResponse
+	34,  // 211: namespace.private.devbox.v1beta.DevBoxService.AcquireLease:output_type -> namespace.private.devbox.v1beta.AcquireLeaseResponse
+	36,  // 212: namespace.private.devbox.v1beta.DevBoxService.ReleaseLease:output_type -> namespace.private.devbox.v1beta.ReleaseLeaseResponse
+	46,  // 213: namespace.private.devbox.v1beta.DevBoxService.CreateTemplate:output_type -> namespace.private.devbox.v1beta.CreateTemplateResponse
+	48,  // 214: namespace.private.devbox.v1beta.DevBoxService.UpdateTemplate:output_type -> namespace.private.devbox.v1beta.UpdateTemplateResponse
+	50,  // 215: namespace.private.devbox.v1beta.DevBoxService.FetchTemplate:output_type -> namespace.private.devbox.v1beta.FetchTemplateResponse
+	52,  // 216: namespace.private.devbox.v1beta.DevBoxService.ListTemplates:output_type -> namespace.private.devbox.v1beta.ListTemplatesResponse
+	54,  // 217: namespace.private.devbox.v1beta.DevBoxService.ExpireTemplate:output_type -> namespace.private.devbox.v1beta.ExpireTemplateResponse
+	60,  // 218: namespace.private.devbox.v1beta.DevBoxService.WireImage:output_type -> namespace.private.devbox.v1beta.WireImageResponse
+	67,  // 219: namespace.private.devbox.v1beta.DevBoxService.OptimizeImage:output_type -> namespace.private.devbox.v1beta.OptimizeImageResponseChunk
+	62,  // 220: namespace.private.devbox.v1beta.DevBoxService.ExpireImage:output_type -> namespace.private.devbox.v1beta.ExpireImageResponse
+	64,  // 221: namespace.private.devbox.v1beta.DevBoxService.ListImages:output_type -> namespace.private.devbox.v1beta.ListImagesResponse
+	69,  // 222: namespace.private.devbox.v1beta.DevBoxService.InspectImage:output_type -> namespace.private.devbox.v1beta.InspectImageResponse
+	71,  // 223: namespace.private.devbox.v1beta.DevBoxService.DescribeImage:output_type -> namespace.private.devbox.v1beta.DescribeImageResponse
+	73,  // 224: namespace.private.devbox.v1beta.DevBoxService.ListComposableFeatures:output_type -> namespace.private.devbox.v1beta.ListComposableFeaturesResponse
+	76,  // 225: namespace.private.devbox.v1beta.DevBoxService.RegisterComposableFeature:output_type -> namespace.private.devbox.v1beta.RegisterComposableFeatureResponse
+	78,  // 226: namespace.private.devbox.v1beta.DevBoxService.RemoveComposableFeature:output_type -> namespace.private.devbox.v1beta.RemoveComposableFeatureResponse
+	86,  // 227: namespace.private.devbox.v1beta.DevBoxService.UpdateDefaults:output_type -> namespace.private.devbox.v1beta.UpdateDefaultsResponse
+	88,  // 228: namespace.private.devbox.v1beta.DevBoxService.FetchDefaults:output_type -> namespace.private.devbox.v1beta.FetchDefaultsResponse
+	90,  // 229: namespace.private.devbox.v1beta.DevBoxService.CreateRepository:output_type -> namespace.private.devbox.v1beta.CreateRepositoryResponse
+	95,  // 230: namespace.private.devbox.v1beta.DevBoxService.CreateIntegration:output_type -> namespace.private.devbox.v1beta.CreateIntegrationResponse
+	97,  // 231: namespace.private.devbox.v1beta.DevBoxService.ListIntegrations:output_type -> namespace.private.devbox.v1beta.ListIntegrationsResponse
+	99,  // 232: namespace.private.devbox.v1beta.DevBoxService.DeleteIntegration:output_type -> namespace.private.devbox.v1beta.DeleteIntegrationResponse
+	56,  // 233: namespace.private.devbox.v1beta.DevBoxService.BeginDevinOutpostConnect:output_type -> namespace.private.devbox.v1beta.BeginDevinOutpostConnectResponse
+	149, // 234: namespace.private.devbox.v1beta.DevBoxService.Ping:output_type -> google.protobuf.Empty
+	80,  // 235: namespace.private.devbox.v1beta.DevBoxService.Metadata:output_type -> namespace.private.devbox.v1beta.MetadataResponse
+	199, // [199:236] is the sub-list for method output_type
+	162, // [162:199] is the sub-list for method input_type
+	162, // [162:162] is the sub-list for extension type_name
+	162, // [162:162] is the sub-list for extension extendee
+	0,   // [0:162] is the sub-list for field type_name
 }
 
 func init() { file_proto_namespace_private_devbox_devbox_proto_init() }
@@ -9290,8 +9623,8 @@ func file_proto_namespace_private_devbox_devbox_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_proto_namespace_private_devbox_devbox_proto_rawDesc), len(file_proto_namespace_private_devbox_devbox_proto_rawDesc)),
-			NumEnums:      11,
-			NumMessages:   125,
+			NumEnums:      12,
+			NumMessages:   127,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

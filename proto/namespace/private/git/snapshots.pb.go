@@ -27,6 +27,11 @@ const (
 	SnapshotKind_SNAPSHOT_KIND_UNSPECIFIED SnapshotKind = 0
 	SnapshotKind_SNAPSHOT_KIND_BARE        SnapshotKind = 1
 	SnapshotKind_SNAPSHOT_KIND_COMPLETE    SnapshotKind = 2
+	SnapshotKind_SNAPSHOT_KIND_CLONE       SnapshotKind = 3
+	// Credential-only origin checkout. git_url and git_ref identify the origin
+	// and requested ref; the client resolves that ref and additional_refs itself.
+	// The server does not populate resolved_commit or resolved_additional_commits.
+	SnapshotKind_SNAPSHOT_KIND_CLONE_ORIGIN SnapshotKind = 4
 )
 
 // Enum value maps for SnapshotKind.
@@ -35,11 +40,15 @@ var (
 		0: "SNAPSHOT_KIND_UNSPECIFIED",
 		1: "SNAPSHOT_KIND_BARE",
 		2: "SNAPSHOT_KIND_COMPLETE",
+		3: "SNAPSHOT_KIND_CLONE",
+		4: "SNAPSHOT_KIND_CLONE_ORIGIN",
 	}
 	SnapshotKind_value = map[string]int32{
-		"SNAPSHOT_KIND_UNSPECIFIED": 0,
-		"SNAPSHOT_KIND_BARE":        1,
-		"SNAPSHOT_KIND_COMPLETE":    2,
+		"SNAPSHOT_KIND_UNSPECIFIED":  0,
+		"SNAPSHOT_KIND_BARE":         1,
+		"SNAPSHOT_KIND_COMPLETE":     2,
+		"SNAPSHOT_KIND_CLONE":        3,
+		"SNAPSHOT_KIND_CLONE_ORIGIN": 4,
 	}
 )
 
@@ -174,7 +183,7 @@ func (x PrepareSnapshotResponseChunk_Status) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use PrepareSnapshotResponseChunk_Status.Descriptor instead.
 func (PrepareSnapshotResponseChunk_Status) EnumDescriptor() ([]byte, []int) {
-	return file_proto_namespace_private_git_snapshots_proto_rawDescGZIP(), []int{2, 0}
+	return file_proto_namespace_private_git_snapshots_proto_rawDescGZIP(), []int{4, 0}
 }
 
 type PrepareSnapshotRequest struct {
@@ -183,7 +192,9 @@ type PrepareSnapshotRequest struct {
 	// https://github.com/namespacelabs/internal.
 	RepositoryUrl string `protobuf:"bytes,1,opt,name=repository_url,json=repositoryUrl,proto3" json:"repository_url,omitempty"`
 	// Git ref, tag, branch, or commit-ish to check out.
-	Ref  string       `protobuf:"bytes,2,opt,name=ref,proto3" json:"ref,omitempty"`
+	Ref string `protobuf:"bytes,2,opt,name=ref,proto3" json:"ref,omitempty"`
+	// Desired snapshot representation. Servers use this when supported_kinds is
+	// empty, including for clients that predate representation negotiation.
 	Kind SnapshotKind `protobuf:"varint,3,opt,name=kind,proto3,enum=namespace.private.git.v1beta.SnapshotKind" json:"kind,omitempty"`
 	// Additional git refs, tags, branches, or commit-ish values to include in the
 	// local git packs. These do not affect the checkout target.
@@ -191,6 +202,12 @@ type PrepareSnapshotRequest struct {
 	// Controls whether the ref is resolved immediately or may reuse a recent
 	// resolution. RECENT is only valid when ref is HEAD.
 	RefResolution RefResolution `protobuf:"varint,6,opt,name=ref_resolution,json=refResolution,proto3,enum=namespace.private.git.v1beta.RefResolution" json:"ref_resolution,omitempty"`
+	// Representations the client can materialize. When non-empty, the server
+	// selects one and reports it in PrepareSnapshotResponse.kind.
+	SupportedKinds []SnapshotKind `protobuf:"varint,7,rep,packed,name=supported_kinds,json=supportedKinds,proto3,enum=namespace.private.git.v1beta.SnapshotKind" json:"supported_kinds,omitempty"`
+	// 0 preserves full history; 1 includes only the requested commits and their
+	// trees. Nonzero depth requires the BARE or COMPLETE representation.
+	Depth         int32 `protobuf:"varint,8,opt,name=depth,proto3" json:"depth,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -260,18 +277,42 @@ func (x *PrepareSnapshotRequest) GetRefResolution() RefResolution {
 	return RefResolution_REF_RESOLUTION_UNSPECIFIED
 }
 
+func (x *PrepareSnapshotRequest) GetSupportedKinds() []SnapshotKind {
+	if x != nil {
+		return x.SupportedKinds
+	}
+	return nil
+}
+
+func (x *PrepareSnapshotRequest) GetDepth() int32 {
+	if x != nil {
+		return x.Depth
+	}
+	return 0
+}
+
 type PrepareSnapshotResponse struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// URL from which the SquashFS image can be downloaded. The server supports
 	// HTTP range requests for this URL.
-	Url                       string       `protobuf:"bytes,1,opt,name=url,proto3" json:"url,omitempty"`
-	SizeBytes                 int64        `protobuf:"varint,2,opt,name=size_bytes,json=sizeBytes,proto3" json:"size_bytes,omitempty"`
-	ResolvedCommit            string       `protobuf:"bytes,3,opt,name=resolved_commit,json=resolvedCommit,proto3" json:"resolved_commit,omitempty"`
+	Url            string `protobuf:"bytes,1,opt,name=url,proto3" json:"url,omitempty"`
+	SizeBytes      int64  `protobuf:"varint,2,opt,name=size_bytes,json=sizeBytes,proto3" json:"size_bytes,omitempty"`
+	ResolvedCommit string `protobuf:"bytes,3,opt,name=resolved_commit,json=resolvedCommit,proto3" json:"resolved_commit,omitempty"`
+	// Representation selected by the server.
 	Kind                      SnapshotKind `protobuf:"varint,4,opt,name=kind,proto3,enum=namespace.private.git.v1beta.SnapshotKind" json:"kind,omitempty"`
 	ResolvedAdditionalCommits []string     `protobuf:"bytes,5,rep,name=resolved_additional_commits,json=resolvedAdditionalCommits,proto3" json:"resolved_additional_commits,omitempty"`
 	ResolvedRef               string       `protobuf:"bytes,6,opt,name=resolved_ref,json=resolvedRef,proto3" json:"resolved_ref,omitempty"`
-	unknownFields             protoimpl.UnknownFields
-	sizeCache                 protoimpl.SizeCache
+	// Smart HTTP Git URL used for CLONE and CLONE_ORIGIN. This may point to the
+	// snapshot service's mirror or to an external origin.
+	GitUrl string `protobuf:"bytes,7,opt,name=git_url,json=gitUrl,proto3" json:"git_url,omitempty"`
+	GitRef string `protobuf:"bytes,8,opt,name=git_ref,json=gitRef,proto3" json:"git_ref,omitempty"`
+	// Short-lived credentials scoped to git_url. Empty for the snapshot service's mirror.
+	GitHttpCredentials *GitHttpCredentials `protobuf:"bytes,9,opt,name=git_http_credentials,json=gitHttpCredentials,proto3" json:"git_http_credentials,omitempty"`
+	// Applied history depth. Clients must check this before accepting a shallow
+	// snapshot from servers that may predate depth support.
+	Depth         int32 `protobuf:"varint,10,opt,name=depth,proto3" json:"depth,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *PrepareSnapshotResponse) Reset() {
@@ -346,6 +387,138 @@ func (x *PrepareSnapshotResponse) GetResolvedRef() string {
 	return ""
 }
 
+func (x *PrepareSnapshotResponse) GetGitUrl() string {
+	if x != nil {
+		return x.GitUrl
+	}
+	return ""
+}
+
+func (x *PrepareSnapshotResponse) GetGitRef() string {
+	if x != nil {
+		return x.GitRef
+	}
+	return ""
+}
+
+func (x *PrepareSnapshotResponse) GetGitHttpCredentials() *GitHttpCredentials {
+	if x != nil {
+		return x.GitHttpCredentials
+	}
+	return nil
+}
+
+func (x *PrepareSnapshotResponse) GetDepth() int32 {
+	if x != nil {
+		return x.Depth
+	}
+	return 0
+}
+
+type GitHttpCredentials struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	UrlScope      string                 `protobuf:"bytes,1,opt,name=url_scope,json=urlScope,proto3" json:"url_scope,omitempty"`
+	Headers       []*GitHttpHeader       `protobuf:"bytes,2,rep,name=headers,proto3" json:"headers,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GitHttpCredentials) Reset() {
+	*x = GitHttpCredentials{}
+	mi := &file_proto_namespace_private_git_snapshots_proto_msgTypes[2]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GitHttpCredentials) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GitHttpCredentials) ProtoMessage() {}
+
+func (x *GitHttpCredentials) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_namespace_private_git_snapshots_proto_msgTypes[2]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GitHttpCredentials.ProtoReflect.Descriptor instead.
+func (*GitHttpCredentials) Descriptor() ([]byte, []int) {
+	return file_proto_namespace_private_git_snapshots_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *GitHttpCredentials) GetUrlScope() string {
+	if x != nil {
+		return x.UrlScope
+	}
+	return ""
+}
+
+func (x *GitHttpCredentials) GetHeaders() []*GitHttpHeader {
+	if x != nil {
+		return x.Headers
+	}
+	return nil
+}
+
+type GitHttpHeader struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Name          string                 `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	Value         string                 `protobuf:"bytes,2,opt,name=value,proto3" json:"value,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GitHttpHeader) Reset() {
+	*x = GitHttpHeader{}
+	mi := &file_proto_namespace_private_git_snapshots_proto_msgTypes[3]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GitHttpHeader) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GitHttpHeader) ProtoMessage() {}
+
+func (x *GitHttpHeader) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_namespace_private_git_snapshots_proto_msgTypes[3]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GitHttpHeader.ProtoReflect.Descriptor instead.
+func (*GitHttpHeader) Descriptor() ([]byte, []int) {
+	return file_proto_namespace_private_git_snapshots_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *GitHttpHeader) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *GitHttpHeader) GetValue() string {
+	if x != nil {
+		return x.Value
+	}
+	return ""
+}
+
 type PrepareSnapshotResponseChunk struct {
 	state         protoimpl.MessageState              `protogen:"open.v1"`
 	Snapshot      *PrepareSnapshotResponse            `protobuf:"bytes,1,opt,name=snapshot,proto3" json:"snapshot,omitempty"`
@@ -357,7 +530,7 @@ type PrepareSnapshotResponseChunk struct {
 
 func (x *PrepareSnapshotResponseChunk) Reset() {
 	*x = PrepareSnapshotResponseChunk{}
-	mi := &file_proto_namespace_private_git_snapshots_proto_msgTypes[2]
+	mi := &file_proto_namespace_private_git_snapshots_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -369,7 +542,7 @@ func (x *PrepareSnapshotResponseChunk) String() string {
 func (*PrepareSnapshotResponseChunk) ProtoMessage() {}
 
 func (x *PrepareSnapshotResponseChunk) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_git_snapshots_proto_msgTypes[2]
+	mi := &file_proto_namespace_private_git_snapshots_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -382,7 +555,7 @@ func (x *PrepareSnapshotResponseChunk) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PrepareSnapshotResponseChunk.ProtoReflect.Descriptor instead.
 func (*PrepareSnapshotResponseChunk) Descriptor() ([]byte, []int) {
-	return file_proto_namespace_private_git_snapshots_proto_rawDescGZIP(), []int{2}
+	return file_proto_namespace_private_git_snapshots_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *PrepareSnapshotResponseChunk) GetSnapshot() *PrepareSnapshotResponse {
@@ -410,13 +583,15 @@ var File_proto_namespace_private_git_snapshots_proto protoreflect.FileDescriptor
 
 const file_proto_namespace_private_git_snapshots_proto_rawDesc = "" +
 	"\n" +
-	"+proto/namespace/private/git/snapshots.proto\x12\x1cnamespace.private.git.v1beta\"\x8e\x02\n" +
+	"+proto/namespace/private/git/snapshots.proto\x12\x1cnamespace.private.git.v1beta\"\xf9\x02\n" +
 	"\x16PrepareSnapshotRequest\x12%\n" +
 	"\x0erepository_url\x18\x01 \x01(\tR\rrepositoryUrl\x12\x10\n" +
 	"\x03ref\x18\x02 \x01(\tR\x03ref\x12>\n" +
 	"\x04kind\x18\x03 \x01(\x0e2*.namespace.private.git.v1beta.SnapshotKindR\x04kind\x12'\n" +
 	"\x0fadditional_refs\x18\x05 \x03(\tR\x0eadditionalRefs\x12R\n" +
-	"\x0eref_resolution\x18\x06 \x01(\x0e2+.namespace.private.git.v1beta.RefResolutionR\rrefResolution\"\x96\x02\n" +
+	"\x0eref_resolution\x18\x06 \x01(\x0e2+.namespace.private.git.v1beta.RefResolutionR\rrefResolution\x12S\n" +
+	"\x0fsupported_kinds\x18\a \x03(\x0e2*.namespace.private.git.v1beta.SnapshotKindR\x0esupportedKinds\x12\x14\n" +
+	"\x05depth\x18\b \x01(\x05R\x05depth\"\xc2\x03\n" +
 	"\x17PrepareSnapshotResponse\x12\x10\n" +
 	"\x03url\x18\x01 \x01(\tR\x03url\x12\x1d\n" +
 	"\n" +
@@ -424,7 +599,18 @@ const file_proto_namespace_private_git_snapshots_proto_rawDesc = "" +
 	"\x0fresolved_commit\x18\x03 \x01(\tR\x0eresolvedCommit\x12>\n" +
 	"\x04kind\x18\x04 \x01(\x0e2*.namespace.private.git.v1beta.SnapshotKindR\x04kind\x12>\n" +
 	"\x1bresolved_additional_commits\x18\x05 \x03(\tR\x19resolvedAdditionalCommits\x12!\n" +
-	"\fresolved_ref\x18\x06 \x01(\tR\vresolvedRef\"\x9a\x03\n" +
+	"\fresolved_ref\x18\x06 \x01(\tR\vresolvedRef\x12\x17\n" +
+	"\agit_url\x18\a \x01(\tR\x06gitUrl\x12\x17\n" +
+	"\agit_ref\x18\b \x01(\tR\x06gitRef\x12b\n" +
+	"\x14git_http_credentials\x18\t \x01(\v20.namespace.private.git.v1beta.GitHttpCredentialsR\x12gitHttpCredentials\x12\x14\n" +
+	"\x05depth\x18\n" +
+	" \x01(\x05R\x05depth\"x\n" +
+	"\x12GitHttpCredentials\x12\x1b\n" +
+	"\turl_scope\x18\x01 \x01(\tR\burlScope\x12E\n" +
+	"\aheaders\x18\x02 \x03(\v2+.namespace.private.git.v1beta.GitHttpHeaderR\aheaders\"9\n" +
+	"\rGitHttpHeader\x12\x12\n" +
+	"\x04name\x18\x01 \x01(\tR\x04name\x12\x14\n" +
+	"\x05value\x18\x02 \x01(\tR\x05value\"\x9a\x03\n" +
 	"\x1cPrepareSnapshotResponseChunk\x12Q\n" +
 	"\bsnapshot\x18\x01 \x01(\v25.namespace.private.git.v1beta.PrepareSnapshotResponseR\bsnapshot\x12Y\n" +
 	"\x06status\x18\x02 \x01(\x0e2A.namespace.private.git.v1beta.PrepareSnapshotResponseChunk.StatusR\x06status\x12\x18\n" +
@@ -435,11 +621,13 @@ const file_proto_namespace_private_git_snapshots_proto_rawDesc = "" +
 	"\x19STATUS_FETCHING_REFERENCE\x10\x02\x12\x1d\n" +
 	"\x19STATUS_PREPARING_SNAPSHOT\x10\x03\x12\x1d\n" +
 	"\x19STATUS_UPLOADING_SNAPSHOT\x10\x04\x12\x10\n" +
-	"\fSTATUS_READY\x10\x05*a\n" +
+	"\fSTATUS_READY\x10\x05*\x9a\x01\n" +
 	"\fSnapshotKind\x12\x1d\n" +
 	"\x19SNAPSHOT_KIND_UNSPECIFIED\x10\x00\x12\x16\n" +
 	"\x12SNAPSHOT_KIND_BARE\x10\x01\x12\x1a\n" +
-	"\x16SNAPSHOT_KIND_COMPLETE\x10\x02*d\n" +
+	"\x16SNAPSHOT_KIND_COMPLETE\x10\x02\x12\x17\n" +
+	"\x13SNAPSHOT_KIND_CLONE\x10\x03\x12\x1e\n" +
+	"\x1aSNAPSHOT_KIND_CLONE_ORIGIN\x10\x04*d\n" +
 	"\rRefResolution\x12\x1e\n" +
 	"\x1aREF_RESOLUTION_UNSPECIFIED\x10\x00\x12\x18\n" +
 	"\x14REF_RESOLUTION_EXACT\x10\x01\x12\x19\n" +
@@ -461,28 +649,33 @@ func file_proto_namespace_private_git_snapshots_proto_rawDescGZIP() []byte {
 }
 
 var file_proto_namespace_private_git_snapshots_proto_enumTypes = make([]protoimpl.EnumInfo, 3)
-var file_proto_namespace_private_git_snapshots_proto_msgTypes = make([]protoimpl.MessageInfo, 3)
+var file_proto_namespace_private_git_snapshots_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
 var file_proto_namespace_private_git_snapshots_proto_goTypes = []any{
 	(SnapshotKind)(0),                        // 0: namespace.private.git.v1beta.SnapshotKind
 	(RefResolution)(0),                       // 1: namespace.private.git.v1beta.RefResolution
 	(PrepareSnapshotResponseChunk_Status)(0), // 2: namespace.private.git.v1beta.PrepareSnapshotResponseChunk.Status
 	(*PrepareSnapshotRequest)(nil),           // 3: namespace.private.git.v1beta.PrepareSnapshotRequest
 	(*PrepareSnapshotResponse)(nil),          // 4: namespace.private.git.v1beta.PrepareSnapshotResponse
-	(*PrepareSnapshotResponseChunk)(nil),     // 5: namespace.private.git.v1beta.PrepareSnapshotResponseChunk
+	(*GitHttpCredentials)(nil),               // 5: namespace.private.git.v1beta.GitHttpCredentials
+	(*GitHttpHeader)(nil),                    // 6: namespace.private.git.v1beta.GitHttpHeader
+	(*PrepareSnapshotResponseChunk)(nil),     // 7: namespace.private.git.v1beta.PrepareSnapshotResponseChunk
 }
 var file_proto_namespace_private_git_snapshots_proto_depIdxs = []int32{
 	0, // 0: namespace.private.git.v1beta.PrepareSnapshotRequest.kind:type_name -> namespace.private.git.v1beta.SnapshotKind
 	1, // 1: namespace.private.git.v1beta.PrepareSnapshotRequest.ref_resolution:type_name -> namespace.private.git.v1beta.RefResolution
-	0, // 2: namespace.private.git.v1beta.PrepareSnapshotResponse.kind:type_name -> namespace.private.git.v1beta.SnapshotKind
-	4, // 3: namespace.private.git.v1beta.PrepareSnapshotResponseChunk.snapshot:type_name -> namespace.private.git.v1beta.PrepareSnapshotResponse
-	2, // 4: namespace.private.git.v1beta.PrepareSnapshotResponseChunk.status:type_name -> namespace.private.git.v1beta.PrepareSnapshotResponseChunk.Status
-	3, // 5: namespace.private.git.v1beta.GitSnapshotService.PrepareSnapshot:input_type -> namespace.private.git.v1beta.PrepareSnapshotRequest
-	5, // 6: namespace.private.git.v1beta.GitSnapshotService.PrepareSnapshot:output_type -> namespace.private.git.v1beta.PrepareSnapshotResponseChunk
-	6, // [6:7] is the sub-list for method output_type
-	5, // [5:6] is the sub-list for method input_type
-	5, // [5:5] is the sub-list for extension type_name
-	5, // [5:5] is the sub-list for extension extendee
-	0, // [0:5] is the sub-list for field type_name
+	0, // 2: namespace.private.git.v1beta.PrepareSnapshotRequest.supported_kinds:type_name -> namespace.private.git.v1beta.SnapshotKind
+	0, // 3: namespace.private.git.v1beta.PrepareSnapshotResponse.kind:type_name -> namespace.private.git.v1beta.SnapshotKind
+	5, // 4: namespace.private.git.v1beta.PrepareSnapshotResponse.git_http_credentials:type_name -> namespace.private.git.v1beta.GitHttpCredentials
+	6, // 5: namespace.private.git.v1beta.GitHttpCredentials.headers:type_name -> namespace.private.git.v1beta.GitHttpHeader
+	4, // 6: namespace.private.git.v1beta.PrepareSnapshotResponseChunk.snapshot:type_name -> namespace.private.git.v1beta.PrepareSnapshotResponse
+	2, // 7: namespace.private.git.v1beta.PrepareSnapshotResponseChunk.status:type_name -> namespace.private.git.v1beta.PrepareSnapshotResponseChunk.Status
+	3, // 8: namespace.private.git.v1beta.GitSnapshotService.PrepareSnapshot:input_type -> namespace.private.git.v1beta.PrepareSnapshotRequest
+	7, // 9: namespace.private.git.v1beta.GitSnapshotService.PrepareSnapshot:output_type -> namespace.private.git.v1beta.PrepareSnapshotResponseChunk
+	9, // [9:10] is the sub-list for method output_type
+	8, // [8:9] is the sub-list for method input_type
+	8, // [8:8] is the sub-list for extension type_name
+	8, // [8:8] is the sub-list for extension extendee
+	0, // [0:8] is the sub-list for field type_name
 }
 
 func init() { file_proto_namespace_private_git_snapshots_proto_init() }
@@ -496,7 +689,7 @@ func file_proto_namespace_private_git_snapshots_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_proto_namespace_private_git_snapshots_proto_rawDesc), len(file_proto_namespace_private_git_snapshots_proto_rawDesc)),
 			NumEnums:      3,
-			NumMessages:   3,
+			NumMessages:   5,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
