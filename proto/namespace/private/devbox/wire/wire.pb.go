@@ -3873,6 +3873,7 @@ type AgentBoot_Op_SetupIntegrations struct {
 	state         protoimpl.MessageState                        `protogen:"open.v1"`
 	DevinOutposts *AgentBoot_Op_SetupIntegrations_DevinOutposts `protobuf:"bytes,1,opt,name=devin_outposts,json=devinOutposts,proto3" json:"devin_outposts,omitempty"`
 	Cursor        *AgentBoot_Op_SetupIntegrations_Cursor        `protobuf:"bytes,2,opt,name=cursor,proto3" json:"cursor,omitempty"`
+	ClaudeAgent   *AgentBoot_Op_SetupIntegrations_ClaudeAgent   `protobuf:"bytes,3,opt,name=claude_agent,json=claudeAgent,proto3" json:"claude_agent,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -3917,6 +3918,13 @@ func (x *AgentBoot_Op_SetupIntegrations) GetDevinOutposts() *AgentBoot_Op_SetupI
 func (x *AgentBoot_Op_SetupIntegrations) GetCursor() *AgentBoot_Op_SetupIntegrations_Cursor {
 	if x != nil {
 		return x.Cursor
+	}
+	return nil
+}
+
+func (x *AgentBoot_Op_SetupIntegrations) GetClaudeAgent() *AgentBoot_Op_SetupIntegrations_ClaudeAgent {
+	if x != nil {
+		return x.ClaudeAgent
 	}
 	return nil
 }
@@ -4113,6 +4121,42 @@ func (x *AgentBoot_Op_SetupIntegrations_Cursor) GetRequestId() string {
 	return ""
 }
 
+type AgentBoot_Op_SetupIntegrations_ClaudeAgent struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *AgentBoot_Op_SetupIntegrations_ClaudeAgent) Reset() {
+	*x = AgentBoot_Op_SetupIntegrations_ClaudeAgent{}
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[65]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *AgentBoot_Op_SetupIntegrations_ClaudeAgent) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AgentBoot_Op_SetupIntegrations_ClaudeAgent) ProtoMessage() {}
+
+func (x *AgentBoot_Op_SetupIntegrations_ClaudeAgent) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[65]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AgentBoot_Op_SetupIntegrations_ClaudeAgent.ProtoReflect.Descriptor instead.
+func (*AgentBoot_Op_SetupIntegrations_ClaudeAgent) Descriptor() ([]byte, []int) {
+	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{22, 0, 11, 2}
+}
+
 type AgentStartup_VSCode struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Extensions    []string               `protobuf:"bytes,1,rep,name=extensions,proto3" json:"extensions,omitempty"`
@@ -4122,7 +4166,7 @@ type AgentStartup_VSCode struct {
 
 func (x *AgentStartup_VSCode) Reset() {
 	*x = AgentStartup_VSCode{}
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[65]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[66]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4134,7 +4178,7 @@ func (x *AgentStartup_VSCode) String() string {
 func (*AgentStartup_VSCode) ProtoMessage() {}
 
 func (x *AgentStartup_VSCode) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[65]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[66]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4167,7 +4211,7 @@ type AgentStartup_NamedPort struct {
 
 func (x *AgentStartup_NamedPort) Reset() {
 	*x = AgentStartup_NamedPort{}
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[66]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[67]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4179,7 +4223,7 @@ func (x *AgentStartup_NamedPort) String() string {
 func (*AgentStartup_NamedPort) ProtoMessage() {}
 
 func (x *AgentStartup_NamedPort) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[66]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[67]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4220,7 +4264,7 @@ type AgentStartup_ClaudeAgent struct {
 
 func (x *AgentStartup_ClaudeAgent) Reset() {
 	*x = AgentStartup_ClaudeAgent{}
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[67]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[68]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4232,7 +4276,7 @@ func (x *AgentStartup_ClaudeAgent) String() string {
 func (*AgentStartup_ClaudeAgent) ProtoMessage() {}
 
 func (x *AgentStartup_ClaudeAgent) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[67]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[68]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4279,7 +4323,7 @@ type AgentRuntimeConfiguration_TmuxConfiguration struct {
 
 func (x *AgentRuntimeConfiguration_TmuxConfiguration) Reset() {
 	*x = AgentRuntimeConfiguration_TmuxConfiguration{}
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[68]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[69]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4291,7 +4335,7 @@ func (x *AgentRuntimeConfiguration_TmuxConfiguration) String() string {
 func (*AgentRuntimeConfiguration_TmuxConfiguration) ProtoMessage() {}
 
 func (x *AgentRuntimeConfiguration_TmuxConfiguration) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[68]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[69]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4330,7 +4374,7 @@ type AgentRuntimeConfiguration_AutomaticPortForwardingConfiguration struct {
 
 func (x *AgentRuntimeConfiguration_AutomaticPortForwardingConfiguration) Reset() {
 	*x = AgentRuntimeConfiguration_AutomaticPortForwardingConfiguration{}
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[69]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[70]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4342,7 +4386,7 @@ func (x *AgentRuntimeConfiguration_AutomaticPortForwardingConfiguration) String(
 func (*AgentRuntimeConfiguration_AutomaticPortForwardingConfiguration) ProtoMessage() {}
 
 func (x *AgentRuntimeConfiguration_AutomaticPortForwardingConfiguration) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[69]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[70]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4375,7 +4419,7 @@ type BootOpResult_Node struct {
 
 func (x *BootOpResult_Node) Reset() {
 	*x = BootOpResult_Node{}
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[72]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[73]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4387,7 +4431,7 @@ func (x *BootOpResult_Node) String() string {
 func (*BootOpResult_Node) ProtoMessage() {}
 
 func (x *BootOpResult_Node) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[72]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[73]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4427,7 +4471,7 @@ type BootOpResult_Log struct {
 
 func (x *BootOpResult_Log) Reset() {
 	*x = BootOpResult_Log{}
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[73]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[74]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4439,7 +4483,7 @@ func (x *BootOpResult_Log) String() string {
 func (*BootOpResult_Log) ProtoMessage() {}
 
 func (x *BootOpResult_Log) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[73]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[74]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4479,7 +4523,7 @@ type BootOpResult_Result struct {
 
 func (x *BootOpResult_Result) Reset() {
 	*x = BootOpResult_Result{}
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[74]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[75]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4491,7 +4535,7 @@ func (x *BootOpResult_Result) String() string {
 func (*BootOpResult_Result) ProtoMessage() {}
 
 func (x *BootOpResult_Result) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[74]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[75]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4533,7 +4577,7 @@ type QueryStateResponse_SignificantMountState struct {
 
 func (x *QueryStateResponse_SignificantMountState) Reset() {
 	*x = QueryStateResponse_SignificantMountState{}
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[75]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[76]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4545,7 +4589,7 @@ func (x *QueryStateResponse_SignificantMountState) String() string {
 func (*QueryStateResponse_SignificantMountState) ProtoMessage() {}
 
 func (x *QueryStateResponse_SignificantMountState) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[75]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[76]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4603,7 +4647,7 @@ type GitStatus_File struct {
 
 func (x *GitStatus_File) Reset() {
 	*x = GitStatus_File{}
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[76]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[77]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4615,7 +4659,7 @@ func (x *GitStatus_File) String() string {
 func (*GitStatus_File) ProtoMessage() {}
 
 func (x *GitStatus_File) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[76]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[77]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4686,7 +4730,7 @@ type GitStatus_Commit struct {
 
 func (x *GitStatus_Commit) Reset() {
 	*x = GitStatus_Commit{}
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[77]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[78]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4698,7 +4742,7 @@ func (x *GitStatus_Commit) String() string {
 func (*GitStatus_Commit) ProtoMessage() {}
 
 func (x *GitStatus_Commit) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[77]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[78]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4760,7 +4804,7 @@ type RunOutputChunk_Result struct {
 
 func (x *RunOutputChunk_Result) Reset() {
 	*x = RunOutputChunk_Result{}
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[78]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[79]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4772,7 +4816,7 @@ func (x *RunOutputChunk_Result) String() string {
 func (*RunOutputChunk_Result) ProtoMessage() {}
 
 func (x *RunOutputChunk_Result) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[78]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[79]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4819,7 +4863,7 @@ type TerminalSession_RunCommand struct {
 
 func (x *TerminalSession_RunCommand) Reset() {
 	*x = TerminalSession_RunCommand{}
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[79]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[80]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4831,7 +4875,7 @@ func (x *TerminalSession_RunCommand) String() string {
 func (*TerminalSession_RunCommand) ProtoMessage() {}
 
 func (x *TerminalSession_RunCommand) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[79]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[80]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4870,7 +4914,7 @@ type TerminalSession_RunScript struct {
 
 func (x *TerminalSession_RunScript) Reset() {
 	*x = TerminalSession_RunScript{}
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[80]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[81]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4882,7 +4926,7 @@ func (x *TerminalSession_RunScript) String() string {
 func (*TerminalSession_RunScript) ProtoMessage() {}
 
 func (x *TerminalSession_RunScript) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[80]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[81]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4916,7 +4960,7 @@ type ResourceMetrics_CpuMetrics struct {
 
 func (x *ResourceMetrics_CpuMetrics) Reset() {
 	*x = ResourceMetrics_CpuMetrics{}
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[81]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[82]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4928,7 +4972,7 @@ func (x *ResourceMetrics_CpuMetrics) String() string {
 func (*ResourceMetrics_CpuMetrics) ProtoMessage() {}
 
 func (x *ResourceMetrics_CpuMetrics) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[81]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[82]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4983,7 +5027,7 @@ type ResourceMetrics_MemoryMetrics struct {
 
 func (x *ResourceMetrics_MemoryMetrics) Reset() {
 	*x = ResourceMetrics_MemoryMetrics{}
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[82]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[83]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4995,7 +5039,7 @@ func (x *ResourceMetrics_MemoryMetrics) String() string {
 func (*ResourceMetrics_MemoryMetrics) ProtoMessage() {}
 
 func (x *ResourceMetrics_MemoryMetrics) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[82]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[83]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5095,7 +5139,7 @@ type ResourceMetrics_CpuMetrics_PerCpuMetrics struct {
 
 func (x *ResourceMetrics_CpuMetrics_PerCpuMetrics) Reset() {
 	*x = ResourceMetrics_CpuMetrics_PerCpuMetrics{}
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[83]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[84]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5107,7 +5151,7 @@ func (x *ResourceMetrics_CpuMetrics_PerCpuMetrics) String() string {
 func (*ResourceMetrics_CpuMetrics_PerCpuMetrics) ProtoMessage() {}
 
 func (x *ResourceMetrics_CpuMetrics_PerCpuMetrics) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[83]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[84]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5175,7 +5219,7 @@ type ResetForLeaseRequest_VersionControl struct {
 
 func (x *ResetForLeaseRequest_VersionControl) Reset() {
 	*x = ResetForLeaseRequest_VersionControl{}
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[84]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[85]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5187,7 +5231,7 @@ func (x *ResetForLeaseRequest_VersionControl) String() string {
 func (*ResetForLeaseRequest_VersionControl) ProtoMessage() {}
 
 func (x *ResetForLeaseRequest_VersionControl) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[84]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[85]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5227,7 +5271,7 @@ type ResetForLeaseRequest_VersionControl_GitCheckout struct {
 
 func (x *ResetForLeaseRequest_VersionControl_GitCheckout) Reset() {
 	*x = ResetForLeaseRequest_VersionControl_GitCheckout{}
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[85]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[86]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5239,7 +5283,7 @@ func (x *ResetForLeaseRequest_VersionControl_GitCheckout) String() string {
 func (*ResetForLeaseRequest_VersionControl_GitCheckout) ProtoMessage() {}
 
 func (x *ResetForLeaseRequest_VersionControl_GitCheckout) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[85]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[86]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5278,7 +5322,7 @@ type ResetForLeaseRequest_VersionControl_GitCredentials struct {
 
 func (x *ResetForLeaseRequest_VersionControl_GitCredentials) Reset() {
 	*x = ResetForLeaseRequest_VersionControl_GitCredentials{}
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[86]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[87]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5290,7 +5334,7 @@ func (x *ResetForLeaseRequest_VersionControl_GitCredentials) String() string {
 func (*ResetForLeaseRequest_VersionControl_GitCredentials) ProtoMessage() {}
 
 func (x *ResetForLeaseRequest_VersionControl_GitCredentials) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[86]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[87]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5323,7 +5367,7 @@ type ResetForLeaseEvent_Log struct {
 
 func (x *ResetForLeaseEvent_Log) Reset() {
 	*x = ResetForLeaseEvent_Log{}
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[87]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[88]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5335,7 +5379,7 @@ func (x *ResetForLeaseEvent_Log) String() string {
 func (*ResetForLeaseEvent_Log) ProtoMessage() {}
 
 func (x *ResetForLeaseEvent_Log) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[87]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[88]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5375,7 +5419,7 @@ type ResetForLeaseEvent_Result struct {
 
 func (x *ResetForLeaseEvent_Result) Reset() {
 	*x = ResetForLeaseEvent_Result{}
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[88]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[89]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5387,7 +5431,7 @@ func (x *ResetForLeaseEvent_Result) String() string {
 func (*ResetForLeaseEvent_Result) ProtoMessage() {}
 
 func (x *ResetForLeaseEvent_Result) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[88]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[89]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5503,9 +5547,9 @@ const file_proto_namespace_private_devbox_wire_wire_proto_rawDesc = "" +
 	"\x05ports\x18\x01 \x03(\v20.namespace.private.devbox.wire.v1beta.ListedPortR\x05ports\"L\n" +
 	"\n" +
 	"ListedPort\x12>\n" +
-	"\x04port\x18\x01 \x01(\v2*.namespace.private.devbox.wire.v1beta.PortR\x04port\"\xcc\x1a\n" +
+	"\x04port\x18\x01 \x01(\v2*.namespace.private.devbox.wire.v1beta.PortR\x04port\"\xd0\x1b\n" +
 	"\tAgentBoot\x12D\n" +
-	"\x03ops\x18\x01 \x03(\v22.namespace.private.devbox.wire.v1beta.AgentBoot.OpR\x03ops\x1a\xf8\x19\n" +
+	"\x03ops\x18\x01 \x03(\v22.namespace.private.devbox.wire.v1beta.AgentBoot.OpR\x03ops\x1a\xfc\x1a\n" +
 	"\x02Op\x12\x12\n" +
 	"\x04name\x18\x01 \x01(\tR\x04name\x12\x96\x01\n" +
 	"\x1fsetup_namespace_git_credentials\x18\x02 \x01(\v2O.namespace.private.devbox.wire.v1beta.AgentBoot.Op.SetupNamespaceGitCredentialsR\x1csetupNamespaceGitCredentials\x12a\n" +
@@ -5565,10 +5609,11 @@ const file_proto_namespace_private_devbox_wire_wire_proto_rawDesc = "" +
 	"Concurrent\x12D\n" +
 	"\x03ops\x18\x01 \x03(\v22.namespace.private.devbox.wire.v1beta.AgentBoot.OpR\x03ops\x1am\n" +
 	"\x0eEnsureSessions\x12[\n" +
-	"\bsessions\x18\x01 \x03(\v2?.namespace.private.devbox.wire.v1beta.AddTerminalSessionRequestR\bsessions\x1a\xa7\x03\n" +
+	"\bsessions\x18\x01 \x03(\v2?.namespace.private.devbox.wire.v1beta.AddTerminalSessionRequestR\bsessions\x1a\xab\x04\n" +
 	"\x11SetupIntegrations\x12y\n" +
 	"\x0edevin_outposts\x18\x01 \x01(\v2R.namespace.private.devbox.wire.v1beta.AgentBoot.Op.SetupIntegrations.DevinOutpostsR\rdevinOutposts\x12c\n" +
-	"\x06cursor\x18\x02 \x01(\v2K.namespace.private.devbox.wire.v1beta.AgentBoot.Op.SetupIntegrations.CursorR\x06cursor\x1aO\n" +
+	"\x06cursor\x18\x02 \x01(\v2K.namespace.private.devbox.wire.v1beta.AgentBoot.Op.SetupIntegrations.CursorR\x06cursor\x12s\n" +
+	"\fclaude_agent\x18\x03 \x01(\v2P.namespace.private.devbox.wire.v1beta.AgentBoot.Op.SetupIntegrations.ClaudeAgentR\vclaudeAgent\x1aO\n" +
 	"\rDevinOutposts\x12\x12\n" +
 	"\x04host\x18\x01 \x01(\tR\x04host\x12*\n" +
 	"\x11remote_binary_sha\x18\x02 \x01(\tR\x0fremoteBinarySha\x1aa\n" +
@@ -5576,7 +5621,8 @@ const file_proto_namespace_private_devbox_wire_wire_proto_rawDesc = "" +
 	"\tworker_id\x18\x01 \x01(\tR\bworkerId\x12\x1b\n" +
 	"\tpool_name\x18\x02 \x01(\tR\bpoolName\x12\x1d\n" +
 	"\n" +
-	"request_id\x18\x03 \x01(\tR\trequestId\x1a-\n" +
+	"request_id\x18\x03 \x01(\tR\trequestId\x1a\r\n" +
+	"\vClaudeAgent\x1a-\n" +
 	"\x12SetupEgressProxyCA\x12\x17\n" +
 	"\aca_path\x18\x01 \x01(\tR\x06caPath\x1a\x19\n" +
 	"\x17AcceptingSSHConnections\"\x9f\n" +
@@ -5870,7 +5916,7 @@ func file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP() []byte {
 }
 
 var file_proto_namespace_private_devbox_wire_wire_proto_enumTypes = make([]protoimpl.EnumInfo, 5)
-var file_proto_namespace_private_devbox_wire_wire_proto_msgTypes = make([]protoimpl.MessageInfo, 89)
+var file_proto_namespace_private_devbox_wire_wire_proto_msgTypes = make([]protoimpl.MessageInfo, 90)
 var file_proto_namespace_private_devbox_wire_wire_proto_goTypes = []any{
 	(PortSpec_Kind)(0), // 0: namespace.private.devbox.wire.v1beta.PortSpec.Kind
 	(Port_Owner)(0),    // 1: namespace.private.devbox.wire.v1beta.Port.Owner
@@ -5942,33 +5988,34 @@ var file_proto_namespace_private_devbox_wire_wire_proto_goTypes = []any{
 	(*AgentBoot_Op_AcceptingSSHConnections)(nil),         // 67: namespace.private.devbox.wire.v1beta.AgentBoot.Op.AcceptingSSHConnections
 	(*AgentBoot_Op_SetupIntegrations_DevinOutposts)(nil), // 68: namespace.private.devbox.wire.v1beta.AgentBoot.Op.SetupIntegrations.DevinOutposts
 	(*AgentBoot_Op_SetupIntegrations_Cursor)(nil),        // 69: namespace.private.devbox.wire.v1beta.AgentBoot.Op.SetupIntegrations.Cursor
-	(*AgentStartup_VSCode)(nil),                          // 70: namespace.private.devbox.wire.v1beta.AgentStartup.VSCode
-	(*AgentStartup_NamedPort)(nil),                       // 71: namespace.private.devbox.wire.v1beta.AgentStartup.NamedPort
-	(*AgentStartup_ClaudeAgent)(nil),                     // 72: namespace.private.devbox.wire.v1beta.AgentStartup.ClaudeAgent
-	(*AgentRuntimeConfiguration_TmuxConfiguration)(nil),  // 73: namespace.private.devbox.wire.v1beta.AgentRuntimeConfiguration.TmuxConfiguration
-	(*AgentRuntimeConfiguration_AutomaticPortForwardingConfiguration)(nil), // 74: namespace.private.devbox.wire.v1beta.AgentRuntimeConfiguration.AutomaticPortForwardingConfiguration
-	nil,                         // 75: namespace.private.devbox.wire.v1beta.AgentRuntimeConfiguration.TmuxConfiguration.ServerOptionsEntry
-	nil,                         // 76: namespace.private.devbox.wire.v1beta.AgentRuntimeConfiguration.TmuxConfiguration.GlobalOptionsEntry
-	(*BootOpResult_Node)(nil),   // 77: namespace.private.devbox.wire.v1beta.BootOpResult.Node
-	(*BootOpResult_Log)(nil),    // 78: namespace.private.devbox.wire.v1beta.BootOpResult.Log
-	(*BootOpResult_Result)(nil), // 79: namespace.private.devbox.wire.v1beta.BootOpResult.Result
-	(*QueryStateResponse_SignificantMountState)(nil),           // 80: namespace.private.devbox.wire.v1beta.QueryStateResponse.SignificantMountState
-	(*GitStatus_File)(nil),                                     // 81: namespace.private.devbox.wire.v1beta.GitStatus.File
-	(*GitStatus_Commit)(nil),                                   // 82: namespace.private.devbox.wire.v1beta.GitStatus.Commit
-	(*RunOutputChunk_Result)(nil),                              // 83: namespace.private.devbox.wire.v1beta.RunOutputChunk.Result
-	(*TerminalSession_RunCommand)(nil),                         // 84: namespace.private.devbox.wire.v1beta.TerminalSession.RunCommand
-	(*TerminalSession_RunScript)(nil),                          // 85: namespace.private.devbox.wire.v1beta.TerminalSession.RunScript
-	(*ResourceMetrics_CpuMetrics)(nil),                         // 86: namespace.private.devbox.wire.v1beta.ResourceMetrics.CpuMetrics
-	(*ResourceMetrics_MemoryMetrics)(nil),                      // 87: namespace.private.devbox.wire.v1beta.ResourceMetrics.MemoryMetrics
-	(*ResourceMetrics_CpuMetrics_PerCpuMetrics)(nil),           // 88: namespace.private.devbox.wire.v1beta.ResourceMetrics.CpuMetrics.PerCpuMetrics
-	(*ResetForLeaseRequest_VersionControl)(nil),                // 89: namespace.private.devbox.wire.v1beta.ResetForLeaseRequest.VersionControl
-	(*ResetForLeaseRequest_VersionControl_GitCheckout)(nil),    // 90: namespace.private.devbox.wire.v1beta.ResetForLeaseRequest.VersionControl.GitCheckout
-	(*ResetForLeaseRequest_VersionControl_GitCredentials)(nil), // 91: namespace.private.devbox.wire.v1beta.ResetForLeaseRequest.VersionControl.GitCredentials
-	(*ResetForLeaseEvent_Log)(nil),                             // 92: namespace.private.devbox.wire.v1beta.ResetForLeaseEvent.Log
-	(*ResetForLeaseEvent_Result)(nil),                          // 93: namespace.private.devbox.wire.v1beta.ResetForLeaseEvent.Result
-	(*timestamppb.Timestamp)(nil),                              // 94: google.protobuf.Timestamp
-	(*durationpb.Duration)(nil),                                // 95: google.protobuf.Duration
-	(*emptypb.Empty)(nil),                                      // 96: google.protobuf.Empty
+	(*AgentBoot_Op_SetupIntegrations_ClaudeAgent)(nil),   // 70: namespace.private.devbox.wire.v1beta.AgentBoot.Op.SetupIntegrations.ClaudeAgent
+	(*AgentStartup_VSCode)(nil),                          // 71: namespace.private.devbox.wire.v1beta.AgentStartup.VSCode
+	(*AgentStartup_NamedPort)(nil),                       // 72: namespace.private.devbox.wire.v1beta.AgentStartup.NamedPort
+	(*AgentStartup_ClaudeAgent)(nil),                     // 73: namespace.private.devbox.wire.v1beta.AgentStartup.ClaudeAgent
+	(*AgentRuntimeConfiguration_TmuxConfiguration)(nil),  // 74: namespace.private.devbox.wire.v1beta.AgentRuntimeConfiguration.TmuxConfiguration
+	(*AgentRuntimeConfiguration_AutomaticPortForwardingConfiguration)(nil), // 75: namespace.private.devbox.wire.v1beta.AgentRuntimeConfiguration.AutomaticPortForwardingConfiguration
+	nil,                         // 76: namespace.private.devbox.wire.v1beta.AgentRuntimeConfiguration.TmuxConfiguration.ServerOptionsEntry
+	nil,                         // 77: namespace.private.devbox.wire.v1beta.AgentRuntimeConfiguration.TmuxConfiguration.GlobalOptionsEntry
+	(*BootOpResult_Node)(nil),   // 78: namespace.private.devbox.wire.v1beta.BootOpResult.Node
+	(*BootOpResult_Log)(nil),    // 79: namespace.private.devbox.wire.v1beta.BootOpResult.Log
+	(*BootOpResult_Result)(nil), // 80: namespace.private.devbox.wire.v1beta.BootOpResult.Result
+	(*QueryStateResponse_SignificantMountState)(nil),           // 81: namespace.private.devbox.wire.v1beta.QueryStateResponse.SignificantMountState
+	(*GitStatus_File)(nil),                                     // 82: namespace.private.devbox.wire.v1beta.GitStatus.File
+	(*GitStatus_Commit)(nil),                                   // 83: namespace.private.devbox.wire.v1beta.GitStatus.Commit
+	(*RunOutputChunk_Result)(nil),                              // 84: namespace.private.devbox.wire.v1beta.RunOutputChunk.Result
+	(*TerminalSession_RunCommand)(nil),                         // 85: namespace.private.devbox.wire.v1beta.TerminalSession.RunCommand
+	(*TerminalSession_RunScript)(nil),                          // 86: namespace.private.devbox.wire.v1beta.TerminalSession.RunScript
+	(*ResourceMetrics_CpuMetrics)(nil),                         // 87: namespace.private.devbox.wire.v1beta.ResourceMetrics.CpuMetrics
+	(*ResourceMetrics_MemoryMetrics)(nil),                      // 88: namespace.private.devbox.wire.v1beta.ResourceMetrics.MemoryMetrics
+	(*ResourceMetrics_CpuMetrics_PerCpuMetrics)(nil),           // 89: namespace.private.devbox.wire.v1beta.ResourceMetrics.CpuMetrics.PerCpuMetrics
+	(*ResetForLeaseRequest_VersionControl)(nil),                // 90: namespace.private.devbox.wire.v1beta.ResetForLeaseRequest.VersionControl
+	(*ResetForLeaseRequest_VersionControl_GitCheckout)(nil),    // 91: namespace.private.devbox.wire.v1beta.ResetForLeaseRequest.VersionControl.GitCheckout
+	(*ResetForLeaseRequest_VersionControl_GitCredentials)(nil), // 92: namespace.private.devbox.wire.v1beta.ResetForLeaseRequest.VersionControl.GitCredentials
+	(*ResetForLeaseEvent_Log)(nil),                             // 93: namespace.private.devbox.wire.v1beta.ResetForLeaseEvent.Log
+	(*ResetForLeaseEvent_Result)(nil),                          // 94: namespace.private.devbox.wire.v1beta.ResetForLeaseEvent.Result
+	(*timestamppb.Timestamp)(nil),                              // 95: google.protobuf.Timestamp
+	(*durationpb.Duration)(nil),                                // 96: google.protobuf.Duration
+	(*emptypb.Empty)(nil),                                      // 97: google.protobuf.Empty
 }
 var file_proto_namespace_private_devbox_wire_wire_proto_depIdxs = []int32{
 	15,  // 0: namespace.private.devbox.wire.v1beta.RunCommand.cwd:type_name -> namespace.private.devbox.wire.v1beta.Cwd
@@ -5979,8 +6026,8 @@ var file_proto_namespace_private_devbox_wire_wire_proto_depIdxs = []int32{
 	12,  // 5: namespace.private.devbox.wire.v1beta.ExecLogMetadata.actions:type_name -> namespace.private.devbox.wire.v1beta.ExecLogAction
 	6,   // 6: namespace.private.devbox.wire.v1beta.ExecLogAction.command:type_name -> namespace.private.devbox.wire.v1beta.RunCommand
 	53,  // 7: namespace.private.devbox.wire.v1beta.ExecLogAction.boot_op:type_name -> namespace.private.devbox.wire.v1beta.AgentBoot.Op
-	94,  // 8: namespace.private.devbox.wire.v1beta.ExecLogAction.started_at:type_name -> google.protobuf.Timestamp
-	94,  // 9: namespace.private.devbox.wire.v1beta.ExecLogAction.completed_at:type_name -> google.protobuf.Timestamp
+	95,  // 8: namespace.private.devbox.wire.v1beta.ExecLogAction.started_at:type_name -> google.protobuf.Timestamp
+	95,  // 9: namespace.private.devbox.wire.v1beta.ExecLogAction.completed_at:type_name -> google.protobuf.Timestamp
 	52,  // 10: namespace.private.devbox.wire.v1beta.ExecLogChunk.result:type_name -> namespace.private.devbox.wire.v1beta.ExecLogChunk.Result
 	0,   // 11: namespace.private.devbox.wire.v1beta.PortSpec.kind:type_name -> namespace.private.devbox.wire.v1beta.PortSpec.Kind
 	18,  // 12: namespace.private.devbox.wire.v1beta.Port.spec:type_name -> namespace.private.devbox.wire.v1beta.PortSpec
@@ -5993,42 +6040,42 @@ var file_proto_namespace_private_devbox_wire_wire_proto_depIdxs = []int32{
 	53,  // 19: namespace.private.devbox.wire.v1beta.AgentBoot.ops:type_name -> namespace.private.devbox.wire.v1beta.AgentBoot.Op
 	27,  // 20: namespace.private.devbox.wire.v1beta.AgentStartup.boot:type_name -> namespace.private.devbox.wire.v1beta.AgentBoot
 	30,  // 21: namespace.private.devbox.wire.v1beta.AgentStartup.significant_mounts:type_name -> namespace.private.devbox.wire.v1beta.SignificantMount
-	71,  // 22: namespace.private.devbox.wire.v1beta.AgentStartup.named_ports:type_name -> namespace.private.devbox.wire.v1beta.AgentStartup.NamedPort
-	70,  // 23: namespace.private.devbox.wire.v1beta.AgentStartup.vscode:type_name -> namespace.private.devbox.wire.v1beta.AgentStartup.VSCode
+	72,  // 22: namespace.private.devbox.wire.v1beta.AgentStartup.named_ports:type_name -> namespace.private.devbox.wire.v1beta.AgentStartup.NamedPort
+	71,  // 23: namespace.private.devbox.wire.v1beta.AgentStartup.vscode:type_name -> namespace.private.devbox.wire.v1beta.AgentStartup.VSCode
 	29,  // 24: namespace.private.devbox.wire.v1beta.AgentStartup.initial_configuration:type_name -> namespace.private.devbox.wire.v1beta.AgentRuntimeConfiguration
-	72,  // 25: namespace.private.devbox.wire.v1beta.AgentStartup.claude_agent:type_name -> namespace.private.devbox.wire.v1beta.AgentStartup.ClaudeAgent
+	73,  // 25: namespace.private.devbox.wire.v1beta.AgentStartup.claude_agent:type_name -> namespace.private.devbox.wire.v1beta.AgentStartup.ClaudeAgent
 	18,  // 26: namespace.private.devbox.wire.v1beta.AgentStartup.ports:type_name -> namespace.private.devbox.wire.v1beta.PortSpec
-	95,  // 27: namespace.private.devbox.wire.v1beta.AgentRuntimeConfiguration.busy_ensure_minimum_duration:type_name -> google.protobuf.Duration
-	73,  // 28: namespace.private.devbox.wire.v1beta.AgentRuntimeConfiguration.tmux:type_name -> namespace.private.devbox.wire.v1beta.AgentRuntimeConfiguration.TmuxConfiguration
-	74,  // 29: namespace.private.devbox.wire.v1beta.AgentRuntimeConfiguration.automatic_port_forwarding:type_name -> namespace.private.devbox.wire.v1beta.AgentRuntimeConfiguration.AutomaticPortForwardingConfiguration
+	96,  // 27: namespace.private.devbox.wire.v1beta.AgentRuntimeConfiguration.busy_ensure_minimum_duration:type_name -> google.protobuf.Duration
+	74,  // 28: namespace.private.devbox.wire.v1beta.AgentRuntimeConfiguration.tmux:type_name -> namespace.private.devbox.wire.v1beta.AgentRuntimeConfiguration.TmuxConfiguration
+	75,  // 29: namespace.private.devbox.wire.v1beta.AgentRuntimeConfiguration.automatic_port_forwarding:type_name -> namespace.private.devbox.wire.v1beta.AgentRuntimeConfiguration.AutomaticPortForwardingConfiguration
 	3,   // 30: namespace.private.devbox.wire.v1beta.SignificantMount.kind:type_name -> namespace.private.devbox.wire.v1beta.SignificantMount.Kind
-	77,  // 31: namespace.private.devbox.wire.v1beta.BootOpResult.node:type_name -> namespace.private.devbox.wire.v1beta.BootOpResult.Node
-	78,  // 32: namespace.private.devbox.wire.v1beta.BootOpResult.log:type_name -> namespace.private.devbox.wire.v1beta.BootOpResult.Log
-	79,  // 33: namespace.private.devbox.wire.v1beta.BootOpResult.result:type_name -> namespace.private.devbox.wire.v1beta.BootOpResult.Result
+	78,  // 31: namespace.private.devbox.wire.v1beta.BootOpResult.node:type_name -> namespace.private.devbox.wire.v1beta.BootOpResult.Node
+	79,  // 32: namespace.private.devbox.wire.v1beta.BootOpResult.log:type_name -> namespace.private.devbox.wire.v1beta.BootOpResult.Log
+	80,  // 33: namespace.private.devbox.wire.v1beta.BootOpResult.result:type_name -> namespace.private.devbox.wire.v1beta.BootOpResult.Result
 	31,  // 34: namespace.private.devbox.wire.v1beta.StartupState.boot_op_results:type_name -> namespace.private.devbox.wire.v1beta.BootOpResult
 	34,  // 35: namespace.private.devbox.wire.v1beta.QueryStateRequest.resource_metrics:type_name -> namespace.private.devbox.wire.v1beta.ResourceMetricsSubscription
-	80,  // 36: namespace.private.devbox.wire.v1beta.QueryStateResponse.mount_states:type_name -> namespace.private.devbox.wire.v1beta.QueryStateResponse.SignificantMountState
+	81,  // 36: namespace.private.devbox.wire.v1beta.QueryStateResponse.mount_states:type_name -> namespace.private.devbox.wire.v1beta.QueryStateResponse.SignificantMountState
 	36,  // 37: namespace.private.devbox.wire.v1beta.QueryStateResponse.git_status:type_name -> namespace.private.devbox.wire.v1beta.GitStatus
 	39,  // 38: namespace.private.devbox.wire.v1beta.QueryStateResponse.worktrees:type_name -> namespace.private.devbox.wire.v1beta.GitWorktree
 	49,  // 39: namespace.private.devbox.wire.v1beta.QueryStateResponse.resource_metrics:type_name -> namespace.private.devbox.wire.v1beta.ResourceMetrics
-	81,  // 40: namespace.private.devbox.wire.v1beta.GitStatus.tracked_files:type_name -> namespace.private.devbox.wire.v1beta.GitStatus.File
-	81,  // 41: namespace.private.devbox.wire.v1beta.GitStatus.untracked_files:type_name -> namespace.private.devbox.wire.v1beta.GitStatus.File
-	82,  // 42: namespace.private.devbox.wire.v1beta.GitStatus.local_commits:type_name -> namespace.private.devbox.wire.v1beta.GitStatus.Commit
-	83,  // 43: namespace.private.devbox.wire.v1beta.RunOutputChunk.result:type_name -> namespace.private.devbox.wire.v1beta.RunOutputChunk.Result
+	82,  // 40: namespace.private.devbox.wire.v1beta.GitStatus.tracked_files:type_name -> namespace.private.devbox.wire.v1beta.GitStatus.File
+	82,  // 41: namespace.private.devbox.wire.v1beta.GitStatus.untracked_files:type_name -> namespace.private.devbox.wire.v1beta.GitStatus.File
+	83,  // 42: namespace.private.devbox.wire.v1beta.GitStatus.local_commits:type_name -> namespace.private.devbox.wire.v1beta.GitStatus.Commit
+	84,  // 43: namespace.private.devbox.wire.v1beta.RunOutputChunk.result:type_name -> namespace.private.devbox.wire.v1beta.RunOutputChunk.Result
 	39,  // 44: namespace.private.devbox.wire.v1beta.ListGitWorktreesResponse.worktrees:type_name -> namespace.private.devbox.wire.v1beta.GitWorktree
 	46,  // 45: namespace.private.devbox.wire.v1beta.ListTerminalSessionsResponse.sessions:type_name -> namespace.private.devbox.wire.v1beta.TerminalSession
-	94,  // 46: namespace.private.devbox.wire.v1beta.TerminalSession.created_at:type_name -> google.protobuf.Timestamp
-	84,  // 47: namespace.private.devbox.wire.v1beta.TerminalSession.run_command:type_name -> namespace.private.devbox.wire.v1beta.TerminalSession.RunCommand
-	85,  // 48: namespace.private.devbox.wire.v1beta.TerminalSession.run_script:type_name -> namespace.private.devbox.wire.v1beta.TerminalSession.RunScript
-	84,  // 49: namespace.private.devbox.wire.v1beta.AddTerminalSessionRequest.run_command:type_name -> namespace.private.devbox.wire.v1beta.TerminalSession.RunCommand
-	85,  // 50: namespace.private.devbox.wire.v1beta.AddTerminalSessionRequest.run_script:type_name -> namespace.private.devbox.wire.v1beta.TerminalSession.RunScript
-	86,  // 51: namespace.private.devbox.wire.v1beta.ResourceMetrics.cpu:type_name -> namespace.private.devbox.wire.v1beta.ResourceMetrics.CpuMetrics
-	87,  // 52: namespace.private.devbox.wire.v1beta.ResourceMetrics.memory:type_name -> namespace.private.devbox.wire.v1beta.ResourceMetrics.MemoryMetrics
-	94,  // 53: namespace.private.devbox.wire.v1beta.ResourceMetrics.timestamp:type_name -> google.protobuf.Timestamp
-	89,  // 54: namespace.private.devbox.wire.v1beta.ResetForLeaseRequest.version_control:type_name -> namespace.private.devbox.wire.v1beta.ResetForLeaseRequest.VersionControl
-	92,  // 55: namespace.private.devbox.wire.v1beta.ResetForLeaseEvent.log:type_name -> namespace.private.devbox.wire.v1beta.ResetForLeaseEvent.Log
-	93,  // 56: namespace.private.devbox.wire.v1beta.ResetForLeaseEvent.result:type_name -> namespace.private.devbox.wire.v1beta.ResetForLeaseEvent.Result
-	95,  // 57: namespace.private.devbox.wire.v1beta.ExecLogChunk.Result.duration:type_name -> google.protobuf.Duration
+	95,  // 46: namespace.private.devbox.wire.v1beta.TerminalSession.created_at:type_name -> google.protobuf.Timestamp
+	85,  // 47: namespace.private.devbox.wire.v1beta.TerminalSession.run_command:type_name -> namespace.private.devbox.wire.v1beta.TerminalSession.RunCommand
+	86,  // 48: namespace.private.devbox.wire.v1beta.TerminalSession.run_script:type_name -> namespace.private.devbox.wire.v1beta.TerminalSession.RunScript
+	85,  // 49: namespace.private.devbox.wire.v1beta.AddTerminalSessionRequest.run_command:type_name -> namespace.private.devbox.wire.v1beta.TerminalSession.RunCommand
+	86,  // 50: namespace.private.devbox.wire.v1beta.AddTerminalSessionRequest.run_script:type_name -> namespace.private.devbox.wire.v1beta.TerminalSession.RunScript
+	87,  // 51: namespace.private.devbox.wire.v1beta.ResourceMetrics.cpu:type_name -> namespace.private.devbox.wire.v1beta.ResourceMetrics.CpuMetrics
+	88,  // 52: namespace.private.devbox.wire.v1beta.ResourceMetrics.memory:type_name -> namespace.private.devbox.wire.v1beta.ResourceMetrics.MemoryMetrics
+	95,  // 53: namespace.private.devbox.wire.v1beta.ResourceMetrics.timestamp:type_name -> google.protobuf.Timestamp
+	90,  // 54: namespace.private.devbox.wire.v1beta.ResetForLeaseRequest.version_control:type_name -> namespace.private.devbox.wire.v1beta.ResetForLeaseRequest.VersionControl
+	93,  // 55: namespace.private.devbox.wire.v1beta.ResetForLeaseEvent.log:type_name -> namespace.private.devbox.wire.v1beta.ResetForLeaseEvent.Log
+	94,  // 56: namespace.private.devbox.wire.v1beta.ResetForLeaseEvent.result:type_name -> namespace.private.devbox.wire.v1beta.ResetForLeaseEvent.Result
+	96,  // 57: namespace.private.devbox.wire.v1beta.ExecLogChunk.Result.duration:type_name -> google.protobuf.Duration
 	54,  // 58: namespace.private.devbox.wire.v1beta.AgentBoot.Op.setup_namespace_git_credentials:type_name -> namespace.private.devbox.wire.v1beta.AgentBoot.Op.SetupNamespaceGitCredentials
 	55,  // 59: namespace.private.devbox.wire.v1beta.AgentBoot.Op.git_checkout:type_name -> namespace.private.devbox.wire.v1beta.AgentBoot.Op.GitCheckout
 	56,  // 60: namespace.private.devbox.wire.v1beta.AgentBoot.Op.git_create_branch:type_name -> namespace.private.devbox.wire.v1beta.AgentBoot.Op.GitCreateBranch
@@ -6051,66 +6098,67 @@ var file_proto_namespace_private_devbox_wire_wire_proto_depIdxs = []int32{
 	47,  // 77: namespace.private.devbox.wire.v1beta.AgentBoot.Op.EnsureSessions.sessions:type_name -> namespace.private.devbox.wire.v1beta.AddTerminalSessionRequest
 	68,  // 78: namespace.private.devbox.wire.v1beta.AgentBoot.Op.SetupIntegrations.devin_outposts:type_name -> namespace.private.devbox.wire.v1beta.AgentBoot.Op.SetupIntegrations.DevinOutposts
 	69,  // 79: namespace.private.devbox.wire.v1beta.AgentBoot.Op.SetupIntegrations.cursor:type_name -> namespace.private.devbox.wire.v1beta.AgentBoot.Op.SetupIntegrations.Cursor
-	75,  // 80: namespace.private.devbox.wire.v1beta.AgentRuntimeConfiguration.TmuxConfiguration.server_options:type_name -> namespace.private.devbox.wire.v1beta.AgentRuntimeConfiguration.TmuxConfiguration.ServerOptionsEntry
-	76,  // 81: namespace.private.devbox.wire.v1beta.AgentRuntimeConfiguration.TmuxConfiguration.global_options:type_name -> namespace.private.devbox.wire.v1beta.AgentRuntimeConfiguration.TmuxConfiguration.GlobalOptionsEntry
-	53,  // 82: namespace.private.devbox.wire.v1beta.BootOpResult.Node.op:type_name -> namespace.private.devbox.wire.v1beta.AgentBoot.Op
-	95,  // 83: namespace.private.devbox.wire.v1beta.BootOpResult.Result.duration:type_name -> google.protobuf.Duration
-	30,  // 84: namespace.private.devbox.wire.v1beta.QueryStateResponse.SignificantMountState.mount:type_name -> namespace.private.devbox.wire.v1beta.SignificantMount
-	4,   // 85: namespace.private.devbox.wire.v1beta.GitStatus.File.flags:type_name -> namespace.private.devbox.wire.v1beta.GitStatus.File.Flag
-	94,  // 86: namespace.private.devbox.wire.v1beta.GitStatus.Commit.author_date:type_name -> google.protobuf.Timestamp
-	94,  // 87: namespace.private.devbox.wire.v1beta.GitStatus.Commit.commit_date:type_name -> google.protobuf.Timestamp
-	95,  // 88: namespace.private.devbox.wire.v1beta.RunOutputChunk.Result.duration:type_name -> google.protobuf.Duration
-	88,  // 89: namespace.private.devbox.wire.v1beta.ResourceMetrics.CpuMetrics.per_cpu:type_name -> namespace.private.devbox.wire.v1beta.ResourceMetrics.CpuMetrics.PerCpuMetrics
-	90,  // 90: namespace.private.devbox.wire.v1beta.ResetForLeaseRequest.VersionControl.git_checkout:type_name -> namespace.private.devbox.wire.v1beta.ResetForLeaseRequest.VersionControl.GitCheckout
-	91,  // 91: namespace.private.devbox.wire.v1beta.ResetForLeaseRequest.VersionControl.git_credentials:type_name -> namespace.private.devbox.wire.v1beta.ResetForLeaseRequest.VersionControl.GitCredentials
-	95,  // 92: namespace.private.devbox.wire.v1beta.ResetForLeaseEvent.Result.duration:type_name -> google.protobuf.Duration
-	96,  // 93: namespace.private.devbox.wire.v1beta.AgentService.Ping:input_type -> google.protobuf.Empty
-	50,  // 94: namespace.private.devbox.wire.v1beta.AgentService.ResetForLease:input_type -> namespace.private.devbox.wire.v1beta.ResetForLeaseRequest
-	96,  // 95: namespace.private.devbox.wire.v1beta.AgentService.WatchBoot:input_type -> google.protobuf.Empty
-	33,  // 96: namespace.private.devbox.wire.v1beta.AgentService.QueryState:input_type -> namespace.private.devbox.wire.v1beta.QueryStateRequest
-	33,  // 97: namespace.private.devbox.wire.v1beta.AgentService.StreamQueryState:input_type -> namespace.private.devbox.wire.v1beta.QueryStateRequest
-	6,   // 98: namespace.private.devbox.wire.v1beta.AgentService.Run:input_type -> namespace.private.devbox.wire.v1beta.RunCommand
-	7,   // 99: namespace.private.devbox.wire.v1beta.AgentService.RunExec:input_type -> namespace.private.devbox.wire.v1beta.StartExecRequest
-	7,   // 100: namespace.private.devbox.wire.v1beta.AgentService.StartExec:input_type -> namespace.private.devbox.wire.v1beta.StartExecRequest
-	9,   // 101: namespace.private.devbox.wire.v1beta.AgentService.ListLogs:input_type -> namespace.private.devbox.wire.v1beta.ListLogsRequest
-	13,  // 102: namespace.private.devbox.wire.v1beta.AgentService.StreamExecLogs:input_type -> namespace.private.devbox.wire.v1beta.StreamExecLogsRequest
-	42,  // 103: namespace.private.devbox.wire.v1beta.AgentService.CreateGitWorktree:input_type -> namespace.private.devbox.wire.v1beta.CreateGitWorktreeRequest
-	40,  // 104: namespace.private.devbox.wire.v1beta.AgentService.ListGitWorktrees:input_type -> namespace.private.devbox.wire.v1beta.ListGitWorktreesRequest
-	44,  // 105: namespace.private.devbox.wire.v1beta.AgentService.RemoveGitWorktree:input_type -> namespace.private.devbox.wire.v1beta.RemoveGitWorktreeRequest
-	47,  // 106: namespace.private.devbox.wire.v1beta.AgentService.AddTerminalSession:input_type -> namespace.private.devbox.wire.v1beta.AddTerminalSessionRequest
-	5,   // 107: namespace.private.devbox.wire.v1beta.AgentService.CreateTerminalSession:input_type -> namespace.private.devbox.wire.v1beta.CreateTerminalSessionRequest
-	48,  // 108: namespace.private.devbox.wire.v1beta.AgentService.DeleteTerminalSession:input_type -> namespace.private.devbox.wire.v1beta.DeleteTerminalSessionRequest
-	96,  // 109: namespace.private.devbox.wire.v1beta.AgentService.ListTerminalSessions:input_type -> google.protobuf.Empty
-	20,  // 110: namespace.private.devbox.wire.v1beta.AgentService.CreatePort:input_type -> namespace.private.devbox.wire.v1beta.CreatePortRequest
-	22,  // 111: namespace.private.devbox.wire.v1beta.AgentService.DeletePort:input_type -> namespace.private.devbox.wire.v1beta.DeletePortRequest
-	24,  // 112: namespace.private.devbox.wire.v1beta.AgentService.ListPorts:input_type -> namespace.private.devbox.wire.v1beta.ListPortsRequest
-	29,  // 113: namespace.private.devbox.wire.v1beta.AgentService.UpdateRuntimeConfiguration:input_type -> namespace.private.devbox.wire.v1beta.AgentRuntimeConfiguration
-	96,  // 114: namespace.private.devbox.wire.v1beta.AgentService.Ping:output_type -> google.protobuf.Empty
-	51,  // 115: namespace.private.devbox.wire.v1beta.AgentService.ResetForLease:output_type -> namespace.private.devbox.wire.v1beta.ResetForLeaseEvent
-	31,  // 116: namespace.private.devbox.wire.v1beta.AgentService.WatchBoot:output_type -> namespace.private.devbox.wire.v1beta.BootOpResult
-	35,  // 117: namespace.private.devbox.wire.v1beta.AgentService.QueryState:output_type -> namespace.private.devbox.wire.v1beta.QueryStateResponse
-	35,  // 118: namespace.private.devbox.wire.v1beta.AgentService.StreamQueryState:output_type -> namespace.private.devbox.wire.v1beta.QueryStateResponse
-	38,  // 119: namespace.private.devbox.wire.v1beta.AgentService.Run:output_type -> namespace.private.devbox.wire.v1beta.RunOutputChunk
-	14,  // 120: namespace.private.devbox.wire.v1beta.AgentService.RunExec:output_type -> namespace.private.devbox.wire.v1beta.ExecLogChunk
-	8,   // 121: namespace.private.devbox.wire.v1beta.AgentService.StartExec:output_type -> namespace.private.devbox.wire.v1beta.StartExecResponse
-	10,  // 122: namespace.private.devbox.wire.v1beta.AgentService.ListLogs:output_type -> namespace.private.devbox.wire.v1beta.ListLogsResponse
-	14,  // 123: namespace.private.devbox.wire.v1beta.AgentService.StreamExecLogs:output_type -> namespace.private.devbox.wire.v1beta.ExecLogChunk
-	43,  // 124: namespace.private.devbox.wire.v1beta.AgentService.CreateGitWorktree:output_type -> namespace.private.devbox.wire.v1beta.CreateGitWorktreeResponse
-	41,  // 125: namespace.private.devbox.wire.v1beta.AgentService.ListGitWorktrees:output_type -> namespace.private.devbox.wire.v1beta.ListGitWorktreesResponse
-	96,  // 126: namespace.private.devbox.wire.v1beta.AgentService.RemoveGitWorktree:output_type -> google.protobuf.Empty
-	46,  // 127: namespace.private.devbox.wire.v1beta.AgentService.AddTerminalSession:output_type -> namespace.private.devbox.wire.v1beta.TerminalSession
-	46,  // 128: namespace.private.devbox.wire.v1beta.AgentService.CreateTerminalSession:output_type -> namespace.private.devbox.wire.v1beta.TerminalSession
-	96,  // 129: namespace.private.devbox.wire.v1beta.AgentService.DeleteTerminalSession:output_type -> google.protobuf.Empty
-	45,  // 130: namespace.private.devbox.wire.v1beta.AgentService.ListTerminalSessions:output_type -> namespace.private.devbox.wire.v1beta.ListTerminalSessionsResponse
-	21,  // 131: namespace.private.devbox.wire.v1beta.AgentService.CreatePort:output_type -> namespace.private.devbox.wire.v1beta.CreatePortResponse
-	23,  // 132: namespace.private.devbox.wire.v1beta.AgentService.DeletePort:output_type -> namespace.private.devbox.wire.v1beta.DeletePortResponse
-	25,  // 133: namespace.private.devbox.wire.v1beta.AgentService.ListPorts:output_type -> namespace.private.devbox.wire.v1beta.ListPortsResponse
-	29,  // 134: namespace.private.devbox.wire.v1beta.AgentService.UpdateRuntimeConfiguration:output_type -> namespace.private.devbox.wire.v1beta.AgentRuntimeConfiguration
-	114, // [114:135] is the sub-list for method output_type
-	93,  // [93:114] is the sub-list for method input_type
-	93,  // [93:93] is the sub-list for extension type_name
-	93,  // [93:93] is the sub-list for extension extendee
-	0,   // [0:93] is the sub-list for field type_name
+	70,  // 80: namespace.private.devbox.wire.v1beta.AgentBoot.Op.SetupIntegrations.claude_agent:type_name -> namespace.private.devbox.wire.v1beta.AgentBoot.Op.SetupIntegrations.ClaudeAgent
+	76,  // 81: namespace.private.devbox.wire.v1beta.AgentRuntimeConfiguration.TmuxConfiguration.server_options:type_name -> namespace.private.devbox.wire.v1beta.AgentRuntimeConfiguration.TmuxConfiguration.ServerOptionsEntry
+	77,  // 82: namespace.private.devbox.wire.v1beta.AgentRuntimeConfiguration.TmuxConfiguration.global_options:type_name -> namespace.private.devbox.wire.v1beta.AgentRuntimeConfiguration.TmuxConfiguration.GlobalOptionsEntry
+	53,  // 83: namespace.private.devbox.wire.v1beta.BootOpResult.Node.op:type_name -> namespace.private.devbox.wire.v1beta.AgentBoot.Op
+	96,  // 84: namespace.private.devbox.wire.v1beta.BootOpResult.Result.duration:type_name -> google.protobuf.Duration
+	30,  // 85: namespace.private.devbox.wire.v1beta.QueryStateResponse.SignificantMountState.mount:type_name -> namespace.private.devbox.wire.v1beta.SignificantMount
+	4,   // 86: namespace.private.devbox.wire.v1beta.GitStatus.File.flags:type_name -> namespace.private.devbox.wire.v1beta.GitStatus.File.Flag
+	95,  // 87: namespace.private.devbox.wire.v1beta.GitStatus.Commit.author_date:type_name -> google.protobuf.Timestamp
+	95,  // 88: namespace.private.devbox.wire.v1beta.GitStatus.Commit.commit_date:type_name -> google.protobuf.Timestamp
+	96,  // 89: namespace.private.devbox.wire.v1beta.RunOutputChunk.Result.duration:type_name -> google.protobuf.Duration
+	89,  // 90: namespace.private.devbox.wire.v1beta.ResourceMetrics.CpuMetrics.per_cpu:type_name -> namespace.private.devbox.wire.v1beta.ResourceMetrics.CpuMetrics.PerCpuMetrics
+	91,  // 91: namespace.private.devbox.wire.v1beta.ResetForLeaseRequest.VersionControl.git_checkout:type_name -> namespace.private.devbox.wire.v1beta.ResetForLeaseRequest.VersionControl.GitCheckout
+	92,  // 92: namespace.private.devbox.wire.v1beta.ResetForLeaseRequest.VersionControl.git_credentials:type_name -> namespace.private.devbox.wire.v1beta.ResetForLeaseRequest.VersionControl.GitCredentials
+	96,  // 93: namespace.private.devbox.wire.v1beta.ResetForLeaseEvent.Result.duration:type_name -> google.protobuf.Duration
+	97,  // 94: namespace.private.devbox.wire.v1beta.AgentService.Ping:input_type -> google.protobuf.Empty
+	50,  // 95: namespace.private.devbox.wire.v1beta.AgentService.ResetForLease:input_type -> namespace.private.devbox.wire.v1beta.ResetForLeaseRequest
+	97,  // 96: namespace.private.devbox.wire.v1beta.AgentService.WatchBoot:input_type -> google.protobuf.Empty
+	33,  // 97: namespace.private.devbox.wire.v1beta.AgentService.QueryState:input_type -> namespace.private.devbox.wire.v1beta.QueryStateRequest
+	33,  // 98: namespace.private.devbox.wire.v1beta.AgentService.StreamQueryState:input_type -> namespace.private.devbox.wire.v1beta.QueryStateRequest
+	6,   // 99: namespace.private.devbox.wire.v1beta.AgentService.Run:input_type -> namespace.private.devbox.wire.v1beta.RunCommand
+	7,   // 100: namespace.private.devbox.wire.v1beta.AgentService.RunExec:input_type -> namespace.private.devbox.wire.v1beta.StartExecRequest
+	7,   // 101: namespace.private.devbox.wire.v1beta.AgentService.StartExec:input_type -> namespace.private.devbox.wire.v1beta.StartExecRequest
+	9,   // 102: namespace.private.devbox.wire.v1beta.AgentService.ListLogs:input_type -> namespace.private.devbox.wire.v1beta.ListLogsRequest
+	13,  // 103: namespace.private.devbox.wire.v1beta.AgentService.StreamExecLogs:input_type -> namespace.private.devbox.wire.v1beta.StreamExecLogsRequest
+	42,  // 104: namespace.private.devbox.wire.v1beta.AgentService.CreateGitWorktree:input_type -> namespace.private.devbox.wire.v1beta.CreateGitWorktreeRequest
+	40,  // 105: namespace.private.devbox.wire.v1beta.AgentService.ListGitWorktrees:input_type -> namespace.private.devbox.wire.v1beta.ListGitWorktreesRequest
+	44,  // 106: namespace.private.devbox.wire.v1beta.AgentService.RemoveGitWorktree:input_type -> namespace.private.devbox.wire.v1beta.RemoveGitWorktreeRequest
+	47,  // 107: namespace.private.devbox.wire.v1beta.AgentService.AddTerminalSession:input_type -> namespace.private.devbox.wire.v1beta.AddTerminalSessionRequest
+	5,   // 108: namespace.private.devbox.wire.v1beta.AgentService.CreateTerminalSession:input_type -> namespace.private.devbox.wire.v1beta.CreateTerminalSessionRequest
+	48,  // 109: namespace.private.devbox.wire.v1beta.AgentService.DeleteTerminalSession:input_type -> namespace.private.devbox.wire.v1beta.DeleteTerminalSessionRequest
+	97,  // 110: namespace.private.devbox.wire.v1beta.AgentService.ListTerminalSessions:input_type -> google.protobuf.Empty
+	20,  // 111: namespace.private.devbox.wire.v1beta.AgentService.CreatePort:input_type -> namespace.private.devbox.wire.v1beta.CreatePortRequest
+	22,  // 112: namespace.private.devbox.wire.v1beta.AgentService.DeletePort:input_type -> namespace.private.devbox.wire.v1beta.DeletePortRequest
+	24,  // 113: namespace.private.devbox.wire.v1beta.AgentService.ListPorts:input_type -> namespace.private.devbox.wire.v1beta.ListPortsRequest
+	29,  // 114: namespace.private.devbox.wire.v1beta.AgentService.UpdateRuntimeConfiguration:input_type -> namespace.private.devbox.wire.v1beta.AgentRuntimeConfiguration
+	97,  // 115: namespace.private.devbox.wire.v1beta.AgentService.Ping:output_type -> google.protobuf.Empty
+	51,  // 116: namespace.private.devbox.wire.v1beta.AgentService.ResetForLease:output_type -> namespace.private.devbox.wire.v1beta.ResetForLeaseEvent
+	31,  // 117: namespace.private.devbox.wire.v1beta.AgentService.WatchBoot:output_type -> namespace.private.devbox.wire.v1beta.BootOpResult
+	35,  // 118: namespace.private.devbox.wire.v1beta.AgentService.QueryState:output_type -> namespace.private.devbox.wire.v1beta.QueryStateResponse
+	35,  // 119: namespace.private.devbox.wire.v1beta.AgentService.StreamQueryState:output_type -> namespace.private.devbox.wire.v1beta.QueryStateResponse
+	38,  // 120: namespace.private.devbox.wire.v1beta.AgentService.Run:output_type -> namespace.private.devbox.wire.v1beta.RunOutputChunk
+	14,  // 121: namespace.private.devbox.wire.v1beta.AgentService.RunExec:output_type -> namespace.private.devbox.wire.v1beta.ExecLogChunk
+	8,   // 122: namespace.private.devbox.wire.v1beta.AgentService.StartExec:output_type -> namespace.private.devbox.wire.v1beta.StartExecResponse
+	10,  // 123: namespace.private.devbox.wire.v1beta.AgentService.ListLogs:output_type -> namespace.private.devbox.wire.v1beta.ListLogsResponse
+	14,  // 124: namespace.private.devbox.wire.v1beta.AgentService.StreamExecLogs:output_type -> namespace.private.devbox.wire.v1beta.ExecLogChunk
+	43,  // 125: namespace.private.devbox.wire.v1beta.AgentService.CreateGitWorktree:output_type -> namespace.private.devbox.wire.v1beta.CreateGitWorktreeResponse
+	41,  // 126: namespace.private.devbox.wire.v1beta.AgentService.ListGitWorktrees:output_type -> namespace.private.devbox.wire.v1beta.ListGitWorktreesResponse
+	97,  // 127: namespace.private.devbox.wire.v1beta.AgentService.RemoveGitWorktree:output_type -> google.protobuf.Empty
+	46,  // 128: namespace.private.devbox.wire.v1beta.AgentService.AddTerminalSession:output_type -> namespace.private.devbox.wire.v1beta.TerminalSession
+	46,  // 129: namespace.private.devbox.wire.v1beta.AgentService.CreateTerminalSession:output_type -> namespace.private.devbox.wire.v1beta.TerminalSession
+	97,  // 130: namespace.private.devbox.wire.v1beta.AgentService.DeleteTerminalSession:output_type -> google.protobuf.Empty
+	45,  // 131: namespace.private.devbox.wire.v1beta.AgentService.ListTerminalSessions:output_type -> namespace.private.devbox.wire.v1beta.ListTerminalSessionsResponse
+	21,  // 132: namespace.private.devbox.wire.v1beta.AgentService.CreatePort:output_type -> namespace.private.devbox.wire.v1beta.CreatePortResponse
+	23,  // 133: namespace.private.devbox.wire.v1beta.AgentService.DeletePort:output_type -> namespace.private.devbox.wire.v1beta.DeletePortResponse
+	25,  // 134: namespace.private.devbox.wire.v1beta.AgentService.ListPorts:output_type -> namespace.private.devbox.wire.v1beta.ListPortsResponse
+	29,  // 135: namespace.private.devbox.wire.v1beta.AgentService.UpdateRuntimeConfiguration:output_type -> namespace.private.devbox.wire.v1beta.AgentRuntimeConfiguration
+	115, // [115:136] is the sub-list for method output_type
+	94,  // [94:115] is the sub-list for method input_type
+	94,  // [94:94] is the sub-list for extension type_name
+	94,  // [94:94] is the sub-list for extension extendee
+	0,   // [0:94] is the sub-list for field type_name
 }
 
 func init() { file_proto_namespace_private_devbox_wire_wire_proto_init() }
@@ -6124,7 +6172,7 @@ func file_proto_namespace_private_devbox_wire_wire_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_proto_namespace_private_devbox_wire_wire_proto_rawDesc), len(file_proto_namespace_private_devbox_wire_wire_proto_rawDesc)),
 			NumEnums:      5,
-			NumMessages:   89,
+			NumMessages:   90,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

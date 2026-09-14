@@ -9,6 +9,7 @@ package networkv1beta
 import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
+	stdlib "namespacelabs.dev/integrations/proto/namespace/stdlib"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
@@ -126,6 +127,55 @@ func (x EgressPolicySpec_Rule_RuleOp) Number() protoreflect.EnumNumber {
 // Deprecated: Use EgressPolicySpec_Rule_RuleOp.Descriptor instead.
 func (EgressPolicySpec_Rule_RuleOp) EnumDescriptor() ([]byte, []int) {
 	return file_proto_namespace_cloud_network_v1beta_egress_proto_rawDescGZIP(), []int{9, 0, 0}
+}
+
+type EgressPolicySpec_InjectOpts_ResolutionPolicy int32
+
+const (
+	EgressPolicySpec_InjectOpts_RESOLUTION_POLICY_UNKNOWN    EgressPolicySpec_InjectOpts_ResolutionPolicy = 0 // Default to once.
+	EgressPolicySpec_InjectOpts_RESOLUTION_POLICY_ONCE       EgressPolicySpec_InjectOpts_ResolutionPolicy = 1 // Resolve once and keep using that value.
+	EgressPolicySpec_InjectOpts_RESOLUTION_POLICY_WHEN_STALE EgressPolicySpec_InjectOpts_ResolutionPolicy = 2 // Cache until stale, then refresh. Staleness follows the Cache-Control: max-age returned by from_endpoint, with a minimum of 10s. Requires from_endpoint.
+)
+
+// Enum value maps for EgressPolicySpec_InjectOpts_ResolutionPolicy.
+var (
+	EgressPolicySpec_InjectOpts_ResolutionPolicy_name = map[int32]string{
+		0: "RESOLUTION_POLICY_UNKNOWN",
+		1: "RESOLUTION_POLICY_ONCE",
+		2: "RESOLUTION_POLICY_WHEN_STALE",
+	}
+	EgressPolicySpec_InjectOpts_ResolutionPolicy_value = map[string]int32{
+		"RESOLUTION_POLICY_UNKNOWN":    0,
+		"RESOLUTION_POLICY_ONCE":       1,
+		"RESOLUTION_POLICY_WHEN_STALE": 2,
+	}
+)
+
+func (x EgressPolicySpec_InjectOpts_ResolutionPolicy) Enum() *EgressPolicySpec_InjectOpts_ResolutionPolicy {
+	p := new(EgressPolicySpec_InjectOpts_ResolutionPolicy)
+	*p = x
+	return p
+}
+
+func (x EgressPolicySpec_InjectOpts_ResolutionPolicy) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (EgressPolicySpec_InjectOpts_ResolutionPolicy) Descriptor() protoreflect.EnumDescriptor {
+	return file_proto_namespace_cloud_network_v1beta_egress_proto_enumTypes[2].Descriptor()
+}
+
+func (EgressPolicySpec_InjectOpts_ResolutionPolicy) Type() protoreflect.EnumType {
+	return &file_proto_namespace_cloud_network_v1beta_egress_proto_enumTypes[2]
+}
+
+func (x EgressPolicySpec_InjectOpts_ResolutionPolicy) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use EgressPolicySpec_InjectOpts_ResolutionPolicy.Descriptor instead.
+func (EgressPolicySpec_InjectOpts_ResolutionPolicy) EnumDescriptor() ([]byte, []int) {
+	return file_proto_namespace_cloud_network_v1beta_egress_proto_rawDescGZIP(), []int{9, 4, 0}
 }
 
 type CreateEgressPolicyRequest struct {
@@ -894,12 +944,13 @@ func (x *EgressPolicySpec_ProxyOpts) GetViaDomain() string {
 type EgressPolicySpec_InjectOpts struct {
 	state      protoimpl.MessageState `protogen:"open.v1"`
 	HeaderName string                 `protobuf:"bytes,1,opt,name=header_name,json=headerName,proto3" json:"header_name,omitempty"`
-	// The header value to inject. Exactly one of `from_secret_id`
-	// or `value` must be set.
-	FromSecretId  string `protobuf:"bytes,2,opt,name=from_secret_id,json=fromSecretId,proto3" json:"from_secret_id,omitempty"`
-	Value         string `protobuf:"bytes,3,opt,name=value,proto3" json:"value,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	// Exactly one value source must be set.
+	FromSecretId     string                                       `protobuf:"bytes,2,opt,name=from_secret_id,json=fromSecretId,proto3" json:"from_secret_id,omitempty"` // References a Vault secret.
+	Value            string                                       `protobuf:"bytes,3,opt,name=value,proto3" json:"value,omitempty"`                                     // Plaintext value.
+	FromEndpoint     *EgressPolicySpec_InjectOpts_FromEndpoint    `protobuf:"bytes,4,opt,name=from_endpoint,json=fromEndpoint,proto3" json:"from_endpoint,omitempty"`   // Fetches the value to inject from an HTTP endpoint using GET.
+	ResolutionPolicy EgressPolicySpec_InjectOpts_ResolutionPolicy `protobuf:"varint,5,opt,name=resolution_policy,json=resolutionPolicy,proto3,enum=namespace.cloud.network.v1beta.EgressPolicySpec_InjectOpts_ResolutionPolicy" json:"resolution_policy,omitempty"`
+	unknownFields    protoimpl.UnknownFields
+	sizeCache        protoimpl.SizeCache
 }
 
 func (x *EgressPolicySpec_InjectOpts) Reset() {
@@ -953,11 +1004,77 @@ func (x *EgressPolicySpec_InjectOpts) GetValue() string {
 	return ""
 }
 
+func (x *EgressPolicySpec_InjectOpts) GetFromEndpoint() *EgressPolicySpec_InjectOpts_FromEndpoint {
+	if x != nil {
+		return x.FromEndpoint
+	}
+	return nil
+}
+
+func (x *EgressPolicySpec_InjectOpts) GetResolutionPolicy() EgressPolicySpec_InjectOpts_ResolutionPolicy {
+	if x != nil {
+		return x.ResolutionPolicy
+	}
+	return EgressPolicySpec_InjectOpts_RESOLUTION_POLICY_UNKNOWN
+}
+
+type EgressPolicySpec_InjectOpts_FromEndpoint struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Url           string                 `protobuf:"bytes,1,opt,name=url,proto3" json:"url,omitempty"`
+	Headers       []*stdlib.HttpHeader   `protobuf:"bytes,2,rep,name=headers,proto3" json:"headers,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *EgressPolicySpec_InjectOpts_FromEndpoint) Reset() {
+	*x = EgressPolicySpec_InjectOpts_FromEndpoint{}
+	mi := &file_proto_namespace_cloud_network_v1beta_egress_proto_msgTypes[16]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *EgressPolicySpec_InjectOpts_FromEndpoint) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*EgressPolicySpec_InjectOpts_FromEndpoint) ProtoMessage() {}
+
+func (x *EgressPolicySpec_InjectOpts_FromEndpoint) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_namespace_cloud_network_v1beta_egress_proto_msgTypes[16]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use EgressPolicySpec_InjectOpts_FromEndpoint.ProtoReflect.Descriptor instead.
+func (*EgressPolicySpec_InjectOpts_FromEndpoint) Descriptor() ([]byte, []int) {
+	return file_proto_namespace_cloud_network_v1beta_egress_proto_rawDescGZIP(), []int{9, 4, 0}
+}
+
+func (x *EgressPolicySpec_InjectOpts_FromEndpoint) GetUrl() string {
+	if x != nil {
+		return x.Url
+	}
+	return ""
+}
+
+func (x *EgressPolicySpec_InjectOpts_FromEndpoint) GetHeaders() []*stdlib.HttpHeader {
+	if x != nil {
+		return x.Headers
+	}
+	return nil
+}
+
 var File_proto_namespace_cloud_network_v1beta_egress_proto protoreflect.FileDescriptor
 
 const file_proto_namespace_cloud_network_v1beta_egress_proto_rawDesc = "" +
 	"\n" +
-	"1proto/namespace/cloud/network/v1beta/egress.proto\x12\x1enamespace.cloud.network.v1beta\"a\n" +
+	"1proto/namespace/cloud/network/v1beta/egress.proto\x12\x1enamespace.cloud.network.v1beta\x1a%proto/namespace/stdlib/callback.proto\"a\n" +
 	"\x19CreateEgressPolicyRequest\x12D\n" +
 	"\x06policy\x18\x01 \x01(\v2,.namespace.cloud.network.v1beta.EgressPolicyR\x06policy\"8\n" +
 	"\x1aCreateEgressPolicyResponse\x12\x1a\n" +
@@ -981,7 +1098,7 @@ const file_proto_namespace_cloud_network_v1beta_egress_proto_rawDesc = "" +
 	"\fEgressPolicy\x12\x10\n" +
 	"\x03tag\x18\x01 \x01(\tR\x03tag\x12 \n" +
 	"\vdescription\x18\x02 \x01(\tR\vdescription\x12D\n" +
-	"\x04spec\x18\x03 \x01(\v20.namespace.cloud.network.v1beta.EgressPolicySpecR\x04spec\"\xd4\b\n" +
+	"\x04spec\x18\x03 \x01(\v20.namespace.cloud.network.v1beta.EgressPolicySpecR\x04spec\"\x8a\f\n" +
 	"\x10EgressPolicySpec\x12I\n" +
 	"\x04mode\x18\x02 \x01(\x0e25.namespace.cloud.network.v1beta.EgressPolicySpec.ModeR\x04mode\x124\n" +
 	"\x16deep_packet_inspection\x18\x03 \x01(\bR\x14deepPacketInspection\x12K\n" +
@@ -1005,13 +1122,22 @@ const file_proto_namespace_cloud_network_v1beta_egress_proto_rawDesc = "" +
 	"\tAllowOpts\x1a*\n" +
 	"\tProxyOpts\x12\x1d\n" +
 	"\n" +
-	"via_domain\x18\x01 \x01(\tR\tviaDomain\x1ai\n" +
+	"via_domain\x18\x01 \x01(\tR\tviaDomain\x1a\x9e\x04\n" +
 	"\n" +
 	"InjectOpts\x12\x1f\n" +
 	"\vheader_name\x18\x01 \x01(\tR\n" +
 	"headerName\x12$\n" +
 	"\x0efrom_secret_id\x18\x02 \x01(\tR\ffromSecretId\x12\x14\n" +
-	"\x05value\x18\x03 \x01(\tR\x05value\"N\n" +
+	"\x05value\x18\x03 \x01(\tR\x05value\x12m\n" +
+	"\rfrom_endpoint\x18\x04 \x01(\v2H.namespace.cloud.network.v1beta.EgressPolicySpec.InjectOpts.FromEndpointR\ffromEndpoint\x12y\n" +
+	"\x11resolution_policy\x18\x05 \x01(\x0e2L.namespace.cloud.network.v1beta.EgressPolicySpec.InjectOpts.ResolutionPolicyR\x10resolutionPolicy\x1aX\n" +
+	"\fFromEndpoint\x12\x10\n" +
+	"\x03url\x18\x01 \x01(\tR\x03url\x126\n" +
+	"\aheaders\x18\x02 \x03(\v2\x1c.namespace.stdlib.HttpHeaderR\aheaders\"o\n" +
+	"\x10ResolutionPolicy\x12\x1d\n" +
+	"\x19RESOLUTION_POLICY_UNKNOWN\x10\x00\x12\x1a\n" +
+	"\x16RESOLUTION_POLICY_ONCE\x10\x01\x12 \n" +
+	"\x1cRESOLUTION_POLICY_WHEN_STALE\x10\x02\"N\n" +
 	"\x04Mode\x12\x10\n" +
 	"\fMODE_UNKNOWN\x10\x00\x12\f\n" +
 	"\bDISABLED\x10\x01\x12\r\n" +
@@ -1037,55 +1163,61 @@ func file_proto_namespace_cloud_network_v1beta_egress_proto_rawDescGZIP() []byte
 	return file_proto_namespace_cloud_network_v1beta_egress_proto_rawDescData
 }
 
-var file_proto_namespace_cloud_network_v1beta_egress_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
-var file_proto_namespace_cloud_network_v1beta_egress_proto_msgTypes = make([]protoimpl.MessageInfo, 16)
+var file_proto_namespace_cloud_network_v1beta_egress_proto_enumTypes = make([]protoimpl.EnumInfo, 3)
+var file_proto_namespace_cloud_network_v1beta_egress_proto_msgTypes = make([]protoimpl.MessageInfo, 17)
 var file_proto_namespace_cloud_network_v1beta_egress_proto_goTypes = []any{
 	(EgressPolicySpec_Mode)(0),                           // 0: namespace.cloud.network.v1beta.EgressPolicySpec.Mode
 	(EgressPolicySpec_Rule_RuleOp)(0),                    // 1: namespace.cloud.network.v1beta.EgressPolicySpec.Rule.RuleOp
-	(*CreateEgressPolicyRequest)(nil),                    // 2: namespace.cloud.network.v1beta.CreateEgressPolicyRequest
-	(*CreateEgressPolicyResponse)(nil),                   // 3: namespace.cloud.network.v1beta.CreateEgressPolicyResponse
-	(*UpdateEgressPolicyRequest)(nil),                    // 4: namespace.cloud.network.v1beta.UpdateEgressPolicyRequest
-	(*UpdateEgressPolicyResponse)(nil),                   // 5: namespace.cloud.network.v1beta.UpdateEgressPolicyResponse
-	(*GetEgressPolicyRequest)(nil),                       // 6: namespace.cloud.network.v1beta.GetEgressPolicyRequest
-	(*GetEgressPolicyResponse)(nil),                      // 7: namespace.cloud.network.v1beta.GetEgressPolicyResponse
-	(*ListEgressPoliciesRequest)(nil),                    // 8: namespace.cloud.network.v1beta.ListEgressPoliciesRequest
-	(*ListEgressPoliciesResponse)(nil),                   // 9: namespace.cloud.network.v1beta.ListEgressPoliciesResponse
-	(*EgressPolicy)(nil),                                 // 10: namespace.cloud.network.v1beta.EgressPolicy
-	(*EgressPolicySpec)(nil),                             // 11: namespace.cloud.network.v1beta.EgressPolicySpec
-	(*ListEgressPoliciesResponse_EgressPolicyEntry)(nil), // 12: namespace.cloud.network.v1beta.ListEgressPoliciesResponse.EgressPolicyEntry
-	(*EgressPolicySpec_Rule)(nil),                        // 13: namespace.cloud.network.v1beta.EgressPolicySpec.Rule
-	(*EgressPolicySpec_Matcher)(nil),                     // 14: namespace.cloud.network.v1beta.EgressPolicySpec.Matcher
-	(*EgressPolicySpec_AllowOpts)(nil),                   // 15: namespace.cloud.network.v1beta.EgressPolicySpec.AllowOpts
-	(*EgressPolicySpec_ProxyOpts)(nil),                   // 16: namespace.cloud.network.v1beta.EgressPolicySpec.ProxyOpts
-	(*EgressPolicySpec_InjectOpts)(nil),                  // 17: namespace.cloud.network.v1beta.EgressPolicySpec.InjectOpts
+	(EgressPolicySpec_InjectOpts_ResolutionPolicy)(0),    // 2: namespace.cloud.network.v1beta.EgressPolicySpec.InjectOpts.ResolutionPolicy
+	(*CreateEgressPolicyRequest)(nil),                    // 3: namespace.cloud.network.v1beta.CreateEgressPolicyRequest
+	(*CreateEgressPolicyResponse)(nil),                   // 4: namespace.cloud.network.v1beta.CreateEgressPolicyResponse
+	(*UpdateEgressPolicyRequest)(nil),                    // 5: namespace.cloud.network.v1beta.UpdateEgressPolicyRequest
+	(*UpdateEgressPolicyResponse)(nil),                   // 6: namespace.cloud.network.v1beta.UpdateEgressPolicyResponse
+	(*GetEgressPolicyRequest)(nil),                       // 7: namespace.cloud.network.v1beta.GetEgressPolicyRequest
+	(*GetEgressPolicyResponse)(nil),                      // 8: namespace.cloud.network.v1beta.GetEgressPolicyResponse
+	(*ListEgressPoliciesRequest)(nil),                    // 9: namespace.cloud.network.v1beta.ListEgressPoliciesRequest
+	(*ListEgressPoliciesResponse)(nil),                   // 10: namespace.cloud.network.v1beta.ListEgressPoliciesResponse
+	(*EgressPolicy)(nil),                                 // 11: namespace.cloud.network.v1beta.EgressPolicy
+	(*EgressPolicySpec)(nil),                             // 12: namespace.cloud.network.v1beta.EgressPolicySpec
+	(*ListEgressPoliciesResponse_EgressPolicyEntry)(nil), // 13: namespace.cloud.network.v1beta.ListEgressPoliciesResponse.EgressPolicyEntry
+	(*EgressPolicySpec_Rule)(nil),                        // 14: namespace.cloud.network.v1beta.EgressPolicySpec.Rule
+	(*EgressPolicySpec_Matcher)(nil),                     // 15: namespace.cloud.network.v1beta.EgressPolicySpec.Matcher
+	(*EgressPolicySpec_AllowOpts)(nil),                   // 16: namespace.cloud.network.v1beta.EgressPolicySpec.AllowOpts
+	(*EgressPolicySpec_ProxyOpts)(nil),                   // 17: namespace.cloud.network.v1beta.EgressPolicySpec.ProxyOpts
+	(*EgressPolicySpec_InjectOpts)(nil),                  // 18: namespace.cloud.network.v1beta.EgressPolicySpec.InjectOpts
+	(*EgressPolicySpec_InjectOpts_FromEndpoint)(nil),     // 19: namespace.cloud.network.v1beta.EgressPolicySpec.InjectOpts.FromEndpoint
+	(*stdlib.HttpHeader)(nil),                            // 20: namespace.stdlib.HttpHeader
 }
 var file_proto_namespace_cloud_network_v1beta_egress_proto_depIdxs = []int32{
-	10, // 0: namespace.cloud.network.v1beta.CreateEgressPolicyRequest.policy:type_name -> namespace.cloud.network.v1beta.EgressPolicy
-	10, // 1: namespace.cloud.network.v1beta.UpdateEgressPolicyRequest.policy:type_name -> namespace.cloud.network.v1beta.EgressPolicy
-	10, // 2: namespace.cloud.network.v1beta.GetEgressPolicyResponse.policy:type_name -> namespace.cloud.network.v1beta.EgressPolicy
-	12, // 3: namespace.cloud.network.v1beta.ListEgressPoliciesResponse.policies:type_name -> namespace.cloud.network.v1beta.ListEgressPoliciesResponse.EgressPolicyEntry
-	11, // 4: namespace.cloud.network.v1beta.EgressPolicy.spec:type_name -> namespace.cloud.network.v1beta.EgressPolicySpec
+	11, // 0: namespace.cloud.network.v1beta.CreateEgressPolicyRequest.policy:type_name -> namespace.cloud.network.v1beta.EgressPolicy
+	11, // 1: namespace.cloud.network.v1beta.UpdateEgressPolicyRequest.policy:type_name -> namespace.cloud.network.v1beta.EgressPolicy
+	11, // 2: namespace.cloud.network.v1beta.GetEgressPolicyResponse.policy:type_name -> namespace.cloud.network.v1beta.EgressPolicy
+	13, // 3: namespace.cloud.network.v1beta.ListEgressPoliciesResponse.policies:type_name -> namespace.cloud.network.v1beta.ListEgressPoliciesResponse.EgressPolicyEntry
+	12, // 4: namespace.cloud.network.v1beta.EgressPolicy.spec:type_name -> namespace.cloud.network.v1beta.EgressPolicySpec
 	0,  // 5: namespace.cloud.network.v1beta.EgressPolicySpec.mode:type_name -> namespace.cloud.network.v1beta.EgressPolicySpec.Mode
-	13, // 6: namespace.cloud.network.v1beta.EgressPolicySpec.rules:type_name -> namespace.cloud.network.v1beta.EgressPolicySpec.Rule
-	10, // 7: namespace.cloud.network.v1beta.ListEgressPoliciesResponse.EgressPolicyEntry.policy:type_name -> namespace.cloud.network.v1beta.EgressPolicy
+	14, // 6: namespace.cloud.network.v1beta.EgressPolicySpec.rules:type_name -> namespace.cloud.network.v1beta.EgressPolicySpec.Rule
+	11, // 7: namespace.cloud.network.v1beta.ListEgressPoliciesResponse.EgressPolicyEntry.policy:type_name -> namespace.cloud.network.v1beta.EgressPolicy
 	1,  // 8: namespace.cloud.network.v1beta.EgressPolicySpec.Rule.op:type_name -> namespace.cloud.network.v1beta.EgressPolicySpec.Rule.RuleOp
-	14, // 9: namespace.cloud.network.v1beta.EgressPolicySpec.Rule.matcher:type_name -> namespace.cloud.network.v1beta.EgressPolicySpec.Matcher
-	15, // 10: namespace.cloud.network.v1beta.EgressPolicySpec.Rule.allow:type_name -> namespace.cloud.network.v1beta.EgressPolicySpec.AllowOpts
-	16, // 11: namespace.cloud.network.v1beta.EgressPolicySpec.Rule.proxy:type_name -> namespace.cloud.network.v1beta.EgressPolicySpec.ProxyOpts
-	17, // 12: namespace.cloud.network.v1beta.EgressPolicySpec.Rule.inject:type_name -> namespace.cloud.network.v1beta.EgressPolicySpec.InjectOpts
-	2,  // 13: namespace.cloud.network.v1beta.EgressPolicyService.CreateEgressPolicy:input_type -> namespace.cloud.network.v1beta.CreateEgressPolicyRequest
-	4,  // 14: namespace.cloud.network.v1beta.EgressPolicyService.UpdateEgressPolicy:input_type -> namespace.cloud.network.v1beta.UpdateEgressPolicyRequest
-	6,  // 15: namespace.cloud.network.v1beta.EgressPolicyService.GetEgressPolicy:input_type -> namespace.cloud.network.v1beta.GetEgressPolicyRequest
-	8,  // 16: namespace.cloud.network.v1beta.EgressPolicyService.ListEgressPolicies:input_type -> namespace.cloud.network.v1beta.ListEgressPoliciesRequest
-	3,  // 17: namespace.cloud.network.v1beta.EgressPolicyService.CreateEgressPolicy:output_type -> namespace.cloud.network.v1beta.CreateEgressPolicyResponse
-	5,  // 18: namespace.cloud.network.v1beta.EgressPolicyService.UpdateEgressPolicy:output_type -> namespace.cloud.network.v1beta.UpdateEgressPolicyResponse
-	7,  // 19: namespace.cloud.network.v1beta.EgressPolicyService.GetEgressPolicy:output_type -> namespace.cloud.network.v1beta.GetEgressPolicyResponse
-	9,  // 20: namespace.cloud.network.v1beta.EgressPolicyService.ListEgressPolicies:output_type -> namespace.cloud.network.v1beta.ListEgressPoliciesResponse
-	17, // [17:21] is the sub-list for method output_type
-	13, // [13:17] is the sub-list for method input_type
-	13, // [13:13] is the sub-list for extension type_name
-	13, // [13:13] is the sub-list for extension extendee
-	0,  // [0:13] is the sub-list for field type_name
+	15, // 9: namespace.cloud.network.v1beta.EgressPolicySpec.Rule.matcher:type_name -> namespace.cloud.network.v1beta.EgressPolicySpec.Matcher
+	16, // 10: namespace.cloud.network.v1beta.EgressPolicySpec.Rule.allow:type_name -> namespace.cloud.network.v1beta.EgressPolicySpec.AllowOpts
+	17, // 11: namespace.cloud.network.v1beta.EgressPolicySpec.Rule.proxy:type_name -> namespace.cloud.network.v1beta.EgressPolicySpec.ProxyOpts
+	18, // 12: namespace.cloud.network.v1beta.EgressPolicySpec.Rule.inject:type_name -> namespace.cloud.network.v1beta.EgressPolicySpec.InjectOpts
+	19, // 13: namespace.cloud.network.v1beta.EgressPolicySpec.InjectOpts.from_endpoint:type_name -> namespace.cloud.network.v1beta.EgressPolicySpec.InjectOpts.FromEndpoint
+	2,  // 14: namespace.cloud.network.v1beta.EgressPolicySpec.InjectOpts.resolution_policy:type_name -> namespace.cloud.network.v1beta.EgressPolicySpec.InjectOpts.ResolutionPolicy
+	20, // 15: namespace.cloud.network.v1beta.EgressPolicySpec.InjectOpts.FromEndpoint.headers:type_name -> namespace.stdlib.HttpHeader
+	3,  // 16: namespace.cloud.network.v1beta.EgressPolicyService.CreateEgressPolicy:input_type -> namespace.cloud.network.v1beta.CreateEgressPolicyRequest
+	5,  // 17: namespace.cloud.network.v1beta.EgressPolicyService.UpdateEgressPolicy:input_type -> namespace.cloud.network.v1beta.UpdateEgressPolicyRequest
+	7,  // 18: namespace.cloud.network.v1beta.EgressPolicyService.GetEgressPolicy:input_type -> namespace.cloud.network.v1beta.GetEgressPolicyRequest
+	9,  // 19: namespace.cloud.network.v1beta.EgressPolicyService.ListEgressPolicies:input_type -> namespace.cloud.network.v1beta.ListEgressPoliciesRequest
+	4,  // 20: namespace.cloud.network.v1beta.EgressPolicyService.CreateEgressPolicy:output_type -> namespace.cloud.network.v1beta.CreateEgressPolicyResponse
+	6,  // 21: namespace.cloud.network.v1beta.EgressPolicyService.UpdateEgressPolicy:output_type -> namespace.cloud.network.v1beta.UpdateEgressPolicyResponse
+	8,  // 22: namespace.cloud.network.v1beta.EgressPolicyService.GetEgressPolicy:output_type -> namespace.cloud.network.v1beta.GetEgressPolicyResponse
+	10, // 23: namespace.cloud.network.v1beta.EgressPolicyService.ListEgressPolicies:output_type -> namespace.cloud.network.v1beta.ListEgressPoliciesResponse
+	20, // [20:24] is the sub-list for method output_type
+	16, // [16:20] is the sub-list for method input_type
+	16, // [16:16] is the sub-list for extension type_name
+	16, // [16:16] is the sub-list for extension extendee
+	0,  // [0:16] is the sub-list for field type_name
 }
 
 func init() { file_proto_namespace_cloud_network_v1beta_egress_proto_init() }
@@ -1098,8 +1230,8 @@ func file_proto_namespace_cloud_network_v1beta_egress_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_proto_namespace_cloud_network_v1beta_egress_proto_rawDesc), len(file_proto_namespace_cloud_network_v1beta_egress_proto_rawDesc)),
-			NumEnums:      2,
-			NumMessages:   16,
+			NumEnums:      3,
+			NumMessages:   17,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

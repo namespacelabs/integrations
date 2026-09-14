@@ -80,6 +80,8 @@ type UsageServiceClient interface {
 	// Execution is constrained to 30 seconds, but supports downloading any
 	// number of records within that window.
 	GenerateReport(ctx context.Context, in *GenerateReportRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[GenerateReportResponse], error)
+	// Returns a point-in-time view of active compute resources and limits, grouped by
+	// concurrency pool. Pools can overlap, so clients should not sum their usage.
 	GetConcurrency(ctx context.Context, in *GetConcurrencyRequest, opts ...grpc.CallOption) (*GetConcurrencyResponse, error)
 }
 
@@ -213,6 +215,8 @@ type UsageServiceServer interface {
 	// Execution is constrained to 30 seconds, but supports downloading any
 	// number of records within that window.
 	GenerateReport(*GenerateReportRequest, grpc.ServerStreamingServer[GenerateReportResponse]) error
+	// Returns a point-in-time view of active compute resources and limits, grouped by
+	// concurrency pool. Pools can overlap, so clients should not sum their usage.
 	GetConcurrency(context.Context, *GetConcurrencyRequest) (*GetConcurrencyResponse, error)
 	mustEmbedUnimplementedUsageServiceServer()
 }

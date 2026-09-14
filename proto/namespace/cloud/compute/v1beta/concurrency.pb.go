@@ -58,7 +58,8 @@ func (*GetConcurrencyRequest) Descriptor() ([]byte, []int) {
 }
 
 type GetConcurrencyResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Current usage and limits for each concurrency pool.
 	Concurrency   []*PlatformConcurrency `protobuf:"bytes,1,rep,name=concurrency,proto3" json:"concurrency,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -102,9 +103,10 @@ func (x *GetConcurrencyResponse) GetConcurrency() []*PlatformConcurrency {
 }
 
 type PlatformConcurrency struct {
-	state             protoimpl.MessageState                 `protogen:"open.v1"`
-	Name              string                                 `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`           // e.g "Linux"
-	Platforms         []string                               `protobuf:"bytes,2,rep,name=platforms,proto3" json:"platforms,omitempty"` // e.g "linux/amd64"
+	state protoimpl.MessageState `protogen:"open.v1"`
+	Name  string                 `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"` // e.g "Linux"
+	// Platforms covered by this pool, e.g. "linux/amd64". Empty means all enabled platforms.
+	Platforms         []string                               `protobuf:"bytes,2,rep,name=platforms,proto3" json:"platforms,omitempty"`
 	Limits            *UsagePolicy_ConcurrencyLimits         `protobuf:"bytes,3,opt,name=limits,proto3" json:"limits,omitempty"`
 	ActiveConcurrency *PlatformConcurrency_ActiveConcurrency `protobuf:"bytes,4,opt,name=active_concurrency,json=activeConcurrency,proto3" json:"active_concurrency,omitempty"`
 	unknownFields     protoimpl.UnknownFields

@@ -2563,6 +2563,34 @@ func (x *ListInstancesResponse) GetPaginationCursor() []byte {
 	return nil
 }
 
+// Describes a platform-managed, Internet-facing endpoint that routes traffic
+// to a service running inside an instance. Use CreateInstanceRequest.ingresses
+// for ports exposed directly by the instance, including native applications
+// on platforms such as macOS. Use ContainerRequest.export_ports for ports
+// owned by containers.
+//
+// Traffic and TLS boundaries:
+//
+// ```
+//
+//	HTTP  [client] --HTTPS------> [Namespace ingress] --HTTP--> [backend]
+//	TCP   [client] --TLS/mTLS---> [Namespace ingress] --TCP---> [backend]
+//	TLS   [client] --TLS (routed by SNI, not terminated)------> [backend]
+//
+// ```
+//
+// Each generated server name routes only to its declared instance and port;
+// no other instance ports are exposed by that ingress. In HTTP and TCP modes,
+// TLS terminates at Namespace and the ingress-to-backend protocol is cleartext
+// HTTP or TCP. TLS passthrough preserves end-to-end encryption: Namespace uses
+// the SNI hostname for routing but does not terminate TLS.
+//
+// HTTP requests require a valid Namespace bearer token with access to the
+// instance by default. HttpMatchRule can explicitly make matching requests
+// unauthenticated. TCP defaults to requiring a Namespace-issued mTLS client
+// certificate with access to the instance; NONE allows any TLS client to
+// connect. In TLS passthrough mode the backend is responsible for server and
+// client authentication.
 type Ingress struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// The name used to generate the Internet-facing server name.

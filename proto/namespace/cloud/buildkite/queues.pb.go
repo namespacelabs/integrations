@@ -245,7 +245,8 @@ type UpdateQueueRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// Required field.
 	QueueId string `protobuf:"bytes,1,opt,name=queue_id,json=queueId,proto3" json:"queue_id,omitempty"`
-	// If empty, this will reset the queue settings.
+	// Fully replaces the queue settings. Call GetQueue first and include any existing settings
+	// that should be retained. If empty, this will reset the queue settings.
 	Settings      *QueueSettings `protobuf:"bytes,2,opt,name=settings,proto3" json:"settings,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -298,9 +299,12 @@ func (x *UpdateQueueRequest) GetSettings() *QueueSettings {
 type QueueSettings struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// Workload permissions for all instances running jobs for this queue.
-	Permissions   *Permissions `protobuf:"bytes,1,opt,name=permissions,proto3" json:"permissions,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	Permissions *Permissions `protobuf:"bytes,1,opt,name=permissions,proto3" json:"permissions,omitempty"`
+	// Tag of the workspace egress policy to apply to jobs running for this queue.
+	// Jobs fail if they also set nsc-egress-policy in their agent tags.
+	EgressPolicyTag string `protobuf:"bytes,2,opt,name=egress_policy_tag,json=egressPolicyTag,proto3" json:"egress_policy_tag,omitempty"`
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
 }
 
 func (x *QueueSettings) Reset() {
@@ -338,6 +342,13 @@ func (x *QueueSettings) GetPermissions() *Permissions {
 		return x.Permissions
 	}
 	return nil
+}
+
+func (x *QueueSettings) GetEgressPolicyTag() string {
+	if x != nil {
+		return x.EgressPolicyTag
+	}
+	return ""
 }
 
 type Permissions struct {
@@ -542,9 +553,10 @@ const file_proto_namespace_cloud_buildkite_queues_proto_rawDesc = "" +
 	"\x05queue\x18\x01 \x01(\v2).namespace.cloud.buildkite.BuildkiteQueueR\x05queue\"u\n" +
 	"\x12UpdateQueueRequest\x12\x19\n" +
 	"\bqueue_id\x18\x01 \x01(\tR\aqueueId\x12D\n" +
-	"\bsettings\x18\x02 \x01(\v2(.namespace.cloud.buildkite.QueueSettingsR\bsettings\"Y\n" +
+	"\bsettings\x18\x02 \x01(\v2(.namespace.cloud.buildkite.QueueSettingsR\bsettings\"\x85\x01\n" +
 	"\rQueueSettings\x12H\n" +
-	"\vpermissions\x18\x01 \x01(\v2&.namespace.cloud.buildkite.PermissionsR\vpermissions\"\xbf\x01\n" +
+	"\vpermissions\x18\x01 \x01(\v2&.namespace.cloud.buildkite.PermissionsR\vpermissions\x12*\n" +
+	"\x11egress_policy_tag\x18\x02 \x01(\tR\x0fegressPolicyTag\"\xbf\x01\n" +
 	"\vPermissions\x12U\n" +
 	"\x10permissions_type\x18\x01 \x01(\x0e2*.namespace.cloud.buildkite.PermissionsTypeR\x0fpermissionsType\x12Y\n" +
 	"\x14workload_permissions\x18\x02 \x03(\v2&.namespace.cloud.iam.v1beta.PermissionR\x13workloadPermissions\"\xec\x01\n" +

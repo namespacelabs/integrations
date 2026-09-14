@@ -132,15 +132,21 @@ type CreateArtifactRequest struct {
 	ExpiresAt *timestamppb.Timestamp `protobuf:"bytes,3,opt,name=expires_at,json=expiresAt,proto3" json:"expires_at,omitempty"`
 	// A set of labels that are attached to the new artifact.
 	Labels []*stdlib.Label `protobuf:"bytes,5,rep,name=labels,proto3" json:"labels,omitempty"`
-	// Deprecated: please enable versioning using `create_new_version_if_exists`.
+	// Deprecated: please enable versioning using `if_exists.create_new_version`.
 	// Whether overwriting an existing artifact with the same path within the same namespace is allowed or not.
 	//
 	// Deprecated: Marked as deprecated in proto/namespace/cloud/storage/v1beta/artifact.proto.
 	Overwrite bool `protobuf:"varint,6,opt,name=overwrite,proto3" json:"overwrite,omitempty"`
+	// Deprecated: use `if_exists.create_new_version` instead.
 	// If a version of the artifact already exists, create a new version rather than failing creation.
+	//
+	// Deprecated: Marked as deprecated in proto/namespace/cloud/storage/v1beta/artifact.proto.
 	CreateNewVersionIfExists bool `protobuf:"varint,7,opt,name=create_new_version_if_exists,json=createNewVersionIfExists,proto3" json:"create_new_version_if_exists,omitempty"`
-	unknownFields            protoimpl.UnknownFields
-	sizeCache                protoimpl.SizeCache
+	// Controls creation when the same tenant, namespace, and path already exist.
+	// Cannot be combined with overwrite or create_new_version_if_exists set to true.
+	IfExists      *CreateArtifactRequest_IfExists `protobuf:"bytes,8,opt,name=if_exists,json=ifExists,proto3" json:"if_exists,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *CreateArtifactRequest) Reset() {
@@ -209,11 +215,19 @@ func (x *CreateArtifactRequest) GetOverwrite() bool {
 	return false
 }
 
+// Deprecated: Marked as deprecated in proto/namespace/cloud/storage/v1beta/artifact.proto.
 func (x *CreateArtifactRequest) GetCreateNewVersionIfExists() bool {
 	if x != nil {
 		return x.CreateNewVersionIfExists
 	}
 	return false
+}
+
+func (x *CreateArtifactRequest) GetIfExists() *CreateArtifactRequest_IfExists {
+	if x != nil {
+		return x.IfExists
+	}
+	return nil
 }
 
 type CreateArtifactResponse struct {
@@ -1131,19 +1145,85 @@ func (x *Artifact) GetStatus() Artifact_Status {
 	return Artifact_STATE_UNKNOWN
 }
 
+type CreateArtifactRequest_IfExists struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Create a new version instead of returning AlreadyExists.
+	CreateNewVersion bool `protobuf:"varint,1,opt,name=create_new_version,json=createNewVersion,proto3" json:"create_new_version,omitempty"`
+	// After successful finalization, retain at most this many live versions,
+	// including the new version. The new version is retained first; remaining
+	// slots are filled by creation time, newest first, with artifact ID as a
+	// deterministic tie-breaker.
+	// Older versions are expired; their metadata remains and their data is
+	// garbage-collected asynchronously. Existing expiration dates still apply.
+	// Zero means no count limit. Negative values are invalid.
+	// A positive value requires create_new_version and artifact:expire access.
+	// Applies only to this upload, not to subsequent uploads that omit it.
+	KeepMaxVersions int32 `protobuf:"varint,2,opt,name=keep_max_versions,json=keepMaxVersions,proto3" json:"keep_max_versions,omitempty"`
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
+}
+
+func (x *CreateArtifactRequest_IfExists) Reset() {
+	*x = CreateArtifactRequest_IfExists{}
+	mi := &file_proto_namespace_cloud_storage_v1beta_artifact_proto_msgTypes[15]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CreateArtifactRequest_IfExists) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateArtifactRequest_IfExists) ProtoMessage() {}
+
+func (x *CreateArtifactRequest_IfExists) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_namespace_cloud_storage_v1beta_artifact_proto_msgTypes[15]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateArtifactRequest_IfExists.ProtoReflect.Descriptor instead.
+func (*CreateArtifactRequest_IfExists) Descriptor() ([]byte, []int) {
+	return file_proto_namespace_cloud_storage_v1beta_artifact_proto_rawDescGZIP(), []int{0, 0}
+}
+
+func (x *CreateArtifactRequest_IfExists) GetCreateNewVersion() bool {
+	if x != nil {
+		return x.CreateNewVersion
+	}
+	return false
+}
+
+func (x *CreateArtifactRequest_IfExists) GetKeepMaxVersions() int32 {
+	if x != nil {
+		return x.KeepMaxVersions
+	}
+	return 0
+}
+
 var File_proto_namespace_cloud_storage_v1beta_artifact_proto protoreflect.FileDescriptor
 
 const file_proto_namespace_cloud_storage_v1beta_artifact_proto_rawDesc = "" +
 	"\n" +
-	"3proto/namespace/cloud/storage/v1beta/artifact.proto\x12\x1enamespace.cloud.storage.v1beta\x1a\x1egoogle/protobuf/duration.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a#proto/namespace/stdlib/labels.proto\x1a%proto/namespace/stdlib/matchers.proto\"\x97\x02\n" +
+	"3proto/namespace/cloud/storage/v1beta/artifact.proto\x12\x1enamespace.cloud.storage.v1beta\x1a\x1egoogle/protobuf/duration.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a#proto/namespace/stdlib/labels.proto\x1a%proto/namespace/stdlib/matchers.proto\"\xde\x03\n" +
 	"\x15CreateArtifactRequest\x12\x12\n" +
 	"\x04path\x18\x01 \x01(\tR\x04path\x12\x1c\n" +
 	"\tnamespace\x18\x02 \x01(\tR\tnamespace\x129\n" +
 	"\n" +
 	"expires_at\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampR\texpiresAt\x12/\n" +
 	"\x06labels\x18\x05 \x03(\v2\x17.namespace.stdlib.LabelR\x06labels\x12 \n" +
-	"\toverwrite\x18\x06 \x01(\bB\x02\x18\x01R\toverwrite\x12>\n" +
-	"\x1ccreate_new_version_if_exists\x18\a \x01(\bR\x18createNewVersionIfExists\"\x9c\x01\n" +
+	"\toverwrite\x18\x06 \x01(\bB\x02\x18\x01R\toverwrite\x12B\n" +
+	"\x1ccreate_new_version_if_exists\x18\a \x01(\bB\x02\x18\x01R\x18createNewVersionIfExists\x12[\n" +
+	"\tif_exists\x18\b \x01(\v2>.namespace.cloud.storage.v1beta.CreateArtifactRequest.IfExistsR\bifExists\x1ad\n" +
+	"\bIfExists\x12,\n" +
+	"\x12create_new_version\x18\x01 \x01(\bR\x10createNewVersion\x12*\n" +
+	"\x11keep_max_versions\x18\x02 \x01(\x05R\x0fkeepMaxVersions\"\x9c\x01\n" +
 	"\x16CreateArtifactResponse\x12*\n" +
 	"\x11signed_upload_url\x18\x01 \x01(\tR\x0fsignedUploadUrl\x12\x1b\n" +
 	"\tupload_id\x18\x02 \x01(\tR\buploadId\x129\n" +
@@ -1245,73 +1325,75 @@ func file_proto_namespace_cloud_storage_v1beta_artifact_proto_rawDescGZIP() []by
 }
 
 var file_proto_namespace_cloud_storage_v1beta_artifact_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
-var file_proto_namespace_cloud_storage_v1beta_artifact_proto_msgTypes = make([]protoimpl.MessageInfo, 15)
+var file_proto_namespace_cloud_storage_v1beta_artifact_proto_msgTypes = make([]protoimpl.MessageInfo, 16)
 var file_proto_namespace_cloud_storage_v1beta_artifact_proto_goTypes = []any{
-	(ListArtifactsRequest_OrderBy)(0), // 0: namespace.cloud.storage.v1beta.ListArtifactsRequest.OrderBy
-	(Artifact_Status)(0),              // 1: namespace.cloud.storage.v1beta.Artifact.Status
-	(*CreateArtifactRequest)(nil),     // 2: namespace.cloud.storage.v1beta.CreateArtifactRequest
-	(*CreateArtifactResponse)(nil),    // 3: namespace.cloud.storage.v1beta.CreateArtifactResponse
-	(*FinalizeArtifactRequest)(nil),   // 4: namespace.cloud.storage.v1beta.FinalizeArtifactRequest
-	(*FinalizeArtifactResponse)(nil),  // 5: namespace.cloud.storage.v1beta.FinalizeArtifactResponse
-	(*ResolveArtifactRequest)(nil),    // 6: namespace.cloud.storage.v1beta.ResolveArtifactRequest
-	(*ResolveArtifactResponse)(nil),   // 7: namespace.cloud.storage.v1beta.ResolveArtifactResponse
-	(*ExpireArtifactRequest)(nil),     // 8: namespace.cloud.storage.v1beta.ExpireArtifactRequest
-	(*ExtendArtifactRequest)(nil),     // 9: namespace.cloud.storage.v1beta.ExtendArtifactRequest
-	(*ExtendArtifactResponse)(nil),    // 10: namespace.cloud.storage.v1beta.ExtendArtifactResponse
-	(*ListArtifactsRequest)(nil),      // 11: namespace.cloud.storage.v1beta.ListArtifactsRequest
-	(*ListNamespacesRequest)(nil),     // 12: namespace.cloud.storage.v1beta.ListNamespacesRequest
-	(*ListNamespacesResponse)(nil),    // 13: namespace.cloud.storage.v1beta.ListNamespacesResponse
-	(*Namespace)(nil),                 // 14: namespace.cloud.storage.v1beta.Namespace
-	(*ListArtifactsResponse)(nil),     // 15: namespace.cloud.storage.v1beta.ListArtifactsResponse
-	(*Artifact)(nil),                  // 16: namespace.cloud.storage.v1beta.Artifact
-	(*timestamppb.Timestamp)(nil),     // 17: google.protobuf.Timestamp
-	(*stdlib.Label)(nil),              // 18: namespace.stdlib.Label
-	(*durationpb.Duration)(nil),       // 19: google.protobuf.Duration
-	(*stdlib.LabelFilterEntry)(nil),   // 20: namespace.stdlib.LabelFilterEntry
-	(*stdlib.Int64Range)(nil),         // 21: namespace.stdlib.Int64Range
-	(*stdlib.StringMatcher)(nil),      // 22: namespace.stdlib.StringMatcher
-	(*emptypb.Empty)(nil),             // 23: google.protobuf.Empty
+	(ListArtifactsRequest_OrderBy)(0),      // 0: namespace.cloud.storage.v1beta.ListArtifactsRequest.OrderBy
+	(Artifact_Status)(0),                   // 1: namespace.cloud.storage.v1beta.Artifact.Status
+	(*CreateArtifactRequest)(nil),          // 2: namespace.cloud.storage.v1beta.CreateArtifactRequest
+	(*CreateArtifactResponse)(nil),         // 3: namespace.cloud.storage.v1beta.CreateArtifactResponse
+	(*FinalizeArtifactRequest)(nil),        // 4: namespace.cloud.storage.v1beta.FinalizeArtifactRequest
+	(*FinalizeArtifactResponse)(nil),       // 5: namespace.cloud.storage.v1beta.FinalizeArtifactResponse
+	(*ResolveArtifactRequest)(nil),         // 6: namespace.cloud.storage.v1beta.ResolveArtifactRequest
+	(*ResolveArtifactResponse)(nil),        // 7: namespace.cloud.storage.v1beta.ResolveArtifactResponse
+	(*ExpireArtifactRequest)(nil),          // 8: namespace.cloud.storage.v1beta.ExpireArtifactRequest
+	(*ExtendArtifactRequest)(nil),          // 9: namespace.cloud.storage.v1beta.ExtendArtifactRequest
+	(*ExtendArtifactResponse)(nil),         // 10: namespace.cloud.storage.v1beta.ExtendArtifactResponse
+	(*ListArtifactsRequest)(nil),           // 11: namespace.cloud.storage.v1beta.ListArtifactsRequest
+	(*ListNamespacesRequest)(nil),          // 12: namespace.cloud.storage.v1beta.ListNamespacesRequest
+	(*ListNamespacesResponse)(nil),         // 13: namespace.cloud.storage.v1beta.ListNamespacesResponse
+	(*Namespace)(nil),                      // 14: namespace.cloud.storage.v1beta.Namespace
+	(*ListArtifactsResponse)(nil),          // 15: namespace.cloud.storage.v1beta.ListArtifactsResponse
+	(*Artifact)(nil),                       // 16: namespace.cloud.storage.v1beta.Artifact
+	(*CreateArtifactRequest_IfExists)(nil), // 17: namespace.cloud.storage.v1beta.CreateArtifactRequest.IfExists
+	(*timestamppb.Timestamp)(nil),          // 18: google.protobuf.Timestamp
+	(*stdlib.Label)(nil),                   // 19: namespace.stdlib.Label
+	(*durationpb.Duration)(nil),            // 20: google.protobuf.Duration
+	(*stdlib.LabelFilterEntry)(nil),        // 21: namespace.stdlib.LabelFilterEntry
+	(*stdlib.Int64Range)(nil),              // 22: namespace.stdlib.Int64Range
+	(*stdlib.StringMatcher)(nil),           // 23: namespace.stdlib.StringMatcher
+	(*emptypb.Empty)(nil),                  // 24: google.protobuf.Empty
 }
 var file_proto_namespace_cloud_storage_v1beta_artifact_proto_depIdxs = []int32{
-	17, // 0: namespace.cloud.storage.v1beta.CreateArtifactRequest.expires_at:type_name -> google.protobuf.Timestamp
-	18, // 1: namespace.cloud.storage.v1beta.CreateArtifactRequest.labels:type_name -> namespace.stdlib.Label
-	17, // 2: namespace.cloud.storage.v1beta.CreateArtifactResponse.expires_at:type_name -> google.protobuf.Timestamp
-	18, // 3: namespace.cloud.storage.v1beta.FinalizeArtifactRequest.add_labels:type_name -> namespace.stdlib.Label
-	16, // 4: namespace.cloud.storage.v1beta.FinalizeArtifactResponse.description:type_name -> namespace.cloud.storage.v1beta.Artifact
-	16, // 5: namespace.cloud.storage.v1beta.ResolveArtifactResponse.description:type_name -> namespace.cloud.storage.v1beta.Artifact
-	17, // 6: namespace.cloud.storage.v1beta.ResolveArtifactResponse.expires_at:type_name -> google.protobuf.Timestamp
-	19, // 7: namespace.cloud.storage.v1beta.ExtendArtifactRequest.extend_by:type_name -> google.protobuf.Duration
-	19, // 8: namespace.cloud.storage.v1beta.ExtendArtifactRequest.ensure_minimum:type_name -> google.protobuf.Duration
-	17, // 9: namespace.cloud.storage.v1beta.ExtendArtifactResponse.expires_at:type_name -> google.protobuf.Timestamp
-	20, // 10: namespace.cloud.storage.v1beta.ListArtifactsRequest.label_filter:type_name -> namespace.stdlib.LabelFilterEntry
-	0,  // 11: namespace.cloud.storage.v1beta.ListArtifactsRequest.order_by:type_name -> namespace.cloud.storage.v1beta.ListArtifactsRequest.OrderBy
-	21, // 12: namespace.cloud.storage.v1beta.ListArtifactsRequest.size_range:type_name -> namespace.stdlib.Int64Range
-	22, // 13: namespace.cloud.storage.v1beta.ListArtifactsRequest.match_path_regex:type_name -> namespace.stdlib.StringMatcher
-	14, // 14: namespace.cloud.storage.v1beta.ListNamespacesResponse.namespaces:type_name -> namespace.cloud.storage.v1beta.Namespace
-	16, // 15: namespace.cloud.storage.v1beta.ListArtifactsResponse.artifacts:type_name -> namespace.cloud.storage.v1beta.Artifact
-	17, // 16: namespace.cloud.storage.v1beta.Artifact.created_at:type_name -> google.protobuf.Timestamp
-	17, // 17: namespace.cloud.storage.v1beta.Artifact.expires_at:type_name -> google.protobuf.Timestamp
-	18, // 18: namespace.cloud.storage.v1beta.Artifact.labels:type_name -> namespace.stdlib.Label
-	1,  // 19: namespace.cloud.storage.v1beta.Artifact.status:type_name -> namespace.cloud.storage.v1beta.Artifact.Status
-	2,  // 20: namespace.cloud.storage.v1beta.ArtifactsService.CreateArtifact:input_type -> namespace.cloud.storage.v1beta.CreateArtifactRequest
-	4,  // 21: namespace.cloud.storage.v1beta.ArtifactsService.FinalizeArtifact:input_type -> namespace.cloud.storage.v1beta.FinalizeArtifactRequest
-	6,  // 22: namespace.cloud.storage.v1beta.ArtifactsService.ResolveArtifact:input_type -> namespace.cloud.storage.v1beta.ResolveArtifactRequest
-	11, // 23: namespace.cloud.storage.v1beta.ArtifactsService.ListArtifacts:input_type -> namespace.cloud.storage.v1beta.ListArtifactsRequest
-	12, // 24: namespace.cloud.storage.v1beta.ArtifactsService.ListNamespaces:input_type -> namespace.cloud.storage.v1beta.ListNamespacesRequest
-	8,  // 25: namespace.cloud.storage.v1beta.ArtifactsService.ExpireArtifact:input_type -> namespace.cloud.storage.v1beta.ExpireArtifactRequest
-	9,  // 26: namespace.cloud.storage.v1beta.ArtifactsService.ExtendArtifact:input_type -> namespace.cloud.storage.v1beta.ExtendArtifactRequest
-	3,  // 27: namespace.cloud.storage.v1beta.ArtifactsService.CreateArtifact:output_type -> namespace.cloud.storage.v1beta.CreateArtifactResponse
-	5,  // 28: namespace.cloud.storage.v1beta.ArtifactsService.FinalizeArtifact:output_type -> namespace.cloud.storage.v1beta.FinalizeArtifactResponse
-	7,  // 29: namespace.cloud.storage.v1beta.ArtifactsService.ResolveArtifact:output_type -> namespace.cloud.storage.v1beta.ResolveArtifactResponse
-	15, // 30: namespace.cloud.storage.v1beta.ArtifactsService.ListArtifacts:output_type -> namespace.cloud.storage.v1beta.ListArtifactsResponse
-	13, // 31: namespace.cloud.storage.v1beta.ArtifactsService.ListNamespaces:output_type -> namespace.cloud.storage.v1beta.ListNamespacesResponse
-	23, // 32: namespace.cloud.storage.v1beta.ArtifactsService.ExpireArtifact:output_type -> google.protobuf.Empty
-	10, // 33: namespace.cloud.storage.v1beta.ArtifactsService.ExtendArtifact:output_type -> namespace.cloud.storage.v1beta.ExtendArtifactResponse
-	27, // [27:34] is the sub-list for method output_type
-	20, // [20:27] is the sub-list for method input_type
-	20, // [20:20] is the sub-list for extension type_name
-	20, // [20:20] is the sub-list for extension extendee
-	0,  // [0:20] is the sub-list for field type_name
+	18, // 0: namespace.cloud.storage.v1beta.CreateArtifactRequest.expires_at:type_name -> google.protobuf.Timestamp
+	19, // 1: namespace.cloud.storage.v1beta.CreateArtifactRequest.labels:type_name -> namespace.stdlib.Label
+	17, // 2: namespace.cloud.storage.v1beta.CreateArtifactRequest.if_exists:type_name -> namespace.cloud.storage.v1beta.CreateArtifactRequest.IfExists
+	18, // 3: namespace.cloud.storage.v1beta.CreateArtifactResponse.expires_at:type_name -> google.protobuf.Timestamp
+	19, // 4: namespace.cloud.storage.v1beta.FinalizeArtifactRequest.add_labels:type_name -> namespace.stdlib.Label
+	16, // 5: namespace.cloud.storage.v1beta.FinalizeArtifactResponse.description:type_name -> namespace.cloud.storage.v1beta.Artifact
+	16, // 6: namespace.cloud.storage.v1beta.ResolveArtifactResponse.description:type_name -> namespace.cloud.storage.v1beta.Artifact
+	18, // 7: namespace.cloud.storage.v1beta.ResolveArtifactResponse.expires_at:type_name -> google.protobuf.Timestamp
+	20, // 8: namespace.cloud.storage.v1beta.ExtendArtifactRequest.extend_by:type_name -> google.protobuf.Duration
+	20, // 9: namespace.cloud.storage.v1beta.ExtendArtifactRequest.ensure_minimum:type_name -> google.protobuf.Duration
+	18, // 10: namespace.cloud.storage.v1beta.ExtendArtifactResponse.expires_at:type_name -> google.protobuf.Timestamp
+	21, // 11: namespace.cloud.storage.v1beta.ListArtifactsRequest.label_filter:type_name -> namespace.stdlib.LabelFilterEntry
+	0,  // 12: namespace.cloud.storage.v1beta.ListArtifactsRequest.order_by:type_name -> namespace.cloud.storage.v1beta.ListArtifactsRequest.OrderBy
+	22, // 13: namespace.cloud.storage.v1beta.ListArtifactsRequest.size_range:type_name -> namespace.stdlib.Int64Range
+	23, // 14: namespace.cloud.storage.v1beta.ListArtifactsRequest.match_path_regex:type_name -> namespace.stdlib.StringMatcher
+	14, // 15: namespace.cloud.storage.v1beta.ListNamespacesResponse.namespaces:type_name -> namespace.cloud.storage.v1beta.Namespace
+	16, // 16: namespace.cloud.storage.v1beta.ListArtifactsResponse.artifacts:type_name -> namespace.cloud.storage.v1beta.Artifact
+	18, // 17: namespace.cloud.storage.v1beta.Artifact.created_at:type_name -> google.protobuf.Timestamp
+	18, // 18: namespace.cloud.storage.v1beta.Artifact.expires_at:type_name -> google.protobuf.Timestamp
+	19, // 19: namespace.cloud.storage.v1beta.Artifact.labels:type_name -> namespace.stdlib.Label
+	1,  // 20: namespace.cloud.storage.v1beta.Artifact.status:type_name -> namespace.cloud.storage.v1beta.Artifact.Status
+	2,  // 21: namespace.cloud.storage.v1beta.ArtifactsService.CreateArtifact:input_type -> namespace.cloud.storage.v1beta.CreateArtifactRequest
+	4,  // 22: namespace.cloud.storage.v1beta.ArtifactsService.FinalizeArtifact:input_type -> namespace.cloud.storage.v1beta.FinalizeArtifactRequest
+	6,  // 23: namespace.cloud.storage.v1beta.ArtifactsService.ResolveArtifact:input_type -> namespace.cloud.storage.v1beta.ResolveArtifactRequest
+	11, // 24: namespace.cloud.storage.v1beta.ArtifactsService.ListArtifacts:input_type -> namespace.cloud.storage.v1beta.ListArtifactsRequest
+	12, // 25: namespace.cloud.storage.v1beta.ArtifactsService.ListNamespaces:input_type -> namespace.cloud.storage.v1beta.ListNamespacesRequest
+	8,  // 26: namespace.cloud.storage.v1beta.ArtifactsService.ExpireArtifact:input_type -> namespace.cloud.storage.v1beta.ExpireArtifactRequest
+	9,  // 27: namespace.cloud.storage.v1beta.ArtifactsService.ExtendArtifact:input_type -> namespace.cloud.storage.v1beta.ExtendArtifactRequest
+	3,  // 28: namespace.cloud.storage.v1beta.ArtifactsService.CreateArtifact:output_type -> namespace.cloud.storage.v1beta.CreateArtifactResponse
+	5,  // 29: namespace.cloud.storage.v1beta.ArtifactsService.FinalizeArtifact:output_type -> namespace.cloud.storage.v1beta.FinalizeArtifactResponse
+	7,  // 30: namespace.cloud.storage.v1beta.ArtifactsService.ResolveArtifact:output_type -> namespace.cloud.storage.v1beta.ResolveArtifactResponse
+	15, // 31: namespace.cloud.storage.v1beta.ArtifactsService.ListArtifacts:output_type -> namespace.cloud.storage.v1beta.ListArtifactsResponse
+	13, // 32: namespace.cloud.storage.v1beta.ArtifactsService.ListNamespaces:output_type -> namespace.cloud.storage.v1beta.ListNamespacesResponse
+	24, // 33: namespace.cloud.storage.v1beta.ArtifactsService.ExpireArtifact:output_type -> google.protobuf.Empty
+	10, // 34: namespace.cloud.storage.v1beta.ArtifactsService.ExtendArtifact:output_type -> namespace.cloud.storage.v1beta.ExtendArtifactResponse
+	28, // [28:35] is the sub-list for method output_type
+	21, // [21:28] is the sub-list for method input_type
+	21, // [21:21] is the sub-list for extension type_name
+	21, // [21:21] is the sub-list for extension extendee
+	0,  // [0:21] is the sub-list for field type_name
 }
 
 func init() { file_proto_namespace_cloud_storage_v1beta_artifact_proto_init() }
@@ -1325,7 +1407,7 @@ func file_proto_namespace_cloud_storage_v1beta_artifact_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_proto_namespace_cloud_storage_v1beta_artifact_proto_rawDesc), len(file_proto_namespace_cloud_storage_v1beta_artifact_proto_rawDesc)),
 			NumEnums:      2,
-			NumMessages:   15,
+			NumMessages:   16,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
