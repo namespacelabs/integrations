@@ -4701,9 +4701,12 @@ func (x *ReleaseUniqueTagResponse) GetInstanceId() string {
 }
 
 type OptimizeImageRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	ImageRef      string                 `protobuf:"bytes,1,opt,name=image_ref,json=imageRef,proto3" json:"image_ref,omitempty"`
-	Site          string                 `protobuf:"bytes,2,opt,name=site,proto3" json:"site,omitempty"`
+	state    protoimpl.MessageState `protogen:"open.v1"`
+	ImageRef string                 `protobuf:"bytes,1,opt,name=image_ref,json=imageRef,proto3" json:"image_ref,omitempty"`
+	Site     string                 `protobuf:"bytes,2,opt,name=site,proto3" json:"site,omitempty"`
+	// If set, publishes this tag in the source image's repository after optimization succeeds.
+	// The tag points to the source image digest that was optimized.
+	PushTag       string `protobuf:"bytes,3,opt,name=push_tag,json=pushTag,proto3" json:"push_tag,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -4748,6 +4751,13 @@ func (x *OptimizeImageRequest) GetImageRef() string {
 func (x *OptimizeImageRequest) GetSite() string {
 	if x != nil {
 		return x.Site
+	}
+	return ""
+}
+
+func (x *OptimizeImageRequest) GetPushTag() string {
+	if x != nil {
+		return x.PushTag
 	}
 	return ""
 }
@@ -8072,10 +8082,11 @@ const file_proto_namespace_cloud_compute_v1beta_compute_proto_rawDesc = "" +
 	"\x0eif_instance_id\x18\x02 \x01(\v2\x1f.namespace.stdlib.StringMatcherR\fifInstanceId\";\n" +
 	"\x18ReleaseUniqueTagResponse\x12\x1f\n" +
 	"\vinstance_id\x18\x01 \x01(\tR\n" +
-	"instanceId\"G\n" +
+	"instanceId\"b\n" +
 	"\x14OptimizeImageRequest\x12\x1b\n" +
 	"\timage_ref\x18\x01 \x01(\tR\bimageRef\x12\x12\n" +
-	"\x04site\x18\x02 \x01(\tR\x04site\"\x9f\x02\n" +
+	"\x04site\x18\x02 \x01(\tR\x04site\x12\x19\n" +
+	"\bpush_tag\x18\x03 \x01(\tR\apushTag\"\x9f\x02\n" +
 	"\x15OptimizeImageProgress\x12T\n" +
 	"\x06status\x18\x01 \x01(\x0e2<.namespace.cloud.compute.v1beta.OptimizeImageProgress.StatusR\x06status\x12*\n" +
 	"\x11baker_instance_id\x18\x02 \x01(\tR\x0fbakerInstanceId\x12'\n" +
