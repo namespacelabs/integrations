@@ -1,8 +1,6 @@
 module namespacelabs.dev/integrations
 
-go 1.24.0
-
-toolchain go1.24.1
+go 1.25.0
 
 require (
 	cloud.google.com/go/secretmanager v1.11.5
@@ -14,6 +12,7 @@ require (
 	github.com/google/go-containerregistry v0.20.6
 	github.com/gorilla/websocket v1.5.1
 	github.com/jpillora/chisel v1.10.1
+	github.com/stretchr/testify v1.11.1
 	golang.org/x/sys v0.38.0
 	google.golang.org/api v0.169.0
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20251029180050-ab9386a59fda
@@ -72,5 +71,6 @@ require (
 	golang.org/x/time v0.6.0 // indirect
 	google.golang.org/genproto v0.0.0-20240213162025-012b6fc9bca9 // indirect
 	google.golang.org/genproto/googleapis/api v0.0.0-20251029180050-ab9386a59fda // indirect
+	gopkg.in/yaml.v3 v3.0.1 // indirect
 	gotest.tools/v3 v3.5.2 // indirect
 )
