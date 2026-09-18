@@ -96,9 +96,6 @@ func run(ctx context.Context) error {
 		InstanceId: instance.Metadata.InstanceId,
 		Ingresses: []*computepb.IngressRequest{{
 			Name: "helloworld",
-			HttpMatchRule: []*computepb.HttpMatchRule{{
-				DoesNotRequireAuth: true,
-			}},
 			ExportedPortBackend: &computepb.ExportedPortBackend{
 				Port: serverPort,
 			},
@@ -114,7 +111,7 @@ func run(ctx context.Context) error {
 	url := "https://" + ingress.AllocatedIngresses[0].Fqdn
 	fmt.Printf("Public URL: %s\n", url)
 
-	return verifyEndpoint(ctx, url)
+	return verifyEndpoint(ctx, token, url)
 }
 
 func buildAndPush(ctx context.Context, token api.TokenSource, srcdir string) (string, error) {
@@ -168,7 +165,12 @@ func buildAndPush(ctx context.Context, token api.TokenSource, srcdir string) (st
 	return parsed.Digest(digest.String()).String(), nil
 }
 
-func verifyEndpoint(ctx context.Context, url string) error {
+func verifyEndpoint(ctx context.Context, tokenSource api.TokenSource, url string) error {
+	token, err := tokenSource.IssueToken(ctx, time.Minute, false)
+	if err != nil {
+		return err
+	}
+
 	deadline := time.Now().Add(time.Minute)
 	client := &http.Client{Timeout: 5 * time.Second}
 	for {
@@ -176,6 +178,7 @@ func verifyEndpoint(ctx context.Context, url string) error {
 		if err != nil {
 			return err
 		}
+		request.Header.Set("x-nsc-ingress-auth", "Bearer "+token)
 
 		response, err := client.Do(request)
 		if err == nil {
