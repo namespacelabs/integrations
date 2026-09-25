@@ -21,6 +21,7 @@ const _ = grpc.SupportPackageIsVersion9
 
 const (
 	AgentService_Ping_FullMethodName                       = "/namespace.private.devbox.wire.v1beta.AgentService/Ping"
+	AgentService_Shutdown_FullMethodName                   = "/namespace.private.devbox.wire.v1beta.AgentService/Shutdown"
 	AgentService_ResetForLease_FullMethodName              = "/namespace.private.devbox.wire.v1beta.AgentService/ResetForLease"
 	AgentService_WatchBoot_FullMethodName                  = "/namespace.private.devbox.wire.v1beta.AgentService/WatchBoot"
 	AgentService_QueryState_FullMethodName                 = "/namespace.private.devbox.wire.v1beta.AgentService/QueryState"
@@ -28,6 +29,7 @@ const (
 	AgentService_Run_FullMethodName                        = "/namespace.private.devbox.wire.v1beta.AgentService/Run"
 	AgentService_RunExec_FullMethodName                    = "/namespace.private.devbox.wire.v1beta.AgentService/RunExec"
 	AgentService_StartExec_FullMethodName                  = "/namespace.private.devbox.wire.v1beta.AgentService/StartExec"
+	AgentService_StopExec_FullMethodName                   = "/namespace.private.devbox.wire.v1beta.AgentService/StopExec"
 	AgentService_ListLogs_FullMethodName                   = "/namespace.private.devbox.wire.v1beta.AgentService/ListLogs"
 	AgentService_StreamExecLogs_FullMethodName             = "/namespace.private.devbox.wire.v1beta.AgentService/StreamExecLogs"
 	AgentService_CreateGitWorktree_FullMethodName          = "/namespace.private.devbox.wire.v1beta.AgentService/CreateGitWorktree"
@@ -48,6 +50,7 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type AgentServiceClient interface {
 	Ping(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	Shutdown(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	ResetForLease(ctx context.Context, in *ResetForLeaseRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[ResetForLeaseEvent], error)
 	WatchBoot(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (grpc.ServerStreamingClient[BootOpResult], error)
 	QueryState(ctx context.Context, in *QueryStateRequest, opts ...grpc.CallOption) (*QueryStateResponse, error)
@@ -60,6 +63,15 @@ type AgentServiceClient interface {
 	// StartExec starts a command on the devbox and returns immediately with an
 	// exec id that can be used to stream the command's retained logs.
 	StartExec(ctx context.Context, in *StartExecRequest, opts ...grpc.CallOption) (*StartExecResponse, error)
+	// StopExec requests termination of a command's process group. Success
+	// acknowledges the request, not completion; observe ListLogs or StreamExecLogs
+	// for the final result. Repeating a mode is a no-op; graceful can be escalated
+	// to force. Completed executions are a no-op; unknown IDs return NotFound,
+	// and boot actions return FailedPrecondition. Canceling this RPC does not
+	// undo a stop that has already been accepted.
+	// Control ends when the group leader exits, even if output is still draining.
+	// Descendants that change process groups or outlive the leader are not managed.
+	StopExec(ctx context.Context, in *StopExecRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	// ListLogs lists actions retained by the devbox agent, including startup
 	// boot actions and exec actions.
 	ListLogs(ctx context.Context, in *ListLogsRequest, opts ...grpc.CallOption) (*ListLogsResponse, error)
@@ -91,6 +103,16 @@ func (c *agentServiceClient) Ping(ctx context.Context, in *emptypb.Empty, opts .
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, AgentService_Ping_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *agentServiceClient) Shutdown(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, AgentService_Shutdown_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -200,6 +222,16 @@ func (c *agentServiceClient) StartExec(ctx context.Context, in *StartExecRequest
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(StartExecResponse)
 	err := c.cc.Invoke(ctx, AgentService_StartExec_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *agentServiceClient) StopExec(ctx context.Context, in *StopExecRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, AgentService_StopExec_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -350,6 +382,7 @@ func (c *agentServiceClient) UpdateRuntimeConfiguration(ctx context.Context, in 
 // for forward compatibility.
 type AgentServiceServer interface {
 	Ping(context.Context, *emptypb.Empty) (*emptypb.Empty, error)
+	Shutdown(context.Context, *emptypb.Empty) (*emptypb.Empty, error)
 	ResetForLease(*ResetForLeaseRequest, grpc.ServerStreamingServer[ResetForLeaseEvent]) error
 	WatchBoot(*emptypb.Empty, grpc.ServerStreamingServer[BootOpResult]) error
 	QueryState(context.Context, *QueryStateRequest) (*QueryStateResponse, error)
@@ -362,6 +395,15 @@ type AgentServiceServer interface {
 	// StartExec starts a command on the devbox and returns immediately with an
 	// exec id that can be used to stream the command's retained logs.
 	StartExec(context.Context, *StartExecRequest) (*StartExecResponse, error)
+	// StopExec requests termination of a command's process group. Success
+	// acknowledges the request, not completion; observe ListLogs or StreamExecLogs
+	// for the final result. Repeating a mode is a no-op; graceful can be escalated
+	// to force. Completed executions are a no-op; unknown IDs return NotFound,
+	// and boot actions return FailedPrecondition. Canceling this RPC does not
+	// undo a stop that has already been accepted.
+	// Control ends when the group leader exits, even if output is still draining.
+	// Descendants that change process groups or outlive the leader are not managed.
+	StopExec(context.Context, *StopExecRequest) (*emptypb.Empty, error)
 	// ListLogs lists actions retained by the devbox agent, including startup
 	// boot actions and exec actions.
 	ListLogs(context.Context, *ListLogsRequest) (*ListLogsResponse, error)
@@ -392,6 +434,9 @@ type UnimplementedAgentServiceServer struct{}
 func (UnimplementedAgentServiceServer) Ping(context.Context, *emptypb.Empty) (*emptypb.Empty, error) {
 	return nil, status.Error(codes.Unimplemented, "method Ping not implemented")
 }
+func (UnimplementedAgentServiceServer) Shutdown(context.Context, *emptypb.Empty) (*emptypb.Empty, error) {
+	return nil, status.Error(codes.Unimplemented, "method Shutdown not implemented")
+}
 func (UnimplementedAgentServiceServer) ResetForLease(*ResetForLeaseRequest, grpc.ServerStreamingServer[ResetForLeaseEvent]) error {
 	return status.Error(codes.Unimplemented, "method ResetForLease not implemented")
 }
@@ -412,6 +457,9 @@ func (UnimplementedAgentServiceServer) RunExec(*StartExecRequest, grpc.ServerStr
 }
 func (UnimplementedAgentServiceServer) StartExec(context.Context, *StartExecRequest) (*StartExecResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method StartExec not implemented")
+}
+func (UnimplementedAgentServiceServer) StopExec(context.Context, *StopExecRequest) (*emptypb.Empty, error) {
+	return nil, status.Error(codes.Unimplemented, "method StopExec not implemented")
 }
 func (UnimplementedAgentServiceServer) ListLogs(context.Context, *ListLogsRequest) (*ListLogsResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method ListLogs not implemented")
@@ -487,6 +535,24 @@ func _AgentService_Ping_Handler(srv interface{}, ctx context.Context, dec func(i
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(AgentServiceServer).Ping(ctx, req.(*emptypb.Empty))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AgentService_Shutdown_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(emptypb.Empty)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AgentServiceServer).Shutdown(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AgentService_Shutdown_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AgentServiceServer).Shutdown(ctx, req.(*emptypb.Empty))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -574,6 +640,24 @@ func _AgentService_StartExec_Handler(srv interface{}, ctx context.Context, dec f
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(AgentServiceServer).StartExec(ctx, req.(*StartExecRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AgentService_StopExec_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StopExecRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AgentServiceServer).StopExec(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AgentService_StopExec_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AgentServiceServer).StopExec(ctx, req.(*StopExecRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -817,12 +901,20 @@ var AgentService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _AgentService_Ping_Handler,
 		},
 		{
+			MethodName: "Shutdown",
+			Handler:    _AgentService_Shutdown_Handler,
+		},
+		{
 			MethodName: "QueryState",
 			Handler:    _AgentService_QueryState_Handler,
 		},
 		{
 			MethodName: "StartExec",
 			Handler:    _AgentService_StartExec_Handler,
+		},
+		{
+			MethodName: "StopExec",
+			Handler:    _AgentService_StopExec_Handler,
 		},
 		{
 			MethodName: "ListLogs",

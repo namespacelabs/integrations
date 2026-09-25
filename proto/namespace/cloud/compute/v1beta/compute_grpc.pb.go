@@ -39,6 +39,7 @@ const (
 	ComputeService_GetVNCConfig_FullMethodName              = "/namespace.cloud.compute.v1beta.ComputeService/GetVNCConfig"
 	ComputeService_ReleaseUniqueTag_FullMethodName          = "/namespace.cloud.compute.v1beta.ComputeService/ReleaseUniqueTag"
 	ComputeService_OptimizeImage_FullMethodName             = "/namespace.cloud.compute.v1beta.ComputeService/OptimizeImage"
+	ComputeService_WaitOptimizeImage_FullMethodName         = "/namespace.cloud.compute.v1beta.ComputeService/WaitOptimizeImage"
 	ComputeService_ListInstanceNotifications_FullMethodName = "/namespace.cloud.compute.v1beta.ComputeService/ListInstanceNotifications"
 )
 
@@ -296,6 +297,8 @@ type ComputeServiceClient interface {
 	// Triggers an internal process to optimize an image. This is not always
 	// needed and is used for internal purposes.
 	OptimizeImage(ctx context.Context, in *OptimizeImageRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[OptimizeImageProgress], error)
+	// Reattaches to the progress stream of an existing image optimization.
+	WaitOptimizeImage(ctx context.Context, in *WaitOptimizeImageRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[OptimizeImageProgress], error)
 	// Returns a list of instance notification events. Each instance has at most one event
 	// in the response, representing its most recent state change. Events can
 	// be filtered by instance ID.
@@ -517,6 +520,25 @@ func (c *computeServiceClient) OptimizeImage(ctx context.Context, in *OptimizeIm
 
 // This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
 type ComputeService_OptimizeImageClient = grpc.ServerStreamingClient[OptimizeImageProgress]
+
+func (c *computeServiceClient) WaitOptimizeImage(ctx context.Context, in *WaitOptimizeImageRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[OptimizeImageProgress], error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	stream, err := c.cc.NewStream(ctx, &ComputeService_ServiceDesc.Streams[2], ComputeService_WaitOptimizeImage_FullMethodName, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &grpc.GenericClientStream[WaitOptimizeImageRequest, OptimizeImageProgress]{ClientStream: stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
+}
+
+// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
+type ComputeService_WaitOptimizeImageClient = grpc.ServerStreamingClient[OptimizeImageProgress]
 
 func (c *computeServiceClient) ListInstanceNotifications(ctx context.Context, in *ListInstanceNotificationsRequest, opts ...grpc.CallOption) (*ListInstanceNotificationsResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
@@ -782,6 +804,8 @@ type ComputeServiceServer interface {
 	// Triggers an internal process to optimize an image. This is not always
 	// needed and is used for internal purposes.
 	OptimizeImage(*OptimizeImageRequest, grpc.ServerStreamingServer[OptimizeImageProgress]) error
+	// Reattaches to the progress stream of an existing image optimization.
+	WaitOptimizeImage(*WaitOptimizeImageRequest, grpc.ServerStreamingServer[OptimizeImageProgress]) error
 	// Returns a list of instance notification events. Each instance has at most one event
 	// in the response, representing its most recent state change. Events can
 	// be filtered by instance ID.
@@ -852,6 +876,9 @@ func (UnimplementedComputeServiceServer) ReleaseUniqueTag(context.Context, *Rele
 }
 func (UnimplementedComputeServiceServer) OptimizeImage(*OptimizeImageRequest, grpc.ServerStreamingServer[OptimizeImageProgress]) error {
 	return status.Error(codes.Unimplemented, "method OptimizeImage not implemented")
+}
+func (UnimplementedComputeServiceServer) WaitOptimizeImage(*WaitOptimizeImageRequest, grpc.ServerStreamingServer[OptimizeImageProgress]) error {
+	return status.Error(codes.Unimplemented, "method WaitOptimizeImage not implemented")
 }
 func (UnimplementedComputeServiceServer) ListInstanceNotifications(context.Context, *ListInstanceNotificationsRequest) (*ListInstanceNotificationsResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method ListInstanceNotifications not implemented")
@@ -1205,6 +1232,17 @@ func _ComputeService_OptimizeImage_Handler(srv interface{}, stream grpc.ServerSt
 // This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
 type ComputeService_OptimizeImageServer = grpc.ServerStreamingServer[OptimizeImageProgress]
 
+func _ComputeService_WaitOptimizeImage_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(WaitOptimizeImageRequest)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(ComputeServiceServer).WaitOptimizeImage(m, &grpc.GenericServerStream[WaitOptimizeImageRequest, OptimizeImageProgress]{ServerStream: stream})
+}
+
+// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
+type ComputeService_WaitOptimizeImageServer = grpc.ServerStreamingServer[OptimizeImageProgress]
+
 func _ComputeService_ListInstanceNotifications_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ListInstanceNotificationsRequest)
 	if err := dec(in); err != nil {
@@ -1312,6 +1350,11 @@ var ComputeService_ServiceDesc = grpc.ServiceDesc{
 		{
 			StreamName:    "OptimizeImage",
 			Handler:       _ComputeService_OptimizeImage_Handler,
+			ServerStreams: true,
+		},
+		{
+			StreamName:    "WaitOptimizeImage",
+			Handler:       _ComputeService_WaitOptimizeImage_Handler,
 			ServerStreams: true,
 		},
 	},
