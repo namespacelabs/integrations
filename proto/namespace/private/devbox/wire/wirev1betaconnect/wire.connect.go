@@ -36,6 +36,8 @@ const (
 const (
 	// AgentServicePingProcedure is the fully-qualified name of the AgentService's Ping RPC.
 	AgentServicePingProcedure = "/namespace.private.devbox.wire.v1beta.AgentService/Ping"
+	// AgentServiceShutdownProcedure is the fully-qualified name of the AgentService's Shutdown RPC.
+	AgentServiceShutdownProcedure = "/namespace.private.devbox.wire.v1beta.AgentService/Shutdown"
 	// AgentServiceResetForLeaseProcedure is the fully-qualified name of the AgentService's
 	// ResetForLease RPC.
 	AgentServiceResetForLeaseProcedure = "/namespace.private.devbox.wire.v1beta.AgentService/ResetForLease"
@@ -52,6 +54,8 @@ const (
 	AgentServiceRunExecProcedure = "/namespace.private.devbox.wire.v1beta.AgentService/RunExec"
 	// AgentServiceStartExecProcedure is the fully-qualified name of the AgentService's StartExec RPC.
 	AgentServiceStartExecProcedure = "/namespace.private.devbox.wire.v1beta.AgentService/StartExec"
+	// AgentServiceStopExecProcedure is the fully-qualified name of the AgentService's StopExec RPC.
+	AgentServiceStopExecProcedure = "/namespace.private.devbox.wire.v1beta.AgentService/StopExec"
 	// AgentServiceListLogsProcedure is the fully-qualified name of the AgentService's ListLogs RPC.
 	AgentServiceListLogsProcedure = "/namespace.private.devbox.wire.v1beta.AgentService/ListLogs"
 	// AgentServiceStreamExecLogsProcedure is the fully-qualified name of the AgentService's
@@ -93,6 +97,7 @@ const (
 var (
 	agentServiceServiceDescriptor                          = wire.File_proto_namespace_private_devbox_wire_wire_proto.Services().ByName("AgentService")
 	agentServicePingMethodDescriptor                       = agentServiceServiceDescriptor.Methods().ByName("Ping")
+	agentServiceShutdownMethodDescriptor                   = agentServiceServiceDescriptor.Methods().ByName("Shutdown")
 	agentServiceResetForLeaseMethodDescriptor              = agentServiceServiceDescriptor.Methods().ByName("ResetForLease")
 	agentServiceWatchBootMethodDescriptor                  = agentServiceServiceDescriptor.Methods().ByName("WatchBoot")
 	agentServiceQueryStateMethodDescriptor                 = agentServiceServiceDescriptor.Methods().ByName("QueryState")
@@ -100,6 +105,7 @@ var (
 	agentServiceRunMethodDescriptor                        = agentServiceServiceDescriptor.Methods().ByName("Run")
 	agentServiceRunExecMethodDescriptor                    = agentServiceServiceDescriptor.Methods().ByName("RunExec")
 	agentServiceStartExecMethodDescriptor                  = agentServiceServiceDescriptor.Methods().ByName("StartExec")
+	agentServiceStopExecMethodDescriptor                   = agentServiceServiceDescriptor.Methods().ByName("StopExec")
 	agentServiceListLogsMethodDescriptor                   = agentServiceServiceDescriptor.Methods().ByName("ListLogs")
 	agentServiceStreamExecLogsMethodDescriptor             = agentServiceServiceDescriptor.Methods().ByName("StreamExecLogs")
 	agentServiceCreateGitWorktreeMethodDescriptor          = agentServiceServiceDescriptor.Methods().ByName("CreateGitWorktree")
@@ -118,6 +124,7 @@ var (
 // AgentServiceClient is a client for the namespace.private.devbox.wire.v1beta.AgentService service.
 type AgentServiceClient interface {
 	Ping(context.Context, *connect.Request[emptypb.Empty]) (*connect.Response[emptypb.Empty], error)
+	Shutdown(context.Context, *connect.Request[emptypb.Empty]) (*connect.Response[emptypb.Empty], error)
 	ResetForLease(context.Context, *connect.Request[wire.ResetForLeaseRequest]) (*connect.ServerStreamForClient[wire.ResetForLeaseEvent], error)
 	WatchBoot(context.Context, *connect.Request[emptypb.Empty]) (*connect.ServerStreamForClient[wire.BootOpResult], error)
 	QueryState(context.Context, *connect.Request[wire.QueryStateRequest]) (*connect.Response[wire.QueryStateResponse], error)
@@ -130,6 +137,15 @@ type AgentServiceClient interface {
 	// StartExec starts a command on the devbox and returns immediately with an
 	// exec id that can be used to stream the command's retained logs.
 	StartExec(context.Context, *connect.Request[wire.StartExecRequest]) (*connect.Response[wire.StartExecResponse], error)
+	// StopExec requests termination of a command's process group. Success
+	// acknowledges the request, not completion; observe ListLogs or StreamExecLogs
+	// for the final result. Repeating a mode is a no-op; graceful can be escalated
+	// to force. Completed executions are a no-op; unknown IDs return NotFound,
+	// and boot actions return FailedPrecondition. Canceling this RPC does not
+	// undo a stop that has already been accepted.
+	// Control ends when the group leader exits, even if output is still draining.
+	// Descendants that change process groups or outlive the leader are not managed.
+	StopExec(context.Context, *connect.Request[wire.StopExecRequest]) (*connect.Response[emptypb.Empty], error)
 	// ListLogs lists actions retained by the devbox agent, including startup
 	// boot actions and exec actions.
 	ListLogs(context.Context, *connect.Request[wire.ListLogsRequest]) (*connect.Response[wire.ListLogsResponse], error)
@@ -164,6 +180,12 @@ func NewAgentServiceClient(httpClient connect.HTTPClient, baseURL string, opts .
 			httpClient,
 			baseURL+AgentServicePingProcedure,
 			connect.WithSchema(agentServicePingMethodDescriptor),
+			connect.WithClientOptions(opts...),
+		),
+		shutdown: connect.NewClient[emptypb.Empty, emptypb.Empty](
+			httpClient,
+			baseURL+AgentServiceShutdownProcedure,
+			connect.WithSchema(agentServiceShutdownMethodDescriptor),
 			connect.WithClientOptions(opts...),
 		),
 		resetForLease: connect.NewClient[wire.ResetForLeaseRequest, wire.ResetForLeaseEvent](
@@ -206,6 +228,12 @@ func NewAgentServiceClient(httpClient connect.HTTPClient, baseURL string, opts .
 			httpClient,
 			baseURL+AgentServiceStartExecProcedure,
 			connect.WithSchema(agentServiceStartExecMethodDescriptor),
+			connect.WithClientOptions(opts...),
+		),
+		stopExec: connect.NewClient[wire.StopExecRequest, emptypb.Empty](
+			httpClient,
+			baseURL+AgentServiceStopExecProcedure,
+			connect.WithSchema(agentServiceStopExecMethodDescriptor),
 			connect.WithClientOptions(opts...),
 		),
 		listLogs: connect.NewClient[wire.ListLogsRequest, wire.ListLogsResponse](
@@ -292,6 +320,7 @@ func NewAgentServiceClient(httpClient connect.HTTPClient, baseURL string, opts .
 // agentServiceClient implements AgentServiceClient.
 type agentServiceClient struct {
 	ping                       *connect.Client[emptypb.Empty, emptypb.Empty]
+	shutdown                   *connect.Client[emptypb.Empty, emptypb.Empty]
 	resetForLease              *connect.Client[wire.ResetForLeaseRequest, wire.ResetForLeaseEvent]
 	watchBoot                  *connect.Client[emptypb.Empty, wire.BootOpResult]
 	queryState                 *connect.Client[wire.QueryStateRequest, wire.QueryStateResponse]
@@ -299,6 +328,7 @@ type agentServiceClient struct {
 	run                        *connect.Client[wire.RunCommand, wire.RunOutputChunk]
 	runExec                    *connect.Client[wire.StartExecRequest, wire.ExecLogChunk]
 	startExec                  *connect.Client[wire.StartExecRequest, wire.StartExecResponse]
+	stopExec                   *connect.Client[wire.StopExecRequest, emptypb.Empty]
 	listLogs                   *connect.Client[wire.ListLogsRequest, wire.ListLogsResponse]
 	streamExecLogs             *connect.Client[wire.StreamExecLogsRequest, wire.ExecLogChunk]
 	createGitWorktree          *connect.Client[wire.CreateGitWorktreeRequest, wire.CreateGitWorktreeResponse]
@@ -317,6 +347,11 @@ type agentServiceClient struct {
 // Ping calls namespace.private.devbox.wire.v1beta.AgentService.Ping.
 func (c *agentServiceClient) Ping(ctx context.Context, req *connect.Request[emptypb.Empty]) (*connect.Response[emptypb.Empty], error) {
 	return c.ping.CallUnary(ctx, req)
+}
+
+// Shutdown calls namespace.private.devbox.wire.v1beta.AgentService.Shutdown.
+func (c *agentServiceClient) Shutdown(ctx context.Context, req *connect.Request[emptypb.Empty]) (*connect.Response[emptypb.Empty], error) {
+	return c.shutdown.CallUnary(ctx, req)
 }
 
 // ResetForLease calls namespace.private.devbox.wire.v1beta.AgentService.ResetForLease.
@@ -352,6 +387,11 @@ func (c *agentServiceClient) RunExec(ctx context.Context, req *connect.Request[w
 // StartExec calls namespace.private.devbox.wire.v1beta.AgentService.StartExec.
 func (c *agentServiceClient) StartExec(ctx context.Context, req *connect.Request[wire.StartExecRequest]) (*connect.Response[wire.StartExecResponse], error) {
 	return c.startExec.CallUnary(ctx, req)
+}
+
+// StopExec calls namespace.private.devbox.wire.v1beta.AgentService.StopExec.
+func (c *agentServiceClient) StopExec(ctx context.Context, req *connect.Request[wire.StopExecRequest]) (*connect.Response[emptypb.Empty], error) {
+	return c.stopExec.CallUnary(ctx, req)
 }
 
 // ListLogs calls namespace.private.devbox.wire.v1beta.AgentService.ListLogs.
@@ -427,6 +467,7 @@ func (c *agentServiceClient) UpdateRuntimeConfiguration(ctx context.Context, req
 // service.
 type AgentServiceHandler interface {
 	Ping(context.Context, *connect.Request[emptypb.Empty]) (*connect.Response[emptypb.Empty], error)
+	Shutdown(context.Context, *connect.Request[emptypb.Empty]) (*connect.Response[emptypb.Empty], error)
 	ResetForLease(context.Context, *connect.Request[wire.ResetForLeaseRequest], *connect.ServerStream[wire.ResetForLeaseEvent]) error
 	WatchBoot(context.Context, *connect.Request[emptypb.Empty], *connect.ServerStream[wire.BootOpResult]) error
 	QueryState(context.Context, *connect.Request[wire.QueryStateRequest]) (*connect.Response[wire.QueryStateResponse], error)
@@ -439,6 +480,15 @@ type AgentServiceHandler interface {
 	// StartExec starts a command on the devbox and returns immediately with an
 	// exec id that can be used to stream the command's retained logs.
 	StartExec(context.Context, *connect.Request[wire.StartExecRequest]) (*connect.Response[wire.StartExecResponse], error)
+	// StopExec requests termination of a command's process group. Success
+	// acknowledges the request, not completion; observe ListLogs or StreamExecLogs
+	// for the final result. Repeating a mode is a no-op; graceful can be escalated
+	// to force. Completed executions are a no-op; unknown IDs return NotFound,
+	// and boot actions return FailedPrecondition. Canceling this RPC does not
+	// undo a stop that has already been accepted.
+	// Control ends when the group leader exits, even if output is still draining.
+	// Descendants that change process groups or outlive the leader are not managed.
+	StopExec(context.Context, *connect.Request[wire.StopExecRequest]) (*connect.Response[emptypb.Empty], error)
 	// ListLogs lists actions retained by the devbox agent, including startup
 	// boot actions and exec actions.
 	ListLogs(context.Context, *connect.Request[wire.ListLogsRequest]) (*connect.Response[wire.ListLogsResponse], error)
@@ -468,6 +518,12 @@ func NewAgentServiceHandler(svc AgentServiceHandler, opts ...connect.HandlerOpti
 		AgentServicePingProcedure,
 		svc.Ping,
 		connect.WithSchema(agentServicePingMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
+	)
+	agentServiceShutdownHandler := connect.NewUnaryHandler(
+		AgentServiceShutdownProcedure,
+		svc.Shutdown,
+		connect.WithSchema(agentServiceShutdownMethodDescriptor),
 		connect.WithHandlerOptions(opts...),
 	)
 	agentServiceResetForLeaseHandler := connect.NewServerStreamHandler(
@@ -510,6 +566,12 @@ func NewAgentServiceHandler(svc AgentServiceHandler, opts ...connect.HandlerOpti
 		AgentServiceStartExecProcedure,
 		svc.StartExec,
 		connect.WithSchema(agentServiceStartExecMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
+	)
+	agentServiceStopExecHandler := connect.NewUnaryHandler(
+		AgentServiceStopExecProcedure,
+		svc.StopExec,
+		connect.WithSchema(agentServiceStopExecMethodDescriptor),
 		connect.WithHandlerOptions(opts...),
 	)
 	agentServiceListLogsHandler := connect.NewUnaryHandler(
@@ -594,6 +656,8 @@ func NewAgentServiceHandler(svc AgentServiceHandler, opts ...connect.HandlerOpti
 		switch r.URL.Path {
 		case AgentServicePingProcedure:
 			agentServicePingHandler.ServeHTTP(w, r)
+		case AgentServiceShutdownProcedure:
+			agentServiceShutdownHandler.ServeHTTP(w, r)
 		case AgentServiceResetForLeaseProcedure:
 			agentServiceResetForLeaseHandler.ServeHTTP(w, r)
 		case AgentServiceWatchBootProcedure:
@@ -608,6 +672,8 @@ func NewAgentServiceHandler(svc AgentServiceHandler, opts ...connect.HandlerOpti
 			agentServiceRunExecHandler.ServeHTTP(w, r)
 		case AgentServiceStartExecProcedure:
 			agentServiceStartExecHandler.ServeHTTP(w, r)
+		case AgentServiceStopExecProcedure:
+			agentServiceStopExecHandler.ServeHTTP(w, r)
 		case AgentServiceListLogsProcedure:
 			agentServiceListLogsHandler.ServeHTTP(w, r)
 		case AgentServiceStreamExecLogsProcedure:
@@ -647,6 +713,10 @@ func (UnimplementedAgentServiceHandler) Ping(context.Context, *connect.Request[e
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("namespace.private.devbox.wire.v1beta.AgentService.Ping is not implemented"))
 }
 
+func (UnimplementedAgentServiceHandler) Shutdown(context.Context, *connect.Request[emptypb.Empty]) (*connect.Response[emptypb.Empty], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("namespace.private.devbox.wire.v1beta.AgentService.Shutdown is not implemented"))
+}
+
 func (UnimplementedAgentServiceHandler) ResetForLease(context.Context, *connect.Request[wire.ResetForLeaseRequest], *connect.ServerStream[wire.ResetForLeaseEvent]) error {
 	return connect.NewError(connect.CodeUnimplemented, errors.New("namespace.private.devbox.wire.v1beta.AgentService.ResetForLease is not implemented"))
 }
@@ -673,6 +743,10 @@ func (UnimplementedAgentServiceHandler) RunExec(context.Context, *connect.Reques
 
 func (UnimplementedAgentServiceHandler) StartExec(context.Context, *connect.Request[wire.StartExecRequest]) (*connect.Response[wire.StartExecResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("namespace.private.devbox.wire.v1beta.AgentService.StartExec is not implemented"))
+}
+
+func (UnimplementedAgentServiceHandler) StopExec(context.Context, *connect.Request[wire.StopExecRequest]) (*connect.Response[emptypb.Empty], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("namespace.private.devbox.wire.v1beta.AgentService.StopExec is not implemented"))
 }
 
 func (UnimplementedAgentServiceHandler) ListLogs(context.Context, *connect.Request[wire.ListLogsRequest]) (*connect.Response[wire.ListLogsResponse], error) {

@@ -86,8 +86,11 @@ type ReserveInstanceRequest struct {
 	// not been fulfilled by this time, the server will no longer attempt to
 	// create the instance.
 	ReservationDeadline *timestamppb.Timestamp `protobuf:"bytes,2,opt,name=reservation_deadline,json=reservationDeadline,proto3" json:"reservation_deadline,omitempty"`
-	unknownFields       protoimpl.UnknownFields
-	sizeCache           protoimpl.SizeCache
+	// Priority amongst all reservations. Higher value = higher priority.
+	// Negative values are allowed.
+	Priority      int64 `protobuf:"varint,3,opt,name=priority,proto3" json:"priority,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *ReserveInstanceRequest) Reset() {
@@ -132,6 +135,13 @@ func (x *ReserveInstanceRequest) GetReservationDeadline() *timestamppb.Timestamp
 		return x.ReservationDeadline
 	}
 	return nil
+}
+
+func (x *ReserveInstanceRequest) GetPriority() int64 {
+	if x != nil {
+		return x.Priority
+	}
+	return 0
 }
 
 type ReserveInstanceResponse struct {
@@ -240,6 +250,7 @@ type DescribeReservationResponse struct {
 	FulfillmentTime *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=fulfillment_time,json=fulfillmentTime,proto3" json:"fulfillment_time,omitempty"`
 	LastAttempt     *CreationAttempt       `protobuf:"bytes,6,opt,name=last_attempt,json=lastAttempt,proto3" json:"last_attempt,omitempty"`
 	Status          ReservationStatus      `protobuf:"varint,7,opt,name=status,proto3,enum=namespace.experimental.compute.ReservationStatus" json:"status,omitempty"`
+	Priority        int64                  `protobuf:"varint,8,opt,name=priority,proto3" json:"priority,omitempty"`
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache
 }
@@ -314,6 +325,13 @@ func (x *DescribeReservationResponse) GetStatus() ReservationStatus {
 		return x.Status
 	}
 	return ReservationStatus_UNKNOWN
+}
+
+func (x *DescribeReservationResponse) GetPriority() int64 {
+	if x != nil {
+		return x.Priority
+	}
+	return 0
 }
 
 type CreationAttempt struct {
@@ -743,10 +761,11 @@ var File_proto_namespace_experimental_compute_reservations_proto protoreflect.Fi
 
 const file_proto_namespace_experimental_compute_reservations_proto_rawDesc = "" +
 	"\n" +
-	"7proto/namespace/experimental/compute/reservations.proto\x12\x1enamespace.experimental.compute\x1a\x1fgoogle/protobuf/timestamp.proto\x1a2proto/namespace/cloud/compute/v1beta/compute.proto\"\xce\x01\n" +
+	"7proto/namespace/experimental/compute/reservations.proto\x12\x1enamespace.experimental.compute\x1a\x1fgoogle/protobuf/timestamp.proto\x1a2proto/namespace/cloud/compute/v1beta/compute.proto\"\xea\x01\n" +
 	"\x16ReserveInstanceRequest\x12e\n" +
 	"\x13create_instance_req\x18\x01 \x01(\v25.namespace.cloud.compute.v1beta.CreateInstanceRequestR\x11createInstanceReq\x12M\n" +
-	"\x14reservation_deadline\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampR\x13reservationDeadline\"\xd7\x02\n" +
+	"\x14reservation_deadline\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampR\x13reservationDeadline\x12\x1a\n" +
+	"\bpriority\x18\x03 \x01(\x03R\bpriority\"\xd7\x02\n" +
 	"\x17ReserveInstanceResponse\x12%\n" +
 	"\x0ereservation_id\x18\x01 \x01(\tR\rreservationId\x12g\n" +
 	"\bmetadata\x18\x02 \x01(\v2K.namespace.experimental.compute.ReserveInstanceResponse.ReservationMetadataR\bmetadata\x1a\xab\x01\n" +
@@ -754,7 +773,7 @@ const file_proto_namespace_experimental_compute_reservations_proto_rawDesc = "" 
 	"\x10reservation_time\x18\x01 \x01(\v2\x1a.google.protobuf.TimestampR\x0freservationTime\x12M\n" +
 	"\x14reservation_deadline\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampR\x13reservationDeadline\"C\n" +
 	"\x1aDescribeReservationRequest\x12%\n" +
-	"\x0ereservation_id\x18\x01 \x01(\tR\rreservationId\"\xd1\x03\n" +
+	"\x0ereservation_id\x18\x01 \x01(\tR\rreservationId\"\xed\x03\n" +
 	"\x1bDescribeReservationResponse\x12%\n" +
 	"\x0ereservation_id\x18\x01 \x01(\tR\rreservationId\x12~\n" +
 	"\x14reservation_metadata\x18\x03 \x01(\v2K.namespace.experimental.compute.ReserveInstanceResponse.ReservationMetadataR\x13reservationMetadata\x12\x1f\n" +
@@ -762,7 +781,8 @@ const file_proto_namespace_experimental_compute_reservations_proto_rawDesc = "" 
 	"instanceId\x12E\n" +
 	"\x10fulfillment_time\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\x0ffulfillmentTime\x12R\n" +
 	"\flast_attempt\x18\x06 \x01(\v2/.namespace.experimental.compute.CreationAttemptR\vlastAttempt\x12I\n" +
-	"\x06status\x18\a \x01(\x0e21.namespace.experimental.compute.ReservationStatusR\x06statusJ\x04\b\x02\x10\x03\"\x82\x01\n" +
+	"\x06status\x18\a \x01(\x0e21.namespace.experimental.compute.ReservationStatusR\x06status\x12\x1a\n" +
+	"\bpriority\x18\b \x01(\x03R\bpriorityJ\x04\b\x02\x10\x03\"\x82\x01\n" +
 	"\x0fCreationAttempt\x128\n" +
 	"\ttimestamp\x18\x01 \x01(\v2\x1a.google.protobuf.TimestampR\ttimestamp\x12\x1f\n" +
 	"\vinstance_id\x18\x02 \x01(\tR\n" +

@@ -882,7 +882,7 @@ func (x OptimizeImageProgress_Status) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use OptimizeImageProgress_Status.Descriptor instead.
 func (OptimizeImageProgress_Status) EnumDescriptor() ([]byte, []int) {
-	return file_proto_namespace_cloud_compute_v1beta_compute_proto_rawDescGZIP(), []int{54, 0}
+	return file_proto_namespace_cloud_compute_v1beta_compute_proto_rawDescGZIP(), []int{55, 0}
 }
 
 type CreateInstanceRequest struct {
@@ -4762,18 +4762,65 @@ func (x *OptimizeImageRequest) GetPushTag() string {
 	return ""
 }
 
+type WaitOptimizeImageRequest struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// The cursor returned in OptimizeImageProgress by the original request.
+	OptimizeCursor []byte `protobuf:"bytes,1,opt,name=optimize_cursor,json=optimizeCursor,proto3" json:"optimize_cursor,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *WaitOptimizeImageRequest) Reset() {
+	*x = WaitOptimizeImageRequest{}
+	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[54]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *WaitOptimizeImageRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*WaitOptimizeImageRequest) ProtoMessage() {}
+
+func (x *WaitOptimizeImageRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[54]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use WaitOptimizeImageRequest.ProtoReflect.Descriptor instead.
+func (*WaitOptimizeImageRequest) Descriptor() ([]byte, []int) {
+	return file_proto_namespace_cloud_compute_v1beta_compute_proto_rawDescGZIP(), []int{54}
+}
+
+func (x *WaitOptimizeImageRequest) GetOptimizeCursor() []byte {
+	if x != nil {
+		return x.OptimizeCursor
+	}
+	return nil
+}
+
 type OptimizeImageProgress struct {
 	state           protoimpl.MessageState       `protogen:"open.v1"`
 	Status          OptimizeImageProgress_Status `protobuf:"varint,1,opt,name=status,proto3,enum=namespace.cloud.compute.v1beta.OptimizeImageProgress_Status" json:"status,omitempty"`
 	BakerInstanceId string                       `protobuf:"bytes,2,opt,name=baker_instance_id,json=bakerInstanceId,proto3" json:"baker_instance_id,omitempty"`
 	FailureMessage  string                       `protobuf:"bytes,3,opt,name=failure_message,json=failureMessage,proto3" json:"failure_message,omitempty"`
-	unknownFields   protoimpl.UnknownFields
-	sizeCache       protoimpl.SizeCache
+	// Identifies this optimization. Pass it to WaitOptimizeImage to reattach after a disconnect.
+	OptimizeCursor []byte `protobuf:"bytes,4,opt,name=optimize_cursor,json=optimizeCursor,proto3" json:"optimize_cursor,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
 }
 
 func (x *OptimizeImageProgress) Reset() {
 	*x = OptimizeImageProgress{}
-	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[54]
+	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[55]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4785,7 +4832,7 @@ func (x *OptimizeImageProgress) String() string {
 func (*OptimizeImageProgress) ProtoMessage() {}
 
 func (x *OptimizeImageProgress) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[54]
+	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[55]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4798,7 +4845,7 @@ func (x *OptimizeImageProgress) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use OptimizeImageProgress.ProtoReflect.Descriptor instead.
 func (*OptimizeImageProgress) Descriptor() ([]byte, []int) {
-	return file_proto_namespace_cloud_compute_v1beta_compute_proto_rawDescGZIP(), []int{54}
+	return file_proto_namespace_cloud_compute_v1beta_compute_proto_rawDescGZIP(), []int{55}
 }
 
 func (x *OptimizeImageProgress) GetStatus() OptimizeImageProgress_Status {
@@ -4822,6 +4869,13 @@ func (x *OptimizeImageProgress) GetFailureMessage() string {
 	return ""
 }
 
+func (x *OptimizeImageProgress) GetOptimizeCursor() []byte {
+	if x != nil {
+		return x.OptimizeCursor
+	}
+	return nil
+}
+
 type InstanceEventMetadata struct {
 	state         protoimpl.MessageState  `protogen:"open.v1"`
 	EmittedAt     *timestamppb.Timestamp  `protobuf:"bytes,1,opt,name=emitted_at,json=emittedAt,proto3" json:"emitted_at,omitempty"`
@@ -4835,7 +4889,7 @@ type InstanceEventMetadata struct {
 
 func (x *InstanceEventMetadata) Reset() {
 	*x = InstanceEventMetadata{}
-	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[55]
+	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[56]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4847,7 +4901,7 @@ func (x *InstanceEventMetadata) String() string {
 func (*InstanceEventMetadata) ProtoMessage() {}
 
 func (x *InstanceEventMetadata) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[55]
+	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[56]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4860,7 +4914,7 @@ func (x *InstanceEventMetadata) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use InstanceEventMetadata.ProtoReflect.Descriptor instead.
 func (*InstanceEventMetadata) Descriptor() ([]byte, []int) {
-	return file_proto_namespace_cloud_compute_v1beta_compute_proto_rawDescGZIP(), []int{55}
+	return file_proto_namespace_cloud_compute_v1beta_compute_proto_rawDescGZIP(), []int{56}
 }
 
 func (x *InstanceEventMetadata) GetEmittedAt() *timestamppb.Timestamp {
@@ -4915,7 +4969,7 @@ type ListInstanceNotificationsRequest struct {
 
 func (x *ListInstanceNotificationsRequest) Reset() {
 	*x = ListInstanceNotificationsRequest{}
-	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[56]
+	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[57]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4927,7 +4981,7 @@ func (x *ListInstanceNotificationsRequest) String() string {
 func (*ListInstanceNotificationsRequest) ProtoMessage() {}
 
 func (x *ListInstanceNotificationsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[56]
+	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[57]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4940,7 +4994,7 @@ func (x *ListInstanceNotificationsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListInstanceNotificationsRequest.ProtoReflect.Descriptor instead.
 func (*ListInstanceNotificationsRequest) Descriptor() ([]byte, []int) {
-	return file_proto_namespace_cloud_compute_v1beta_compute_proto_rawDescGZIP(), []int{56}
+	return file_proto_namespace_cloud_compute_v1beta_compute_proto_rawDescGZIP(), []int{57}
 }
 
 func (x *ListInstanceNotificationsRequest) GetInstanceIds() *stdlib.StringMatcher {
@@ -4975,7 +5029,7 @@ type ListInstanceNotificationsResponse struct {
 
 func (x *ListInstanceNotificationsResponse) Reset() {
 	*x = ListInstanceNotificationsResponse{}
-	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[57]
+	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[58]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4987,7 +5041,7 @@ func (x *ListInstanceNotificationsResponse) String() string {
 func (*ListInstanceNotificationsResponse) ProtoMessage() {}
 
 func (x *ListInstanceNotificationsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[57]
+	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[58]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5000,7 +5054,7 @@ func (x *ListInstanceNotificationsResponse) ProtoReflect() protoreflect.Message 
 
 // Deprecated: Use ListInstanceNotificationsResponse.ProtoReflect.Descriptor instead.
 func (*ListInstanceNotificationsResponse) Descriptor() ([]byte, []int) {
-	return file_proto_namespace_cloud_compute_v1beta_compute_proto_rawDescGZIP(), []int{57}
+	return file_proto_namespace_cloud_compute_v1beta_compute_proto_rawDescGZIP(), []int{58}
 }
 
 func (x *ListInstanceNotificationsResponse) GetEvents() []*InstanceEventMetadata {
@@ -5023,7 +5077,7 @@ type CreateInstanceRequest_NetworkPolicy struct {
 
 func (x *CreateInstanceRequest_NetworkPolicy) Reset() {
 	*x = CreateInstanceRequest_NetworkPolicy{}
-	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[59]
+	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[60]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5035,7 +5089,7 @@ func (x *CreateInstanceRequest_NetworkPolicy) String() string {
 func (*CreateInstanceRequest_NetworkPolicy) ProtoMessage() {}
 
 func (x *CreateInstanceRequest_NetworkPolicy) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[59]
+	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[60]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5115,13 +5169,18 @@ type CreateInstanceRequest_ExperimentalFeatures struct {
 	NestedVirtualization bool `protobuf:"varint,19,opt,name=nested_virtualization,json=nestedVirtualization,proto3" json:"nested_virtualization,omitempty"`
 	// Reach out to the Namespace team to learn more about this capability.
 	PrometheusMetricsSink *CreateInstanceRequest_ExperimentalFeatures_PrometheusMetricsSink `protobuf:"bytes,20,opt,name=prometheus_metrics_sink,json=prometheusMetricsSink,proto3" json:"prometheus_metrics_sink,omitempty"`
-	unknownFields         protoimpl.UnknownFields
-	sizeCache             protoimpl.SizeCache
+	// Select a named compute configuration from workspace policy. Its configured
+	// SKU and hypervisor override request settings, and its features are added
+	// to the request. Explicit request placement overrides configuration placement.
+	// Resource sizes are unchanged. Unknown names fail.
+	WithConfiguration string `protobuf:"bytes,21,opt,name=with_configuration,json=withConfiguration,proto3" json:"with_configuration,omitempty"`
+	unknownFields     protoimpl.UnknownFields
+	sizeCache         protoimpl.SizeCache
 }
 
 func (x *CreateInstanceRequest_ExperimentalFeatures) Reset() {
 	*x = CreateInstanceRequest_ExperimentalFeatures{}
-	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[60]
+	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[61]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5133,7 +5192,7 @@ func (x *CreateInstanceRequest_ExperimentalFeatures) String() string {
 func (*CreateInstanceRequest_ExperimentalFeatures) ProtoMessage() {}
 
 func (x *CreateInstanceRequest_ExperimentalFeatures) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[60]
+	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[61]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5275,6 +5334,13 @@ func (x *CreateInstanceRequest_ExperimentalFeatures) GetPrometheusMetricsSink() 
 	return nil
 }
 
+func (x *CreateInstanceRequest_ExperimentalFeatures) GetWithConfiguration() string {
+	if x != nil {
+		return x.WithConfiguration
+	}
+	return ""
+}
+
 type CreateInstanceRequest_FeatureConfiguration struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// If set, also runs a single-node Kubernetes in this instance. Must be
@@ -5291,7 +5357,7 @@ type CreateInstanceRequest_FeatureConfiguration struct {
 
 func (x *CreateInstanceRequest_FeatureConfiguration) Reset() {
 	*x = CreateInstanceRequest_FeatureConfiguration{}
-	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[61]
+	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[62]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5303,7 +5369,7 @@ func (x *CreateInstanceRequest_FeatureConfiguration) String() string {
 func (*CreateInstanceRequest_FeatureConfiguration) ProtoMessage() {}
 
 func (x *CreateInstanceRequest_FeatureConfiguration) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[61]
+	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[62]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5350,7 +5416,7 @@ type CreateInstanceRequest_ExperimentalFeatures_Disk struct {
 
 func (x *CreateInstanceRequest_ExperimentalFeatures_Disk) Reset() {
 	*x = CreateInstanceRequest_ExperimentalFeatures_Disk{}
-	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[64]
+	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[65]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5362,7 +5428,7 @@ func (x *CreateInstanceRequest_ExperimentalFeatures_Disk) String() string {
 func (*CreateInstanceRequest_ExperimentalFeatures_Disk) ProtoMessage() {}
 
 func (x *CreateInstanceRequest_ExperimentalFeatures_Disk) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[64]
+	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[65]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5405,7 +5471,7 @@ type CreateInstanceRequest_ExperimentalFeatures_ContainerdShim struct {
 
 func (x *CreateInstanceRequest_ExperimentalFeatures_ContainerdShim) Reset() {
 	*x = CreateInstanceRequest_ExperimentalFeatures_ContainerdShim{}
-	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[65]
+	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[66]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5417,7 +5483,7 @@ func (x *CreateInstanceRequest_ExperimentalFeatures_ContainerdShim) String() str
 func (*CreateInstanceRequest_ExperimentalFeatures_ContainerdShim) ProtoMessage() {}
 
 func (x *CreateInstanceRequest_ExperimentalFeatures_ContainerdShim) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[65]
+	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[66]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5481,7 +5547,7 @@ type CreateInstanceRequest_ExperimentalFeatures_TlsBackedPort struct {
 
 func (x *CreateInstanceRequest_ExperimentalFeatures_TlsBackedPort) Reset() {
 	*x = CreateInstanceRequest_ExperimentalFeatures_TlsBackedPort{}
-	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[66]
+	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[67]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5493,7 +5559,7 @@ func (x *CreateInstanceRequest_ExperimentalFeatures_TlsBackedPort) String() stri
 func (*CreateInstanceRequest_ExperimentalFeatures_TlsBackedPort) ProtoMessage() {}
 
 func (x *CreateInstanceRequest_ExperimentalFeatures_TlsBackedPort) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[66]
+	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[67]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5553,7 +5619,7 @@ type CreateInstanceRequest_ExperimentalFeatures_PrewarmContainerImage struct {
 
 func (x *CreateInstanceRequest_ExperimentalFeatures_PrewarmContainerImage) Reset() {
 	*x = CreateInstanceRequest_ExperimentalFeatures_PrewarmContainerImage{}
-	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[67]
+	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[68]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5565,7 +5631,7 @@ func (x *CreateInstanceRequest_ExperimentalFeatures_PrewarmContainerImage) Strin
 func (*CreateInstanceRequest_ExperimentalFeatures_PrewarmContainerImage) ProtoMessage() {}
 
 func (x *CreateInstanceRequest_ExperimentalFeatures_PrewarmContainerImage) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[67]
+	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[68]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5605,7 +5671,7 @@ type CreateInstanceRequest_ExperimentalFeatures_DirectoryRequest struct {
 
 func (x *CreateInstanceRequest_ExperimentalFeatures_DirectoryRequest) Reset() {
 	*x = CreateInstanceRequest_ExperimentalFeatures_DirectoryRequest{}
-	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[68]
+	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[69]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5617,7 +5683,7 @@ func (x *CreateInstanceRequest_ExperimentalFeatures_DirectoryRequest) String() s
 func (*CreateInstanceRequest_ExperimentalFeatures_DirectoryRequest) ProtoMessage() {}
 
 func (x *CreateInstanceRequest_ExperimentalFeatures_DirectoryRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[68]
+	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[69]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5662,7 +5728,7 @@ type CreateInstanceRequest_ExperimentalFeatures_ContainerCache struct {
 
 func (x *CreateInstanceRequest_ExperimentalFeatures_ContainerCache) Reset() {
 	*x = CreateInstanceRequest_ExperimentalFeatures_ContainerCache{}
-	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[69]
+	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[70]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5674,7 +5740,7 @@ func (x *CreateInstanceRequest_ExperimentalFeatures_ContainerCache) String() str
 func (*CreateInstanceRequest_ExperimentalFeatures_ContainerCache) ProtoMessage() {}
 
 func (x *CreateInstanceRequest_ExperimentalFeatures_ContainerCache) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[69]
+	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[70]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5721,7 +5787,7 @@ type CreateInstanceRequest_ExperimentalFeatures_Hook struct {
 
 func (x *CreateInstanceRequest_ExperimentalFeatures_Hook) Reset() {
 	*x = CreateInstanceRequest_ExperimentalFeatures_Hook{}
-	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[70]
+	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[71]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5733,7 +5799,7 @@ func (x *CreateInstanceRequest_ExperimentalFeatures_Hook) String() string {
 func (*CreateInstanceRequest_ExperimentalFeatures_Hook) ProtoMessage() {}
 
 func (x *CreateInstanceRequest_ExperimentalFeatures_Hook) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[70]
+	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[71]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5768,7 +5834,7 @@ type CreateInstanceRequest_ExperimentalFeatures_PrometheusMetricsSink struct {
 
 func (x *CreateInstanceRequest_ExperimentalFeatures_PrometheusMetricsSink) Reset() {
 	*x = CreateInstanceRequest_ExperimentalFeatures_PrometheusMetricsSink{}
-	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[71]
+	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[72]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5780,7 +5846,7 @@ func (x *CreateInstanceRequest_ExperimentalFeatures_PrometheusMetricsSink) Strin
 func (*CreateInstanceRequest_ExperimentalFeatures_PrometheusMetricsSink) ProtoMessage() {}
 
 func (x *CreateInstanceRequest_ExperimentalFeatures_PrometheusMetricsSink) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[71]
+	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[72]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5844,7 +5910,7 @@ type CreateInstanceRequest_ExperimentalFeatures_Hook_Command struct {
 
 func (x *CreateInstanceRequest_ExperimentalFeatures_Hook_Command) Reset() {
 	*x = CreateInstanceRequest_ExperimentalFeatures_Hook_Command{}
-	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[72]
+	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[73]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5856,7 +5922,7 @@ func (x *CreateInstanceRequest_ExperimentalFeatures_Hook_Command) String() strin
 func (*CreateInstanceRequest_ExperimentalFeatures_Hook_Command) ProtoMessage() {}
 
 func (x *CreateInstanceRequest_ExperimentalFeatures_Hook_Command) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[72]
+	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[73]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5914,7 +5980,7 @@ type AdditionalRegistry_Authenticator struct {
 
 func (x *AdditionalRegistry_Authenticator) Reset() {
 	*x = AdditionalRegistry_Authenticator{}
-	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[74]
+	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[75]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5926,7 +5992,7 @@ func (x *AdditionalRegistry_Authenticator) String() string {
 func (*AdditionalRegistry_Authenticator) ProtoMessage() {}
 
 func (x *AdditionalRegistry_Authenticator) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[74]
+	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[75]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5980,7 +6046,7 @@ type AdditionalRegistry_Authenticator_Basic struct {
 
 func (x *AdditionalRegistry_Authenticator_Basic) Reset() {
 	*x = AdditionalRegistry_Authenticator_Basic{}
-	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[75]
+	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[76]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5992,7 +6058,7 @@ func (x *AdditionalRegistry_Authenticator_Basic) String() string {
 func (*AdditionalRegistry_Authenticator_Basic) ProtoMessage() {}
 
 func (x *AdditionalRegistry_Authenticator_Basic) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[75]
+	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[76]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6034,7 +6100,7 @@ type AdditionalRegistry_Authenticator_OpenIDFederation struct {
 
 func (x *AdditionalRegistry_Authenticator_OpenIDFederation) Reset() {
 	*x = AdditionalRegistry_Authenticator_OpenIDFederation{}
-	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[76]
+	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[77]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6046,7 +6112,7 @@ func (x *AdditionalRegistry_Authenticator_OpenIDFederation) String() string {
 func (*AdditionalRegistry_Authenticator_OpenIDFederation) ProtoMessage() {}
 
 func (x *AdditionalRegistry_Authenticator_OpenIDFederation) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[76]
+	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[77]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6087,7 +6153,7 @@ type AdditionalRegistry_Authenticator_AssumeRoleFromAwsFederation struct {
 
 func (x *AdditionalRegistry_Authenticator_AssumeRoleFromAwsFederation) Reset() {
 	*x = AdditionalRegistry_Authenticator_AssumeRoleFromAwsFederation{}
-	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[77]
+	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[78]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6099,7 +6165,7 @@ func (x *AdditionalRegistry_Authenticator_AssumeRoleFromAwsFederation) String() 
 func (*AdditionalRegistry_Authenticator_AssumeRoleFromAwsFederation) ProtoMessage() {}
 
 func (x *AdditionalRegistry_Authenticator_AssumeRoleFromAwsFederation) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[77]
+	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[78]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6146,7 +6212,7 @@ type AdditionalRegistry_Authenticator_GcpWorkloadIdentityFederation struct {
 
 func (x *AdditionalRegistry_Authenticator_GcpWorkloadIdentityFederation) Reset() {
 	*x = AdditionalRegistry_Authenticator_GcpWorkloadIdentityFederation{}
-	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[78]
+	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[79]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6158,7 +6224,7 @@ func (x *AdditionalRegistry_Authenticator_GcpWorkloadIdentityFederation) String(
 func (*AdditionalRegistry_Authenticator_GcpWorkloadIdentityFederation) ProtoMessage() {}
 
 func (x *AdditionalRegistry_Authenticator_GcpWorkloadIdentityFederation) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[78]
+	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[79]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6206,7 +6272,7 @@ type DescribeInstanceResponse_ExperimentalFeatures struct {
 
 func (x *DescribeInstanceResponse_ExperimentalFeatures) Reset() {
 	*x = DescribeInstanceResponse_ExperimentalFeatures{}
-	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[79]
+	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[80]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6218,7 +6284,7 @@ func (x *DescribeInstanceResponse_ExperimentalFeatures) String() string {
 func (*DescribeInstanceResponse_ExperimentalFeatures) ProtoMessage() {}
 
 func (x *DescribeInstanceResponse_ExperimentalFeatures) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[79]
+	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[80]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6255,7 +6321,7 @@ type DescribeInstanceResponse_ShutdownReason struct {
 
 func (x *DescribeInstanceResponse_ShutdownReason) Reset() {
 	*x = DescribeInstanceResponse_ShutdownReason{}
-	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[80]
+	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[81]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6267,7 +6333,7 @@ func (x *DescribeInstanceResponse_ShutdownReason) String() string {
 func (*DescribeInstanceResponse_ShutdownReason) ProtoMessage() {}
 
 func (x *DescribeInstanceResponse_ShutdownReason) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[80]
+	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[81]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6358,7 +6424,7 @@ type ContainerRequest_ExperimentalFeatures struct {
 
 func (x *ContainerRequest_ExperimentalFeatures) Reset() {
 	*x = ContainerRequest_ExperimentalFeatures{}
-	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[82]
+	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[83]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6370,7 +6436,7 @@ func (x *ContainerRequest_ExperimentalFeatures) String() string {
 func (*ContainerRequest_ExperimentalFeatures) ProtoMessage() {}
 
 func (x *ContainerRequest_ExperimentalFeatures) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[82]
+	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[83]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6493,7 +6559,7 @@ type ContainerRequest_SidecarVolume struct {
 
 func (x *ContainerRequest_SidecarVolume) Reset() {
 	*x = ContainerRequest_SidecarVolume{}
-	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[83]
+	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[84]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6505,7 +6571,7 @@ func (x *ContainerRequest_SidecarVolume) String() string {
 func (*ContainerRequest_SidecarVolume) ProtoMessage() {}
 
 func (x *ContainerRequest_SidecarVolume) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[83]
+	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[84]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6553,7 +6619,7 @@ type ContainerRequest_ExperimentalFeatures_HostMount struct {
 
 func (x *ContainerRequest_ExperimentalFeatures_HostMount) Reset() {
 	*x = ContainerRequest_ExperimentalFeatures_HostMount{}
-	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[85]
+	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[86]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6565,7 +6631,7 @@ func (x *ContainerRequest_ExperimentalFeatures_HostMount) String() string {
 func (*ContainerRequest_ExperimentalFeatures_HostMount) ProtoMessage() {}
 
 func (x *ContainerRequest_ExperimentalFeatures_HostMount) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[85]
+	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[86]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6613,7 +6679,7 @@ type ContainerRequest_ExperimentalFeatures_ImagePullCredentials struct {
 
 func (x *ContainerRequest_ExperimentalFeatures_ImagePullCredentials) Reset() {
 	*x = ContainerRequest_ExperimentalFeatures_ImagePullCredentials{}
-	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[86]
+	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[87]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6625,7 +6691,7 @@ func (x *ContainerRequest_ExperimentalFeatures_ImagePullCredentials) String() st
 func (*ContainerRequest_ExperimentalFeatures_ImagePullCredentials) ProtoMessage() {}
 
 func (x *ContainerRequest_ExperimentalFeatures_ImagePullCredentials) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[86]
+	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[87]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6658,7 +6724,7 @@ type ContainerRequest_ExperimentalFeatures_PushEphemeralDiskAsImage struct {
 
 func (x *ContainerRequest_ExperimentalFeatures_PushEphemeralDiskAsImage) Reset() {
 	*x = ContainerRequest_ExperimentalFeatures_PushEphemeralDiskAsImage{}
-	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[87]
+	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[88]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6670,7 +6736,7 @@ func (x *ContainerRequest_ExperimentalFeatures_PushEphemeralDiskAsImage) String(
 func (*ContainerRequest_ExperimentalFeatures_PushEphemeralDiskAsImage) ProtoMessage() {}
 
 func (x *ContainerRequest_ExperimentalFeatures_PushEphemeralDiskAsImage) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[87]
+	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[88]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6705,7 +6771,7 @@ type ContainerRequest_ExperimentalFeatures_SidecarVolume struct {
 
 func (x *ContainerRequest_ExperimentalFeatures_SidecarVolume) Reset() {
 	*x = ContainerRequest_ExperimentalFeatures_SidecarVolume{}
-	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[88]
+	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[89]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6717,7 +6783,7 @@ func (x *ContainerRequest_ExperimentalFeatures_SidecarVolume) String() string {
 func (*ContainerRequest_ExperimentalFeatures_SidecarVolume) ProtoMessage() {}
 
 func (x *ContainerRequest_ExperimentalFeatures_SidecarVolume) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[88]
+	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[89]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6764,7 +6830,7 @@ type ApplicationRequest_ExperimentalFeatures struct {
 
 func (x *ApplicationRequest_ExperimentalFeatures) Reset() {
 	*x = ApplicationRequest_ExperimentalFeatures{}
-	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[90]
+	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[91]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6776,7 +6842,7 @@ func (x *ApplicationRequest_ExperimentalFeatures) String() string {
 func (*ApplicationRequest_ExperimentalFeatures) ProtoMessage() {}
 
 func (x *ApplicationRequest_ExperimentalFeatures) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[90]
+	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[91]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6811,7 +6877,7 @@ type HttpMatchRule_HttpMatch struct {
 
 func (x *HttpMatchRule_HttpMatch) Reset() {
 	*x = HttpMatchRule_HttpMatch{}
-	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[91]
+	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[92]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6823,7 +6889,7 @@ func (x *HttpMatchRule_HttpMatch) String() string {
 func (*HttpMatchRule_HttpMatch) ProtoMessage() {}
 
 func (x *HttpMatchRule_HttpMatch) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[91]
+	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[92]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6880,7 +6946,7 @@ type AllocatedContainer_ExportedContainerPort struct {
 
 func (x *AllocatedContainer_ExportedContainerPort) Reset() {
 	*x = AllocatedContainer_ExportedContainerPort{}
-	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[92]
+	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[93]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6892,7 +6958,7 @@ func (x *AllocatedContainer_ExportedContainerPort) String() string {
 func (*AllocatedContainer_ExportedContainerPort) ProtoMessage() {}
 
 func (x *AllocatedContainer_ExportedContainerPort) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[92]
+	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[93]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6970,7 +7036,7 @@ type InstanceExtendedMetadata_SshMetadata struct {
 
 func (x *InstanceExtendedMetadata_SshMetadata) Reset() {
 	*x = InstanceExtendedMetadata_SshMetadata{}
-	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[93]
+	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[94]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6982,7 +7048,7 @@ func (x *InstanceExtendedMetadata_SshMetadata) String() string {
 func (*InstanceExtendedMetadata_SshMetadata) ProtoMessage() {}
 
 func (x *InstanceExtendedMetadata_SshMetadata) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[93]
+	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[94]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7030,7 +7096,7 @@ type InstanceExtendedMetadata_KubernetesInstanceMetadata struct {
 
 func (x *InstanceExtendedMetadata_KubernetesInstanceMetadata) Reset() {
 	*x = InstanceExtendedMetadata_KubernetesInstanceMetadata{}
-	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[94]
+	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[95]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -7042,7 +7108,7 @@ func (x *InstanceExtendedMetadata_KubernetesInstanceMetadata) String() string {
 func (*InstanceExtendedMetadata_KubernetesInstanceMetadata) ProtoMessage() {}
 
 func (x *InstanceExtendedMetadata_KubernetesInstanceMetadata) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[94]
+	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[95]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7111,7 +7177,7 @@ type InstanceExtendedMetadata_AllocatedTlsBackedPort struct {
 
 func (x *InstanceExtendedMetadata_AllocatedTlsBackedPort) Reset() {
 	*x = InstanceExtendedMetadata_AllocatedTlsBackedPort{}
-	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[95]
+	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[96]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -7123,7 +7189,7 @@ func (x *InstanceExtendedMetadata_AllocatedTlsBackedPort) String() string {
 func (*InstanceExtendedMetadata_AllocatedTlsBackedPort) ProtoMessage() {}
 
 func (x *InstanceExtendedMetadata_AllocatedTlsBackedPort) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[95]
+	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[96]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7203,7 +7269,7 @@ type InstanceMetadata_Service struct {
 
 func (x *InstanceMetadata_Service) Reset() {
 	*x = InstanceMetadata_Service{}
-	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[96]
+	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[97]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -7215,7 +7281,7 @@ func (x *InstanceMetadata_Service) String() string {
 func (*InstanceMetadata_Service) ProtoMessage() {}
 
 func (x *InstanceMetadata_Service) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[96]
+	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[97]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7271,7 +7337,7 @@ type InstanceMetadata_HWDeployment struct {
 
 func (x *InstanceMetadata_HWDeployment) Reset() {
 	*x = InstanceMetadata_HWDeployment{}
-	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[97]
+	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[98]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -7283,7 +7349,7 @@ func (x *InstanceMetadata_HWDeployment) String() string {
 func (*InstanceMetadata_HWDeployment) ProtoMessage() {}
 
 func (x *InstanceMetadata_HWDeployment) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[97]
+	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[98]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7324,7 +7390,7 @@ type ResourceLimitsError_Resource struct {
 
 func (x *ResourceLimitsError_Resource) Reset() {
 	*x = ResourceLimitsError_Resource{}
-	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[98]
+	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[99]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -7336,7 +7402,7 @@ func (x *ResourceLimitsError_Resource) String() string {
 func (*ResourceLimitsError_Resource) ProtoMessage() {}
 
 func (x *ResourceLimitsError_Resource) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[98]
+	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[99]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7383,7 +7449,7 @@ type UsageLimitsError_Usage struct {
 
 func (x *UsageLimitsError_Usage) Reset() {
 	*x = UsageLimitsError_Usage{}
-	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[99]
+	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[100]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -7395,7 +7461,7 @@ func (x *UsageLimitsError_Usage) String() string {
 func (*UsageLimitsError_Usage) ProtoMessage() {}
 
 func (x *UsageLimitsError_Usage) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[99]
+	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[100]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7436,7 +7502,7 @@ type GetNetworkConfigurationResponse_Egress struct {
 
 func (x *GetNetworkConfigurationResponse_Egress) Reset() {
 	*x = GetNetworkConfigurationResponse_Egress{}
-	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[100]
+	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[101]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -7448,7 +7514,7 @@ func (x *GetNetworkConfigurationResponse_Egress) String() string {
 func (*GetNetworkConfigurationResponse_Egress) ProtoMessage() {}
 
 func (x *GetNetworkConfigurationResponse_Egress) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[100]
+	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[101]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7484,7 +7550,7 @@ type GetNetworkConfigurationResponse_CIDR struct {
 
 func (x *GetNetworkConfigurationResponse_CIDR) Reset() {
 	*x = GetNetworkConfigurationResponse_CIDR{}
-	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[101]
+	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[102]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -7496,7 +7562,7 @@ func (x *GetNetworkConfigurationResponse_CIDR) String() string {
 func (*GetNetworkConfigurationResponse_CIDR) ProtoMessage() {}
 
 func (x *GetNetworkConfigurationResponse_CIDR) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[101]
+	mi := &file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes[102]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7537,7 +7603,7 @@ var File_proto_namespace_cloud_compute_v1beta_compute_proto protoreflect.FileDes
 
 const file_proto_namespace_cloud_compute_v1beta_compute_proto_rawDesc = "" +
 	"\n" +
-	"2proto/namespace/cloud/compute/v1beta/compute.proto\x12\x1enamespace.cloud.compute.v1beta\x1a\x1bgoogle/protobuf/empty.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1egoogle/protobuf/duration.proto\x1a%proto/namespace/stdlib/callback.proto\x1a#proto/namespace/stdlib/labels.proto\x1a%proto/namespace/stdlib/matchers.proto\x1a'proto/namespace/stdlib/timeseries.proto\x1a,proto/namespace/cloud/iam/v1beta/authz.proto\x1a1proto/namespace/cloud/network/v1beta/egress.proto\"\xc1*\n" +
+	"2proto/namespace/cloud/compute/v1beta/compute.proto\x12\x1enamespace.cloud.compute.v1beta\x1a\x1bgoogle/protobuf/empty.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1egoogle/protobuf/duration.proto\x1a%proto/namespace/stdlib/callback.proto\x1a#proto/namespace/stdlib/labels.proto\x1a%proto/namespace/stdlib/matchers.proto\x1a'proto/namespace/stdlib/timeseries.proto\x1a,proto/namespace/cloud/iam/v1beta/authz.proto\x1a1proto/namespace/cloud/network/v1beta/egress.proto\"\xf0*\n" +
 	"\x15CreateInstanceRequest\x12C\n" +
 	"\x05shape\x18\x01 \x01(\v2-.namespace.cloud.compute.v1beta.InstanceShapeR\x05shape\x12Y\n" +
 	"\bfeatures\x18\x03 \x03(\x0e2=.namespace.cloud.compute.v1beta.CreateInstanceRequest.FeatureR\bfeatures\x12\x7f\n" +
@@ -7567,7 +7633,7 @@ const file_proto_namespace_cloud_compute_v1beta_compute_proto_rawDesc = "" +
 	"\x05value\x18\x02 \x01(\v22.namespace.cloud.compute.v1beta.AdditionalRegistryR\x05value:\x028\x01\x1a\x85\x01\n" +
 	"\rNetworkPolicy\x12H\n" +
 	"\x06egress\x18\x01 \x01(\v20.namespace.cloud.network.v1beta.EgressPolicySpecR\x06egress\x12*\n" +
-	"\x11egress_policy_tag\x18\x02 \x01(\tR\x0fegressPolicyTag\x1a\x88\x1a\n" +
+	"\x11egress_policy_tag\x18\x02 \x01(\tR\x0fegressPolicyTag\x1a\xb7\x1a\n" +
 	"\x14ExperimentalFeatures\x12'\n" +
 	"\x0fprivate_feature\x18\x01 \x03(\tR\x0eprivateFeature\x12e\n" +
 	"\x05disks\x18\x02 \x03(\v2O.namespace.cloud.compute.v1beta.CreateInstanceRequest.ExperimentalFeatures.DiskR\x05disks\x12\x84\x01\n" +
@@ -7588,7 +7654,8 @@ const file_proto_namespace_cloud_compute_v1beta_compute_proto_rawDesc = "" +
 	"\x13macos_base_image_id\x18\x10 \x01(\tR\x10macosBaseImageId\x12t\n" +
 	"\binternal\x18\x0f \x03(\v2X.namespace.cloud.compute.v1beta.CreateInstanceRequest.ExperimentalFeatures.InternalEntryR\binternal\x123\n" +
 	"\x15nested_virtualization\x18\x13 \x01(\bR\x14nestedVirtualization\x12\x98\x01\n" +
-	"\x17prometheus_metrics_sink\x18\x14 \x01(\v2`.namespace.cloud.compute.v1beta.CreateInstanceRequest.ExperimentalFeatures.PrometheusMetricsSinkR\x15prometheusMetricsSink\x1aF\n" +
+	"\x17prometheus_metrics_sink\x18\x14 \x01(\v2`.namespace.cloud.compute.v1beta.CreateInstanceRequest.ExperimentalFeatures.PrometheusMetricsSinkR\x15prometheusMetricsSink\x12-\n" +
+	"\x12with_configuration\x18\x15 \x01(\tR\x11withConfiguration\x1aF\n" +
 	"\x18ExportedUnixSocketsEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
 	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\x1a;\n" +
@@ -8086,11 +8153,14 @@ const file_proto_namespace_cloud_compute_v1beta_compute_proto_rawDesc = "" +
 	"\x14OptimizeImageRequest\x12\x1b\n" +
 	"\timage_ref\x18\x01 \x01(\tR\bimageRef\x12\x12\n" +
 	"\x04site\x18\x02 \x01(\tR\x04site\x12\x19\n" +
-	"\bpush_tag\x18\x03 \x01(\tR\apushTag\"\x9f\x02\n" +
+	"\bpush_tag\x18\x03 \x01(\tR\apushTag\"C\n" +
+	"\x18WaitOptimizeImageRequest\x12'\n" +
+	"\x0foptimize_cursor\x18\x01 \x01(\fR\x0eoptimizeCursor\"\xc8\x02\n" +
 	"\x15OptimizeImageProgress\x12T\n" +
 	"\x06status\x18\x01 \x01(\x0e2<.namespace.cloud.compute.v1beta.OptimizeImageProgress.StatusR\x06status\x12*\n" +
 	"\x11baker_instance_id\x18\x02 \x01(\tR\x0fbakerInstanceId\x12'\n" +
-	"\x0ffailure_message\x18\x03 \x01(\tR\x0efailureMessage\"[\n" +
+	"\x0ffailure_message\x18\x03 \x01(\tR\x0efailureMessage\x12'\n" +
+	"\x0foptimize_cursor\x18\x04 \x01(\fR\x0eoptimizeCursor\"[\n" +
 	"\x06Status\x12\x12\n" +
 	"\x0eSTATUS_UNKNOWN\x10\x00\x12\r\n" +
 	"\tPREPARING\x10\x01\x12\f\n" +
@@ -8117,7 +8187,7 @@ const file_proto_namespace_cloud_compute_v1beta_compute_proto_rawDesc = "" +
 	"\x1bIngressClientAuthentication\x12-\n" +
 	")INGRESS_CLIENT_AUTHENTICATION_UNSPECIFIED\x10\x00\x12&\n" +
 	"\"INGRESS_CLIENT_AUTHENTICATION_NONE\x10\x01\x12&\n" +
-	"\"INGRESS_CLIENT_AUTHENTICATION_MTLS\x10\x022\x98\x14\n" +
+	"\"INGRESS_CLIENT_AUTHENTICATION_MTLS\x10\x022\xa1\x15\n" +
 	"\x0eComputeService\x12\x81\x01\n" +
 	"\x0eCreateInstance\x125.namespace.cloud.compute.v1beta.CreateInstanceRequest\x1a8.namespace.cloud.compute.v1beta.DescribeInstanceResponse\x12{\n" +
 	"\fWaitInstance\x123.namespace.cloud.compute.v1beta.WaitInstanceRequest\x1a4.namespace.cloud.compute.v1beta.WaitInstanceResponse0\x01\x12}\n" +
@@ -8137,7 +8207,8 @@ const file_proto_namespace_cloud_compute_v1beta_compute_proto_rawDesc = "" +
 	"\fGetSSHConfig\x123.namespace.cloud.compute.v1beta.GetSSHConfigRequest\x1a4.namespace.cloud.compute.v1beta.GetSSHConfigResponse\x12y\n" +
 	"\fGetVNCConfig\x123.namespace.cloud.compute.v1beta.GetVNCConfigRequest\x1a4.namespace.cloud.compute.v1beta.GetVNCConfigResponse\x12\x85\x01\n" +
 	"\x10ReleaseUniqueTag\x127.namespace.cloud.compute.v1beta.ReleaseUniqueTagRequest\x1a8.namespace.cloud.compute.v1beta.ReleaseUniqueTagResponse\x12~\n" +
-	"\rOptimizeImage\x124.namespace.cloud.compute.v1beta.OptimizeImageRequest\x1a5.namespace.cloud.compute.v1beta.OptimizeImageProgress0\x01\x12\xa0\x01\n" +
+	"\rOptimizeImage\x124.namespace.cloud.compute.v1beta.OptimizeImageRequest\x1a5.namespace.cloud.compute.v1beta.OptimizeImageProgress0\x01\x12\x86\x01\n" +
+	"\x11WaitOptimizeImage\x128.namespace.cloud.compute.v1beta.WaitOptimizeImageRequest\x1a5.namespace.cloud.compute.v1beta.OptimizeImageProgress0\x01\x12\xa0\x01\n" +
 	"\x19ListInstanceNotifications\x12@.namespace.cloud.compute.v1beta.ListInstanceNotificationsRequest\x1aA.namespace.cloud.compute.v1beta.ListInstanceNotificationsResponseB\xa2\x02\n" +
 	"\"com.namespace.cloud.compute.v1betaB\fComputeProtoP\x01ZQnamespacelabs.dev/integrations/proto/namespace/cloud/compute/v1beta;computev1beta\xa2\x02\x03NCC\xaa\x02\x1eNamespace.Cloud.Compute.V1beta\xca\x02\x1fNamespace_\\Cloud\\Compute\\V1beta\xe2\x02+Namespace_\\Cloud\\Compute\\V1beta\\GPBMetadata\xea\x02!Namespace::Cloud::Compute::V1betab\x06proto3"
 
@@ -8154,7 +8225,7 @@ func file_proto_namespace_cloud_compute_v1beta_compute_proto_rawDescGZIP() []byt
 }
 
 var file_proto_namespace_cloud_compute_v1beta_compute_proto_enumTypes = make([]protoimpl.EnumInfo, 15)
-var file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes = make([]protoimpl.MessageInfo, 102)
+var file_proto_namespace_cloud_compute_v1beta_compute_proto_msgTypes = make([]protoimpl.MessageInfo, 103)
 var file_proto_namespace_cloud_compute_v1beta_compute_proto_goTypes = []any{
 	(IngressClientAuthentication)(0),               // 0: namespace.cloud.compute.v1beta.IngressClientAuthentication
 	(CreateInstanceRequest_Feature)(0),             // 1: namespace.cloud.compute.v1beta.CreateInstanceRequest.Feature
@@ -8225,112 +8296,113 @@ var file_proto_namespace_cloud_compute_v1beta_compute_proto_goTypes = []any{
 	(*ReleaseUniqueTagRequest)(nil),                // 66: namespace.cloud.compute.v1beta.ReleaseUniqueTagRequest
 	(*ReleaseUniqueTagResponse)(nil),               // 67: namespace.cloud.compute.v1beta.ReleaseUniqueTagResponse
 	(*OptimizeImageRequest)(nil),                   // 68: namespace.cloud.compute.v1beta.OptimizeImageRequest
-	(*OptimizeImageProgress)(nil),                  // 69: namespace.cloud.compute.v1beta.OptimizeImageProgress
-	(*InstanceEventMetadata)(nil),                  // 70: namespace.cloud.compute.v1beta.InstanceEventMetadata
-	(*ListInstanceNotificationsRequest)(nil),       // 71: namespace.cloud.compute.v1beta.ListInstanceNotificationsRequest
-	(*ListInstanceNotificationsResponse)(nil),      // 72: namespace.cloud.compute.v1beta.ListInstanceNotificationsResponse
-	nil, // 73: namespace.cloud.compute.v1beta.CreateInstanceRequest.AdditionalRegistriesEntry
-	(*CreateInstanceRequest_NetworkPolicy)(nil),        // 74: namespace.cloud.compute.v1beta.CreateInstanceRequest.NetworkPolicy
-	(*CreateInstanceRequest_ExperimentalFeatures)(nil), // 75: namespace.cloud.compute.v1beta.CreateInstanceRequest.ExperimentalFeatures
-	(*CreateInstanceRequest_FeatureConfiguration)(nil), // 76: namespace.cloud.compute.v1beta.CreateInstanceRequest.FeatureConfiguration
-	nil, // 77: namespace.cloud.compute.v1beta.CreateInstanceRequest.ExperimentalFeatures.ExportedUnixSocketsEntry
-	nil, // 78: namespace.cloud.compute.v1beta.CreateInstanceRequest.ExperimentalFeatures.InternalEntry
-	(*CreateInstanceRequest_ExperimentalFeatures_Disk)(nil),                  // 79: namespace.cloud.compute.v1beta.CreateInstanceRequest.ExperimentalFeatures.Disk
-	(*CreateInstanceRequest_ExperimentalFeatures_ContainerdShim)(nil),        // 80: namespace.cloud.compute.v1beta.CreateInstanceRequest.ExperimentalFeatures.ContainerdShim
-	(*CreateInstanceRequest_ExperimentalFeatures_TlsBackedPort)(nil),         // 81: namespace.cloud.compute.v1beta.CreateInstanceRequest.ExperimentalFeatures.TlsBackedPort
-	(*CreateInstanceRequest_ExperimentalFeatures_PrewarmContainerImage)(nil), // 82: namespace.cloud.compute.v1beta.CreateInstanceRequest.ExperimentalFeatures.PrewarmContainerImage
-	(*CreateInstanceRequest_ExperimentalFeatures_DirectoryRequest)(nil),      // 83: namespace.cloud.compute.v1beta.CreateInstanceRequest.ExperimentalFeatures.DirectoryRequest
-	(*CreateInstanceRequest_ExperimentalFeatures_ContainerCache)(nil),        // 84: namespace.cloud.compute.v1beta.CreateInstanceRequest.ExperimentalFeatures.ContainerCache
-	(*CreateInstanceRequest_ExperimentalFeatures_Hook)(nil),                  // 85: namespace.cloud.compute.v1beta.CreateInstanceRequest.ExperimentalFeatures.Hook
-	(*CreateInstanceRequest_ExperimentalFeatures_PrometheusMetricsSink)(nil), // 86: namespace.cloud.compute.v1beta.CreateInstanceRequest.ExperimentalFeatures.PrometheusMetricsSink
-	(*CreateInstanceRequest_ExperimentalFeatures_Hook_Command)(nil),          // 87: namespace.cloud.compute.v1beta.CreateInstanceRequest.ExperimentalFeatures.Hook.Command
-	nil,                                      // 88: namespace.cloud.compute.v1beta.CreateInstanceRequest.ExperimentalFeatures.Hook.Command.EnvironmentEntry
-	(*AdditionalRegistry_Authenticator)(nil), // 89: namespace.cloud.compute.v1beta.AdditionalRegistry.Authenticator
-	(*AdditionalRegistry_Authenticator_Basic)(nil),                         // 90: namespace.cloud.compute.v1beta.AdditionalRegistry.Authenticator.Basic
-	(*AdditionalRegistry_Authenticator_OpenIDFederation)(nil),              // 91: namespace.cloud.compute.v1beta.AdditionalRegistry.Authenticator.OpenIDFederation
-	(*AdditionalRegistry_Authenticator_AssumeRoleFromAwsFederation)(nil),   // 92: namespace.cloud.compute.v1beta.AdditionalRegistry.Authenticator.AssumeRoleFromAwsFederation
-	(*AdditionalRegistry_Authenticator_GcpWorkloadIdentityFederation)(nil), // 93: namespace.cloud.compute.v1beta.AdditionalRegistry.Authenticator.GcpWorkloadIdentityFederation
-	(*DescribeInstanceResponse_ExperimentalFeatures)(nil),                  // 94: namespace.cloud.compute.v1beta.DescribeInstanceResponse.ExperimentalFeatures
-	(*DescribeInstanceResponse_ShutdownReason)(nil),                        // 95: namespace.cloud.compute.v1beta.DescribeInstanceResponse.ShutdownReason
-	nil, // 96: namespace.cloud.compute.v1beta.ContainerRequest.EnvironmentEntry
-	(*ContainerRequest_ExperimentalFeatures)(nil), // 97: namespace.cloud.compute.v1beta.ContainerRequest.ExperimentalFeatures
-	(*ContainerRequest_SidecarVolume)(nil),        // 98: namespace.cloud.compute.v1beta.ContainerRequest.SidecarVolume
-	nil,                                           // 99: namespace.cloud.compute.v1beta.ContainerRequest.ExperimentalFeatures.ExportedUnixSocketsEntry
-	(*ContainerRequest_ExperimentalFeatures_HostMount)(nil),                // 100: namespace.cloud.compute.v1beta.ContainerRequest.ExperimentalFeatures.HostMount
-	(*ContainerRequest_ExperimentalFeatures_ImagePullCredentials)(nil),     // 101: namespace.cloud.compute.v1beta.ContainerRequest.ExperimentalFeatures.ImagePullCredentials
-	(*ContainerRequest_ExperimentalFeatures_PushEphemeralDiskAsImage)(nil), // 102: namespace.cloud.compute.v1beta.ContainerRequest.ExperimentalFeatures.PushEphemeralDiskAsImage
-	(*ContainerRequest_ExperimentalFeatures_SidecarVolume)(nil),            // 103: namespace.cloud.compute.v1beta.ContainerRequest.ExperimentalFeatures.SidecarVolume
-	nil, // 104: namespace.cloud.compute.v1beta.ApplicationRequest.EnvironmentEntry
-	(*ApplicationRequest_ExperimentalFeatures)(nil),             // 105: namespace.cloud.compute.v1beta.ApplicationRequest.ExperimentalFeatures
-	(*HttpMatchRule_HttpMatch)(nil),                             // 106: namespace.cloud.compute.v1beta.HttpMatchRule.HttpMatch
-	(*AllocatedContainer_ExportedContainerPort)(nil),            // 107: namespace.cloud.compute.v1beta.AllocatedContainer.ExportedContainerPort
-	(*InstanceExtendedMetadata_SshMetadata)(nil),                // 108: namespace.cloud.compute.v1beta.InstanceExtendedMetadata.SshMetadata
-	(*InstanceExtendedMetadata_KubernetesInstanceMetadata)(nil), // 109: namespace.cloud.compute.v1beta.InstanceExtendedMetadata.KubernetesInstanceMetadata
-	(*InstanceExtendedMetadata_AllocatedTlsBackedPort)(nil),     // 110: namespace.cloud.compute.v1beta.InstanceExtendedMetadata.AllocatedTlsBackedPort
-	(*InstanceMetadata_Service)(nil),                            // 111: namespace.cloud.compute.v1beta.InstanceMetadata.Service
-	(*InstanceMetadata_HWDeployment)(nil),                       // 112: namespace.cloud.compute.v1beta.InstanceMetadata.HWDeployment
-	(*ResourceLimitsError_Resource)(nil),                        // 113: namespace.cloud.compute.v1beta.ResourceLimitsError.Resource
-	(*UsageLimitsError_Usage)(nil),                              // 114: namespace.cloud.compute.v1beta.UsageLimitsError.Usage
-	(*GetNetworkConfigurationResponse_Egress)(nil),              // 115: namespace.cloud.compute.v1beta.GetNetworkConfigurationResponse.Egress
-	(*GetNetworkConfigurationResponse_CIDR)(nil),                // 116: namespace.cloud.compute.v1beta.GetNetworkConfigurationResponse.CIDR
-	(*stdlib.Label)(nil),                                        // 117: namespace.stdlib.Label
-	(*timestamppb.Timestamp)(nil),                               // 118: google.protobuf.Timestamp
-	(*stdlib.HttpCallbackEndpoint)(nil),                         // 119: namespace.stdlib.HttpCallbackEndpoint
-	(*v1beta.Permission)(nil),                                   // 120: namespace.cloud.iam.v1beta.Permission
-	(*durationpb.Duration)(nil),                                 // 121: google.protobuf.Duration
-	(*stdlib.LabelFilterEntry)(nil),                             // 122: namespace.stdlib.LabelFilterEntry
-	(*stdlib.TimeSeries)(nil),                                   // 123: namespace.stdlib.TimeSeries
-	(*stdlib.StringMatcher)(nil),                                // 124: namespace.stdlib.StringMatcher
-	(*v1beta1.EgressPolicySpec)(nil),                            // 125: namespace.cloud.network.v1beta.EgressPolicySpec
-	(*emptypb.Empty)(nil),                                       // 126: google.protobuf.Empty
+	(*WaitOptimizeImageRequest)(nil),               // 69: namespace.cloud.compute.v1beta.WaitOptimizeImageRequest
+	(*OptimizeImageProgress)(nil),                  // 70: namespace.cloud.compute.v1beta.OptimizeImageProgress
+	(*InstanceEventMetadata)(nil),                  // 71: namespace.cloud.compute.v1beta.InstanceEventMetadata
+	(*ListInstanceNotificationsRequest)(nil),       // 72: namespace.cloud.compute.v1beta.ListInstanceNotificationsRequest
+	(*ListInstanceNotificationsResponse)(nil),      // 73: namespace.cloud.compute.v1beta.ListInstanceNotificationsResponse
+	nil, // 74: namespace.cloud.compute.v1beta.CreateInstanceRequest.AdditionalRegistriesEntry
+	(*CreateInstanceRequest_NetworkPolicy)(nil),        // 75: namespace.cloud.compute.v1beta.CreateInstanceRequest.NetworkPolicy
+	(*CreateInstanceRequest_ExperimentalFeatures)(nil), // 76: namespace.cloud.compute.v1beta.CreateInstanceRequest.ExperimentalFeatures
+	(*CreateInstanceRequest_FeatureConfiguration)(nil), // 77: namespace.cloud.compute.v1beta.CreateInstanceRequest.FeatureConfiguration
+	nil, // 78: namespace.cloud.compute.v1beta.CreateInstanceRequest.ExperimentalFeatures.ExportedUnixSocketsEntry
+	nil, // 79: namespace.cloud.compute.v1beta.CreateInstanceRequest.ExperimentalFeatures.InternalEntry
+	(*CreateInstanceRequest_ExperimentalFeatures_Disk)(nil),                  // 80: namespace.cloud.compute.v1beta.CreateInstanceRequest.ExperimentalFeatures.Disk
+	(*CreateInstanceRequest_ExperimentalFeatures_ContainerdShim)(nil),        // 81: namespace.cloud.compute.v1beta.CreateInstanceRequest.ExperimentalFeatures.ContainerdShim
+	(*CreateInstanceRequest_ExperimentalFeatures_TlsBackedPort)(nil),         // 82: namespace.cloud.compute.v1beta.CreateInstanceRequest.ExperimentalFeatures.TlsBackedPort
+	(*CreateInstanceRequest_ExperimentalFeatures_PrewarmContainerImage)(nil), // 83: namespace.cloud.compute.v1beta.CreateInstanceRequest.ExperimentalFeatures.PrewarmContainerImage
+	(*CreateInstanceRequest_ExperimentalFeatures_DirectoryRequest)(nil),      // 84: namespace.cloud.compute.v1beta.CreateInstanceRequest.ExperimentalFeatures.DirectoryRequest
+	(*CreateInstanceRequest_ExperimentalFeatures_ContainerCache)(nil),        // 85: namespace.cloud.compute.v1beta.CreateInstanceRequest.ExperimentalFeatures.ContainerCache
+	(*CreateInstanceRequest_ExperimentalFeatures_Hook)(nil),                  // 86: namespace.cloud.compute.v1beta.CreateInstanceRequest.ExperimentalFeatures.Hook
+	(*CreateInstanceRequest_ExperimentalFeatures_PrometheusMetricsSink)(nil), // 87: namespace.cloud.compute.v1beta.CreateInstanceRequest.ExperimentalFeatures.PrometheusMetricsSink
+	(*CreateInstanceRequest_ExperimentalFeatures_Hook_Command)(nil),          // 88: namespace.cloud.compute.v1beta.CreateInstanceRequest.ExperimentalFeatures.Hook.Command
+	nil,                                      // 89: namespace.cloud.compute.v1beta.CreateInstanceRequest.ExperimentalFeatures.Hook.Command.EnvironmentEntry
+	(*AdditionalRegistry_Authenticator)(nil), // 90: namespace.cloud.compute.v1beta.AdditionalRegistry.Authenticator
+	(*AdditionalRegistry_Authenticator_Basic)(nil),                         // 91: namespace.cloud.compute.v1beta.AdditionalRegistry.Authenticator.Basic
+	(*AdditionalRegistry_Authenticator_OpenIDFederation)(nil),              // 92: namespace.cloud.compute.v1beta.AdditionalRegistry.Authenticator.OpenIDFederation
+	(*AdditionalRegistry_Authenticator_AssumeRoleFromAwsFederation)(nil),   // 93: namespace.cloud.compute.v1beta.AdditionalRegistry.Authenticator.AssumeRoleFromAwsFederation
+	(*AdditionalRegistry_Authenticator_GcpWorkloadIdentityFederation)(nil), // 94: namespace.cloud.compute.v1beta.AdditionalRegistry.Authenticator.GcpWorkloadIdentityFederation
+	(*DescribeInstanceResponse_ExperimentalFeatures)(nil),                  // 95: namespace.cloud.compute.v1beta.DescribeInstanceResponse.ExperimentalFeatures
+	(*DescribeInstanceResponse_ShutdownReason)(nil),                        // 96: namespace.cloud.compute.v1beta.DescribeInstanceResponse.ShutdownReason
+	nil, // 97: namespace.cloud.compute.v1beta.ContainerRequest.EnvironmentEntry
+	(*ContainerRequest_ExperimentalFeatures)(nil), // 98: namespace.cloud.compute.v1beta.ContainerRequest.ExperimentalFeatures
+	(*ContainerRequest_SidecarVolume)(nil),        // 99: namespace.cloud.compute.v1beta.ContainerRequest.SidecarVolume
+	nil,                                           // 100: namespace.cloud.compute.v1beta.ContainerRequest.ExperimentalFeatures.ExportedUnixSocketsEntry
+	(*ContainerRequest_ExperimentalFeatures_HostMount)(nil),                // 101: namespace.cloud.compute.v1beta.ContainerRequest.ExperimentalFeatures.HostMount
+	(*ContainerRequest_ExperimentalFeatures_ImagePullCredentials)(nil),     // 102: namespace.cloud.compute.v1beta.ContainerRequest.ExperimentalFeatures.ImagePullCredentials
+	(*ContainerRequest_ExperimentalFeatures_PushEphemeralDiskAsImage)(nil), // 103: namespace.cloud.compute.v1beta.ContainerRequest.ExperimentalFeatures.PushEphemeralDiskAsImage
+	(*ContainerRequest_ExperimentalFeatures_SidecarVolume)(nil),            // 104: namespace.cloud.compute.v1beta.ContainerRequest.ExperimentalFeatures.SidecarVolume
+	nil, // 105: namespace.cloud.compute.v1beta.ApplicationRequest.EnvironmentEntry
+	(*ApplicationRequest_ExperimentalFeatures)(nil),             // 106: namespace.cloud.compute.v1beta.ApplicationRequest.ExperimentalFeatures
+	(*HttpMatchRule_HttpMatch)(nil),                             // 107: namespace.cloud.compute.v1beta.HttpMatchRule.HttpMatch
+	(*AllocatedContainer_ExportedContainerPort)(nil),            // 108: namespace.cloud.compute.v1beta.AllocatedContainer.ExportedContainerPort
+	(*InstanceExtendedMetadata_SshMetadata)(nil),                // 109: namespace.cloud.compute.v1beta.InstanceExtendedMetadata.SshMetadata
+	(*InstanceExtendedMetadata_KubernetesInstanceMetadata)(nil), // 110: namespace.cloud.compute.v1beta.InstanceExtendedMetadata.KubernetesInstanceMetadata
+	(*InstanceExtendedMetadata_AllocatedTlsBackedPort)(nil),     // 111: namespace.cloud.compute.v1beta.InstanceExtendedMetadata.AllocatedTlsBackedPort
+	(*InstanceMetadata_Service)(nil),                            // 112: namespace.cloud.compute.v1beta.InstanceMetadata.Service
+	(*InstanceMetadata_HWDeployment)(nil),                       // 113: namespace.cloud.compute.v1beta.InstanceMetadata.HWDeployment
+	(*ResourceLimitsError_Resource)(nil),                        // 114: namespace.cloud.compute.v1beta.ResourceLimitsError.Resource
+	(*UsageLimitsError_Usage)(nil),                              // 115: namespace.cloud.compute.v1beta.UsageLimitsError.Usage
+	(*GetNetworkConfigurationResponse_Egress)(nil),              // 116: namespace.cloud.compute.v1beta.GetNetworkConfigurationResponse.Egress
+	(*GetNetworkConfigurationResponse_CIDR)(nil),                // 117: namespace.cloud.compute.v1beta.GetNetworkConfigurationResponse.CIDR
+	(*stdlib.Label)(nil),                                        // 118: namespace.stdlib.Label
+	(*timestamppb.Timestamp)(nil),                               // 119: google.protobuf.Timestamp
+	(*stdlib.HttpCallbackEndpoint)(nil),                         // 120: namespace.stdlib.HttpCallbackEndpoint
+	(*v1beta.Permission)(nil),                                   // 121: namespace.cloud.iam.v1beta.Permission
+	(*durationpb.Duration)(nil),                                 // 122: google.protobuf.Duration
+	(*stdlib.LabelFilterEntry)(nil),                             // 123: namespace.stdlib.LabelFilterEntry
+	(*stdlib.TimeSeries)(nil),                                   // 124: namespace.stdlib.TimeSeries
+	(*stdlib.StringMatcher)(nil),                                // 125: namespace.stdlib.StringMatcher
+	(*v1beta1.EgressPolicySpec)(nil),                            // 126: namespace.cloud.network.v1beta.EgressPolicySpec
+	(*emptypb.Empty)(nil),                                       // 127: google.protobuf.Empty
 }
 var file_proto_namespace_cloud_compute_v1beta_compute_proto_depIdxs = []int32{
 	42,  // 0: namespace.cloud.compute.v1beta.CreateInstanceRequest.shape:type_name -> namespace.cloud.compute.v1beta.InstanceShape
 	1,   // 1: namespace.cloud.compute.v1beta.CreateInstanceRequest.features:type_name -> namespace.cloud.compute.v1beta.CreateInstanceRequest.Feature
-	76,  // 2: namespace.cloud.compute.v1beta.CreateInstanceRequest.feature_configuration:type_name -> namespace.cloud.compute.v1beta.CreateInstanceRequest.FeatureConfiguration
-	117, // 3: namespace.cloud.compute.v1beta.CreateInstanceRequest.labels:type_name -> namespace.stdlib.Label
-	118, // 4: namespace.cloud.compute.v1beta.CreateInstanceRequest.deadline:type_name -> google.protobuf.Timestamp
+	77,  // 2: namespace.cloud.compute.v1beta.CreateInstanceRequest.feature_configuration:type_name -> namespace.cloud.compute.v1beta.CreateInstanceRequest.FeatureConfiguration
+	118, // 3: namespace.cloud.compute.v1beta.CreateInstanceRequest.labels:type_name -> namespace.stdlib.Label
+	119, // 4: namespace.cloud.compute.v1beta.CreateInstanceRequest.deadline:type_name -> google.protobuf.Timestamp
 	21,  // 5: namespace.cloud.compute.v1beta.CreateInstanceRequest.containers:type_name -> namespace.cloud.compute.v1beta.ContainerRequest
 	34,  // 6: namespace.cloud.compute.v1beta.CreateInstanceRequest.ingresses:type_name -> namespace.cloud.compute.v1beta.Ingress
 	25,  // 7: namespace.cloud.compute.v1beta.CreateInstanceRequest.applications:type_name -> namespace.cloud.compute.v1beta.ApplicationRequest
-	75,  // 8: namespace.cloud.compute.v1beta.CreateInstanceRequest.experimental:type_name -> namespace.cloud.compute.v1beta.CreateInstanceRequest.ExperimentalFeatures
+	76,  // 8: namespace.cloud.compute.v1beta.CreateInstanceRequest.experimental:type_name -> namespace.cloud.compute.v1beta.CreateInstanceRequest.ExperimentalFeatures
 	53,  // 9: namespace.cloud.compute.v1beta.CreateInstanceRequest.volumes:type_name -> namespace.cloud.compute.v1beta.VolumeRequest
 	18,  // 10: namespace.cloud.compute.v1beta.CreateInstanceRequest.container_cache:type_name -> namespace.cloud.compute.v1beta.ContainerCache
-	119, // 11: namespace.cloud.compute.v1beta.CreateInstanceRequest.http_event_callback:type_name -> namespace.stdlib.HttpCallbackEndpoint
-	73,  // 12: namespace.cloud.compute.v1beta.CreateInstanceRequest.additional_registries:type_name -> namespace.cloud.compute.v1beta.CreateInstanceRequest.AdditionalRegistriesEntry
-	120, // 13: namespace.cloud.compute.v1beta.CreateInstanceRequest.workload_permissions:type_name -> namespace.cloud.iam.v1beta.Permission
-	74,  // 14: namespace.cloud.compute.v1beta.CreateInstanceRequest.network_policy:type_name -> namespace.cloud.compute.v1beta.CreateInstanceRequest.NetworkPolicy
-	89,  // 15: namespace.cloud.compute.v1beta.AdditionalRegistry.authentication:type_name -> namespace.cloud.compute.v1beta.AdditionalRegistry.Authenticator
+	120, // 11: namespace.cloud.compute.v1beta.CreateInstanceRequest.http_event_callback:type_name -> namespace.stdlib.HttpCallbackEndpoint
+	74,  // 12: namespace.cloud.compute.v1beta.CreateInstanceRequest.additional_registries:type_name -> namespace.cloud.compute.v1beta.CreateInstanceRequest.AdditionalRegistriesEntry
+	121, // 13: namespace.cloud.compute.v1beta.CreateInstanceRequest.workload_permissions:type_name -> namespace.cloud.iam.v1beta.Permission
+	75,  // 14: namespace.cloud.compute.v1beta.CreateInstanceRequest.network_policy:type_name -> namespace.cloud.compute.v1beta.CreateInstanceRequest.NetworkPolicy
+	90,  // 15: namespace.cloud.compute.v1beta.AdditionalRegistry.authentication:type_name -> namespace.cloud.compute.v1beta.AdditionalRegistry.Authenticator
 	41,  // 16: namespace.cloud.compute.v1beta.DescribeInstanceResponse.metadata:type_name -> namespace.cloud.compute.v1beta.InstanceMetadata
 	40,  // 17: namespace.cloud.compute.v1beta.DescribeInstanceResponse.extended_metadata:type_name -> namespace.cloud.compute.v1beta.InstanceExtendedMetadata
 	43,  // 18: namespace.cloud.compute.v1beta.DescribeInstanceResponse.registry:type_name -> namespace.cloud.compute.v1beta.ImageRegistry
 	37,  // 19: namespace.cloud.compute.v1beta.DescribeInstanceResponse.containers:type_name -> namespace.cloud.compute.v1beta.AllocatedContainer
-	94,  // 20: namespace.cloud.compute.v1beta.DescribeInstanceResponse.experimental:type_name -> namespace.cloud.compute.v1beta.DescribeInstanceResponse.ExperimentalFeatures
+	95,  // 20: namespace.cloud.compute.v1beta.DescribeInstanceResponse.experimental:type_name -> namespace.cloud.compute.v1beta.DescribeInstanceResponse.ExperimentalFeatures
 	19,  // 21: namespace.cloud.compute.v1beta.DescribeInstanceResponse.attachments:type_name -> namespace.cloud.compute.v1beta.Attachment
 	18,  // 22: namespace.cloud.compute.v1beta.DescribeInstanceResponse.container_cache:type_name -> namespace.cloud.compute.v1beta.ContainerCache
-	95,  // 23: namespace.cloud.compute.v1beta.DescribeInstanceResponse.shutdown_reasons:type_name -> namespace.cloud.compute.v1beta.DescribeInstanceResponse.ShutdownReason
-	120, // 24: namespace.cloud.compute.v1beta.DescribeInstanceResponse.workload_permissions:type_name -> namespace.cloud.iam.v1beta.Permission
+	96,  // 23: namespace.cloud.compute.v1beta.DescribeInstanceResponse.shutdown_reasons:type_name -> namespace.cloud.compute.v1beta.DescribeInstanceResponse.ShutdownReason
+	121, // 24: namespace.cloud.compute.v1beta.DescribeInstanceResponse.workload_permissions:type_name -> namespace.cloud.iam.v1beta.Permission
 	21,  // 25: namespace.cloud.compute.v1beta.StartContainersRequest.containers:type_name -> namespace.cloud.compute.v1beta.ContainerRequest
-	96,  // 26: namespace.cloud.compute.v1beta.ContainerRequest.environment:type_name -> namespace.cloud.compute.v1beta.ContainerRequest.EnvironmentEntry
+	97,  // 26: namespace.cloud.compute.v1beta.ContainerRequest.environment:type_name -> namespace.cloud.compute.v1beta.ContainerRequest.EnvironmentEntry
 	22,  // 27: namespace.cloud.compute.v1beta.ContainerRequest.env_vars:type_name -> namespace.cloud.compute.v1beta.EnvironmentVariable
 	35,  // 28: namespace.cloud.compute.v1beta.ContainerRequest.export_ports:type_name -> namespace.cloud.compute.v1beta.ContainerPort
 	2,   // 29: namespace.cloud.compute.v1beta.ContainerRequest.network:type_name -> namespace.cloud.compute.v1beta.ContainerRequest.Network
-	97,  // 30: namespace.cloud.compute.v1beta.ContainerRequest.experimental:type_name -> namespace.cloud.compute.v1beta.ContainerRequest.ExperimentalFeatures
+	98,  // 30: namespace.cloud.compute.v1beta.ContainerRequest.experimental:type_name -> namespace.cloud.compute.v1beta.ContainerRequest.ExperimentalFeatures
 	53,  // 31: namespace.cloud.compute.v1beta.ContainerRequest.volumes:type_name -> namespace.cloud.compute.v1beta.VolumeRequest
 	3,   // 32: namespace.cloud.compute.v1beta.ContainerRequest.workload_type:type_name -> namespace.cloud.compute.v1beta.ContainerRequest.WorkloadType
-	98,  // 33: namespace.cloud.compute.v1beta.ContainerRequest.sidecar_volumes:type_name -> namespace.cloud.compute.v1beta.ContainerRequest.SidecarVolume
+	99,  // 33: namespace.cloud.compute.v1beta.ContainerRequest.sidecar_volumes:type_name -> namespace.cloud.compute.v1beta.ContainerRequest.SidecarVolume
 	37,  // 34: namespace.cloud.compute.v1beta.StartContainersResponse.containers:type_name -> namespace.cloud.compute.v1beta.AllocatedContainer
-	104, // 35: namespace.cloud.compute.v1beta.ApplicationRequest.environment:type_name -> namespace.cloud.compute.v1beta.ApplicationRequest.EnvironmentEntry
+	105, // 35: namespace.cloud.compute.v1beta.ApplicationRequest.environment:type_name -> namespace.cloud.compute.v1beta.ApplicationRequest.EnvironmentEntry
 	22,  // 36: namespace.cloud.compute.v1beta.ApplicationRequest.env_vars:type_name -> namespace.cloud.compute.v1beta.EnvironmentVariable
 	4,   // 37: namespace.cloud.compute.v1beta.ApplicationRequest.workload_type:type_name -> namespace.cloud.compute.v1beta.ApplicationRequest.WorkloadType
-	105, // 38: namespace.cloud.compute.v1beta.ApplicationRequest.experimental:type_name -> namespace.cloud.compute.v1beta.ApplicationRequest.ExperimentalFeatures
+	106, // 38: namespace.cloud.compute.v1beta.ApplicationRequest.experimental:type_name -> namespace.cloud.compute.v1beta.ApplicationRequest.ExperimentalFeatures
 	41,  // 39: namespace.cloud.compute.v1beta.WaitInstanceResponse.metadata:type_name -> namespace.cloud.compute.v1beta.InstanceMetadata
-	121, // 40: namespace.cloud.compute.v1beta.ExtendInstanceRequest.extend_by:type_name -> google.protobuf.Duration
-	121, // 41: namespace.cloud.compute.v1beta.ExtendInstanceRequest.ensure_minimum:type_name -> google.protobuf.Duration
-	118, // 42: namespace.cloud.compute.v1beta.ExtendInstanceRequest.new_deadline:type_name -> google.protobuf.Timestamp
-	118, // 43: namespace.cloud.compute.v1beta.ExtendInstanceResponse.new_deadline:type_name -> google.protobuf.Timestamp
-	118, // 44: namespace.cloud.compute.v1beta.ListInstancesRequest.not_older_than:type_name -> google.protobuf.Timestamp
-	122, // 45: namespace.cloud.compute.v1beta.ListInstancesRequest.label_filter:type_name -> namespace.stdlib.LabelFilterEntry
+	122, // 40: namespace.cloud.compute.v1beta.ExtendInstanceRequest.extend_by:type_name -> google.protobuf.Duration
+	122, // 41: namespace.cloud.compute.v1beta.ExtendInstanceRequest.ensure_minimum:type_name -> google.protobuf.Duration
+	119, // 42: namespace.cloud.compute.v1beta.ExtendInstanceRequest.new_deadline:type_name -> google.protobuf.Timestamp
+	119, // 43: namespace.cloud.compute.v1beta.ExtendInstanceResponse.new_deadline:type_name -> google.protobuf.Timestamp
+	119, // 44: namespace.cloud.compute.v1beta.ListInstancesRequest.not_older_than:type_name -> google.protobuf.Timestamp
+	123, // 45: namespace.cloud.compute.v1beta.ListInstancesRequest.label_filter:type_name -> namespace.stdlib.LabelFilterEntry
 	41,  // 46: namespace.cloud.compute.v1beta.ListInstancesResponse.instances:type_name -> namespace.cloud.compute.v1beta.InstanceMetadata
 	5,   // 47: namespace.cloud.compute.v1beta.Ingress.mode:type_name -> namespace.cloud.compute.v1beta.Ingress.Mode
 	36,  // 48: namespace.cloud.compute.v1beta.Ingress.http_match_rule:type_name -> namespace.cloud.compute.v1beta.HttpMatchRule
@@ -8338,71 +8410,71 @@ var file_proto_namespace_cloud_compute_v1beta_compute_proto_depIdxs = []int32{
 	6,   // 50: namespace.cloud.compute.v1beta.ContainerPort.proto:type_name -> namespace.cloud.compute.v1beta.ContainerPort.Proto
 	36,  // 51: namespace.cloud.compute.v1beta.ContainerPort.http_match_rule:type_name -> namespace.cloud.compute.v1beta.HttpMatchRule
 	0,   // 52: namespace.cloud.compute.v1beta.ContainerPort.client_authentication:type_name -> namespace.cloud.compute.v1beta.IngressClientAuthentication
-	106, // 53: namespace.cloud.compute.v1beta.HttpMatchRule.match:type_name -> namespace.cloud.compute.v1beta.HttpMatchRule.HttpMatch
-	107, // 54: namespace.cloud.compute.v1beta.AllocatedContainer.exported_port:type_name -> namespace.cloud.compute.v1beta.AllocatedContainer.ExportedContainerPort
-	108, // 55: namespace.cloud.compute.v1beta.InstanceExtendedMetadata.ssh_metadata:type_name -> namespace.cloud.compute.v1beta.InstanceExtendedMetadata.SshMetadata
-	109, // 56: namespace.cloud.compute.v1beta.InstanceExtendedMetadata.kubernetes_metadata:type_name -> namespace.cloud.compute.v1beta.InstanceExtendedMetadata.KubernetesInstanceMetadata
-	110, // 57: namespace.cloud.compute.v1beta.InstanceExtendedMetadata.tls_backed_port:type_name -> namespace.cloud.compute.v1beta.InstanceExtendedMetadata.AllocatedTlsBackedPort
-	118, // 58: namespace.cloud.compute.v1beta.InstanceMetadata.created_at:type_name -> google.protobuf.Timestamp
-	118, // 59: namespace.cloud.compute.v1beta.InstanceMetadata.ready_at:type_name -> google.protobuf.Timestamp
-	118, // 60: namespace.cloud.compute.v1beta.InstanceMetadata.destroyed_at:type_name -> google.protobuf.Timestamp
-	118, // 61: namespace.cloud.compute.v1beta.InstanceMetadata.deadline:type_name -> google.protobuf.Timestamp
+	107, // 53: namespace.cloud.compute.v1beta.HttpMatchRule.match:type_name -> namespace.cloud.compute.v1beta.HttpMatchRule.HttpMatch
+	108, // 54: namespace.cloud.compute.v1beta.AllocatedContainer.exported_port:type_name -> namespace.cloud.compute.v1beta.AllocatedContainer.ExportedContainerPort
+	109, // 55: namespace.cloud.compute.v1beta.InstanceExtendedMetadata.ssh_metadata:type_name -> namespace.cloud.compute.v1beta.InstanceExtendedMetadata.SshMetadata
+	110, // 56: namespace.cloud.compute.v1beta.InstanceExtendedMetadata.kubernetes_metadata:type_name -> namespace.cloud.compute.v1beta.InstanceExtendedMetadata.KubernetesInstanceMetadata
+	111, // 57: namespace.cloud.compute.v1beta.InstanceExtendedMetadata.tls_backed_port:type_name -> namespace.cloud.compute.v1beta.InstanceExtendedMetadata.AllocatedTlsBackedPort
+	119, // 58: namespace.cloud.compute.v1beta.InstanceMetadata.created_at:type_name -> google.protobuf.Timestamp
+	119, // 59: namespace.cloud.compute.v1beta.InstanceMetadata.ready_at:type_name -> google.protobuf.Timestamp
+	119, // 60: namespace.cloud.compute.v1beta.InstanceMetadata.destroyed_at:type_name -> google.protobuf.Timestamp
+	119, // 61: namespace.cloud.compute.v1beta.InstanceMetadata.deadline:type_name -> google.protobuf.Timestamp
 	42,  // 62: namespace.cloud.compute.v1beta.InstanceMetadata.shape:type_name -> namespace.cloud.compute.v1beta.InstanceShape
 	7,   // 63: namespace.cloud.compute.v1beta.InstanceMetadata.status:type_name -> namespace.cloud.compute.v1beta.InstanceMetadata.Status
-	117, // 64: namespace.cloud.compute.v1beta.InstanceMetadata.labels:type_name -> namespace.stdlib.Label
-	111, // 65: namespace.cloud.compute.v1beta.InstanceMetadata.services:type_name -> namespace.cloud.compute.v1beta.InstanceMetadata.Service
-	112, // 66: namespace.cloud.compute.v1beta.InstanceMetadata.hw_deployment:type_name -> namespace.cloud.compute.v1beta.InstanceMetadata.HWDeployment
-	117, // 67: namespace.cloud.compute.v1beta.InstanceShape.selectors:type_name -> namespace.stdlib.Label
+	118, // 64: namespace.cloud.compute.v1beta.InstanceMetadata.labels:type_name -> namespace.stdlib.Label
+	112, // 65: namespace.cloud.compute.v1beta.InstanceMetadata.services:type_name -> namespace.cloud.compute.v1beta.InstanceMetadata.Service
+	113, // 66: namespace.cloud.compute.v1beta.InstanceMetadata.hw_deployment:type_name -> namespace.cloud.compute.v1beta.InstanceMetadata.HWDeployment
+	118, // 67: namespace.cloud.compute.v1beta.InstanceShape.selectors:type_name -> namespace.stdlib.Label
 	45,  // 68: namespace.cloud.compute.v1beta.CreateIngressRequest.ingresses:type_name -> namespace.cloud.compute.v1beta.IngressRequest
 	36,  // 69: namespace.cloud.compute.v1beta.IngressRequest.http_match_rule:type_name -> namespace.cloud.compute.v1beta.HttpMatchRule
 	50,  // 70: namespace.cloud.compute.v1beta.IngressRequest.exported_port_backend:type_name -> namespace.cloud.compute.v1beta.ExportedPortBackend
 	49,  // 71: namespace.cloud.compute.v1beta.CreateIngressResponse.allocated_ingresses:type_name -> namespace.cloud.compute.v1beta.AllocatedIngress
 	49,  // 72: namespace.cloud.compute.v1beta.ListIngressesResponse.allocated_ingresses:type_name -> namespace.cloud.compute.v1beta.AllocatedIngress
 	10,  // 73: namespace.cloud.compute.v1beta.VolumeRequest.persistency_kind:type_name -> namespace.cloud.compute.v1beta.VolumeRequest.PersistencyKind
-	118, // 74: namespace.cloud.compute.v1beta.GetInstanceMetricsRequest.start_timestamp:type_name -> google.protobuf.Timestamp
-	118, // 75: namespace.cloud.compute.v1beta.GetInstanceMetricsRequest.end_timestamp:type_name -> google.protobuf.Timestamp
+	119, // 74: namespace.cloud.compute.v1beta.GetInstanceMetricsRequest.start_timestamp:type_name -> google.protobuf.Timestamp
+	119, // 75: namespace.cloud.compute.v1beta.GetInstanceMetricsRequest.end_timestamp:type_name -> google.protobuf.Timestamp
 	11,  // 76: namespace.cloud.compute.v1beta.GetInstanceMetricsRequest.metric_resource:type_name -> namespace.cloud.compute.v1beta.GetInstanceMetricsRequest.MetricResource
-	123, // 77: namespace.cloud.compute.v1beta.GetInstanceMetricsResponse.time_series:type_name -> namespace.stdlib.TimeSeries
+	124, // 77: namespace.cloud.compute.v1beta.GetInstanceMetricsResponse.time_series:type_name -> namespace.stdlib.TimeSeries
 	12,  // 78: namespace.cloud.compute.v1beta.ResourceLimitsError.kind:type_name -> namespace.cloud.compute.v1beta.ResourceLimitsError.LimitKind
-	113, // 79: namespace.cloud.compute.v1beta.ResourceLimitsError.requested:type_name -> namespace.cloud.compute.v1beta.ResourceLimitsError.Resource
-	113, // 80: namespace.cloud.compute.v1beta.ResourceLimitsError.used:type_name -> namespace.cloud.compute.v1beta.ResourceLimitsError.Resource
-	113, // 81: namespace.cloud.compute.v1beta.ResourceLimitsError.limits:type_name -> namespace.cloud.compute.v1beta.ResourceLimitsError.Resource
-	114, // 82: namespace.cloud.compute.v1beta.UsageLimitsError.used:type_name -> namespace.cloud.compute.v1beta.UsageLimitsError.Usage
-	114, // 83: namespace.cloud.compute.v1beta.UsageLimitsError.limits:type_name -> namespace.cloud.compute.v1beta.UsageLimitsError.Usage
-	115, // 84: namespace.cloud.compute.v1beta.GetNetworkConfigurationResponse.egress:type_name -> namespace.cloud.compute.v1beta.GetNetworkConfigurationResponse.Egress
-	124, // 85: namespace.cloud.compute.v1beta.ReleaseUniqueTagRequest.if_instance_id:type_name -> namespace.stdlib.StringMatcher
+	114, // 79: namespace.cloud.compute.v1beta.ResourceLimitsError.requested:type_name -> namespace.cloud.compute.v1beta.ResourceLimitsError.Resource
+	114, // 80: namespace.cloud.compute.v1beta.ResourceLimitsError.used:type_name -> namespace.cloud.compute.v1beta.ResourceLimitsError.Resource
+	114, // 81: namespace.cloud.compute.v1beta.ResourceLimitsError.limits:type_name -> namespace.cloud.compute.v1beta.ResourceLimitsError.Resource
+	115, // 82: namespace.cloud.compute.v1beta.UsageLimitsError.used:type_name -> namespace.cloud.compute.v1beta.UsageLimitsError.Usage
+	115, // 83: namespace.cloud.compute.v1beta.UsageLimitsError.limits:type_name -> namespace.cloud.compute.v1beta.UsageLimitsError.Usage
+	116, // 84: namespace.cloud.compute.v1beta.GetNetworkConfigurationResponse.egress:type_name -> namespace.cloud.compute.v1beta.GetNetworkConfigurationResponse.Egress
+	125, // 85: namespace.cloud.compute.v1beta.ReleaseUniqueTagRequest.if_instance_id:type_name -> namespace.stdlib.StringMatcher
 	14,  // 86: namespace.cloud.compute.v1beta.OptimizeImageProgress.status:type_name -> namespace.cloud.compute.v1beta.OptimizeImageProgress.Status
-	118, // 87: namespace.cloud.compute.v1beta.InstanceEventMetadata.emitted_at:type_name -> google.protobuf.Timestamp
+	119, // 87: namespace.cloud.compute.v1beta.InstanceEventMetadata.emitted_at:type_name -> google.protobuf.Timestamp
 	7,   // 88: namespace.cloud.compute.v1beta.InstanceEventMetadata.status:type_name -> namespace.cloud.compute.v1beta.InstanceMetadata.Status
-	117, // 89: namespace.cloud.compute.v1beta.InstanceEventMetadata.labels:type_name -> namespace.stdlib.Label
-	124, // 90: namespace.cloud.compute.v1beta.ListInstanceNotificationsRequest.instance_ids:type_name -> namespace.stdlib.StringMatcher
-	70,  // 91: namespace.cloud.compute.v1beta.ListInstanceNotificationsResponse.events:type_name -> namespace.cloud.compute.v1beta.InstanceEventMetadata
+	118, // 89: namespace.cloud.compute.v1beta.InstanceEventMetadata.labels:type_name -> namespace.stdlib.Label
+	125, // 90: namespace.cloud.compute.v1beta.ListInstanceNotificationsRequest.instance_ids:type_name -> namespace.stdlib.StringMatcher
+	71,  // 91: namespace.cloud.compute.v1beta.ListInstanceNotificationsResponse.events:type_name -> namespace.cloud.compute.v1beta.InstanceEventMetadata
 	16,  // 92: namespace.cloud.compute.v1beta.CreateInstanceRequest.AdditionalRegistriesEntry.value:type_name -> namespace.cloud.compute.v1beta.AdditionalRegistry
-	125, // 93: namespace.cloud.compute.v1beta.CreateInstanceRequest.NetworkPolicy.egress:type_name -> namespace.cloud.network.v1beta.EgressPolicySpec
-	79,  // 94: namespace.cloud.compute.v1beta.CreateInstanceRequest.ExperimentalFeatures.disks:type_name -> namespace.cloud.compute.v1beta.CreateInstanceRequest.ExperimentalFeatures.Disk
-	80,  // 95: namespace.cloud.compute.v1beta.CreateInstanceRequest.ExperimentalFeatures.containerd_shims:type_name -> namespace.cloud.compute.v1beta.CreateInstanceRequest.ExperimentalFeatures.ContainerdShim
-	81,  // 96: namespace.cloud.compute.v1beta.CreateInstanceRequest.ExperimentalFeatures.tls_backed_ports:type_name -> namespace.cloud.compute.v1beta.CreateInstanceRequest.ExperimentalFeatures.TlsBackedPort
-	82,  // 97: namespace.cloud.compute.v1beta.CreateInstanceRequest.ExperimentalFeatures.prewarm_container_images:type_name -> namespace.cloud.compute.v1beta.CreateInstanceRequest.ExperimentalFeatures.PrewarmContainerImage
+	126, // 93: namespace.cloud.compute.v1beta.CreateInstanceRequest.NetworkPolicy.egress:type_name -> namespace.cloud.network.v1beta.EgressPolicySpec
+	80,  // 94: namespace.cloud.compute.v1beta.CreateInstanceRequest.ExperimentalFeatures.disks:type_name -> namespace.cloud.compute.v1beta.CreateInstanceRequest.ExperimentalFeatures.Disk
+	81,  // 95: namespace.cloud.compute.v1beta.CreateInstanceRequest.ExperimentalFeatures.containerd_shims:type_name -> namespace.cloud.compute.v1beta.CreateInstanceRequest.ExperimentalFeatures.ContainerdShim
+	82,  // 96: namespace.cloud.compute.v1beta.CreateInstanceRequest.ExperimentalFeatures.tls_backed_ports:type_name -> namespace.cloud.compute.v1beta.CreateInstanceRequest.ExperimentalFeatures.TlsBackedPort
+	83,  // 97: namespace.cloud.compute.v1beta.CreateInstanceRequest.ExperimentalFeatures.prewarm_container_images:type_name -> namespace.cloud.compute.v1beta.CreateInstanceRequest.ExperimentalFeatures.PrewarmContainerImage
 	53,  // 98: namespace.cloud.compute.v1beta.CreateInstanceRequest.ExperimentalFeatures.volumes:type_name -> namespace.cloud.compute.v1beta.VolumeRequest
-	83,  // 99: namespace.cloud.compute.v1beta.CreateInstanceRequest.ExperimentalFeatures.ensure_directory:type_name -> namespace.cloud.compute.v1beta.CreateInstanceRequest.ExperimentalFeatures.DirectoryRequest
-	77,  // 100: namespace.cloud.compute.v1beta.CreateInstanceRequest.ExperimentalFeatures.exported_unix_sockets:type_name -> namespace.cloud.compute.v1beta.CreateInstanceRequest.ExperimentalFeatures.ExportedUnixSocketsEntry
-	84,  // 101: namespace.cloud.compute.v1beta.CreateInstanceRequest.ExperimentalFeatures.container_cache:type_name -> namespace.cloud.compute.v1beta.CreateInstanceRequest.ExperimentalFeatures.ContainerCache
-	85,  // 102: namespace.cloud.compute.v1beta.CreateInstanceRequest.ExperimentalFeatures.pre_start_hook:type_name -> namespace.cloud.compute.v1beta.CreateInstanceRequest.ExperimentalFeatures.Hook
-	85,  // 103: namespace.cloud.compute.v1beta.CreateInstanceRequest.ExperimentalFeatures.pre_shutdown_hook:type_name -> namespace.cloud.compute.v1beta.CreateInstanceRequest.ExperimentalFeatures.Hook
-	78,  // 104: namespace.cloud.compute.v1beta.CreateInstanceRequest.ExperimentalFeatures.internal:type_name -> namespace.cloud.compute.v1beta.CreateInstanceRequest.ExperimentalFeatures.InternalEntry
-	86,  // 105: namespace.cloud.compute.v1beta.CreateInstanceRequest.ExperimentalFeatures.prometheus_metrics_sink:type_name -> namespace.cloud.compute.v1beta.CreateInstanceRequest.ExperimentalFeatures.PrometheusMetricsSink
+	84,  // 99: namespace.cloud.compute.v1beta.CreateInstanceRequest.ExperimentalFeatures.ensure_directory:type_name -> namespace.cloud.compute.v1beta.CreateInstanceRequest.ExperimentalFeatures.DirectoryRequest
+	78,  // 100: namespace.cloud.compute.v1beta.CreateInstanceRequest.ExperimentalFeatures.exported_unix_sockets:type_name -> namespace.cloud.compute.v1beta.CreateInstanceRequest.ExperimentalFeatures.ExportedUnixSocketsEntry
+	85,  // 101: namespace.cloud.compute.v1beta.CreateInstanceRequest.ExperimentalFeatures.container_cache:type_name -> namespace.cloud.compute.v1beta.CreateInstanceRequest.ExperimentalFeatures.ContainerCache
+	86,  // 102: namespace.cloud.compute.v1beta.CreateInstanceRequest.ExperimentalFeatures.pre_start_hook:type_name -> namespace.cloud.compute.v1beta.CreateInstanceRequest.ExperimentalFeatures.Hook
+	86,  // 103: namespace.cloud.compute.v1beta.CreateInstanceRequest.ExperimentalFeatures.pre_shutdown_hook:type_name -> namespace.cloud.compute.v1beta.CreateInstanceRequest.ExperimentalFeatures.Hook
+	79,  // 104: namespace.cloud.compute.v1beta.CreateInstanceRequest.ExperimentalFeatures.internal:type_name -> namespace.cloud.compute.v1beta.CreateInstanceRequest.ExperimentalFeatures.InternalEntry
+	87,  // 105: namespace.cloud.compute.v1beta.CreateInstanceRequest.ExperimentalFeatures.prometheus_metrics_sink:type_name -> namespace.cloud.compute.v1beta.CreateInstanceRequest.ExperimentalFeatures.PrometheusMetricsSink
 	0,   // 106: namespace.cloud.compute.v1beta.CreateInstanceRequest.ExperimentalFeatures.TlsBackedPort.client_authentication:type_name -> namespace.cloud.compute.v1beta.IngressClientAuthentication
-	87,  // 107: namespace.cloud.compute.v1beta.CreateInstanceRequest.ExperimentalFeatures.Hook.command:type_name -> namespace.cloud.compute.v1beta.CreateInstanceRequest.ExperimentalFeatures.Hook.Command
-	88,  // 108: namespace.cloud.compute.v1beta.CreateInstanceRequest.ExperimentalFeatures.Hook.Command.environment:type_name -> namespace.cloud.compute.v1beta.CreateInstanceRequest.ExperimentalFeatures.Hook.Command.EnvironmentEntry
-	90,  // 109: namespace.cloud.compute.v1beta.AdditionalRegistry.Authenticator.basic:type_name -> namespace.cloud.compute.v1beta.AdditionalRegistry.Authenticator.Basic
-	91,  // 110: namespace.cloud.compute.v1beta.AdditionalRegistry.Authenticator.openid:type_name -> namespace.cloud.compute.v1beta.AdditionalRegistry.Authenticator.OpenIDFederation
-	92,  // 111: namespace.cloud.compute.v1beta.AdditionalRegistry.Authenticator.ecr_token_from_aws_federation:type_name -> namespace.cloud.compute.v1beta.AdditionalRegistry.Authenticator.AssumeRoleFromAwsFederation
-	93,  // 112: namespace.cloud.compute.v1beta.AdditionalRegistry.Authenticator.gcp_workload_identity_federation:type_name -> namespace.cloud.compute.v1beta.AdditionalRegistry.Authenticator.GcpWorkloadIdentityFederation
-	100, // 113: namespace.cloud.compute.v1beta.ContainerRequest.ExperimentalFeatures.host_mount:type_name -> namespace.cloud.compute.v1beta.ContainerRequest.ExperimentalFeatures.HostMount
-	99,  // 114: namespace.cloud.compute.v1beta.ContainerRequest.ExperimentalFeatures.exported_unix_sockets:type_name -> namespace.cloud.compute.v1beta.ContainerRequest.ExperimentalFeatures.ExportedUnixSocketsEntry
-	101, // 115: namespace.cloud.compute.v1beta.ContainerRequest.ExperimentalFeatures.image_pull_credentials:type_name -> namespace.cloud.compute.v1beta.ContainerRequest.ExperimentalFeatures.ImagePullCredentials
-	102, // 116: namespace.cloud.compute.v1beta.ContainerRequest.ExperimentalFeatures.push_ephemeral_disk_as_image:type_name -> namespace.cloud.compute.v1beta.ContainerRequest.ExperimentalFeatures.PushEphemeralDiskAsImage
-	103, // 117: namespace.cloud.compute.v1beta.ContainerRequest.ExperimentalFeatures.sidecar_volumes:type_name -> namespace.cloud.compute.v1beta.ContainerRequest.ExperimentalFeatures.SidecarVolume
+	88,  // 107: namespace.cloud.compute.v1beta.CreateInstanceRequest.ExperimentalFeatures.Hook.command:type_name -> namespace.cloud.compute.v1beta.CreateInstanceRequest.ExperimentalFeatures.Hook.Command
+	89,  // 108: namespace.cloud.compute.v1beta.CreateInstanceRequest.ExperimentalFeatures.Hook.Command.environment:type_name -> namespace.cloud.compute.v1beta.CreateInstanceRequest.ExperimentalFeatures.Hook.Command.EnvironmentEntry
+	91,  // 109: namespace.cloud.compute.v1beta.AdditionalRegistry.Authenticator.basic:type_name -> namespace.cloud.compute.v1beta.AdditionalRegistry.Authenticator.Basic
+	92,  // 110: namespace.cloud.compute.v1beta.AdditionalRegistry.Authenticator.openid:type_name -> namespace.cloud.compute.v1beta.AdditionalRegistry.Authenticator.OpenIDFederation
+	93,  // 111: namespace.cloud.compute.v1beta.AdditionalRegistry.Authenticator.ecr_token_from_aws_federation:type_name -> namespace.cloud.compute.v1beta.AdditionalRegistry.Authenticator.AssumeRoleFromAwsFederation
+	94,  // 112: namespace.cloud.compute.v1beta.AdditionalRegistry.Authenticator.gcp_workload_identity_federation:type_name -> namespace.cloud.compute.v1beta.AdditionalRegistry.Authenticator.GcpWorkloadIdentityFederation
+	101, // 113: namespace.cloud.compute.v1beta.ContainerRequest.ExperimentalFeatures.host_mount:type_name -> namespace.cloud.compute.v1beta.ContainerRequest.ExperimentalFeatures.HostMount
+	100, // 114: namespace.cloud.compute.v1beta.ContainerRequest.ExperimentalFeatures.exported_unix_sockets:type_name -> namespace.cloud.compute.v1beta.ContainerRequest.ExperimentalFeatures.ExportedUnixSocketsEntry
+	102, // 115: namespace.cloud.compute.v1beta.ContainerRequest.ExperimentalFeatures.image_pull_credentials:type_name -> namespace.cloud.compute.v1beta.ContainerRequest.ExperimentalFeatures.ImagePullCredentials
+	103, // 116: namespace.cloud.compute.v1beta.ContainerRequest.ExperimentalFeatures.push_ephemeral_disk_as_image:type_name -> namespace.cloud.compute.v1beta.ContainerRequest.ExperimentalFeatures.PushEphemeralDiskAsImage
+	104, // 117: namespace.cloud.compute.v1beta.ContainerRequest.ExperimentalFeatures.sidecar_volumes:type_name -> namespace.cloud.compute.v1beta.ContainerRequest.ExperimentalFeatures.SidecarVolume
 	23,  // 118: namespace.cloud.compute.v1beta.ContainerRequest.ExperimentalFeatures.ImagePullCredentials.aws_ecr:type_name -> namespace.cloud.compute.v1beta.AWSCredentials
 	6,   // 119: namespace.cloud.compute.v1beta.AllocatedContainer.ExportedContainerPort.proto:type_name -> namespace.cloud.compute.v1beta.ContainerPort.Proto
 	36,  // 120: namespace.cloud.compute.v1beta.AllocatedContainer.ExportedContainerPort.http_match_rule:type_name -> namespace.cloud.compute.v1beta.HttpMatchRule
@@ -8411,7 +8483,7 @@ var file_proto_namespace_cloud_compute_v1beta_compute_proto_depIdxs = []int32{
 	0,   // 123: namespace.cloud.compute.v1beta.InstanceExtendedMetadata.AllocatedTlsBackedPort.client_authentication:type_name -> namespace.cloud.compute.v1beta.IngressClientAuthentication
 	8,   // 124: namespace.cloud.compute.v1beta.InstanceMetadata.Service.status:type_name -> namespace.cloud.compute.v1beta.InstanceMetadata.Service.Status
 	9,   // 125: namespace.cloud.compute.v1beta.InstanceMetadata.Service.endpoint_kind:type_name -> namespace.cloud.compute.v1beta.InstanceMetadata.Service.EndpointKind
-	116, // 126: namespace.cloud.compute.v1beta.GetNetworkConfigurationResponse.Egress.egress_cidrs:type_name -> namespace.cloud.compute.v1beta.GetNetworkConfigurationResponse.CIDR
+	117, // 126: namespace.cloud.compute.v1beta.GetNetworkConfigurationResponse.Egress.egress_cidrs:type_name -> namespace.cloud.compute.v1beta.GetNetworkConfigurationResponse.CIDR
 	13,  // 127: namespace.cloud.compute.v1beta.GetNetworkConfigurationResponse.CIDR.kind:type_name -> namespace.cloud.compute.v1beta.GetNetworkConfigurationResponse.CIDR.Kind
 	15,  // 128: namespace.cloud.compute.v1beta.ComputeService.CreateInstance:input_type -> namespace.cloud.compute.v1beta.CreateInstanceRequest
 	27,  // 129: namespace.cloud.compute.v1beta.ComputeService.WaitInstance:input_type -> namespace.cloud.compute.v1beta.WaitInstanceRequest
@@ -8432,29 +8504,31 @@ var file_proto_namespace_cloud_compute_v1beta_compute_proto_depIdxs = []int32{
 	64,  // 144: namespace.cloud.compute.v1beta.ComputeService.GetVNCConfig:input_type -> namespace.cloud.compute.v1beta.GetVNCConfigRequest
 	66,  // 145: namespace.cloud.compute.v1beta.ComputeService.ReleaseUniqueTag:input_type -> namespace.cloud.compute.v1beta.ReleaseUniqueTagRequest
 	68,  // 146: namespace.cloud.compute.v1beta.ComputeService.OptimizeImage:input_type -> namespace.cloud.compute.v1beta.OptimizeImageRequest
-	71,  // 147: namespace.cloud.compute.v1beta.ComputeService.ListInstanceNotifications:input_type -> namespace.cloud.compute.v1beta.ListInstanceNotificationsRequest
-	17,  // 148: namespace.cloud.compute.v1beta.ComputeService.CreateInstance:output_type -> namespace.cloud.compute.v1beta.DescribeInstanceResponse
-	28,  // 149: namespace.cloud.compute.v1beta.ComputeService.WaitInstance:output_type -> namespace.cloud.compute.v1beta.WaitInstanceResponse
-	28,  // 150: namespace.cloud.compute.v1beta.ComputeService.WaitInstanceSync:output_type -> namespace.cloud.compute.v1beta.WaitInstanceResponse
-	30,  // 151: namespace.cloud.compute.v1beta.ComputeService.ExtendInstance:output_type -> namespace.cloud.compute.v1beta.ExtendInstanceResponse
-	24,  // 152: namespace.cloud.compute.v1beta.ComputeService.StartContainers:output_type -> namespace.cloud.compute.v1beta.StartContainersResponse
-	17,  // 153: namespace.cloud.compute.v1beta.ComputeService.DescribeInstance:output_type -> namespace.cloud.compute.v1beta.DescribeInstanceResponse
-	126, // 154: namespace.cloud.compute.v1beta.ComputeService.DestroyInstance:output_type -> google.protobuf.Empty
-	33,  // 155: namespace.cloud.compute.v1beta.ComputeService.ListInstances:output_type -> namespace.cloud.compute.v1beta.ListInstancesResponse
-	126, // 156: namespace.cloud.compute.v1beta.ComputeService.SuspendInstance:output_type -> google.protobuf.Empty
-	126, // 157: namespace.cloud.compute.v1beta.ComputeService.WakeInstance:output_type -> google.protobuf.Empty
-	46,  // 158: namespace.cloud.compute.v1beta.ComputeService.CreateIngress:output_type -> namespace.cloud.compute.v1beta.CreateIngressResponse
-	48,  // 159: namespace.cloud.compute.v1beta.ComputeService.ListIngresses:output_type -> namespace.cloud.compute.v1beta.ListIngressesResponse
-	52,  // 160: namespace.cloud.compute.v1beta.ComputeService.GetKubernetesConfig:output_type -> namespace.cloud.compute.v1beta.GetKubernetesConfigResponse
-	55,  // 161: namespace.cloud.compute.v1beta.ComputeService.GetInstanceMetrics:output_type -> namespace.cloud.compute.v1beta.GetInstanceMetricsResponse
-	61,  // 162: namespace.cloud.compute.v1beta.ComputeService.GetNetworkConfiguration:output_type -> namespace.cloud.compute.v1beta.GetNetworkConfigurationResponse
-	63,  // 163: namespace.cloud.compute.v1beta.ComputeService.GetSSHConfig:output_type -> namespace.cloud.compute.v1beta.GetSSHConfigResponse
-	65,  // 164: namespace.cloud.compute.v1beta.ComputeService.GetVNCConfig:output_type -> namespace.cloud.compute.v1beta.GetVNCConfigResponse
-	67,  // 165: namespace.cloud.compute.v1beta.ComputeService.ReleaseUniqueTag:output_type -> namespace.cloud.compute.v1beta.ReleaseUniqueTagResponse
-	69,  // 166: namespace.cloud.compute.v1beta.ComputeService.OptimizeImage:output_type -> namespace.cloud.compute.v1beta.OptimizeImageProgress
-	72,  // 167: namespace.cloud.compute.v1beta.ComputeService.ListInstanceNotifications:output_type -> namespace.cloud.compute.v1beta.ListInstanceNotificationsResponse
-	148, // [148:168] is the sub-list for method output_type
-	128, // [128:148] is the sub-list for method input_type
+	69,  // 147: namespace.cloud.compute.v1beta.ComputeService.WaitOptimizeImage:input_type -> namespace.cloud.compute.v1beta.WaitOptimizeImageRequest
+	72,  // 148: namespace.cloud.compute.v1beta.ComputeService.ListInstanceNotifications:input_type -> namespace.cloud.compute.v1beta.ListInstanceNotificationsRequest
+	17,  // 149: namespace.cloud.compute.v1beta.ComputeService.CreateInstance:output_type -> namespace.cloud.compute.v1beta.DescribeInstanceResponse
+	28,  // 150: namespace.cloud.compute.v1beta.ComputeService.WaitInstance:output_type -> namespace.cloud.compute.v1beta.WaitInstanceResponse
+	28,  // 151: namespace.cloud.compute.v1beta.ComputeService.WaitInstanceSync:output_type -> namespace.cloud.compute.v1beta.WaitInstanceResponse
+	30,  // 152: namespace.cloud.compute.v1beta.ComputeService.ExtendInstance:output_type -> namespace.cloud.compute.v1beta.ExtendInstanceResponse
+	24,  // 153: namespace.cloud.compute.v1beta.ComputeService.StartContainers:output_type -> namespace.cloud.compute.v1beta.StartContainersResponse
+	17,  // 154: namespace.cloud.compute.v1beta.ComputeService.DescribeInstance:output_type -> namespace.cloud.compute.v1beta.DescribeInstanceResponse
+	127, // 155: namespace.cloud.compute.v1beta.ComputeService.DestroyInstance:output_type -> google.protobuf.Empty
+	33,  // 156: namespace.cloud.compute.v1beta.ComputeService.ListInstances:output_type -> namespace.cloud.compute.v1beta.ListInstancesResponse
+	127, // 157: namespace.cloud.compute.v1beta.ComputeService.SuspendInstance:output_type -> google.protobuf.Empty
+	127, // 158: namespace.cloud.compute.v1beta.ComputeService.WakeInstance:output_type -> google.protobuf.Empty
+	46,  // 159: namespace.cloud.compute.v1beta.ComputeService.CreateIngress:output_type -> namespace.cloud.compute.v1beta.CreateIngressResponse
+	48,  // 160: namespace.cloud.compute.v1beta.ComputeService.ListIngresses:output_type -> namespace.cloud.compute.v1beta.ListIngressesResponse
+	52,  // 161: namespace.cloud.compute.v1beta.ComputeService.GetKubernetesConfig:output_type -> namespace.cloud.compute.v1beta.GetKubernetesConfigResponse
+	55,  // 162: namespace.cloud.compute.v1beta.ComputeService.GetInstanceMetrics:output_type -> namespace.cloud.compute.v1beta.GetInstanceMetricsResponse
+	61,  // 163: namespace.cloud.compute.v1beta.ComputeService.GetNetworkConfiguration:output_type -> namespace.cloud.compute.v1beta.GetNetworkConfigurationResponse
+	63,  // 164: namespace.cloud.compute.v1beta.ComputeService.GetSSHConfig:output_type -> namespace.cloud.compute.v1beta.GetSSHConfigResponse
+	65,  // 165: namespace.cloud.compute.v1beta.ComputeService.GetVNCConfig:output_type -> namespace.cloud.compute.v1beta.GetVNCConfigResponse
+	67,  // 166: namespace.cloud.compute.v1beta.ComputeService.ReleaseUniqueTag:output_type -> namespace.cloud.compute.v1beta.ReleaseUniqueTagResponse
+	70,  // 167: namespace.cloud.compute.v1beta.ComputeService.OptimizeImage:output_type -> namespace.cloud.compute.v1beta.OptimizeImageProgress
+	70,  // 168: namespace.cloud.compute.v1beta.ComputeService.WaitOptimizeImage:output_type -> namespace.cloud.compute.v1beta.OptimizeImageProgress
+	73,  // 169: namespace.cloud.compute.v1beta.ComputeService.ListInstanceNotifications:output_type -> namespace.cloud.compute.v1beta.ListInstanceNotificationsResponse
+	149, // [149:170] is the sub-list for method output_type
+	128, // [128:149] is the sub-list for method input_type
 	128, // [128:128] is the sub-list for extension type_name
 	128, // [128:128] is the sub-list for extension extendee
 	0,   // [0:128] is the sub-list for field type_name
@@ -8471,7 +8545,7 @@ func file_proto_namespace_cloud_compute_v1beta_compute_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_proto_namespace_cloud_compute_v1beta_compute_proto_rawDesc), len(file_proto_namespace_cloud_compute_v1beta_compute_proto_rawDesc)),
 			NumEnums:      15,
-			NumMessages:   102,
+			NumMessages:   103,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

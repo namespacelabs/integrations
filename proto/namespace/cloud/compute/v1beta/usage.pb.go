@@ -33,6 +33,9 @@ const (
 	ArtifactProduct_ARTIFACT_PRODUCT_GITHUB_ARTIFACTS ArtifactProduct = 3
 	ArtifactProduct_ARTIFACT_PRODUCT_BAZEL            ArtifactProduct = 4
 	ArtifactProduct_ARTIFACT_PRODUCT_GRADLE           ArtifactProduct = 5
+	// Combined GitHub Actions artifacts and artifacts uploaded through ArtifactsService,
+	// including `nsc artifact`.
+	ArtifactProduct_ARTIFACT_PRODUCT_ARTIFACTS ArtifactProduct = 6
 )
 
 // Enum value maps for ArtifactProduct.
@@ -44,6 +47,7 @@ var (
 		3: "ARTIFACT_PRODUCT_GITHUB_ARTIFACTS",
 		4: "ARTIFACT_PRODUCT_BAZEL",
 		5: "ARTIFACT_PRODUCT_GRADLE",
+		6: "ARTIFACT_PRODUCT_ARTIFACTS",
 	}
 	ArtifactProduct_value = map[string]int32{
 		"ARTIFACT_PRODUCT_UNSPECIFIED":      0,
@@ -52,6 +56,7 @@ var (
 		"ARTIFACT_PRODUCT_GITHUB_ARTIFACTS": 3,
 		"ARTIFACT_PRODUCT_BAZEL":            4,
 		"ARTIFACT_PRODUCT_GRADLE":           5,
+		"ARTIFACT_PRODUCT_ARTIFACTS":        6,
 	}
 )
 
@@ -1920,14 +1925,15 @@ const file_proto_namespace_cloud_compute_v1beta_usage_proto_rawDesc = "" +
 	"repository\x18\f \x01(\tR\n" +
 	"repository\x12\x16\n" +
 	"\x06branch\x18\r \x01(\tR\x06branch\x12\x1b\n" +
-	"\tjob_state\x18\x0e \x01(\tR\bjobState*\xd2\x01\n" +
+	"\tjob_state\x18\x0e \x01(\tR\bjobState*\xf2\x01\n" +
 	"\x0fArtifactProduct\x12 \n" +
 	"\x1cARTIFACT_PRODUCT_UNSPECIFIED\x10\x00\x12\x1d\n" +
 	"\x19ARTIFACT_PRODUCT_REGISTRY\x10\x01\x12\x1e\n" +
 	"\x1aARTIFACT_PRODUCT_TURBOREPO\x10\x02\x12%\n" +
 	"!ARTIFACT_PRODUCT_GITHUB_ARTIFACTS\x10\x03\x12\x1a\n" +
 	"\x16ARTIFACT_PRODUCT_BAZEL\x10\x04\x12\x1b\n" +
-	"\x17ARTIFACT_PRODUCT_GRADLE\x10\x052\x99\x06\n" +
+	"\x17ARTIFACT_PRODUCT_GRADLE\x10\x05\x12\x1e\n" +
+	"\x1aARTIFACT_PRODUCT_ARTIFACTS\x10\x062\x99\x06\n" +
 	"\fUsageService\x12m\n" +
 	"\bGetUsage\x12/.namespace.cloud.compute.v1beta.GetUsageRequest\x1a0.namespace.cloud.compute.v1beta.GetUsageResponse\x12\x7f\n" +
 	"\x0eGetVolumeUsage\x125.namespace.cloud.compute.v1beta.GetVolumeUsageRequest\x1a6.namespace.cloud.compute.v1beta.GetVolumeUsageResponse\x12\x85\x01\n" +

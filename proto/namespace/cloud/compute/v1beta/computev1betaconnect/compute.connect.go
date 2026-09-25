@@ -91,6 +91,9 @@ const (
 	// ComputeServiceOptimizeImageProcedure is the fully-qualified name of the ComputeService's
 	// OptimizeImage RPC.
 	ComputeServiceOptimizeImageProcedure = "/namespace.cloud.compute.v1beta.ComputeService/OptimizeImage"
+	// ComputeServiceWaitOptimizeImageProcedure is the fully-qualified name of the ComputeService's
+	// WaitOptimizeImage RPC.
+	ComputeServiceWaitOptimizeImageProcedure = "/namespace.cloud.compute.v1beta.ComputeService/WaitOptimizeImage"
 	// ComputeServiceListInstanceNotificationsProcedure is the fully-qualified name of the
 	// ComputeService's ListInstanceNotifications RPC.
 	ComputeServiceListInstanceNotificationsProcedure = "/namespace.cloud.compute.v1beta.ComputeService/ListInstanceNotifications"
@@ -118,6 +121,7 @@ var (
 	computeServiceGetVNCConfigMethodDescriptor              = computeServiceServiceDescriptor.Methods().ByName("GetVNCConfig")
 	computeServiceReleaseUniqueTagMethodDescriptor          = computeServiceServiceDescriptor.Methods().ByName("ReleaseUniqueTag")
 	computeServiceOptimizeImageMethodDescriptor             = computeServiceServiceDescriptor.Methods().ByName("OptimizeImage")
+	computeServiceWaitOptimizeImageMethodDescriptor         = computeServiceServiceDescriptor.Methods().ByName("WaitOptimizeImage")
 	computeServiceListInstanceNotificationsMethodDescriptor = computeServiceServiceDescriptor.Methods().ByName("ListInstanceNotifications")
 )
 
@@ -289,6 +293,8 @@ type ComputeServiceClient interface {
 	// Triggers an internal process to optimize an image. This is not always
 	// needed and is used for internal purposes.
 	OptimizeImage(context.Context, *connect.Request[v1beta.OptimizeImageRequest]) (*connect.ServerStreamForClient[v1beta.OptimizeImageProgress], error)
+	// Reattaches to the progress stream of an existing image optimization.
+	WaitOptimizeImage(context.Context, *connect.Request[v1beta.WaitOptimizeImageRequest]) (*connect.ServerStreamForClient[v1beta.OptimizeImageProgress], error)
 	// Returns a list of instance notification events. Each instance has at most one event
 	// in the response, representing its most recent state change. Events can
 	// be filtered by instance ID.
@@ -419,6 +425,12 @@ func NewComputeServiceClient(httpClient connect.HTTPClient, baseURL string, opts
 			connect.WithSchema(computeServiceOptimizeImageMethodDescriptor),
 			connect.WithClientOptions(opts...),
 		),
+		waitOptimizeImage: connect.NewClient[v1beta.WaitOptimizeImageRequest, v1beta.OptimizeImageProgress](
+			httpClient,
+			baseURL+ComputeServiceWaitOptimizeImageProcedure,
+			connect.WithSchema(computeServiceWaitOptimizeImageMethodDescriptor),
+			connect.WithClientOptions(opts...),
+		),
 		listInstanceNotifications: connect.NewClient[v1beta.ListInstanceNotificationsRequest, v1beta.ListInstanceNotificationsResponse](
 			httpClient,
 			baseURL+ComputeServiceListInstanceNotificationsProcedure,
@@ -449,6 +461,7 @@ type computeServiceClient struct {
 	getVNCConfig              *connect.Client[v1beta.GetVNCConfigRequest, v1beta.GetVNCConfigResponse]
 	releaseUniqueTag          *connect.Client[v1beta.ReleaseUniqueTagRequest, v1beta.ReleaseUniqueTagResponse]
 	optimizeImage             *connect.Client[v1beta.OptimizeImageRequest, v1beta.OptimizeImageProgress]
+	waitOptimizeImage         *connect.Client[v1beta.WaitOptimizeImageRequest, v1beta.OptimizeImageProgress]
 	listInstanceNotifications *connect.Client[v1beta.ListInstanceNotificationsRequest, v1beta.ListInstanceNotificationsResponse]
 }
 
@@ -546,6 +559,11 @@ func (c *computeServiceClient) ReleaseUniqueTag(ctx context.Context, req *connec
 // OptimizeImage calls namespace.cloud.compute.v1beta.ComputeService.OptimizeImage.
 func (c *computeServiceClient) OptimizeImage(ctx context.Context, req *connect.Request[v1beta.OptimizeImageRequest]) (*connect.ServerStreamForClient[v1beta.OptimizeImageProgress], error) {
 	return c.optimizeImage.CallServerStream(ctx, req)
+}
+
+// WaitOptimizeImage calls namespace.cloud.compute.v1beta.ComputeService.WaitOptimizeImage.
+func (c *computeServiceClient) WaitOptimizeImage(ctx context.Context, req *connect.Request[v1beta.WaitOptimizeImageRequest]) (*connect.ServerStreamForClient[v1beta.OptimizeImageProgress], error) {
+	return c.waitOptimizeImage.CallServerStream(ctx, req)
 }
 
 // ListInstanceNotifications calls
@@ -723,6 +741,8 @@ type ComputeServiceHandler interface {
 	// Triggers an internal process to optimize an image. This is not always
 	// needed and is used for internal purposes.
 	OptimizeImage(context.Context, *connect.Request[v1beta.OptimizeImageRequest], *connect.ServerStream[v1beta.OptimizeImageProgress]) error
+	// Reattaches to the progress stream of an existing image optimization.
+	WaitOptimizeImage(context.Context, *connect.Request[v1beta.WaitOptimizeImageRequest], *connect.ServerStream[v1beta.OptimizeImageProgress]) error
 	// Returns a list of instance notification events. Each instance has at most one event
 	// in the response, representing its most recent state change. Events can
 	// be filtered by instance ID.
@@ -849,6 +869,12 @@ func NewComputeServiceHandler(svc ComputeServiceHandler, opts ...connect.Handler
 		connect.WithSchema(computeServiceOptimizeImageMethodDescriptor),
 		connect.WithHandlerOptions(opts...),
 	)
+	computeServiceWaitOptimizeImageHandler := connect.NewServerStreamHandler(
+		ComputeServiceWaitOptimizeImageProcedure,
+		svc.WaitOptimizeImage,
+		connect.WithSchema(computeServiceWaitOptimizeImageMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
+	)
 	computeServiceListInstanceNotificationsHandler := connect.NewUnaryHandler(
 		ComputeServiceListInstanceNotificationsProcedure,
 		svc.ListInstanceNotifications,
@@ -895,6 +921,8 @@ func NewComputeServiceHandler(svc ComputeServiceHandler, opts ...connect.Handler
 			computeServiceReleaseUniqueTagHandler.ServeHTTP(w, r)
 		case ComputeServiceOptimizeImageProcedure:
 			computeServiceOptimizeImageHandler.ServeHTTP(w, r)
+		case ComputeServiceWaitOptimizeImageProcedure:
+			computeServiceWaitOptimizeImageHandler.ServeHTTP(w, r)
 		case ComputeServiceListInstanceNotificationsProcedure:
 			computeServiceListInstanceNotificationsHandler.ServeHTTP(w, r)
 		default:
@@ -980,6 +1008,10 @@ func (UnimplementedComputeServiceHandler) ReleaseUniqueTag(context.Context, *con
 
 func (UnimplementedComputeServiceHandler) OptimizeImage(context.Context, *connect.Request[v1beta.OptimizeImageRequest], *connect.ServerStream[v1beta.OptimizeImageProgress]) error {
 	return connect.NewError(connect.CodeUnimplemented, errors.New("namespace.cloud.compute.v1beta.ComputeService.OptimizeImage is not implemented"))
+}
+
+func (UnimplementedComputeServiceHandler) WaitOptimizeImage(context.Context, *connect.Request[v1beta.WaitOptimizeImageRequest], *connect.ServerStream[v1beta.OptimizeImageProgress]) error {
+	return connect.NewError(connect.CodeUnimplemented, errors.New("namespace.cloud.compute.v1beta.ComputeService.WaitOptimizeImage is not implemented"))
 }
 
 func (UnimplementedComputeServiceHandler) ListInstanceNotifications(context.Context, *connect.Request[v1beta.ListInstanceNotificationsRequest]) (*connect.Response[v1beta.ListInstanceNotificationsResponse], error) {
