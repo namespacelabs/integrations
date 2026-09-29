@@ -39,6 +39,14 @@ const (
 	AgentService_CreateTerminalSession_FullMethodName      = "/namespace.private.devbox.wire.v1beta.AgentService/CreateTerminalSession"
 	AgentService_DeleteTerminalSession_FullMethodName      = "/namespace.private.devbox.wire.v1beta.AgentService/DeleteTerminalSession"
 	AgentService_ListTerminalSessions_FullMethodName       = "/namespace.private.devbox.wire.v1beta.AgentService/ListTerminalSessions"
+	AgentService_CreateService_FullMethodName              = "/namespace.private.devbox.wire.v1beta.AgentService/CreateService"
+	AgentService_ListServices_FullMethodName               = "/namespace.private.devbox.wire.v1beta.AgentService/ListServices"
+	AgentService_DeleteService_FullMethodName              = "/namespace.private.devbox.wire.v1beta.AgentService/DeleteService"
+	AgentService_ResumeService_FullMethodName              = "/namespace.private.devbox.wire.v1beta.AgentService/ResumeService"
+	AgentService_SuspendService_FullMethodName             = "/namespace.private.devbox.wire.v1beta.AgentService/SuspendService"
+	AgentService_StartService_FullMethodName               = "/namespace.private.devbox.wire.v1beta.AgentService/StartService"
+	AgentService_StopService_FullMethodName                = "/namespace.private.devbox.wire.v1beta.AgentService/StopService"
+	AgentService_SignalService_FullMethodName              = "/namespace.private.devbox.wire.v1beta.AgentService/SignalService"
 	AgentService_CreatePort_FullMethodName                 = "/namespace.private.devbox.wire.v1beta.AgentService/CreatePort"
 	AgentService_DeletePort_FullMethodName                 = "/namespace.private.devbox.wire.v1beta.AgentService/DeletePort"
 	AgentService_ListPorts_FullMethodName                  = "/namespace.private.devbox.wire.v1beta.AgentService/ListPorts"
@@ -85,6 +93,14 @@ type AgentServiceClient interface {
 	CreateTerminalSession(ctx context.Context, in *CreateTerminalSessionRequest, opts ...grpc.CallOption) (*TerminalSession, error)
 	DeleteTerminalSession(ctx context.Context, in *DeleteTerminalSessionRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	ListTerminalSessions(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*ListTerminalSessionsResponse, error)
+	CreateService(ctx context.Context, in *CreateServiceRequest, opts ...grpc.CallOption) (*CreateServiceResponse, error)
+	ListServices(ctx context.Context, in *ListServicesRequest, opts ...grpc.CallOption) (*ListServicesResponse, error)
+	DeleteService(ctx context.Context, in *DeleteServiceRequest, opts ...grpc.CallOption) (*DeleteServiceResponse, error)
+	ResumeService(ctx context.Context, in *ResumeServiceRequest, opts ...grpc.CallOption) (*ResumeServiceResponse, error)
+	SuspendService(ctx context.Context, in *SuspendServiceRequest, opts ...grpc.CallOption) (*SuspendServiceResponse, error)
+	StartService(ctx context.Context, in *StartServiceRequest, opts ...grpc.CallOption) (*StartServiceResponse, error)
+	StopService(ctx context.Context, in *StopServiceRequest, opts ...grpc.CallOption) (*StopServiceResponse, error)
+	SignalService(ctx context.Context, in *SignalServiceRequest, opts ...grpc.CallOption) (*SignalServiceResponse, error)
 	CreatePort(ctx context.Context, in *CreatePortRequest, opts ...grpc.CallOption) (*CreatePortResponse, error)
 	DeletePort(ctx context.Context, in *DeletePortRequest, opts ...grpc.CallOption) (*DeletePortResponse, error)
 	ListPorts(ctx context.Context, in *ListPortsRequest, opts ...grpc.CallOption) (*ListPortsResponse, error)
@@ -337,6 +353,86 @@ func (c *agentServiceClient) ListTerminalSessions(ctx context.Context, in *empty
 	return out, nil
 }
 
+func (c *agentServiceClient) CreateService(ctx context.Context, in *CreateServiceRequest, opts ...grpc.CallOption) (*CreateServiceResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CreateServiceResponse)
+	err := c.cc.Invoke(ctx, AgentService_CreateService_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *agentServiceClient) ListServices(ctx context.Context, in *ListServicesRequest, opts ...grpc.CallOption) (*ListServicesResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListServicesResponse)
+	err := c.cc.Invoke(ctx, AgentService_ListServices_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *agentServiceClient) DeleteService(ctx context.Context, in *DeleteServiceRequest, opts ...grpc.CallOption) (*DeleteServiceResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(DeleteServiceResponse)
+	err := c.cc.Invoke(ctx, AgentService_DeleteService_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *agentServiceClient) ResumeService(ctx context.Context, in *ResumeServiceRequest, opts ...grpc.CallOption) (*ResumeServiceResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ResumeServiceResponse)
+	err := c.cc.Invoke(ctx, AgentService_ResumeService_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *agentServiceClient) SuspendService(ctx context.Context, in *SuspendServiceRequest, opts ...grpc.CallOption) (*SuspendServiceResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(SuspendServiceResponse)
+	err := c.cc.Invoke(ctx, AgentService_SuspendService_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *agentServiceClient) StartService(ctx context.Context, in *StartServiceRequest, opts ...grpc.CallOption) (*StartServiceResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(StartServiceResponse)
+	err := c.cc.Invoke(ctx, AgentService_StartService_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *agentServiceClient) StopService(ctx context.Context, in *StopServiceRequest, opts ...grpc.CallOption) (*StopServiceResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(StopServiceResponse)
+	err := c.cc.Invoke(ctx, AgentService_StopService_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *agentServiceClient) SignalService(ctx context.Context, in *SignalServiceRequest, opts ...grpc.CallOption) (*SignalServiceResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(SignalServiceResponse)
+	err := c.cc.Invoke(ctx, AgentService_SignalService_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *agentServiceClient) CreatePort(ctx context.Context, in *CreatePortRequest, opts ...grpc.CallOption) (*CreatePortResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(CreatePortResponse)
@@ -417,6 +513,14 @@ type AgentServiceServer interface {
 	CreateTerminalSession(context.Context, *CreateTerminalSessionRequest) (*TerminalSession, error)
 	DeleteTerminalSession(context.Context, *DeleteTerminalSessionRequest) (*emptypb.Empty, error)
 	ListTerminalSessions(context.Context, *emptypb.Empty) (*ListTerminalSessionsResponse, error)
+	CreateService(context.Context, *CreateServiceRequest) (*CreateServiceResponse, error)
+	ListServices(context.Context, *ListServicesRequest) (*ListServicesResponse, error)
+	DeleteService(context.Context, *DeleteServiceRequest) (*DeleteServiceResponse, error)
+	ResumeService(context.Context, *ResumeServiceRequest) (*ResumeServiceResponse, error)
+	SuspendService(context.Context, *SuspendServiceRequest) (*SuspendServiceResponse, error)
+	StartService(context.Context, *StartServiceRequest) (*StartServiceResponse, error)
+	StopService(context.Context, *StopServiceRequest) (*StopServiceResponse, error)
+	SignalService(context.Context, *SignalServiceRequest) (*SignalServiceResponse, error)
 	CreatePort(context.Context, *CreatePortRequest) (*CreatePortResponse, error)
 	DeletePort(context.Context, *DeletePortRequest) (*DeletePortResponse, error)
 	ListPorts(context.Context, *ListPortsRequest) (*ListPortsResponse, error)
@@ -487,6 +591,30 @@ func (UnimplementedAgentServiceServer) DeleteTerminalSession(context.Context, *D
 }
 func (UnimplementedAgentServiceServer) ListTerminalSessions(context.Context, *emptypb.Empty) (*ListTerminalSessionsResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method ListTerminalSessions not implemented")
+}
+func (UnimplementedAgentServiceServer) CreateService(context.Context, *CreateServiceRequest) (*CreateServiceResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method CreateService not implemented")
+}
+func (UnimplementedAgentServiceServer) ListServices(context.Context, *ListServicesRequest) (*ListServicesResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method ListServices not implemented")
+}
+func (UnimplementedAgentServiceServer) DeleteService(context.Context, *DeleteServiceRequest) (*DeleteServiceResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method DeleteService not implemented")
+}
+func (UnimplementedAgentServiceServer) ResumeService(context.Context, *ResumeServiceRequest) (*ResumeServiceResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method ResumeService not implemented")
+}
+func (UnimplementedAgentServiceServer) SuspendService(context.Context, *SuspendServiceRequest) (*SuspendServiceResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method SuspendService not implemented")
+}
+func (UnimplementedAgentServiceServer) StartService(context.Context, *StartServiceRequest) (*StartServiceResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method StartService not implemented")
+}
+func (UnimplementedAgentServiceServer) StopService(context.Context, *StopServiceRequest) (*StopServiceResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method StopService not implemented")
+}
+func (UnimplementedAgentServiceServer) SignalService(context.Context, *SignalServiceRequest) (*SignalServiceResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method SignalService not implemented")
 }
 func (UnimplementedAgentServiceServer) CreatePort(context.Context, *CreatePortRequest) (*CreatePortResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method CreatePort not implemented")
@@ -817,6 +945,150 @@ func _AgentService_ListTerminalSessions_Handler(srv interface{}, ctx context.Con
 	return interceptor(ctx, in, info, handler)
 }
 
+func _AgentService_CreateService_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateServiceRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AgentServiceServer).CreateService(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AgentService_CreateService_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AgentServiceServer).CreateService(ctx, req.(*CreateServiceRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AgentService_ListServices_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListServicesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AgentServiceServer).ListServices(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AgentService_ListServices_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AgentServiceServer).ListServices(ctx, req.(*ListServicesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AgentService_DeleteService_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteServiceRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AgentServiceServer).DeleteService(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AgentService_DeleteService_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AgentServiceServer).DeleteService(ctx, req.(*DeleteServiceRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AgentService_ResumeService_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ResumeServiceRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AgentServiceServer).ResumeService(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AgentService_ResumeService_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AgentServiceServer).ResumeService(ctx, req.(*ResumeServiceRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AgentService_SuspendService_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SuspendServiceRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AgentServiceServer).SuspendService(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AgentService_SuspendService_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AgentServiceServer).SuspendService(ctx, req.(*SuspendServiceRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AgentService_StartService_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StartServiceRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AgentServiceServer).StartService(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AgentService_StartService_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AgentServiceServer).StartService(ctx, req.(*StartServiceRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AgentService_StopService_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StopServiceRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AgentServiceServer).StopService(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AgentService_StopService_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AgentServiceServer).StopService(ctx, req.(*StopServiceRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AgentService_SignalService_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SignalServiceRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AgentServiceServer).SignalService(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AgentService_SignalService_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AgentServiceServer).SignalService(ctx, req.(*SignalServiceRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _AgentService_CreatePort_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(CreatePortRequest)
 	if err := dec(in); err != nil {
@@ -947,6 +1219,38 @@ var AgentService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListTerminalSessions",
 			Handler:    _AgentService_ListTerminalSessions_Handler,
+		},
+		{
+			MethodName: "CreateService",
+			Handler:    _AgentService_CreateService_Handler,
+		},
+		{
+			MethodName: "ListServices",
+			Handler:    _AgentService_ListServices_Handler,
+		},
+		{
+			MethodName: "DeleteService",
+			Handler:    _AgentService_DeleteService_Handler,
+		},
+		{
+			MethodName: "ResumeService",
+			Handler:    _AgentService_ResumeService_Handler,
+		},
+		{
+			MethodName: "SuspendService",
+			Handler:    _AgentService_SuspendService_Handler,
+		},
+		{
+			MethodName: "StartService",
+			Handler:    _AgentService_StartService_Handler,
+		},
+		{
+			MethodName: "StopService",
+			Handler:    _AgentService_StopService_Handler,
+		},
+		{
+			MethodName: "SignalService",
+			Handler:    _AgentService_SignalService_Handler,
 		},
 		{
 			MethodName: "CreatePort",

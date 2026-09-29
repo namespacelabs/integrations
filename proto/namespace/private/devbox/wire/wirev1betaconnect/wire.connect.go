@@ -82,6 +82,30 @@ const (
 	// AgentServiceListTerminalSessionsProcedure is the fully-qualified name of the AgentService's
 	// ListTerminalSessions RPC.
 	AgentServiceListTerminalSessionsProcedure = "/namespace.private.devbox.wire.v1beta.AgentService/ListTerminalSessions"
+	// AgentServiceCreateServiceProcedure is the fully-qualified name of the AgentService's
+	// CreateService RPC.
+	AgentServiceCreateServiceProcedure = "/namespace.private.devbox.wire.v1beta.AgentService/CreateService"
+	// AgentServiceListServicesProcedure is the fully-qualified name of the AgentService's ListServices
+	// RPC.
+	AgentServiceListServicesProcedure = "/namespace.private.devbox.wire.v1beta.AgentService/ListServices"
+	// AgentServiceDeleteServiceProcedure is the fully-qualified name of the AgentService's
+	// DeleteService RPC.
+	AgentServiceDeleteServiceProcedure = "/namespace.private.devbox.wire.v1beta.AgentService/DeleteService"
+	// AgentServiceResumeServiceProcedure is the fully-qualified name of the AgentService's
+	// ResumeService RPC.
+	AgentServiceResumeServiceProcedure = "/namespace.private.devbox.wire.v1beta.AgentService/ResumeService"
+	// AgentServiceSuspendServiceProcedure is the fully-qualified name of the AgentService's
+	// SuspendService RPC.
+	AgentServiceSuspendServiceProcedure = "/namespace.private.devbox.wire.v1beta.AgentService/SuspendService"
+	// AgentServiceStartServiceProcedure is the fully-qualified name of the AgentService's StartService
+	// RPC.
+	AgentServiceStartServiceProcedure = "/namespace.private.devbox.wire.v1beta.AgentService/StartService"
+	// AgentServiceStopServiceProcedure is the fully-qualified name of the AgentService's StopService
+	// RPC.
+	AgentServiceStopServiceProcedure = "/namespace.private.devbox.wire.v1beta.AgentService/StopService"
+	// AgentServiceSignalServiceProcedure is the fully-qualified name of the AgentService's
+	// SignalService RPC.
+	AgentServiceSignalServiceProcedure = "/namespace.private.devbox.wire.v1beta.AgentService/SignalService"
 	// AgentServiceCreatePortProcedure is the fully-qualified name of the AgentService's CreatePort RPC.
 	AgentServiceCreatePortProcedure = "/namespace.private.devbox.wire.v1beta.AgentService/CreatePort"
 	// AgentServiceDeletePortProcedure is the fully-qualified name of the AgentService's DeletePort RPC.
@@ -115,6 +139,14 @@ var (
 	agentServiceCreateTerminalSessionMethodDescriptor      = agentServiceServiceDescriptor.Methods().ByName("CreateTerminalSession")
 	agentServiceDeleteTerminalSessionMethodDescriptor      = agentServiceServiceDescriptor.Methods().ByName("DeleteTerminalSession")
 	agentServiceListTerminalSessionsMethodDescriptor       = agentServiceServiceDescriptor.Methods().ByName("ListTerminalSessions")
+	agentServiceCreateServiceMethodDescriptor              = agentServiceServiceDescriptor.Methods().ByName("CreateService")
+	agentServiceListServicesMethodDescriptor               = agentServiceServiceDescriptor.Methods().ByName("ListServices")
+	agentServiceDeleteServiceMethodDescriptor              = agentServiceServiceDescriptor.Methods().ByName("DeleteService")
+	agentServiceResumeServiceMethodDescriptor              = agentServiceServiceDescriptor.Methods().ByName("ResumeService")
+	agentServiceSuspendServiceMethodDescriptor             = agentServiceServiceDescriptor.Methods().ByName("SuspendService")
+	agentServiceStartServiceMethodDescriptor               = agentServiceServiceDescriptor.Methods().ByName("StartService")
+	agentServiceStopServiceMethodDescriptor                = agentServiceServiceDescriptor.Methods().ByName("StopService")
+	agentServiceSignalServiceMethodDescriptor              = agentServiceServiceDescriptor.Methods().ByName("SignalService")
 	agentServiceCreatePortMethodDescriptor                 = agentServiceServiceDescriptor.Methods().ByName("CreatePort")
 	agentServiceDeletePortMethodDescriptor                 = agentServiceServiceDescriptor.Methods().ByName("DeletePort")
 	agentServiceListPortsMethodDescriptor                  = agentServiceServiceDescriptor.Methods().ByName("ListPorts")
@@ -159,6 +191,14 @@ type AgentServiceClient interface {
 	CreateTerminalSession(context.Context, *connect.Request[wire.CreateTerminalSessionRequest]) (*connect.Response[wire.TerminalSession], error)
 	DeleteTerminalSession(context.Context, *connect.Request[wire.DeleteTerminalSessionRequest]) (*connect.Response[emptypb.Empty], error)
 	ListTerminalSessions(context.Context, *connect.Request[emptypb.Empty]) (*connect.Response[wire.ListTerminalSessionsResponse], error)
+	CreateService(context.Context, *connect.Request[wire.CreateServiceRequest]) (*connect.Response[wire.CreateServiceResponse], error)
+	ListServices(context.Context, *connect.Request[wire.ListServicesRequest]) (*connect.Response[wire.ListServicesResponse], error)
+	DeleteService(context.Context, *connect.Request[wire.DeleteServiceRequest]) (*connect.Response[wire.DeleteServiceResponse], error)
+	ResumeService(context.Context, *connect.Request[wire.ResumeServiceRequest]) (*connect.Response[wire.ResumeServiceResponse], error)
+	SuspendService(context.Context, *connect.Request[wire.SuspendServiceRequest]) (*connect.Response[wire.SuspendServiceResponse], error)
+	StartService(context.Context, *connect.Request[wire.StartServiceRequest]) (*connect.Response[wire.StartServiceResponse], error)
+	StopService(context.Context, *connect.Request[wire.StopServiceRequest]) (*connect.Response[wire.StopServiceResponse], error)
+	SignalService(context.Context, *connect.Request[wire.SignalServiceRequest]) (*connect.Response[wire.SignalServiceResponse], error)
 	CreatePort(context.Context, *connect.Request[wire.CreatePortRequest]) (*connect.Response[wire.CreatePortResponse], error)
 	DeletePort(context.Context, *connect.Request[wire.DeletePortRequest]) (*connect.Response[wire.DeletePortResponse], error)
 	ListPorts(context.Context, *connect.Request[wire.ListPortsRequest]) (*connect.Response[wire.ListPortsResponse], error)
@@ -290,6 +330,54 @@ func NewAgentServiceClient(httpClient connect.HTTPClient, baseURL string, opts .
 			connect.WithSchema(agentServiceListTerminalSessionsMethodDescriptor),
 			connect.WithClientOptions(opts...),
 		),
+		createService: connect.NewClient[wire.CreateServiceRequest, wire.CreateServiceResponse](
+			httpClient,
+			baseURL+AgentServiceCreateServiceProcedure,
+			connect.WithSchema(agentServiceCreateServiceMethodDescriptor),
+			connect.WithClientOptions(opts...),
+		),
+		listServices: connect.NewClient[wire.ListServicesRequest, wire.ListServicesResponse](
+			httpClient,
+			baseURL+AgentServiceListServicesProcedure,
+			connect.WithSchema(agentServiceListServicesMethodDescriptor),
+			connect.WithClientOptions(opts...),
+		),
+		deleteService: connect.NewClient[wire.DeleteServiceRequest, wire.DeleteServiceResponse](
+			httpClient,
+			baseURL+AgentServiceDeleteServiceProcedure,
+			connect.WithSchema(agentServiceDeleteServiceMethodDescriptor),
+			connect.WithClientOptions(opts...),
+		),
+		resumeService: connect.NewClient[wire.ResumeServiceRequest, wire.ResumeServiceResponse](
+			httpClient,
+			baseURL+AgentServiceResumeServiceProcedure,
+			connect.WithSchema(agentServiceResumeServiceMethodDescriptor),
+			connect.WithClientOptions(opts...),
+		),
+		suspendService: connect.NewClient[wire.SuspendServiceRequest, wire.SuspendServiceResponse](
+			httpClient,
+			baseURL+AgentServiceSuspendServiceProcedure,
+			connect.WithSchema(agentServiceSuspendServiceMethodDescriptor),
+			connect.WithClientOptions(opts...),
+		),
+		startService: connect.NewClient[wire.StartServiceRequest, wire.StartServiceResponse](
+			httpClient,
+			baseURL+AgentServiceStartServiceProcedure,
+			connect.WithSchema(agentServiceStartServiceMethodDescriptor),
+			connect.WithClientOptions(opts...),
+		),
+		stopService: connect.NewClient[wire.StopServiceRequest, wire.StopServiceResponse](
+			httpClient,
+			baseURL+AgentServiceStopServiceProcedure,
+			connect.WithSchema(agentServiceStopServiceMethodDescriptor),
+			connect.WithClientOptions(opts...),
+		),
+		signalService: connect.NewClient[wire.SignalServiceRequest, wire.SignalServiceResponse](
+			httpClient,
+			baseURL+AgentServiceSignalServiceProcedure,
+			connect.WithSchema(agentServiceSignalServiceMethodDescriptor),
+			connect.WithClientOptions(opts...),
+		),
 		createPort: connect.NewClient[wire.CreatePortRequest, wire.CreatePortResponse](
 			httpClient,
 			baseURL+AgentServiceCreatePortProcedure,
@@ -338,6 +426,14 @@ type agentServiceClient struct {
 	createTerminalSession      *connect.Client[wire.CreateTerminalSessionRequest, wire.TerminalSession]
 	deleteTerminalSession      *connect.Client[wire.DeleteTerminalSessionRequest, emptypb.Empty]
 	listTerminalSessions       *connect.Client[emptypb.Empty, wire.ListTerminalSessionsResponse]
+	createService              *connect.Client[wire.CreateServiceRequest, wire.CreateServiceResponse]
+	listServices               *connect.Client[wire.ListServicesRequest, wire.ListServicesResponse]
+	deleteService              *connect.Client[wire.DeleteServiceRequest, wire.DeleteServiceResponse]
+	resumeService              *connect.Client[wire.ResumeServiceRequest, wire.ResumeServiceResponse]
+	suspendService             *connect.Client[wire.SuspendServiceRequest, wire.SuspendServiceResponse]
+	startService               *connect.Client[wire.StartServiceRequest, wire.StartServiceResponse]
+	stopService                *connect.Client[wire.StopServiceRequest, wire.StopServiceResponse]
+	signalService              *connect.Client[wire.SignalServiceRequest, wire.SignalServiceResponse]
 	createPort                 *connect.Client[wire.CreatePortRequest, wire.CreatePortResponse]
 	deletePort                 *connect.Client[wire.DeletePortRequest, wire.DeletePortResponse]
 	listPorts                  *connect.Client[wire.ListPortsRequest, wire.ListPortsResponse]
@@ -442,6 +538,46 @@ func (c *agentServiceClient) ListTerminalSessions(ctx context.Context, req *conn
 	return c.listTerminalSessions.CallUnary(ctx, req)
 }
 
+// CreateService calls namespace.private.devbox.wire.v1beta.AgentService.CreateService.
+func (c *agentServiceClient) CreateService(ctx context.Context, req *connect.Request[wire.CreateServiceRequest]) (*connect.Response[wire.CreateServiceResponse], error) {
+	return c.createService.CallUnary(ctx, req)
+}
+
+// ListServices calls namespace.private.devbox.wire.v1beta.AgentService.ListServices.
+func (c *agentServiceClient) ListServices(ctx context.Context, req *connect.Request[wire.ListServicesRequest]) (*connect.Response[wire.ListServicesResponse], error) {
+	return c.listServices.CallUnary(ctx, req)
+}
+
+// DeleteService calls namespace.private.devbox.wire.v1beta.AgentService.DeleteService.
+func (c *agentServiceClient) DeleteService(ctx context.Context, req *connect.Request[wire.DeleteServiceRequest]) (*connect.Response[wire.DeleteServiceResponse], error) {
+	return c.deleteService.CallUnary(ctx, req)
+}
+
+// ResumeService calls namespace.private.devbox.wire.v1beta.AgentService.ResumeService.
+func (c *agentServiceClient) ResumeService(ctx context.Context, req *connect.Request[wire.ResumeServiceRequest]) (*connect.Response[wire.ResumeServiceResponse], error) {
+	return c.resumeService.CallUnary(ctx, req)
+}
+
+// SuspendService calls namespace.private.devbox.wire.v1beta.AgentService.SuspendService.
+func (c *agentServiceClient) SuspendService(ctx context.Context, req *connect.Request[wire.SuspendServiceRequest]) (*connect.Response[wire.SuspendServiceResponse], error) {
+	return c.suspendService.CallUnary(ctx, req)
+}
+
+// StartService calls namespace.private.devbox.wire.v1beta.AgentService.StartService.
+func (c *agentServiceClient) StartService(ctx context.Context, req *connect.Request[wire.StartServiceRequest]) (*connect.Response[wire.StartServiceResponse], error) {
+	return c.startService.CallUnary(ctx, req)
+}
+
+// StopService calls namespace.private.devbox.wire.v1beta.AgentService.StopService.
+func (c *agentServiceClient) StopService(ctx context.Context, req *connect.Request[wire.StopServiceRequest]) (*connect.Response[wire.StopServiceResponse], error) {
+	return c.stopService.CallUnary(ctx, req)
+}
+
+// SignalService calls namespace.private.devbox.wire.v1beta.AgentService.SignalService.
+func (c *agentServiceClient) SignalService(ctx context.Context, req *connect.Request[wire.SignalServiceRequest]) (*connect.Response[wire.SignalServiceResponse], error) {
+	return c.signalService.CallUnary(ctx, req)
+}
+
 // CreatePort calls namespace.private.devbox.wire.v1beta.AgentService.CreatePort.
 func (c *agentServiceClient) CreatePort(ctx context.Context, req *connect.Request[wire.CreatePortRequest]) (*connect.Response[wire.CreatePortResponse], error) {
 	return c.createPort.CallUnary(ctx, req)
@@ -502,6 +638,14 @@ type AgentServiceHandler interface {
 	CreateTerminalSession(context.Context, *connect.Request[wire.CreateTerminalSessionRequest]) (*connect.Response[wire.TerminalSession], error)
 	DeleteTerminalSession(context.Context, *connect.Request[wire.DeleteTerminalSessionRequest]) (*connect.Response[emptypb.Empty], error)
 	ListTerminalSessions(context.Context, *connect.Request[emptypb.Empty]) (*connect.Response[wire.ListTerminalSessionsResponse], error)
+	CreateService(context.Context, *connect.Request[wire.CreateServiceRequest]) (*connect.Response[wire.CreateServiceResponse], error)
+	ListServices(context.Context, *connect.Request[wire.ListServicesRequest]) (*connect.Response[wire.ListServicesResponse], error)
+	DeleteService(context.Context, *connect.Request[wire.DeleteServiceRequest]) (*connect.Response[wire.DeleteServiceResponse], error)
+	ResumeService(context.Context, *connect.Request[wire.ResumeServiceRequest]) (*connect.Response[wire.ResumeServiceResponse], error)
+	SuspendService(context.Context, *connect.Request[wire.SuspendServiceRequest]) (*connect.Response[wire.SuspendServiceResponse], error)
+	StartService(context.Context, *connect.Request[wire.StartServiceRequest]) (*connect.Response[wire.StartServiceResponse], error)
+	StopService(context.Context, *connect.Request[wire.StopServiceRequest]) (*connect.Response[wire.StopServiceResponse], error)
+	SignalService(context.Context, *connect.Request[wire.SignalServiceRequest]) (*connect.Response[wire.SignalServiceResponse], error)
 	CreatePort(context.Context, *connect.Request[wire.CreatePortRequest]) (*connect.Response[wire.CreatePortResponse], error)
 	DeletePort(context.Context, *connect.Request[wire.DeletePortRequest]) (*connect.Response[wire.DeletePortResponse], error)
 	ListPorts(context.Context, *connect.Request[wire.ListPortsRequest]) (*connect.Response[wire.ListPortsResponse], error)
@@ -628,6 +772,54 @@ func NewAgentServiceHandler(svc AgentServiceHandler, opts ...connect.HandlerOpti
 		connect.WithSchema(agentServiceListTerminalSessionsMethodDescriptor),
 		connect.WithHandlerOptions(opts...),
 	)
+	agentServiceCreateServiceHandler := connect.NewUnaryHandler(
+		AgentServiceCreateServiceProcedure,
+		svc.CreateService,
+		connect.WithSchema(agentServiceCreateServiceMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
+	)
+	agentServiceListServicesHandler := connect.NewUnaryHandler(
+		AgentServiceListServicesProcedure,
+		svc.ListServices,
+		connect.WithSchema(agentServiceListServicesMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
+	)
+	agentServiceDeleteServiceHandler := connect.NewUnaryHandler(
+		AgentServiceDeleteServiceProcedure,
+		svc.DeleteService,
+		connect.WithSchema(agentServiceDeleteServiceMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
+	)
+	agentServiceResumeServiceHandler := connect.NewUnaryHandler(
+		AgentServiceResumeServiceProcedure,
+		svc.ResumeService,
+		connect.WithSchema(agentServiceResumeServiceMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
+	)
+	agentServiceSuspendServiceHandler := connect.NewUnaryHandler(
+		AgentServiceSuspendServiceProcedure,
+		svc.SuspendService,
+		connect.WithSchema(agentServiceSuspendServiceMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
+	)
+	agentServiceStartServiceHandler := connect.NewUnaryHandler(
+		AgentServiceStartServiceProcedure,
+		svc.StartService,
+		connect.WithSchema(agentServiceStartServiceMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
+	)
+	agentServiceStopServiceHandler := connect.NewUnaryHandler(
+		AgentServiceStopServiceProcedure,
+		svc.StopService,
+		connect.WithSchema(agentServiceStopServiceMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
+	)
+	agentServiceSignalServiceHandler := connect.NewUnaryHandler(
+		AgentServiceSignalServiceProcedure,
+		svc.SignalService,
+		connect.WithSchema(agentServiceSignalServiceMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
+	)
 	agentServiceCreatePortHandler := connect.NewUnaryHandler(
 		AgentServiceCreatePortProcedure,
 		svc.CreatePort,
@@ -692,6 +884,22 @@ func NewAgentServiceHandler(svc AgentServiceHandler, opts ...connect.HandlerOpti
 			agentServiceDeleteTerminalSessionHandler.ServeHTTP(w, r)
 		case AgentServiceListTerminalSessionsProcedure:
 			agentServiceListTerminalSessionsHandler.ServeHTTP(w, r)
+		case AgentServiceCreateServiceProcedure:
+			agentServiceCreateServiceHandler.ServeHTTP(w, r)
+		case AgentServiceListServicesProcedure:
+			agentServiceListServicesHandler.ServeHTTP(w, r)
+		case AgentServiceDeleteServiceProcedure:
+			agentServiceDeleteServiceHandler.ServeHTTP(w, r)
+		case AgentServiceResumeServiceProcedure:
+			agentServiceResumeServiceHandler.ServeHTTP(w, r)
+		case AgentServiceSuspendServiceProcedure:
+			agentServiceSuspendServiceHandler.ServeHTTP(w, r)
+		case AgentServiceStartServiceProcedure:
+			agentServiceStartServiceHandler.ServeHTTP(w, r)
+		case AgentServiceStopServiceProcedure:
+			agentServiceStopServiceHandler.ServeHTTP(w, r)
+		case AgentServiceSignalServiceProcedure:
+			agentServiceSignalServiceHandler.ServeHTTP(w, r)
 		case AgentServiceCreatePortProcedure:
 			agentServiceCreatePortHandler.ServeHTTP(w, r)
 		case AgentServiceDeletePortProcedure:
@@ -783,6 +991,38 @@ func (UnimplementedAgentServiceHandler) DeleteTerminalSession(context.Context, *
 
 func (UnimplementedAgentServiceHandler) ListTerminalSessions(context.Context, *connect.Request[emptypb.Empty]) (*connect.Response[wire.ListTerminalSessionsResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("namespace.private.devbox.wire.v1beta.AgentService.ListTerminalSessions is not implemented"))
+}
+
+func (UnimplementedAgentServiceHandler) CreateService(context.Context, *connect.Request[wire.CreateServiceRequest]) (*connect.Response[wire.CreateServiceResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("namespace.private.devbox.wire.v1beta.AgentService.CreateService is not implemented"))
+}
+
+func (UnimplementedAgentServiceHandler) ListServices(context.Context, *connect.Request[wire.ListServicesRequest]) (*connect.Response[wire.ListServicesResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("namespace.private.devbox.wire.v1beta.AgentService.ListServices is not implemented"))
+}
+
+func (UnimplementedAgentServiceHandler) DeleteService(context.Context, *connect.Request[wire.DeleteServiceRequest]) (*connect.Response[wire.DeleteServiceResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("namespace.private.devbox.wire.v1beta.AgentService.DeleteService is not implemented"))
+}
+
+func (UnimplementedAgentServiceHandler) ResumeService(context.Context, *connect.Request[wire.ResumeServiceRequest]) (*connect.Response[wire.ResumeServiceResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("namespace.private.devbox.wire.v1beta.AgentService.ResumeService is not implemented"))
+}
+
+func (UnimplementedAgentServiceHandler) SuspendService(context.Context, *connect.Request[wire.SuspendServiceRequest]) (*connect.Response[wire.SuspendServiceResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("namespace.private.devbox.wire.v1beta.AgentService.SuspendService is not implemented"))
+}
+
+func (UnimplementedAgentServiceHandler) StartService(context.Context, *connect.Request[wire.StartServiceRequest]) (*connect.Response[wire.StartServiceResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("namespace.private.devbox.wire.v1beta.AgentService.StartService is not implemented"))
+}
+
+func (UnimplementedAgentServiceHandler) StopService(context.Context, *connect.Request[wire.StopServiceRequest]) (*connect.Response[wire.StopServiceResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("namespace.private.devbox.wire.v1beta.AgentService.StopService is not implemented"))
+}
+
+func (UnimplementedAgentServiceHandler) SignalService(context.Context, *connect.Request[wire.SignalServiceRequest]) (*connect.Response[wire.SignalServiceResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("namespace.private.devbox.wire.v1beta.AgentService.SignalService is not implemented"))
 }
 
 func (UnimplementedAgentServiceHandler) CreatePort(context.Context, *connect.Request[wire.CreatePortRequest]) (*connect.Response[wire.CreatePortResponse], error) {
