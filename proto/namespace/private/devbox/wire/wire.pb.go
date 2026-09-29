@@ -76,6 +76,321 @@ func (StopExecRequest_Mode) EnumDescriptor() ([]byte, []int) {
 	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{4, 0}
 }
 
+type ServiceSpec_StartPolicy int32
+
+const (
+	ServiceSpec_START_POLICY_UNSPECIFIED     ServiceSpec_StartPolicy = 0 // Defaults to on boot.
+	ServiceSpec_START_POLICY_ON_BOOT         ServiceSpec_StartPolicy = 1 // Starts when the agent boots.
+	ServiceSpec_START_POLICY_ON_HTTP_INGRESS ServiceSpec_StartPolicy = 2 // Starts when one of the service's HTTP ingress ports is accessed.
+	ServiceSpec_START_POLICY_MANUAL          ServiceSpec_StartPolicy = 3 // After creation, starts only when explicitly requested.
+)
+
+// Enum value maps for ServiceSpec_StartPolicy.
+var (
+	ServiceSpec_StartPolicy_name = map[int32]string{
+		0: "START_POLICY_UNSPECIFIED",
+		1: "START_POLICY_ON_BOOT",
+		2: "START_POLICY_ON_HTTP_INGRESS",
+		3: "START_POLICY_MANUAL",
+	}
+	ServiceSpec_StartPolicy_value = map[string]int32{
+		"START_POLICY_UNSPECIFIED":     0,
+		"START_POLICY_ON_BOOT":         1,
+		"START_POLICY_ON_HTTP_INGRESS": 2,
+		"START_POLICY_MANUAL":          3,
+	}
+)
+
+func (x ServiceSpec_StartPolicy) Enum() *ServiceSpec_StartPolicy {
+	p := new(ServiceSpec_StartPolicy)
+	*p = x
+	return p
+}
+
+func (x ServiceSpec_StartPolicy) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (ServiceSpec_StartPolicy) Descriptor() protoreflect.EnumDescriptor {
+	return file_proto_namespace_private_devbox_wire_wire_proto_enumTypes[1].Descriptor()
+}
+
+func (ServiceSpec_StartPolicy) Type() protoreflect.EnumType {
+	return &file_proto_namespace_private_devbox_wire_wire_proto_enumTypes[1]
+}
+
+func (x ServiceSpec_StartPolicy) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use ServiceSpec_StartPolicy.Descriptor instead.
+func (ServiceSpec_StartPolicy) EnumDescriptor() ([]byte, []int) {
+	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{14, 0}
+}
+
+type ServiceSpec_RestartPolicy int32
+
+const (
+	ServiceSpec_RESTART_POLICY_UNSPECIFIED ServiceSpec_RestartPolicy = 0 // Defaults to on failure.
+	ServiceSpec_RESTART_POLICY_NEVER       ServiceSpec_RestartPolicy = 1
+	ServiceSpec_RESTART_POLICY_ON_FAILURE  ServiceSpec_RestartPolicy = 2 // Restarts after a non-zero exit.
+	ServiceSpec_RESTART_POLICY_ALWAYS      ServiceSpec_RestartPolicy = 3 // Restarts after any exit.
+)
+
+// Enum value maps for ServiceSpec_RestartPolicy.
+var (
+	ServiceSpec_RestartPolicy_name = map[int32]string{
+		0: "RESTART_POLICY_UNSPECIFIED",
+		1: "RESTART_POLICY_NEVER",
+		2: "RESTART_POLICY_ON_FAILURE",
+		3: "RESTART_POLICY_ALWAYS",
+	}
+	ServiceSpec_RestartPolicy_value = map[string]int32{
+		"RESTART_POLICY_UNSPECIFIED": 0,
+		"RESTART_POLICY_NEVER":       1,
+		"RESTART_POLICY_ON_FAILURE":  2,
+		"RESTART_POLICY_ALWAYS":      3,
+	}
+)
+
+func (x ServiceSpec_RestartPolicy) Enum() *ServiceSpec_RestartPolicy {
+	p := new(ServiceSpec_RestartPolicy)
+	*p = x
+	return p
+}
+
+func (x ServiceSpec_RestartPolicy) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (ServiceSpec_RestartPolicy) Descriptor() protoreflect.EnumDescriptor {
+	return file_proto_namespace_private_devbox_wire_wire_proto_enumTypes[2].Descriptor()
+}
+
+func (ServiceSpec_RestartPolicy) Type() protoreflect.EnumType {
+	return &file_proto_namespace_private_devbox_wire_wire_proto_enumTypes[2]
+}
+
+func (x ServiceSpec_RestartPolicy) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use ServiceSpec_RestartPolicy.Descriptor instead.
+func (ServiceSpec_RestartPolicy) EnumDescriptor() ([]byte, []int) {
+	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{14, 1}
+}
+
+type Service_Owner int32
+
+const (
+	Service_OWNER_UNSPECIFIED Service_Owner = 0
+	Service_OWNER_USER        Service_Owner = 1
+	Service_OWNER_NAMESPACE   Service_Owner = 2 // Managed by Namespace and immutable through CRUD.
+)
+
+// Enum value maps for Service_Owner.
+var (
+	Service_Owner_name = map[int32]string{
+		0: "OWNER_UNSPECIFIED",
+		1: "OWNER_USER",
+		2: "OWNER_NAMESPACE",
+	}
+	Service_Owner_value = map[string]int32{
+		"OWNER_UNSPECIFIED": 0,
+		"OWNER_USER":        1,
+		"OWNER_NAMESPACE":   2,
+	}
+)
+
+func (x Service_Owner) Enum() *Service_Owner {
+	p := new(Service_Owner)
+	*p = x
+	return p
+}
+
+func (x Service_Owner) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (Service_Owner) Descriptor() protoreflect.EnumDescriptor {
+	return file_proto_namespace_private_devbox_wire_wire_proto_enumTypes[3].Descriptor()
+}
+
+func (Service_Owner) Type() protoreflect.EnumType {
+	return &file_proto_namespace_private_devbox_wire_wire_proto_enumTypes[3]
+}
+
+func (x Service_Owner) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use Service_Owner.Descriptor instead.
+func (Service_Owner) EnumDescriptor() ([]byte, []int) {
+	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{15, 0}
+}
+
+type ServiceProcess_Status int32
+
+const (
+	ServiceProcess_STATUS_UNSPECIFIED ServiceProcess_Status = 0
+	ServiceProcess_STATUS_STARTING    ServiceProcess_Status = 1
+	ServiceProcess_STATUS_RUNNING     ServiceProcess_Status = 2
+	ServiceProcess_STATUS_STOPPING    ServiceProcess_Status = 3
+	ServiceProcess_STATUS_STOPPED     ServiceProcess_Status = 4
+	ServiceProcess_STATUS_FAILED      ServiceProcess_Status = 5 // Exited and the agent gave up restarting.
+	ServiceProcess_STATUS_RESTARTING  ServiceProcess_Status = 6 // Exited and waiting to restart.
+)
+
+// Enum value maps for ServiceProcess_Status.
+var (
+	ServiceProcess_Status_name = map[int32]string{
+		0: "STATUS_UNSPECIFIED",
+		1: "STATUS_STARTING",
+		2: "STATUS_RUNNING",
+		3: "STATUS_STOPPING",
+		4: "STATUS_STOPPED",
+		5: "STATUS_FAILED",
+		6: "STATUS_RESTARTING",
+	}
+	ServiceProcess_Status_value = map[string]int32{
+		"STATUS_UNSPECIFIED": 0,
+		"STATUS_STARTING":    1,
+		"STATUS_RUNNING":     2,
+		"STATUS_STOPPING":    3,
+		"STATUS_STOPPED":     4,
+		"STATUS_FAILED":      5,
+		"STATUS_RESTARTING":  6,
+	}
+)
+
+func (x ServiceProcess_Status) Enum() *ServiceProcess_Status {
+	p := new(ServiceProcess_Status)
+	*p = x
+	return p
+}
+
+func (x ServiceProcess_Status) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (ServiceProcess_Status) Descriptor() protoreflect.EnumDescriptor {
+	return file_proto_namespace_private_devbox_wire_wire_proto_enumTypes[4].Descriptor()
+}
+
+func (ServiceProcess_Status) Type() protoreflect.EnumType {
+	return &file_proto_namespace_private_devbox_wire_wire_proto_enumTypes[4]
+}
+
+func (x ServiceProcess_Status) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use ServiceProcess_Status.Descriptor instead.
+func (ServiceProcess_Status) EnumDescriptor() ([]byte, []int) {
+	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{16, 0}
+}
+
+type CreateServiceRequest_InitialState int32
+
+const (
+	CreateServiceRequest_INITIAL_STATE_UNSPECIFIED CreateServiceRequest_InitialState = 0 // Defaults to running.
+	CreateServiceRequest_INITIAL_STATE_RUNNING     CreateServiceRequest_InitialState = 1
+	CreateServiceRequest_INITIAL_STATE_STOPPED     CreateServiceRequest_InitialState = 2 // Does not start on creation.
+	CreateServiceRequest_INITIAL_STATE_SUSPENDED   CreateServiceRequest_InitialState = 3 // Does not start until resumed.
+)
+
+// Enum value maps for CreateServiceRequest_InitialState.
+var (
+	CreateServiceRequest_InitialState_name = map[int32]string{
+		0: "INITIAL_STATE_UNSPECIFIED",
+		1: "INITIAL_STATE_RUNNING",
+		2: "INITIAL_STATE_STOPPED",
+		3: "INITIAL_STATE_SUSPENDED",
+	}
+	CreateServiceRequest_InitialState_value = map[string]int32{
+		"INITIAL_STATE_UNSPECIFIED": 0,
+		"INITIAL_STATE_RUNNING":     1,
+		"INITIAL_STATE_STOPPED":     2,
+		"INITIAL_STATE_SUSPENDED":   3,
+	}
+)
+
+func (x CreateServiceRequest_InitialState) Enum() *CreateServiceRequest_InitialState {
+	p := new(CreateServiceRequest_InitialState)
+	*p = x
+	return p
+}
+
+func (x CreateServiceRequest_InitialState) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (CreateServiceRequest_InitialState) Descriptor() protoreflect.EnumDescriptor {
+	return file_proto_namespace_private_devbox_wire_wire_proto_enumTypes[5].Descriptor()
+}
+
+func (CreateServiceRequest_InitialState) Type() protoreflect.EnumType {
+	return &file_proto_namespace_private_devbox_wire_wire_proto_enumTypes[5]
+}
+
+func (x CreateServiceRequest_InitialState) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use CreateServiceRequest_InitialState.Descriptor instead.
+func (CreateServiceRequest_InitialState) EnumDescriptor() ([]byte, []int) {
+	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{17, 0}
+}
+
+type StopServiceRequest_Mode int32
+
+const (
+	StopServiceRequest_MODE_UNSPECIFIED StopServiceRequest_Mode = 0 // Treated as MODE_GRACEFUL.
+	StopServiceRequest_MODE_GRACEFUL    StopServiceRequest_Mode = 1 // Send SIGTERM, allowing cleanup.
+	StopServiceRequest_MODE_FORCE       StopServiceRequest_Mode = 2 // Send SIGKILL immediately.
+)
+
+// Enum value maps for StopServiceRequest_Mode.
+var (
+	StopServiceRequest_Mode_name = map[int32]string{
+		0: "MODE_UNSPECIFIED",
+		1: "MODE_GRACEFUL",
+		2: "MODE_FORCE",
+	}
+	StopServiceRequest_Mode_value = map[string]int32{
+		"MODE_UNSPECIFIED": 0,
+		"MODE_GRACEFUL":    1,
+		"MODE_FORCE":       2,
+	}
+)
+
+func (x StopServiceRequest_Mode) Enum() *StopServiceRequest_Mode {
+	p := new(StopServiceRequest_Mode)
+	*p = x
+	return p
+}
+
+func (x StopServiceRequest_Mode) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (StopServiceRequest_Mode) Descriptor() protoreflect.EnumDescriptor {
+	return file_proto_namespace_private_devbox_wire_wire_proto_enumTypes[6].Descriptor()
+}
+
+func (StopServiceRequest_Mode) Type() protoreflect.EnumType {
+	return &file_proto_namespace_private_devbox_wire_wire_proto_enumTypes[6]
+}
+
+func (x StopServiceRequest_Mode) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use StopServiceRequest_Mode.Descriptor instead.
+func (StopServiceRequest_Mode) EnumDescriptor() ([]byte, []int) {
+	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{29, 0}
+}
+
 type PortSpec_Kind int32
 
 const (
@@ -109,11 +424,11 @@ func (x PortSpec_Kind) String() string {
 }
 
 func (PortSpec_Kind) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_namespace_private_devbox_wire_wire_proto_enumTypes[1].Descriptor()
+	return file_proto_namespace_private_devbox_wire_wire_proto_enumTypes[7].Descriptor()
 }
 
 func (PortSpec_Kind) Type() protoreflect.EnumType {
-	return &file_proto_namespace_private_devbox_wire_wire_proto_enumTypes[1]
+	return &file_proto_namespace_private_devbox_wire_wire_proto_enumTypes[7]
 }
 
 func (x PortSpec_Kind) Number() protoreflect.EnumNumber {
@@ -122,7 +437,7 @@ func (x PortSpec_Kind) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use PortSpec_Kind.Descriptor instead.
 func (PortSpec_Kind) EnumDescriptor() ([]byte, []int) {
-	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{14, 0}
+	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{33, 0}
 }
 
 type Port_Owner int32
@@ -158,11 +473,11 @@ func (x Port_Owner) String() string {
 }
 
 func (Port_Owner) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_namespace_private_devbox_wire_wire_proto_enumTypes[2].Descriptor()
+	return file_proto_namespace_private_devbox_wire_wire_proto_enumTypes[8].Descriptor()
 }
 
 func (Port_Owner) Type() protoreflect.EnumType {
-	return &file_proto_namespace_private_devbox_wire_wire_proto_enumTypes[2]
+	return &file_proto_namespace_private_devbox_wire_wire_proto_enumTypes[8]
 }
 
 func (x Port_Owner) Number() protoreflect.EnumNumber {
@@ -171,7 +486,7 @@ func (x Port_Owner) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use Port_Owner.Descriptor instead.
 func (Port_Owner) EnumDescriptor() ([]byte, []int) {
-	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{15, 0}
+	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{34, 0}
 }
 
 type AgentBoot_Op_GitCheckout_CheckoutMethod int32
@@ -207,11 +522,11 @@ func (x AgentBoot_Op_GitCheckout_CheckoutMethod) String() string {
 }
 
 func (AgentBoot_Op_GitCheckout_CheckoutMethod) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_namespace_private_devbox_wire_wire_proto_enumTypes[3].Descriptor()
+	return file_proto_namespace_private_devbox_wire_wire_proto_enumTypes[9].Descriptor()
 }
 
 func (AgentBoot_Op_GitCheckout_CheckoutMethod) Type() protoreflect.EnumType {
-	return &file_proto_namespace_private_devbox_wire_wire_proto_enumTypes[3]
+	return &file_proto_namespace_private_devbox_wire_wire_proto_enumTypes[9]
 }
 
 func (x AgentBoot_Op_GitCheckout_CheckoutMethod) Number() protoreflect.EnumNumber {
@@ -220,7 +535,7 @@ func (x AgentBoot_Op_GitCheckout_CheckoutMethod) Number() protoreflect.EnumNumbe
 
 // Deprecated: Use AgentBoot_Op_GitCheckout_CheckoutMethod.Descriptor instead.
 func (AgentBoot_Op_GitCheckout_CheckoutMethod) EnumDescriptor() ([]byte, []int) {
-	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{23, 0, 1, 0}
+	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{42, 0, 1, 0}
 }
 
 type SignificantMount_Kind int32
@@ -256,11 +571,11 @@ func (x SignificantMount_Kind) String() string {
 }
 
 func (SignificantMount_Kind) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_namespace_private_devbox_wire_wire_proto_enumTypes[4].Descriptor()
+	return file_proto_namespace_private_devbox_wire_wire_proto_enumTypes[10].Descriptor()
 }
 
 func (SignificantMount_Kind) Type() protoreflect.EnumType {
-	return &file_proto_namespace_private_devbox_wire_wire_proto_enumTypes[4]
+	return &file_proto_namespace_private_devbox_wire_wire_proto_enumTypes[10]
 }
 
 func (x SignificantMount_Kind) Number() protoreflect.EnumNumber {
@@ -269,7 +584,7 @@ func (x SignificantMount_Kind) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use SignificantMount_Kind.Descriptor instead.
 func (SignificantMount_Kind) EnumDescriptor() ([]byte, []int) {
-	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{26, 0}
+	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{45, 0}
 }
 
 type GitStatus_File_Flag int32
@@ -302,11 +617,11 @@ func (x GitStatus_File_Flag) String() string {
 }
 
 func (GitStatus_File_Flag) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_namespace_private_devbox_wire_wire_proto_enumTypes[5].Descriptor()
+	return file_proto_namespace_private_devbox_wire_wire_proto_enumTypes[11].Descriptor()
 }
 
 func (GitStatus_File_Flag) Type() protoreflect.EnumType {
-	return &file_proto_namespace_private_devbox_wire_wire_proto_enumTypes[5]
+	return &file_proto_namespace_private_devbox_wire_wire_proto_enumTypes[11]
 }
 
 func (x GitStatus_File_Flag) Number() protoreflect.EnumNumber {
@@ -315,7 +630,7 @@ func (x GitStatus_File_Flag) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use GitStatus_File_Flag.Descriptor instead.
 func (GitStatus_File_Flag) EnumDescriptor() ([]byte, []int) {
-	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{32, 0, 0}
+	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{51, 0, 0}
 }
 
 type CreateTerminalSessionRequest struct {
@@ -1112,6 +1427,968 @@ func (x *ValueOrSecret) GetFromSecretId() string {
 	return ""
 }
 
+type ServiceSpec struct {
+	state               protoimpl.MessageState    `protogen:"open.v1"`
+	Name                string                    `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"` // Required and unique across services.
+	Description         string                    `protobuf:"bytes,2,opt,name=description,proto3" json:"description,omitempty"`
+	Command             *RunCommand               `protobuf:"bytes,3,opt,name=command,proto3" json:"command,omitempty"` // Required. stdin is not supported.
+	StartPolicy         ServiceSpec_StartPolicy   `protobuf:"varint,4,opt,name=start_policy,json=startPolicy,proto3,enum=namespace.private.devbox.wire.v1beta.ServiceSpec_StartPolicy" json:"start_policy,omitempty"`
+	RestartPolicy       ServiceSpec_RestartPolicy `protobuf:"varint,5,opt,name=restart_policy,json=restartPolicy,proto3,enum=namespace.private.devbox.wire.v1beta.ServiceSpec_RestartPolicy" json:"restart_policy,omitempty"`
+	PreventIdleShutdown bool                      `protobuf:"varint,6,opt,name=prevent_idle_shutdown,json=preventIdleShutdown,proto3" json:"prevent_idle_shutdown,omitempty"` // Prevents idle shutdown while the service process is active.
+	unknownFields       protoimpl.UnknownFields
+	sizeCache           protoimpl.SizeCache
+}
+
+func (x *ServiceSpec) Reset() {
+	*x = ServiceSpec{}
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[14]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ServiceSpec) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ServiceSpec) ProtoMessage() {}
+
+func (x *ServiceSpec) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[14]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ServiceSpec.ProtoReflect.Descriptor instead.
+func (*ServiceSpec) Descriptor() ([]byte, []int) {
+	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{14}
+}
+
+func (x *ServiceSpec) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *ServiceSpec) GetDescription() string {
+	if x != nil {
+		return x.Description
+	}
+	return ""
+}
+
+func (x *ServiceSpec) GetCommand() *RunCommand {
+	if x != nil {
+		return x.Command
+	}
+	return nil
+}
+
+func (x *ServiceSpec) GetStartPolicy() ServiceSpec_StartPolicy {
+	if x != nil {
+		return x.StartPolicy
+	}
+	return ServiceSpec_START_POLICY_UNSPECIFIED
+}
+
+func (x *ServiceSpec) GetRestartPolicy() ServiceSpec_RestartPolicy {
+	if x != nil {
+		return x.RestartPolicy
+	}
+	return ServiceSpec_RESTART_POLICY_UNSPECIFIED
+}
+
+func (x *ServiceSpec) GetPreventIdleShutdown() bool {
+	if x != nil {
+		return x.PreventIdleShutdown
+	}
+	return false
+}
+
+type Service struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`     // Assigned by the agent when persisted.
+	Spec          *ServiceSpec           `protobuf:"bytes,2,opt,name=spec,proto3" json:"spec,omitempty"` // Required.
+	Ports         []*Port                `protobuf:"bytes,3,rep,name=ports,proto3" json:"ports,omitempty"`
+	Owner         Service_Owner          `protobuf:"varint,4,opt,name=owner,proto3,enum=namespace.private.devbox.wire.v1beta.Service_Owner" json:"owner,omitempty"`
+	Suspended     bool                   `protobuf:"varint,5,opt,name=suspended,proto3" json:"suspended,omitempty"` // A suspended service cannot start until it is resumed.
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *Service) Reset() {
+	*x = Service{}
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[15]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Service) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Service) ProtoMessage() {}
+
+func (x *Service) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[15]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Service.ProtoReflect.Descriptor instead.
+func (*Service) Descriptor() ([]byte, []int) {
+	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{15}
+}
+
+func (x *Service) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *Service) GetSpec() *ServiceSpec {
+	if x != nil {
+		return x.Spec
+	}
+	return nil
+}
+
+func (x *Service) GetPorts() []*Port {
+	if x != nil {
+		return x.Ports
+	}
+	return nil
+}
+
+func (x *Service) GetOwner() Service_Owner {
+	if x != nil {
+		return x.Owner
+	}
+	return Service_OWNER_UNSPECIFIED
+}
+
+func (x *Service) GetSuspended() bool {
+	if x != nil {
+		return x.Suspended
+	}
+	return false
+}
+
+type ServiceProcess struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Status        ServiceProcess_Status  `protobuf:"varint,1,opt,name=status,proto3,enum=namespace.private.devbox.wire.v1beta.ServiceProcess_Status" json:"status,omitempty"`
+	Pid           uint32                 `protobuf:"varint,2,opt,name=pid,proto3" json:"pid,omitempty"`
+	StartedAt     *timestamppb.Timestamp `protobuf:"bytes,3,opt,name=started_at,json=startedAt,proto3" json:"started_at,omitempty"`
+	LastExit      *ServiceProcess_Exit   `protobuf:"bytes,4,opt,name=last_exit,json=lastExit,proto3" json:"last_exit,omitempty"`
+	Restarts      uint32                 `protobuf:"varint,5,opt,name=restarts,proto3" json:"restarts,omitempty"` // Process restarts since the current service run began.
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ServiceProcess) Reset() {
+	*x = ServiceProcess{}
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[16]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ServiceProcess) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ServiceProcess) ProtoMessage() {}
+
+func (x *ServiceProcess) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[16]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ServiceProcess.ProtoReflect.Descriptor instead.
+func (*ServiceProcess) Descriptor() ([]byte, []int) {
+	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{16}
+}
+
+func (x *ServiceProcess) GetStatus() ServiceProcess_Status {
+	if x != nil {
+		return x.Status
+	}
+	return ServiceProcess_STATUS_UNSPECIFIED
+}
+
+func (x *ServiceProcess) GetPid() uint32 {
+	if x != nil {
+		return x.Pid
+	}
+	return 0
+}
+
+func (x *ServiceProcess) GetStartedAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.StartedAt
+	}
+	return nil
+}
+
+func (x *ServiceProcess) GetLastExit() *ServiceProcess_Exit {
+	if x != nil {
+		return x.LastExit
+	}
+	return nil
+}
+
+func (x *ServiceProcess) GetRestarts() uint32 {
+	if x != nil {
+		return x.Restarts
+	}
+	return 0
+}
+
+type CreateServiceRequest struct {
+	state         protoimpl.MessageState            `protogen:"open.v1"`
+	Spec          *ServiceSpec                      `protobuf:"bytes,1,opt,name=spec,proto3" json:"spec,omitempty"`
+	Ports         []*PortSpec                       `protobuf:"bytes,2,rep,name=ports,proto3" json:"ports,omitempty"` // Must be unique across all ports and services.
+	InitialState  CreateServiceRequest_InitialState `protobuf:"varint,3,opt,name=initial_state,json=initialState,proto3,enum=namespace.private.devbox.wire.v1beta.CreateServiceRequest_InitialState" json:"initial_state,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CreateServiceRequest) Reset() {
+	*x = CreateServiceRequest{}
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[17]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CreateServiceRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateServiceRequest) ProtoMessage() {}
+
+func (x *CreateServiceRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[17]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateServiceRequest.ProtoReflect.Descriptor instead.
+func (*CreateServiceRequest) Descriptor() ([]byte, []int) {
+	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{17}
+}
+
+func (x *CreateServiceRequest) GetSpec() *ServiceSpec {
+	if x != nil {
+		return x.Spec
+	}
+	return nil
+}
+
+func (x *CreateServiceRequest) GetPorts() []*PortSpec {
+	if x != nil {
+		return x.Ports
+	}
+	return nil
+}
+
+func (x *CreateServiceRequest) GetInitialState() CreateServiceRequest_InitialState {
+	if x != nil {
+		return x.InitialState
+	}
+	return CreateServiceRequest_INITIAL_STATE_UNSPECIFIED
+}
+
+type CreateServiceResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Service       *Service               `protobuf:"bytes,1,opt,name=service,proto3" json:"service,omitempty"`
+	Process       *ServiceProcess        `protobuf:"bytes,2,opt,name=process,proto3" json:"process,omitempty"` // Set when creation starts the service. Launch failures are returned here.
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CreateServiceResponse) Reset() {
+	*x = CreateServiceResponse{}
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[18]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CreateServiceResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateServiceResponse) ProtoMessage() {}
+
+func (x *CreateServiceResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[18]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateServiceResponse.ProtoReflect.Descriptor instead.
+func (*CreateServiceResponse) Descriptor() ([]byte, []int) {
+	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{18}
+}
+
+func (x *CreateServiceResponse) GetService() *Service {
+	if x != nil {
+		return x.Service
+	}
+	return nil
+}
+
+func (x *CreateServiceResponse) GetProcess() *ServiceProcess {
+	if x != nil {
+		return x.Process
+	}
+	return nil
+}
+
+type ListServicesRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListServicesRequest) Reset() {
+	*x = ListServicesRequest{}
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[19]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListServicesRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListServicesRequest) ProtoMessage() {}
+
+func (x *ListServicesRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[19]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListServicesRequest.ProtoReflect.Descriptor instead.
+func (*ListServicesRequest) Descriptor() ([]byte, []int) {
+	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{19}
+}
+
+type ListServicesResponse struct {
+	state         protoimpl.MessageState                `protogen:"open.v1"`
+	Services      []*ListServicesResponse_ListedService `protobuf:"bytes,1,rep,name=services,proto3" json:"services,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListServicesResponse) Reset() {
+	*x = ListServicesResponse{}
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[20]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListServicesResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListServicesResponse) ProtoMessage() {}
+
+func (x *ListServicesResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[20]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListServicesResponse.ProtoReflect.Descriptor instead.
+func (*ListServicesResponse) Descriptor() ([]byte, []int) {
+	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{20}
+}
+
+func (x *ListServicesResponse) GetServices() []*ListServicesResponse_ListedService {
+	if x != nil {
+		return x.Services
+	}
+	return nil
+}
+
+// Gracefully stops a running process and deletes the service after it exits.
+// Forces the process after 15 seconds and returns DEADLINE_EXCEEDED if it has not exited after 20 seconds.
+type DeleteServiceRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	IdOrName      string                 `protobuf:"bytes,1,opt,name=id_or_name,json=idOrName,proto3" json:"id_or_name,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DeleteServiceRequest) Reset() {
+	*x = DeleteServiceRequest{}
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[21]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DeleteServiceRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteServiceRequest) ProtoMessage() {}
+
+func (x *DeleteServiceRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[21]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteServiceRequest.ProtoReflect.Descriptor instead.
+func (*DeleteServiceRequest) Descriptor() ([]byte, []int) {
+	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{21}
+}
+
+func (x *DeleteServiceRequest) GetIdOrName() string {
+	if x != nil {
+		return x.IdOrName
+	}
+	return ""
+}
+
+type DeleteServiceResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DeleteServiceResponse) Reset() {
+	*x = DeleteServiceResponse{}
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[22]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DeleteServiceResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteServiceResponse) ProtoMessage() {}
+
+func (x *DeleteServiceResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[22]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteServiceResponse.ProtoReflect.Descriptor instead.
+func (*DeleteServiceResponse) Descriptor() ([]byte, []int) {
+	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{22}
+}
+
+// Clears suspension and starts the service. If already active, returns its current process.
+type ResumeServiceRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	IdOrName      string                 `protobuf:"bytes,1,opt,name=id_or_name,json=idOrName,proto3" json:"id_or_name,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ResumeServiceRequest) Reset() {
+	*x = ResumeServiceRequest{}
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[23]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ResumeServiceRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ResumeServiceRequest) ProtoMessage() {}
+
+func (x *ResumeServiceRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[23]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ResumeServiceRequest.ProtoReflect.Descriptor instead.
+func (*ResumeServiceRequest) Descriptor() ([]byte, []int) {
+	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{23}
+}
+
+func (x *ResumeServiceRequest) GetIdOrName() string {
+	if x != nil {
+		return x.IdOrName
+	}
+	return ""
+}
+
+type ResumeServiceResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Process       *ServiceProcess        `protobuf:"bytes,1,opt,name=process,proto3" json:"process,omitempty"` // Launch failures are reported here, not as an error.
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ResumeServiceResponse) Reset() {
+	*x = ResumeServiceResponse{}
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[24]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ResumeServiceResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ResumeServiceResponse) ProtoMessage() {}
+
+func (x *ResumeServiceResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[24]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ResumeServiceResponse.ProtoReflect.Descriptor instead.
+func (*ResumeServiceResponse) Descriptor() ([]byte, []int) {
+	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{24}
+}
+
+func (x *ResumeServiceResponse) GetProcess() *ServiceProcess {
+	if x != nil {
+		return x.Process
+	}
+	return nil
+}
+
+// Suspends the service and force-stops its process. If it is already stopped or suspended, succeeds.
+type SuspendServiceRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	IdOrName      string                 `protobuf:"bytes,1,opt,name=id_or_name,json=idOrName,proto3" json:"id_or_name,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SuspendServiceRequest) Reset() {
+	*x = SuspendServiceRequest{}
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[25]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SuspendServiceRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SuspendServiceRequest) ProtoMessage() {}
+
+func (x *SuspendServiceRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[25]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SuspendServiceRequest.ProtoReflect.Descriptor instead.
+func (*SuspendServiceRequest) Descriptor() ([]byte, []int) {
+	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{25}
+}
+
+func (x *SuspendServiceRequest) GetIdOrName() string {
+	if x != nil {
+		return x.IdOrName
+	}
+	return ""
+}
+
+type SuspendServiceResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Process       *ServiceProcess        `protobuf:"bytes,1,opt,name=process,proto3" json:"process,omitempty"` // May be unset, STOPPING, or STOPPED.
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SuspendServiceResponse) Reset() {
+	*x = SuspendServiceResponse{}
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[26]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SuspendServiceResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SuspendServiceResponse) ProtoMessage() {}
+
+func (x *SuspendServiceResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[26]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SuspendServiceResponse.ProtoReflect.Descriptor instead.
+func (*SuspendServiceResponse) Descriptor() ([]byte, []int) {
+	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{26}
+}
+
+func (x *SuspendServiceResponse) GetProcess() *ServiceProcess {
+	if x != nil {
+		return x.Process
+	}
+	return nil
+}
+
+// Starts the service. Fails if suspended; returns the current process if already active.
+type StartServiceRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	IdOrName      string                 `protobuf:"bytes,1,opt,name=id_or_name,json=idOrName,proto3" json:"id_or_name,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *StartServiceRequest) Reset() {
+	*x = StartServiceRequest{}
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[27]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *StartServiceRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*StartServiceRequest) ProtoMessage() {}
+
+func (x *StartServiceRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[27]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use StartServiceRequest.ProtoReflect.Descriptor instead.
+func (*StartServiceRequest) Descriptor() ([]byte, []int) {
+	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{27}
+}
+
+func (x *StartServiceRequest) GetIdOrName() string {
+	if x != nil {
+		return x.IdOrName
+	}
+	return ""
+}
+
+type StartServiceResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Process       *ServiceProcess        `protobuf:"bytes,1,opt,name=process,proto3" json:"process,omitempty"` // Launch failures are reported here, not as an error.
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *StartServiceResponse) Reset() {
+	*x = StartServiceResponse{}
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[28]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *StartServiceResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*StartServiceResponse) ProtoMessage() {}
+
+func (x *StartServiceResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[28]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use StartServiceResponse.ProtoReflect.Descriptor instead.
+func (*StartServiceResponse) Descriptor() ([]byte, []int) {
+	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{28}
+}
+
+func (x *StartServiceResponse) GetProcess() *ServiceProcess {
+	if x != nil {
+		return x.Process
+	}
+	return nil
+}
+
+// Stops the process without suspending the service. If it is already stopped or suspended, succeeds.
+type StopServiceRequest struct {
+	state         protoimpl.MessageState  `protogen:"open.v1"`
+	IdOrName      string                  `protobuf:"bytes,1,opt,name=id_or_name,json=idOrName,proto3" json:"id_or_name,omitempty"`
+	Mode          StopServiceRequest_Mode `protobuf:"varint,2,opt,name=mode,proto3,enum=namespace.private.devbox.wire.v1beta.StopServiceRequest_Mode" json:"mode,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *StopServiceRequest) Reset() {
+	*x = StopServiceRequest{}
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[29]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *StopServiceRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*StopServiceRequest) ProtoMessage() {}
+
+func (x *StopServiceRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[29]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use StopServiceRequest.ProtoReflect.Descriptor instead.
+func (*StopServiceRequest) Descriptor() ([]byte, []int) {
+	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{29}
+}
+
+func (x *StopServiceRequest) GetIdOrName() string {
+	if x != nil {
+		return x.IdOrName
+	}
+	return ""
+}
+
+func (x *StopServiceRequest) GetMode() StopServiceRequest_Mode {
+	if x != nil {
+		return x.Mode
+	}
+	return StopServiceRequest_MODE_UNSPECIFIED
+}
+
+type StopServiceResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Process       *ServiceProcess        `protobuf:"bytes,1,opt,name=process,proto3" json:"process,omitempty"` // May be unset, STOPPING, or STOPPED.
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *StopServiceResponse) Reset() {
+	*x = StopServiceResponse{}
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[30]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *StopServiceResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*StopServiceResponse) ProtoMessage() {}
+
+func (x *StopServiceResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[30]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use StopServiceResponse.ProtoReflect.Descriptor instead.
+func (*StopServiceResponse) Descriptor() ([]byte, []int) {
+	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{30}
+}
+
+func (x *StopServiceResponse) GetProcess() *ServiceProcess {
+	if x != nil {
+		return x.Process
+	}
+	return nil
+}
+
+type SignalServiceRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	IdOrName      string                 `protobuf:"bytes,1,opt,name=id_or_name,json=idOrName,proto3" json:"id_or_name,omitempty"`
+	Signal        int32                  `protobuf:"varint,2,opt,name=signal,proto3" json:"signal,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SignalServiceRequest) Reset() {
+	*x = SignalServiceRequest{}
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[31]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SignalServiceRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SignalServiceRequest) ProtoMessage() {}
+
+func (x *SignalServiceRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[31]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SignalServiceRequest.ProtoReflect.Descriptor instead.
+func (*SignalServiceRequest) Descriptor() ([]byte, []int) {
+	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{31}
+}
+
+func (x *SignalServiceRequest) GetIdOrName() string {
+	if x != nil {
+		return x.IdOrName
+	}
+	return ""
+}
+
+func (x *SignalServiceRequest) GetSignal() int32 {
+	if x != nil {
+		return x.Signal
+	}
+	return 0
+}
+
+type SignalServiceResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SignalServiceResponse) Reset() {
+	*x = SignalServiceResponse{}
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[32]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SignalServiceResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SignalServiceResponse) ProtoMessage() {}
+
+func (x *SignalServiceResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[32]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SignalServiceResponse.ProtoReflect.Descriptor instead.
+func (*SignalServiceResponse) Descriptor() ([]byte, []int) {
+	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{32}
+}
+
 // A configured port. Numbers and non-empty names are unique within each kind.
 type PortSpec struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
@@ -1124,7 +2401,7 @@ type PortSpec struct {
 
 func (x *PortSpec) Reset() {
 	*x = PortSpec{}
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[14]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[33]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1136,7 +2413,7 @@ func (x *PortSpec) String() string {
 func (*PortSpec) ProtoMessage() {}
 
 func (x *PortSpec) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[14]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[33]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1149,7 +2426,7 @@ func (x *PortSpec) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PortSpec.ProtoReflect.Descriptor instead.
 func (*PortSpec) Descriptor() ([]byte, []int) {
-	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{14}
+	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{33}
 }
 
 func (x *PortSpec) GetName() string {
@@ -1184,7 +2461,7 @@ type Port struct {
 
 func (x *Port) Reset() {
 	*x = Port{}
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[15]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[34]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1196,7 +2473,7 @@ func (x *Port) String() string {
 func (*Port) ProtoMessage() {}
 
 func (x *Port) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[15]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[34]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1209,7 +2486,7 @@ func (x *Port) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Port.ProtoReflect.Descriptor instead.
 func (*Port) Descriptor() ([]byte, []int) {
-	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{15}
+	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{34}
 }
 
 func (x *Port) GetId() string {
@@ -1242,7 +2519,7 @@ type CreatePortRequest struct {
 
 func (x *CreatePortRequest) Reset() {
 	*x = CreatePortRequest{}
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[16]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[35]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1254,7 +2531,7 @@ func (x *CreatePortRequest) String() string {
 func (*CreatePortRequest) ProtoMessage() {}
 
 func (x *CreatePortRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[16]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[35]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1267,7 +2544,7 @@ func (x *CreatePortRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreatePortRequest.ProtoReflect.Descriptor instead.
 func (*CreatePortRequest) Descriptor() ([]byte, []int) {
-	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{16}
+	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{35}
 }
 
 func (x *CreatePortRequest) GetSpec() *PortSpec {
@@ -1286,7 +2563,7 @@ type CreatePortResponse struct {
 
 func (x *CreatePortResponse) Reset() {
 	*x = CreatePortResponse{}
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[17]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[36]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1298,7 +2575,7 @@ func (x *CreatePortResponse) String() string {
 func (*CreatePortResponse) ProtoMessage() {}
 
 func (x *CreatePortResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[17]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[36]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1311,7 +2588,7 @@ func (x *CreatePortResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreatePortResponse.ProtoReflect.Descriptor instead.
 func (*CreatePortResponse) Descriptor() ([]byte, []int) {
-	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{17}
+	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{36}
 }
 
 func (x *CreatePortResponse) GetPort() *Port {
@@ -1330,7 +2607,7 @@ type DeletePortRequest struct {
 
 func (x *DeletePortRequest) Reset() {
 	*x = DeletePortRequest{}
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[18]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[37]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1342,7 +2619,7 @@ func (x *DeletePortRequest) String() string {
 func (*DeletePortRequest) ProtoMessage() {}
 
 func (x *DeletePortRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[18]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[37]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1355,7 +2632,7 @@ func (x *DeletePortRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeletePortRequest.ProtoReflect.Descriptor instead.
 func (*DeletePortRequest) Descriptor() ([]byte, []int) {
-	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{18}
+	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{37}
 }
 
 func (x *DeletePortRequest) GetId() string {
@@ -1373,7 +2650,7 @@ type DeletePortResponse struct {
 
 func (x *DeletePortResponse) Reset() {
 	*x = DeletePortResponse{}
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[19]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[38]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1385,7 +2662,7 @@ func (x *DeletePortResponse) String() string {
 func (*DeletePortResponse) ProtoMessage() {}
 
 func (x *DeletePortResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[19]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[38]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1398,7 +2675,7 @@ func (x *DeletePortResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeletePortResponse.ProtoReflect.Descriptor instead.
 func (*DeletePortResponse) Descriptor() ([]byte, []int) {
-	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{19}
+	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{38}
 }
 
 type ListPortsRequest struct {
@@ -1410,7 +2687,7 @@ type ListPortsRequest struct {
 
 func (x *ListPortsRequest) Reset() {
 	*x = ListPortsRequest{}
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[20]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[39]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1422,7 +2699,7 @@ func (x *ListPortsRequest) String() string {
 func (*ListPortsRequest) ProtoMessage() {}
 
 func (x *ListPortsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[20]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[39]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1435,7 +2712,7 @@ func (x *ListPortsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListPortsRequest.ProtoReflect.Descriptor instead.
 func (*ListPortsRequest) Descriptor() ([]byte, []int) {
-	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{20}
+	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{39}
 }
 
 func (x *ListPortsRequest) GetKinds() []PortSpec_Kind {
@@ -1454,7 +2731,7 @@ type ListPortsResponse struct {
 
 func (x *ListPortsResponse) Reset() {
 	*x = ListPortsResponse{}
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[21]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[40]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1466,7 +2743,7 @@ func (x *ListPortsResponse) String() string {
 func (*ListPortsResponse) ProtoMessage() {}
 
 func (x *ListPortsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[21]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[40]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1479,7 +2756,7 @@ func (x *ListPortsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListPortsResponse.ProtoReflect.Descriptor instead.
 func (*ListPortsResponse) Descriptor() ([]byte, []int) {
-	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{21}
+	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{40}
 }
 
 func (x *ListPortsResponse) GetPorts() []*ListedPort {
@@ -1498,7 +2775,7 @@ type ListedPort struct {
 
 func (x *ListedPort) Reset() {
 	*x = ListedPort{}
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[22]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[41]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1510,7 +2787,7 @@ func (x *ListedPort) String() string {
 func (*ListedPort) ProtoMessage() {}
 
 func (x *ListedPort) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[22]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[41]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1523,7 +2800,7 @@ func (x *ListedPort) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListedPort.ProtoReflect.Descriptor instead.
 func (*ListedPort) Descriptor() ([]byte, []int) {
-	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{22}
+	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{41}
 }
 
 func (x *ListedPort) GetPort() *Port {
@@ -1542,7 +2819,7 @@ type AgentBoot struct {
 
 func (x *AgentBoot) Reset() {
 	*x = AgentBoot{}
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[23]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[42]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1554,7 +2831,7 @@ func (x *AgentBoot) String() string {
 func (*AgentBoot) ProtoMessage() {}
 
 func (x *AgentBoot) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[23]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[42]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1567,7 +2844,7 @@ func (x *AgentBoot) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AgentBoot.ProtoReflect.Descriptor instead.
 func (*AgentBoot) Descriptor() ([]byte, []int) {
-	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{23}
+	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{42}
 }
 
 func (x *AgentBoot) GetOps() []*AgentBoot_Op {
@@ -1596,7 +2873,6 @@ type AgentStartup struct {
 	Vscode               *AgentStartup_VSCode       `protobuf:"bytes,16,opt,name=vscode,proto3" json:"vscode,omitempty"`
 	InitialConfiguration *AgentRuntimeConfiguration `protobuf:"bytes,17,opt,name=initial_configuration,json=initialConfiguration,proto3" json:"initial_configuration,omitempty"`
 	EnableDbus           bool                       `protobuf:"varint,18,opt,name=enable_dbus,json=enableDbus,proto3" json:"enable_dbus,omitempty"`
-	ClaudeAgent          *AgentStartup_ClaudeAgent  `protobuf:"bytes,19,opt,name=claude_agent,json=claudeAgent,proto3" json:"claude_agent,omitempty"`
 	Ports                []*PortSpec                `protobuf:"bytes,21,rep,name=ports,proto3" json:"ports,omitempty"`
 	unknownFields        protoimpl.UnknownFields
 	sizeCache            protoimpl.SizeCache
@@ -1604,7 +2880,7 @@ type AgentStartup struct {
 
 func (x *AgentStartup) Reset() {
 	*x = AgentStartup{}
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[24]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[43]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1616,7 +2892,7 @@ func (x *AgentStartup) String() string {
 func (*AgentStartup) ProtoMessage() {}
 
 func (x *AgentStartup) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[24]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[43]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1629,7 +2905,7 @@ func (x *AgentStartup) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AgentStartup.ProtoReflect.Descriptor instead.
 func (*AgentStartup) Descriptor() ([]byte, []int) {
-	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{24}
+	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{43}
 }
 
 func (x *AgentStartup) GetRepository() string {
@@ -1751,13 +3027,6 @@ func (x *AgentStartup) GetEnableDbus() bool {
 	return false
 }
 
-func (x *AgentStartup) GetClaudeAgent() *AgentStartup_ClaudeAgent {
-	if x != nil {
-		return x.ClaudeAgent
-	}
-	return nil
-}
-
 func (x *AgentStartup) GetPorts() []*PortSpec {
 	if x != nil {
 		return x.Ports
@@ -1777,7 +3046,7 @@ type AgentRuntimeConfiguration struct {
 
 func (x *AgentRuntimeConfiguration) Reset() {
 	*x = AgentRuntimeConfiguration{}
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[25]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[44]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1789,7 +3058,7 @@ func (x *AgentRuntimeConfiguration) String() string {
 func (*AgentRuntimeConfiguration) ProtoMessage() {}
 
 func (x *AgentRuntimeConfiguration) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[25]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[44]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1802,7 +3071,7 @@ func (x *AgentRuntimeConfiguration) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AgentRuntimeConfiguration.ProtoReflect.Descriptor instead.
 func (*AgentRuntimeConfiguration) Descriptor() ([]byte, []int) {
-	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{25}
+	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{44}
 }
 
 func (x *AgentRuntimeConfiguration) GetVersion() int32 {
@@ -1843,7 +3112,7 @@ type SignificantMount struct {
 
 func (x *SignificantMount) Reset() {
 	*x = SignificantMount{}
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[26]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[45]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1855,7 +3124,7 @@ func (x *SignificantMount) String() string {
 func (*SignificantMount) ProtoMessage() {}
 
 func (x *SignificantMount) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[26]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[45]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1868,7 +3137,7 @@ func (x *SignificantMount) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SignificantMount.ProtoReflect.Descriptor instead.
 func (*SignificantMount) Descriptor() ([]byte, []int) {
-	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{26}
+	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{45}
 }
 
 func (x *SignificantMount) GetPath() string {
@@ -1898,7 +3167,7 @@ type BootOpResult struct {
 
 func (x *BootOpResult) Reset() {
 	*x = BootOpResult{}
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[27]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[46]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1910,7 +3179,7 @@ func (x *BootOpResult) String() string {
 func (*BootOpResult) ProtoMessage() {}
 
 func (x *BootOpResult) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[27]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[46]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1923,7 +3192,7 @@ func (x *BootOpResult) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BootOpResult.ProtoReflect.Descriptor instead.
 func (*BootOpResult) Descriptor() ([]byte, []int) {
-	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{27}
+	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{46}
 }
 
 func (x *BootOpResult) GetOpId() string {
@@ -1970,7 +3239,7 @@ type StartupState struct {
 
 func (x *StartupState) Reset() {
 	*x = StartupState{}
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[28]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[47]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1982,7 +3251,7 @@ func (x *StartupState) String() string {
 func (*StartupState) ProtoMessage() {}
 
 func (x *StartupState) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[28]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[47]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1995,7 +3264,7 @@ func (x *StartupState) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use StartupState.ProtoReflect.Descriptor instead.
 func (*StartupState) Descriptor() ([]byte, []int) {
-	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{28}
+	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{47}
 }
 
 func (x *StartupState) GetBootOpResults() []*BootOpResult {
@@ -2016,7 +3285,7 @@ type QueryStateRequest struct {
 
 func (x *QueryStateRequest) Reset() {
 	*x = QueryStateRequest{}
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[29]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[48]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2028,7 +3297,7 @@ func (x *QueryStateRequest) String() string {
 func (*QueryStateRequest) ProtoMessage() {}
 
 func (x *QueryStateRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[29]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[48]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2041,7 +3310,7 @@ func (x *QueryStateRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use QueryStateRequest.ProtoReflect.Descriptor instead.
 func (*QueryStateRequest) Descriptor() ([]byte, []int) {
-	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{29}
+	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{48}
 }
 
 func (x *QueryStateRequest) GetIncludeGitStatus() bool {
@@ -2075,7 +3344,7 @@ type ResourceMetricsSubscription struct {
 
 func (x *ResourceMetricsSubscription) Reset() {
 	*x = ResourceMetricsSubscription{}
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[30]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[49]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2087,7 +3356,7 @@ func (x *ResourceMetricsSubscription) String() string {
 func (*ResourceMetricsSubscription) ProtoMessage() {}
 
 func (x *ResourceMetricsSubscription) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[30]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[49]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2100,7 +3369,7 @@ func (x *ResourceMetricsSubscription) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ResourceMetricsSubscription.ProtoReflect.Descriptor instead.
 func (*ResourceMetricsSubscription) Descriptor() ([]byte, []int) {
-	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{30}
+	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{49}
 }
 
 func (x *ResourceMetricsSubscription) GetSubscribe() bool {
@@ -2129,7 +3398,7 @@ type QueryStateResponse struct {
 
 func (x *QueryStateResponse) Reset() {
 	*x = QueryStateResponse{}
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[31]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[50]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2141,7 +3410,7 @@ func (x *QueryStateResponse) String() string {
 func (*QueryStateResponse) ProtoMessage() {}
 
 func (x *QueryStateResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[31]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[50]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2154,7 +3423,7 @@ func (x *QueryStateResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use QueryStateResponse.ProtoReflect.Descriptor instead.
 func (*QueryStateResponse) Descriptor() ([]byte, []int) {
-	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{31}
+	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{50}
 }
 
 func (x *QueryStateResponse) GetMountStates() []*QueryStateResponse_SignificantMountState {
@@ -2197,7 +3466,7 @@ type GitStatus struct {
 
 func (x *GitStatus) Reset() {
 	*x = GitStatus{}
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[32]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[51]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2209,7 +3478,7 @@ func (x *GitStatus) String() string {
 func (*GitStatus) ProtoMessage() {}
 
 func (x *GitStatus) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[32]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[51]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2222,7 +3491,7 @@ func (x *GitStatus) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GitStatus.ProtoReflect.Descriptor instead.
 func (*GitStatus) Descriptor() ([]byte, []int) {
-	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{32}
+	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{51}
 }
 
 func (x *GitStatus) GetCurrentBranch() string {
@@ -2268,7 +3537,7 @@ type WebSocketSSHInitiation struct {
 
 func (x *WebSocketSSHInitiation) Reset() {
 	*x = WebSocketSSHInitiation{}
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[33]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[52]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2280,7 +3549,7 @@ func (x *WebSocketSSHInitiation) String() string {
 func (*WebSocketSSHInitiation) ProtoMessage() {}
 
 func (x *WebSocketSSHInitiation) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[33]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[52]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2293,7 +3562,7 @@ func (x *WebSocketSSHInitiation) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use WebSocketSSHInitiation.ProtoReflect.Descriptor instead.
 func (*WebSocketSSHInitiation) Descriptor() ([]byte, []int) {
-	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{33}
+	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{52}
 }
 
 func (x *WebSocketSSHInitiation) GetUser() string {
@@ -2356,7 +3625,7 @@ type RunOutputChunk struct {
 
 func (x *RunOutputChunk) Reset() {
 	*x = RunOutputChunk{}
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[34]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[53]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2368,7 +3637,7 @@ func (x *RunOutputChunk) String() string {
 func (*RunOutputChunk) ProtoMessage() {}
 
 func (x *RunOutputChunk) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[34]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[53]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2381,7 +3650,7 @@ func (x *RunOutputChunk) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RunOutputChunk.ProtoReflect.Descriptor instead.
 func (*RunOutputChunk) Descriptor() ([]byte, []int) {
-	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{34}
+	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{53}
 }
 
 func (x *RunOutputChunk) GetStdout() []byte {
@@ -2418,7 +3687,7 @@ type GitWorktree struct {
 
 func (x *GitWorktree) Reset() {
 	*x = GitWorktree{}
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[35]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[54]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2430,7 +3699,7 @@ func (x *GitWorktree) String() string {
 func (*GitWorktree) ProtoMessage() {}
 
 func (x *GitWorktree) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[35]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[54]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2443,7 +3712,7 @@ func (x *GitWorktree) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GitWorktree.ProtoReflect.Descriptor instead.
 func (*GitWorktree) Descriptor() ([]byte, []int) {
-	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{35}
+	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{54}
 }
 
 func (x *GitWorktree) GetPath() string {
@@ -2490,7 +3759,7 @@ type ListGitWorktreesRequest struct {
 
 func (x *ListGitWorktreesRequest) Reset() {
 	*x = ListGitWorktreesRequest{}
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[36]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[55]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2502,7 +3771,7 @@ func (x *ListGitWorktreesRequest) String() string {
 func (*ListGitWorktreesRequest) ProtoMessage() {}
 
 func (x *ListGitWorktreesRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[36]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[55]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2515,7 +3784,7 @@ func (x *ListGitWorktreesRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListGitWorktreesRequest.ProtoReflect.Descriptor instead.
 func (*ListGitWorktreesRequest) Descriptor() ([]byte, []int) {
-	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{36}
+	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{55}
 }
 
 func (x *ListGitWorktreesRequest) GetWorkspaceRelative() string {
@@ -2534,7 +3803,7 @@ type ListGitWorktreesResponse struct {
 
 func (x *ListGitWorktreesResponse) Reset() {
 	*x = ListGitWorktreesResponse{}
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[37]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[56]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2546,7 +3815,7 @@ func (x *ListGitWorktreesResponse) String() string {
 func (*ListGitWorktreesResponse) ProtoMessage() {}
 
 func (x *ListGitWorktreesResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[37]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[56]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2559,7 +3828,7 @@ func (x *ListGitWorktreesResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListGitWorktreesResponse.ProtoReflect.Descriptor instead.
 func (*ListGitWorktreesResponse) Descriptor() ([]byte, []int) {
-	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{37}
+	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{56}
 }
 
 func (x *ListGitWorktreesResponse) GetWorktrees() []*GitWorktree {
@@ -2581,7 +3850,7 @@ type CreateGitWorktreeRequest struct {
 
 func (x *CreateGitWorktreeRequest) Reset() {
 	*x = CreateGitWorktreeRequest{}
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[38]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[57]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2593,7 +3862,7 @@ func (x *CreateGitWorktreeRequest) String() string {
 func (*CreateGitWorktreeRequest) ProtoMessage() {}
 
 func (x *CreateGitWorktreeRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[38]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[57]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2606,7 +3875,7 @@ func (x *CreateGitWorktreeRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateGitWorktreeRequest.ProtoReflect.Descriptor instead.
 func (*CreateGitWorktreeRequest) Descriptor() ([]byte, []int) {
-	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{38}
+	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{57}
 }
 
 func (x *CreateGitWorktreeRequest) GetWorkspaceRelative() string {
@@ -2648,7 +3917,7 @@ type CreateGitWorktreeResponse struct {
 
 func (x *CreateGitWorktreeResponse) Reset() {
 	*x = CreateGitWorktreeResponse{}
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[39]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[58]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2660,7 +3929,7 @@ func (x *CreateGitWorktreeResponse) String() string {
 func (*CreateGitWorktreeResponse) ProtoMessage() {}
 
 func (x *CreateGitWorktreeResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[39]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[58]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2673,7 +3942,7 @@ func (x *CreateGitWorktreeResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateGitWorktreeResponse.ProtoReflect.Descriptor instead.
 func (*CreateGitWorktreeResponse) Descriptor() ([]byte, []int) {
-	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{39}
+	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{58}
 }
 
 func (x *CreateGitWorktreeResponse) GetPath() string {
@@ -2708,7 +3977,7 @@ type RemoveGitWorktreeRequest struct {
 
 func (x *RemoveGitWorktreeRequest) Reset() {
 	*x = RemoveGitWorktreeRequest{}
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[40]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[59]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2720,7 +3989,7 @@ func (x *RemoveGitWorktreeRequest) String() string {
 func (*RemoveGitWorktreeRequest) ProtoMessage() {}
 
 func (x *RemoveGitWorktreeRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[40]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[59]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2733,7 +4002,7 @@ func (x *RemoveGitWorktreeRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RemoveGitWorktreeRequest.ProtoReflect.Descriptor instead.
 func (*RemoveGitWorktreeRequest) Descriptor() ([]byte, []int) {
-	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{40}
+	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{59}
 }
 
 func (x *RemoveGitWorktreeRequest) GetWorkspaceRelative() string {
@@ -2766,7 +4035,7 @@ type ListTerminalSessionsResponse struct {
 
 func (x *ListTerminalSessionsResponse) Reset() {
 	*x = ListTerminalSessionsResponse{}
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[41]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[60]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2778,7 +4047,7 @@ func (x *ListTerminalSessionsResponse) String() string {
 func (*ListTerminalSessionsResponse) ProtoMessage() {}
 
 func (x *ListTerminalSessionsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[41]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[60]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2791,7 +4060,7 @@ func (x *ListTerminalSessionsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListTerminalSessionsResponse.ProtoReflect.Descriptor instead.
 func (*ListTerminalSessionsResponse) Descriptor() ([]byte, []int) {
-	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{41}
+	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{60}
 }
 
 func (x *ListTerminalSessionsResponse) GetSessions() []*TerminalSession {
@@ -2817,7 +4086,7 @@ type TerminalSession struct {
 
 func (x *TerminalSession) Reset() {
 	*x = TerminalSession{}
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[42]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[61]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2829,7 +4098,7 @@ func (x *TerminalSession) String() string {
 func (*TerminalSession) ProtoMessage() {}
 
 func (x *TerminalSession) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[42]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[61]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2842,7 +4111,7 @@ func (x *TerminalSession) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TerminalSession.ProtoReflect.Descriptor instead.
 func (*TerminalSession) Descriptor() ([]byte, []int) {
-	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{42}
+	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{61}
 }
 
 func (x *TerminalSession) GetName() string {
@@ -2913,7 +4182,7 @@ type AddTerminalSessionRequest struct {
 
 func (x *AddTerminalSessionRequest) Reset() {
 	*x = AddTerminalSessionRequest{}
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[43]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[62]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2925,7 +4194,7 @@ func (x *AddTerminalSessionRequest) String() string {
 func (*AddTerminalSessionRequest) ProtoMessage() {}
 
 func (x *AddTerminalSessionRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[43]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[62]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2938,7 +4207,7 @@ func (x *AddTerminalSessionRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AddTerminalSessionRequest.ProtoReflect.Descriptor instead.
 func (*AddTerminalSessionRequest) Descriptor() ([]byte, []int) {
-	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{43}
+	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{62}
 }
 
 func (x *AddTerminalSessionRequest) GetName() string {
@@ -2978,7 +4247,7 @@ type DeleteTerminalSessionRequest struct {
 
 func (x *DeleteTerminalSessionRequest) Reset() {
 	*x = DeleteTerminalSessionRequest{}
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[44]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[63]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2990,7 +4259,7 @@ func (x *DeleteTerminalSessionRequest) String() string {
 func (*DeleteTerminalSessionRequest) ProtoMessage() {}
 
 func (x *DeleteTerminalSessionRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[44]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[63]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3003,7 +4272,7 @@ func (x *DeleteTerminalSessionRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteTerminalSessionRequest.ProtoReflect.Descriptor instead.
 func (*DeleteTerminalSessionRequest) Descriptor() ([]byte, []int) {
-	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{44}
+	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{63}
 }
 
 func (x *DeleteTerminalSessionRequest) GetName() string {
@@ -3024,7 +4293,7 @@ type ResourceMetrics struct {
 
 func (x *ResourceMetrics) Reset() {
 	*x = ResourceMetrics{}
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[45]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[64]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3036,7 +4305,7 @@ func (x *ResourceMetrics) String() string {
 func (*ResourceMetrics) ProtoMessage() {}
 
 func (x *ResourceMetrics) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[45]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[64]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3049,7 +4318,7 @@ func (x *ResourceMetrics) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ResourceMetrics.ProtoReflect.Descriptor instead.
 func (*ResourceMetrics) Descriptor() ([]byte, []int) {
-	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{45}
+	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{64}
 }
 
 func (x *ResourceMetrics) GetCpu() *ResourceMetrics_CpuMetrics {
@@ -3083,7 +4352,7 @@ type ResetForLeaseRequest struct {
 
 func (x *ResetForLeaseRequest) Reset() {
 	*x = ResetForLeaseRequest{}
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[46]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[65]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3095,7 +4364,7 @@ func (x *ResetForLeaseRequest) String() string {
 func (*ResetForLeaseRequest) ProtoMessage() {}
 
 func (x *ResetForLeaseRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[46]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[65]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3108,7 +4377,7 @@ func (x *ResetForLeaseRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ResetForLeaseRequest.ProtoReflect.Descriptor instead.
 func (*ResetForLeaseRequest) Descriptor() ([]byte, []int) {
-	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{46}
+	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{65}
 }
 
 func (x *ResetForLeaseRequest) GetLeaseId() string {
@@ -3138,7 +4407,7 @@ type ResetForLeaseEvent struct {
 
 func (x *ResetForLeaseEvent) Reset() {
 	*x = ResetForLeaseEvent{}
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[47]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[66]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3150,7 +4419,7 @@ func (x *ResetForLeaseEvent) String() string {
 func (*ResetForLeaseEvent) ProtoMessage() {}
 
 func (x *ResetForLeaseEvent) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[47]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[66]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3163,7 +4432,7 @@ func (x *ResetForLeaseEvent) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ResetForLeaseEvent.ProtoReflect.Descriptor instead.
 func (*ResetForLeaseEvent) Descriptor() ([]byte, []int) {
-	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{47}
+	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{66}
 }
 
 func (x *ResetForLeaseEvent) GetStepId() string {
@@ -3215,7 +4484,7 @@ type ExecLogChunk_Result struct {
 
 func (x *ExecLogChunk_Result) Reset() {
 	*x = ExecLogChunk_Result{}
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[48]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[67]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3227,7 +4496,7 @@ func (x *ExecLogChunk_Result) String() string {
 func (*ExecLogChunk_Result) ProtoMessage() {}
 
 func (x *ExecLogChunk_Result) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[48]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[67]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3264,6 +4533,118 @@ func (x *ExecLogChunk_Result) GetExitCode() int32 {
 	return 0
 }
 
+type ServiceProcess_Exit struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Code          int32                  `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
+	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	ExitedAt      *timestamppb.Timestamp `protobuf:"bytes,3,opt,name=exited_at,json=exitedAt,proto3" json:"exited_at,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ServiceProcess_Exit) Reset() {
+	*x = ServiceProcess_Exit{}
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[68]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ServiceProcess_Exit) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ServiceProcess_Exit) ProtoMessage() {}
+
+func (x *ServiceProcess_Exit) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[68]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ServiceProcess_Exit.ProtoReflect.Descriptor instead.
+func (*ServiceProcess_Exit) Descriptor() ([]byte, []int) {
+	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{16, 0}
+}
+
+func (x *ServiceProcess_Exit) GetCode() int32 {
+	if x != nil {
+		return x.Code
+	}
+	return 0
+}
+
+func (x *ServiceProcess_Exit) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
+func (x *ServiceProcess_Exit) GetExitedAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.ExitedAt
+	}
+	return nil
+}
+
+type ListServicesResponse_ListedService struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Service       *Service               `protobuf:"bytes,1,opt,name=service,proto3" json:"service,omitempty"`
+	Process       *ServiceProcess        `protobuf:"bytes,2,opt,name=process,proto3" json:"process,omitempty"` // Unset when the agent has no process state for the service.
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListServicesResponse_ListedService) Reset() {
+	*x = ListServicesResponse_ListedService{}
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[69]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListServicesResponse_ListedService) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListServicesResponse_ListedService) ProtoMessage() {}
+
+func (x *ListServicesResponse_ListedService) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[69]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListServicesResponse_ListedService.ProtoReflect.Descriptor instead.
+func (*ListServicesResponse_ListedService) Descriptor() ([]byte, []int) {
+	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{20, 0}
+}
+
+func (x *ListServicesResponse_ListedService) GetService() *Service {
+	if x != nil {
+		return x.Service
+	}
+	return nil
+}
+
+func (x *ListServicesResponse_ListedService) GetProcess() *ServiceProcess {
+	if x != nil {
+		return x.Process
+	}
+	return nil
+}
+
 type AgentBoot_Op struct {
 	state                        protoimpl.MessageState                     `protogen:"open.v1"`
 	Name                         string                                     `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"` // Optional.
@@ -3283,13 +4664,14 @@ type AgentBoot_Op struct {
 	SetupEgressProxyCa           *AgentBoot_Op_SetupEgressProxyCA           `protobuf:"bytes,15,opt,name=setup_egress_proxy_ca,json=setupEgressProxyCa,proto3" json:"setup_egress_proxy_ca,omitempty"`
 	AcceptingSshConnections      *AgentBoot_Op_AcceptingSSHConnections      `protobuf:"bytes,16,opt,name=accepting_ssh_connections,json=acceptingSshConnections,proto3" json:"accepting_ssh_connections,omitempty"`
 	GitCheckoutRepositories      *AgentBoot_Op_GitCheckoutRepositories      `protobuf:"bytes,17,opt,name=git_checkout_repositories,json=gitCheckoutRepositories,proto3" json:"git_checkout_repositories,omitempty"`
+	StartServices                *AgentBoot_Op_StartServices                `protobuf:"bytes,18,opt,name=start_services,json=startServices,proto3" json:"start_services,omitempty"`
 	unknownFields                protoimpl.UnknownFields
 	sizeCache                    protoimpl.SizeCache
 }
 
 func (x *AgentBoot_Op) Reset() {
 	*x = AgentBoot_Op{}
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[49]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[70]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3301,7 +4683,7 @@ func (x *AgentBoot_Op) String() string {
 func (*AgentBoot_Op) ProtoMessage() {}
 
 func (x *AgentBoot_Op) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[49]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[70]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3314,7 +4696,7 @@ func (x *AgentBoot_Op) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AgentBoot_Op.ProtoReflect.Descriptor instead.
 func (*AgentBoot_Op) Descriptor() ([]byte, []int) {
-	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{23, 0}
+	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{42, 0}
 }
 
 func (x *AgentBoot_Op) GetName() string {
@@ -3436,6 +4818,13 @@ func (x *AgentBoot_Op) GetGitCheckoutRepositories() *AgentBoot_Op_GitCheckoutRep
 	return nil
 }
 
+func (x *AgentBoot_Op) GetStartServices() *AgentBoot_Op_StartServices {
+	if x != nil {
+		return x.StartServices
+	}
+	return nil
+}
+
 type AgentBoot_Op_SetupNamespaceGitCredentials struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Repositories  []string               `protobuf:"bytes,2,rep,name=repositories,proto3" json:"repositories,omitempty"`
@@ -3445,7 +4834,7 @@ type AgentBoot_Op_SetupNamespaceGitCredentials struct {
 
 func (x *AgentBoot_Op_SetupNamespaceGitCredentials) Reset() {
 	*x = AgentBoot_Op_SetupNamespaceGitCredentials{}
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[50]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[71]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3457,7 +4846,7 @@ func (x *AgentBoot_Op_SetupNamespaceGitCredentials) String() string {
 func (*AgentBoot_Op_SetupNamespaceGitCredentials) ProtoMessage() {}
 
 func (x *AgentBoot_Op_SetupNamespaceGitCredentials) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[50]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[71]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3470,7 +4859,7 @@ func (x *AgentBoot_Op_SetupNamespaceGitCredentials) ProtoReflect() protoreflect.
 
 // Deprecated: Use AgentBoot_Op_SetupNamespaceGitCredentials.ProtoReflect.Descriptor instead.
 func (*AgentBoot_Op_SetupNamespaceGitCredentials) Descriptor() ([]byte, []int) {
-	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{23, 0, 0}
+	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{42, 0, 0}
 }
 
 func (x *AgentBoot_Op_SetupNamespaceGitCredentials) GetRepositories() []string {
@@ -3494,7 +4883,7 @@ type AgentBoot_Op_GitCheckout struct {
 
 func (x *AgentBoot_Op_GitCheckout) Reset() {
 	*x = AgentBoot_Op_GitCheckout{}
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[51]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[72]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3506,7 +4895,7 @@ func (x *AgentBoot_Op_GitCheckout) String() string {
 func (*AgentBoot_Op_GitCheckout) ProtoMessage() {}
 
 func (x *AgentBoot_Op_GitCheckout) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[51]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[72]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3519,7 +4908,7 @@ func (x *AgentBoot_Op_GitCheckout) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AgentBoot_Op_GitCheckout.ProtoReflect.Descriptor instead.
 func (*AgentBoot_Op_GitCheckout) Descriptor() ([]byte, []int) {
-	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{23, 0, 1}
+	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{42, 0, 1}
 }
 
 func (x *AgentBoot_Op_GitCheckout) GetRepository() string {
@@ -3559,7 +4948,7 @@ type AgentBoot_Op_GitCheckoutRepositories struct {
 
 func (x *AgentBoot_Op_GitCheckoutRepositories) Reset() {
 	*x = AgentBoot_Op_GitCheckoutRepositories{}
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[52]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[73]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3571,7 +4960,7 @@ func (x *AgentBoot_Op_GitCheckoutRepositories) String() string {
 func (*AgentBoot_Op_GitCheckoutRepositories) ProtoMessage() {}
 
 func (x *AgentBoot_Op_GitCheckoutRepositories) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[52]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[73]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3584,7 +4973,7 @@ func (x *AgentBoot_Op_GitCheckoutRepositories) ProtoReflect() protoreflect.Messa
 
 // Deprecated: Use AgentBoot_Op_GitCheckoutRepositories.ProtoReflect.Descriptor instead.
 func (*AgentBoot_Op_GitCheckoutRepositories) Descriptor() ([]byte, []int) {
-	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{23, 0, 2}
+	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{42, 0, 2}
 }
 
 func (x *AgentBoot_Op_GitCheckoutRepositories) GetRepositories() []*AgentBoot_Op_GitCheckout {
@@ -3604,7 +4993,7 @@ type AgentBoot_Op_GitCreateBranch struct {
 
 func (x *AgentBoot_Op_GitCreateBranch) Reset() {
 	*x = AgentBoot_Op_GitCreateBranch{}
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[53]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[74]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3616,7 +5005,7 @@ func (x *AgentBoot_Op_GitCreateBranch) String() string {
 func (*AgentBoot_Op_GitCreateBranch) ProtoMessage() {}
 
 func (x *AgentBoot_Op_GitCreateBranch) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[53]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[74]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3629,7 +5018,7 @@ func (x *AgentBoot_Op_GitCreateBranch) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AgentBoot_Op_GitCreateBranch.ProtoReflect.Descriptor instead.
 func (*AgentBoot_Op_GitCreateBranch) Descriptor() ([]byte, []int) {
-	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{23, 0, 3}
+	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{42, 0, 3}
 }
 
 func (x *AgentBoot_Op_GitCreateBranch) GetWorkspaceRel() string {
@@ -3654,7 +5043,7 @@ type AgentBoot_Op_GitSetUserAndEmail struct {
 
 func (x *AgentBoot_Op_GitSetUserAndEmail) Reset() {
 	*x = AgentBoot_Op_GitSetUserAndEmail{}
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[54]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[75]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3666,7 +5055,7 @@ func (x *AgentBoot_Op_GitSetUserAndEmail) String() string {
 func (*AgentBoot_Op_GitSetUserAndEmail) ProtoMessage() {}
 
 func (x *AgentBoot_Op_GitSetUserAndEmail) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[54]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[75]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3679,7 +5068,7 @@ func (x *AgentBoot_Op_GitSetUserAndEmail) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AgentBoot_Op_GitSetUserAndEmail.ProtoReflect.Descriptor instead.
 func (*AgentBoot_Op_GitSetUserAndEmail) Descriptor() ([]byte, []int) {
-	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{23, 0, 4}
+	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{42, 0, 4}
 }
 
 type AgentBoot_Op_GitReset struct {
@@ -3693,7 +5082,7 @@ type AgentBoot_Op_GitReset struct {
 
 func (x *AgentBoot_Op_GitReset) Reset() {
 	*x = AgentBoot_Op_GitReset{}
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[55]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[76]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3705,7 +5094,7 @@ func (x *AgentBoot_Op_GitReset) String() string {
 func (*AgentBoot_Op_GitReset) ProtoMessage() {}
 
 func (x *AgentBoot_Op_GitReset) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[55]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[76]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3718,7 +5107,7 @@ func (x *AgentBoot_Op_GitReset) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AgentBoot_Op_GitReset.ProtoReflect.Descriptor instead.
 func (*AgentBoot_Op_GitReset) Descriptor() ([]byte, []int) {
-	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{23, 0, 5}
+	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{42, 0, 5}
 }
 
 func (x *AgentBoot_Op_GitReset) GetRef() string {
@@ -3743,7 +5132,7 @@ type AgentBoot_Op_RunScript struct {
 
 func (x *AgentBoot_Op_RunScript) Reset() {
 	*x = AgentBoot_Op_RunScript{}
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[56]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[77]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3755,7 +5144,7 @@ func (x *AgentBoot_Op_RunScript) String() string {
 func (*AgentBoot_Op_RunScript) ProtoMessage() {}
 
 func (x *AgentBoot_Op_RunScript) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[56]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[77]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3768,7 +5157,7 @@ func (x *AgentBoot_Op_RunScript) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AgentBoot_Op_RunScript.ProtoReflect.Descriptor instead.
 func (*AgentBoot_Op_RunScript) Descriptor() ([]byte, []int) {
-	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{23, 0, 6}
+	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{42, 0, 6}
 }
 
 func (x *AgentBoot_Op_RunScript) GetScript() string {
@@ -3815,7 +5204,7 @@ type AgentBoot_Op_OnCreate struct {
 
 func (x *AgentBoot_Op_OnCreate) Reset() {
 	*x = AgentBoot_Op_OnCreate{}
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[57]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[78]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3827,7 +5216,7 @@ func (x *AgentBoot_Op_OnCreate) String() string {
 func (*AgentBoot_Op_OnCreate) ProtoMessage() {}
 
 func (x *AgentBoot_Op_OnCreate) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[57]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[78]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3840,7 +5229,7 @@ func (x *AgentBoot_Op_OnCreate) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AgentBoot_Op_OnCreate.ProtoReflect.Descriptor instead.
 func (*AgentBoot_Op_OnCreate) Descriptor() ([]byte, []int) {
-	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{23, 0, 7}
+	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{42, 0, 7}
 }
 
 func (x *AgentBoot_Op_OnCreate) GetOps() []*AgentBoot_Op {
@@ -3859,7 +5248,7 @@ type AgentBoot_Op_SetupDotfiles struct {
 
 func (x *AgentBoot_Op_SetupDotfiles) Reset() {
 	*x = AgentBoot_Op_SetupDotfiles{}
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[58]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[79]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3871,7 +5260,7 @@ func (x *AgentBoot_Op_SetupDotfiles) String() string {
 func (*AgentBoot_Op_SetupDotfiles) ProtoMessage() {}
 
 func (x *AgentBoot_Op_SetupDotfiles) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[58]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[79]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3884,7 +5273,7 @@ func (x *AgentBoot_Op_SetupDotfiles) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AgentBoot_Op_SetupDotfiles.ProtoReflect.Descriptor instead.
 func (*AgentBoot_Op_SetupDotfiles) Descriptor() ([]byte, []int) {
-	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{23, 0, 8}
+	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{42, 0, 8}
 }
 
 func (x *AgentBoot_Op_SetupDotfiles) GetWorkspaceTarget() string {
@@ -3903,7 +5292,7 @@ type AgentBoot_Op_SetupDocker struct {
 
 func (x *AgentBoot_Op_SetupDocker) Reset() {
 	*x = AgentBoot_Op_SetupDocker{}
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[59]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[80]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3915,7 +5304,7 @@ func (x *AgentBoot_Op_SetupDocker) String() string {
 func (*AgentBoot_Op_SetupDocker) ProtoMessage() {}
 
 func (x *AgentBoot_Op_SetupDocker) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[59]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[80]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3928,7 +5317,7 @@ func (x *AgentBoot_Op_SetupDocker) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AgentBoot_Op_SetupDocker.ProtoReflect.Descriptor instead.
 func (*AgentBoot_Op_SetupDocker) Descriptor() ([]byte, []int) {
-	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{23, 0, 9}
+	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{42, 0, 9}
 }
 
 func (x *AgentBoot_Op_SetupDocker) GetDockerDir() string {
@@ -3947,7 +5336,7 @@ type AgentBoot_Op_Concurrent struct {
 
 func (x *AgentBoot_Op_Concurrent) Reset() {
 	*x = AgentBoot_Op_Concurrent{}
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[60]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[81]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3959,7 +5348,7 @@ func (x *AgentBoot_Op_Concurrent) String() string {
 func (*AgentBoot_Op_Concurrent) ProtoMessage() {}
 
 func (x *AgentBoot_Op_Concurrent) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[60]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[81]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3972,7 +5361,7 @@ func (x *AgentBoot_Op_Concurrent) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AgentBoot_Op_Concurrent.ProtoReflect.Descriptor instead.
 func (*AgentBoot_Op_Concurrent) Descriptor() ([]byte, []int) {
-	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{23, 0, 10}
+	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{42, 0, 10}
 }
 
 func (x *AgentBoot_Op_Concurrent) GetOps() []*AgentBoot_Op {
@@ -3991,7 +5380,7 @@ type AgentBoot_Op_EnsureSessions struct {
 
 func (x *AgentBoot_Op_EnsureSessions) Reset() {
 	*x = AgentBoot_Op_EnsureSessions{}
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[61]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[82]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4003,7 +5392,7 @@ func (x *AgentBoot_Op_EnsureSessions) String() string {
 func (*AgentBoot_Op_EnsureSessions) ProtoMessage() {}
 
 func (x *AgentBoot_Op_EnsureSessions) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[61]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[82]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4016,7 +5405,7 @@ func (x *AgentBoot_Op_EnsureSessions) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AgentBoot_Op_EnsureSessions.ProtoReflect.Descriptor instead.
 func (*AgentBoot_Op_EnsureSessions) Descriptor() ([]byte, []int) {
-	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{23, 0, 11}
+	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{42, 0, 11}
 }
 
 func (x *AgentBoot_Op_EnsureSessions) GetSessions() []*AddTerminalSessionRequest {
@@ -4037,7 +5426,7 @@ type AgentBoot_Op_SetupIntegrations struct {
 
 func (x *AgentBoot_Op_SetupIntegrations) Reset() {
 	*x = AgentBoot_Op_SetupIntegrations{}
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[62]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[83]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4049,7 +5438,7 @@ func (x *AgentBoot_Op_SetupIntegrations) String() string {
 func (*AgentBoot_Op_SetupIntegrations) ProtoMessage() {}
 
 func (x *AgentBoot_Op_SetupIntegrations) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[62]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[83]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4062,7 +5451,7 @@ func (x *AgentBoot_Op_SetupIntegrations) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AgentBoot_Op_SetupIntegrations.ProtoReflect.Descriptor instead.
 func (*AgentBoot_Op_SetupIntegrations) Descriptor() ([]byte, []int) {
-	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{23, 0, 12}
+	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{42, 0, 12}
 }
 
 func (x *AgentBoot_Op_SetupIntegrations) GetDevinOutposts() *AgentBoot_Op_SetupIntegrations_DevinOutposts {
@@ -4095,7 +5484,7 @@ type AgentBoot_Op_SetupEgressProxyCA struct {
 
 func (x *AgentBoot_Op_SetupEgressProxyCA) Reset() {
 	*x = AgentBoot_Op_SetupEgressProxyCA{}
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[63]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[84]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4107,7 +5496,7 @@ func (x *AgentBoot_Op_SetupEgressProxyCA) String() string {
 func (*AgentBoot_Op_SetupEgressProxyCA) ProtoMessage() {}
 
 func (x *AgentBoot_Op_SetupEgressProxyCA) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[63]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[84]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4120,7 +5509,7 @@ func (x *AgentBoot_Op_SetupEgressProxyCA) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AgentBoot_Op_SetupEgressProxyCA.ProtoReflect.Descriptor instead.
 func (*AgentBoot_Op_SetupEgressProxyCA) Descriptor() ([]byte, []int) {
-	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{23, 0, 13}
+	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{42, 0, 13}
 }
 
 func (x *AgentBoot_Op_SetupEgressProxyCA) GetCaPath() string {
@@ -4138,7 +5527,7 @@ type AgentBoot_Op_AcceptingSSHConnections struct {
 
 func (x *AgentBoot_Op_AcceptingSSHConnections) Reset() {
 	*x = AgentBoot_Op_AcceptingSSHConnections{}
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[64]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[85]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4150,7 +5539,7 @@ func (x *AgentBoot_Op_AcceptingSSHConnections) String() string {
 func (*AgentBoot_Op_AcceptingSSHConnections) ProtoMessage() {}
 
 func (x *AgentBoot_Op_AcceptingSSHConnections) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[64]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[85]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4163,7 +5552,43 @@ func (x *AgentBoot_Op_AcceptingSSHConnections) ProtoReflect() protoreflect.Messa
 
 // Deprecated: Use AgentBoot_Op_AcceptingSSHConnections.ProtoReflect.Descriptor instead.
 func (*AgentBoot_Op_AcceptingSSHConnections) Descriptor() ([]byte, []int) {
-	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{23, 0, 14}
+	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{42, 0, 14}
+}
+
+type AgentBoot_Op_StartServices struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *AgentBoot_Op_StartServices) Reset() {
+	*x = AgentBoot_Op_StartServices{}
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[86]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *AgentBoot_Op_StartServices) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AgentBoot_Op_StartServices) ProtoMessage() {}
+
+func (x *AgentBoot_Op_StartServices) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[86]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AgentBoot_Op_StartServices.ProtoReflect.Descriptor instead.
+func (*AgentBoot_Op_StartServices) Descriptor() ([]byte, []int) {
+	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{42, 0, 15}
 }
 
 type AgentBoot_Op_SetupIntegrations_DevinOutposts struct {
@@ -4176,7 +5601,7 @@ type AgentBoot_Op_SetupIntegrations_DevinOutposts struct {
 
 func (x *AgentBoot_Op_SetupIntegrations_DevinOutposts) Reset() {
 	*x = AgentBoot_Op_SetupIntegrations_DevinOutposts{}
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[65]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[87]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4188,7 +5613,7 @@ func (x *AgentBoot_Op_SetupIntegrations_DevinOutposts) String() string {
 func (*AgentBoot_Op_SetupIntegrations_DevinOutposts) ProtoMessage() {}
 
 func (x *AgentBoot_Op_SetupIntegrations_DevinOutposts) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[65]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[87]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4201,7 +5626,7 @@ func (x *AgentBoot_Op_SetupIntegrations_DevinOutposts) ProtoReflect() protorefle
 
 // Deprecated: Use AgentBoot_Op_SetupIntegrations_DevinOutposts.ProtoReflect.Descriptor instead.
 func (*AgentBoot_Op_SetupIntegrations_DevinOutposts) Descriptor() ([]byte, []int) {
-	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{23, 0, 12, 0}
+	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{42, 0, 12, 0}
 }
 
 func (x *AgentBoot_Op_SetupIntegrations_DevinOutposts) GetHost() string {
@@ -4229,7 +5654,7 @@ type AgentBoot_Op_SetupIntegrations_Cursor struct {
 
 func (x *AgentBoot_Op_SetupIntegrations_Cursor) Reset() {
 	*x = AgentBoot_Op_SetupIntegrations_Cursor{}
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[66]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[88]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4241,7 +5666,7 @@ func (x *AgentBoot_Op_SetupIntegrations_Cursor) String() string {
 func (*AgentBoot_Op_SetupIntegrations_Cursor) ProtoMessage() {}
 
 func (x *AgentBoot_Op_SetupIntegrations_Cursor) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[66]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[88]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4254,7 +5679,7 @@ func (x *AgentBoot_Op_SetupIntegrations_Cursor) ProtoReflect() protoreflect.Mess
 
 // Deprecated: Use AgentBoot_Op_SetupIntegrations_Cursor.ProtoReflect.Descriptor instead.
 func (*AgentBoot_Op_SetupIntegrations_Cursor) Descriptor() ([]byte, []int) {
-	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{23, 0, 12, 1}
+	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{42, 0, 12, 1}
 }
 
 func (x *AgentBoot_Op_SetupIntegrations_Cursor) GetWorkerId() string {
@@ -4286,7 +5711,7 @@ type AgentBoot_Op_SetupIntegrations_ClaudeAgent struct {
 
 func (x *AgentBoot_Op_SetupIntegrations_ClaudeAgent) Reset() {
 	*x = AgentBoot_Op_SetupIntegrations_ClaudeAgent{}
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[67]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[89]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4298,7 +5723,7 @@ func (x *AgentBoot_Op_SetupIntegrations_ClaudeAgent) String() string {
 func (*AgentBoot_Op_SetupIntegrations_ClaudeAgent) ProtoMessage() {}
 
 func (x *AgentBoot_Op_SetupIntegrations_ClaudeAgent) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[67]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[89]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4311,7 +5736,7 @@ func (x *AgentBoot_Op_SetupIntegrations_ClaudeAgent) ProtoReflect() protoreflect
 
 // Deprecated: Use AgentBoot_Op_SetupIntegrations_ClaudeAgent.ProtoReflect.Descriptor instead.
 func (*AgentBoot_Op_SetupIntegrations_ClaudeAgent) Descriptor() ([]byte, []int) {
-	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{23, 0, 12, 2}
+	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{42, 0, 12, 2}
 }
 
 type AgentStartup_VSCode struct {
@@ -4323,7 +5748,7 @@ type AgentStartup_VSCode struct {
 
 func (x *AgentStartup_VSCode) Reset() {
 	*x = AgentStartup_VSCode{}
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[68]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[90]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4335,7 +5760,7 @@ func (x *AgentStartup_VSCode) String() string {
 func (*AgentStartup_VSCode) ProtoMessage() {}
 
 func (x *AgentStartup_VSCode) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[68]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[90]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4348,7 +5773,7 @@ func (x *AgentStartup_VSCode) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AgentStartup_VSCode.ProtoReflect.Descriptor instead.
 func (*AgentStartup_VSCode) Descriptor() ([]byte, []int) {
-	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{24, 0}
+	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{43, 0}
 }
 
 func (x *AgentStartup_VSCode) GetExtensions() []string {
@@ -4368,7 +5793,7 @@ type AgentStartup_NamedPort struct {
 
 func (x *AgentStartup_NamedPort) Reset() {
 	*x = AgentStartup_NamedPort{}
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[69]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[91]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4380,7 +5805,7 @@ func (x *AgentStartup_NamedPort) String() string {
 func (*AgentStartup_NamedPort) ProtoMessage() {}
 
 func (x *AgentStartup_NamedPort) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[69]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[91]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4393,7 +5818,7 @@ func (x *AgentStartup_NamedPort) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AgentStartup_NamedPort.ProtoReflect.Descriptor instead.
 func (*AgentStartup_NamedPort) Descriptor() ([]byte, []int) {
-	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{24, 1}
+	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{43, 1}
 }
 
 func (x *AgentStartup_NamedPort) GetName() string {
@@ -4410,66 +5835,6 @@ func (x *AgentStartup_NamedPort) GetPort() int32 {
 	return 0
 }
 
-type AgentStartup_ClaudeAgent struct {
-	state          protoimpl.MessageState `protogen:"open.v1"`
-	EnvironmentId  string                 `protobuf:"bytes,1,opt,name=environment_id,json=environmentId,proto3" json:"environment_id,omitempty"`
-	EnvironmentKey string                 `protobuf:"bytes,2,opt,name=environment_key,json=environmentKey,proto3" json:"environment_key,omitempty"`
-	SessionId      string                 `protobuf:"bytes,3,opt,name=session_id,json=sessionId,proto3" json:"session_id,omitempty"`
-	unknownFields  protoimpl.UnknownFields
-	sizeCache      protoimpl.SizeCache
-}
-
-func (x *AgentStartup_ClaudeAgent) Reset() {
-	*x = AgentStartup_ClaudeAgent{}
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[70]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *AgentStartup_ClaudeAgent) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*AgentStartup_ClaudeAgent) ProtoMessage() {}
-
-func (x *AgentStartup_ClaudeAgent) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[70]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use AgentStartup_ClaudeAgent.ProtoReflect.Descriptor instead.
-func (*AgentStartup_ClaudeAgent) Descriptor() ([]byte, []int) {
-	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{24, 2}
-}
-
-func (x *AgentStartup_ClaudeAgent) GetEnvironmentId() string {
-	if x != nil {
-		return x.EnvironmentId
-	}
-	return ""
-}
-
-func (x *AgentStartup_ClaudeAgent) GetEnvironmentKey() string {
-	if x != nil {
-		return x.EnvironmentKey
-	}
-	return ""
-}
-
-func (x *AgentStartup_ClaudeAgent) GetSessionId() string {
-	if x != nil {
-		return x.SessionId
-	}
-	return ""
-}
-
 type AgentRuntimeConfiguration_TmuxConfiguration struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	ServerOptions map[string]string      `protobuf:"bytes,1,rep,name=server_options,json=serverOptions,proto3" json:"server_options,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
@@ -4480,7 +5845,7 @@ type AgentRuntimeConfiguration_TmuxConfiguration struct {
 
 func (x *AgentRuntimeConfiguration_TmuxConfiguration) Reset() {
 	*x = AgentRuntimeConfiguration_TmuxConfiguration{}
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[71]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[92]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4492,7 +5857,7 @@ func (x *AgentRuntimeConfiguration_TmuxConfiguration) String() string {
 func (*AgentRuntimeConfiguration_TmuxConfiguration) ProtoMessage() {}
 
 func (x *AgentRuntimeConfiguration_TmuxConfiguration) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[71]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[92]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4505,7 +5870,7 @@ func (x *AgentRuntimeConfiguration_TmuxConfiguration) ProtoReflect() protoreflec
 
 // Deprecated: Use AgentRuntimeConfiguration_TmuxConfiguration.ProtoReflect.Descriptor instead.
 func (*AgentRuntimeConfiguration_TmuxConfiguration) Descriptor() ([]byte, []int) {
-	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{25, 0}
+	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{44, 0}
 }
 
 func (x *AgentRuntimeConfiguration_TmuxConfiguration) GetServerOptions() map[string]string {
@@ -4531,7 +5896,7 @@ type AgentRuntimeConfiguration_AutomaticPortForwardingConfiguration struct {
 
 func (x *AgentRuntimeConfiguration_AutomaticPortForwardingConfiguration) Reset() {
 	*x = AgentRuntimeConfiguration_AutomaticPortForwardingConfiguration{}
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[72]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[93]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4543,7 +5908,7 @@ func (x *AgentRuntimeConfiguration_AutomaticPortForwardingConfiguration) String(
 func (*AgentRuntimeConfiguration_AutomaticPortForwardingConfiguration) ProtoMessage() {}
 
 func (x *AgentRuntimeConfiguration_AutomaticPortForwardingConfiguration) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[72]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[93]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4556,7 +5921,7 @@ func (x *AgentRuntimeConfiguration_AutomaticPortForwardingConfiguration) ProtoRe
 
 // Deprecated: Use AgentRuntimeConfiguration_AutomaticPortForwardingConfiguration.ProtoReflect.Descriptor instead.
 func (*AgentRuntimeConfiguration_AutomaticPortForwardingConfiguration) Descriptor() ([]byte, []int) {
-	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{25, 1}
+	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{44, 1}
 }
 
 func (x *AgentRuntimeConfiguration_AutomaticPortForwardingConfiguration) GetExcludedPorts() []uint32 {
@@ -4576,7 +5941,7 @@ type BootOpResult_Node struct {
 
 func (x *BootOpResult_Node) Reset() {
 	*x = BootOpResult_Node{}
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[75]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[96]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4588,7 +5953,7 @@ func (x *BootOpResult_Node) String() string {
 func (*BootOpResult_Node) ProtoMessage() {}
 
 func (x *BootOpResult_Node) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[75]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[96]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4601,7 +5966,7 @@ func (x *BootOpResult_Node) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BootOpResult_Node.ProtoReflect.Descriptor instead.
 func (*BootOpResult_Node) Descriptor() ([]byte, []int) {
-	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{27, 0}
+	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{46, 0}
 }
 
 func (x *BootOpResult_Node) GetName() string {
@@ -4628,7 +5993,7 @@ type BootOpResult_Log struct {
 
 func (x *BootOpResult_Log) Reset() {
 	*x = BootOpResult_Log{}
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[76]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[97]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4640,7 +6005,7 @@ func (x *BootOpResult_Log) String() string {
 func (*BootOpResult_Log) ProtoMessage() {}
 
 func (x *BootOpResult_Log) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[76]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[97]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4653,7 +6018,7 @@ func (x *BootOpResult_Log) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BootOpResult_Log.ProtoReflect.Descriptor instead.
 func (*BootOpResult_Log) Descriptor() ([]byte, []int) {
-	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{27, 1}
+	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{46, 1}
 }
 
 func (x *BootOpResult_Log) GetStream() string {
@@ -4680,7 +6045,7 @@ type BootOpResult_Result struct {
 
 func (x *BootOpResult_Result) Reset() {
 	*x = BootOpResult_Result{}
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[77]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[98]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4692,7 +6057,7 @@ func (x *BootOpResult_Result) String() string {
 func (*BootOpResult_Result) ProtoMessage() {}
 
 func (x *BootOpResult_Result) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[77]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[98]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4705,7 +6070,7 @@ func (x *BootOpResult_Result) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BootOpResult_Result.ProtoReflect.Descriptor instead.
 func (*BootOpResult_Result) Descriptor() ([]byte, []int) {
-	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{27, 2}
+	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{46, 2}
 }
 
 func (x *BootOpResult_Result) GetDuration() *durationpb.Duration {
@@ -4734,7 +6099,7 @@ type QueryStateResponse_SignificantMountState struct {
 
 func (x *QueryStateResponse_SignificantMountState) Reset() {
 	*x = QueryStateResponse_SignificantMountState{}
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[78]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[99]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4746,7 +6111,7 @@ func (x *QueryStateResponse_SignificantMountState) String() string {
 func (*QueryStateResponse_SignificantMountState) ProtoMessage() {}
 
 func (x *QueryStateResponse_SignificantMountState) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[78]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[99]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4759,7 +6124,7 @@ func (x *QueryStateResponse_SignificantMountState) ProtoReflect() protoreflect.M
 
 // Deprecated: Use QueryStateResponse_SignificantMountState.ProtoReflect.Descriptor instead.
 func (*QueryStateResponse_SignificantMountState) Descriptor() ([]byte, []int) {
-	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{31, 0}
+	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{50, 0}
 }
 
 func (x *QueryStateResponse_SignificantMountState) GetMount() *SignificantMount {
@@ -4804,7 +6169,7 @@ type GitStatus_File struct {
 
 func (x *GitStatus_File) Reset() {
 	*x = GitStatus_File{}
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[79]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[100]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4816,7 +6181,7 @@ func (x *GitStatus_File) String() string {
 func (*GitStatus_File) ProtoMessage() {}
 
 func (x *GitStatus_File) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[79]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[100]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4829,7 +6194,7 @@ func (x *GitStatus_File) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GitStatus_File.ProtoReflect.Descriptor instead.
 func (*GitStatus_File) Descriptor() ([]byte, []int) {
-	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{32, 0}
+	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{51, 0}
 }
 
 func (x *GitStatus_File) GetPath() string {
@@ -4887,7 +6252,7 @@ type GitStatus_Commit struct {
 
 func (x *GitStatus_Commit) Reset() {
 	*x = GitStatus_Commit{}
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[80]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[101]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4899,7 +6264,7 @@ func (x *GitStatus_Commit) String() string {
 func (*GitStatus_Commit) ProtoMessage() {}
 
 func (x *GitStatus_Commit) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[80]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[101]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4912,7 +6277,7 @@ func (x *GitStatus_Commit) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GitStatus_Commit.ProtoReflect.Descriptor instead.
 func (*GitStatus_Commit) Descriptor() ([]byte, []int) {
-	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{32, 1}
+	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{51, 1}
 }
 
 func (x *GitStatus_Commit) GetDigest() string {
@@ -4961,7 +6326,7 @@ type RunOutputChunk_Result struct {
 
 func (x *RunOutputChunk_Result) Reset() {
 	*x = RunOutputChunk_Result{}
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[81]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[102]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4973,7 +6338,7 @@ func (x *RunOutputChunk_Result) String() string {
 func (*RunOutputChunk_Result) ProtoMessage() {}
 
 func (x *RunOutputChunk_Result) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[81]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[102]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4986,7 +6351,7 @@ func (x *RunOutputChunk_Result) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RunOutputChunk_Result.ProtoReflect.Descriptor instead.
 func (*RunOutputChunk_Result) Descriptor() ([]byte, []int) {
-	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{34, 0}
+	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{53, 0}
 }
 
 func (x *RunOutputChunk_Result) GetDuration() *durationpb.Duration {
@@ -5020,7 +6385,7 @@ type TerminalSession_RunCommand struct {
 
 func (x *TerminalSession_RunCommand) Reset() {
 	*x = TerminalSession_RunCommand{}
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[82]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[103]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5032,7 +6397,7 @@ func (x *TerminalSession_RunCommand) String() string {
 func (*TerminalSession_RunCommand) ProtoMessage() {}
 
 func (x *TerminalSession_RunCommand) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[82]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[103]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5045,7 +6410,7 @@ func (x *TerminalSession_RunCommand) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TerminalSession_RunCommand.ProtoReflect.Descriptor instead.
 func (*TerminalSession_RunCommand) Descriptor() ([]byte, []int) {
-	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{42, 0}
+	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{61, 0}
 }
 
 func (x *TerminalSession_RunCommand) GetCommand() string {
@@ -5071,7 +6436,7 @@ type TerminalSession_RunScript struct {
 
 func (x *TerminalSession_RunScript) Reset() {
 	*x = TerminalSession_RunScript{}
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[83]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[104]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5083,7 +6448,7 @@ func (x *TerminalSession_RunScript) String() string {
 func (*TerminalSession_RunScript) ProtoMessage() {}
 
 func (x *TerminalSession_RunScript) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[83]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[104]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5096,7 +6461,7 @@ func (x *TerminalSession_RunScript) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TerminalSession_RunScript.ProtoReflect.Descriptor instead.
 func (*TerminalSession_RunScript) Descriptor() ([]byte, []int) {
-	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{42, 1}
+	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{61, 1}
 }
 
 func (x *TerminalSession_RunScript) GetScript() string {
@@ -5117,7 +6482,7 @@ type ResourceMetrics_CpuMetrics struct {
 
 func (x *ResourceMetrics_CpuMetrics) Reset() {
 	*x = ResourceMetrics_CpuMetrics{}
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[84]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[105]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5129,7 +6494,7 @@ func (x *ResourceMetrics_CpuMetrics) String() string {
 func (*ResourceMetrics_CpuMetrics) ProtoMessage() {}
 
 func (x *ResourceMetrics_CpuMetrics) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[84]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[105]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5142,7 +6507,7 @@ func (x *ResourceMetrics_CpuMetrics) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ResourceMetrics_CpuMetrics.ProtoReflect.Descriptor instead.
 func (*ResourceMetrics_CpuMetrics) Descriptor() ([]byte, []int) {
-	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{45, 0}
+	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{64, 0}
 }
 
 func (x *ResourceMetrics_CpuMetrics) GetTotalPercent() float64 {
@@ -5184,7 +6549,7 @@ type ResourceMetrics_MemoryMetrics struct {
 
 func (x *ResourceMetrics_MemoryMetrics) Reset() {
 	*x = ResourceMetrics_MemoryMetrics{}
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[85]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[106]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5196,7 +6561,7 @@ func (x *ResourceMetrics_MemoryMetrics) String() string {
 func (*ResourceMetrics_MemoryMetrics) ProtoMessage() {}
 
 func (x *ResourceMetrics_MemoryMetrics) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[85]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[106]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5209,7 +6574,7 @@ func (x *ResourceMetrics_MemoryMetrics) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ResourceMetrics_MemoryMetrics.ProtoReflect.Descriptor instead.
 func (*ResourceMetrics_MemoryMetrics) Descriptor() ([]byte, []int) {
-	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{45, 1}
+	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{64, 1}
 }
 
 func (x *ResourceMetrics_MemoryMetrics) GetTotalBytes() uint64 {
@@ -5296,7 +6661,7 @@ type ResourceMetrics_CpuMetrics_PerCpuMetrics struct {
 
 func (x *ResourceMetrics_CpuMetrics_PerCpuMetrics) Reset() {
 	*x = ResourceMetrics_CpuMetrics_PerCpuMetrics{}
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[86]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[107]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5308,7 +6673,7 @@ func (x *ResourceMetrics_CpuMetrics_PerCpuMetrics) String() string {
 func (*ResourceMetrics_CpuMetrics_PerCpuMetrics) ProtoMessage() {}
 
 func (x *ResourceMetrics_CpuMetrics_PerCpuMetrics) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[86]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[107]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5321,7 +6686,7 @@ func (x *ResourceMetrics_CpuMetrics_PerCpuMetrics) ProtoReflect() protoreflect.M
 
 // Deprecated: Use ResourceMetrics_CpuMetrics_PerCpuMetrics.ProtoReflect.Descriptor instead.
 func (*ResourceMetrics_CpuMetrics_PerCpuMetrics) Descriptor() ([]byte, []int) {
-	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{45, 0, 0}
+	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{64, 0, 0}
 }
 
 func (x *ResourceMetrics_CpuMetrics_PerCpuMetrics) GetCoreId() int32 {
@@ -5376,7 +6741,7 @@ type ResetForLeaseRequest_VersionControl struct {
 
 func (x *ResetForLeaseRequest_VersionControl) Reset() {
 	*x = ResetForLeaseRequest_VersionControl{}
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[87]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[108]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5388,7 +6753,7 @@ func (x *ResetForLeaseRequest_VersionControl) String() string {
 func (*ResetForLeaseRequest_VersionControl) ProtoMessage() {}
 
 func (x *ResetForLeaseRequest_VersionControl) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[87]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[108]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5401,7 +6766,7 @@ func (x *ResetForLeaseRequest_VersionControl) ProtoReflect() protoreflect.Messag
 
 // Deprecated: Use ResetForLeaseRequest_VersionControl.ProtoReflect.Descriptor instead.
 func (*ResetForLeaseRequest_VersionControl) Descriptor() ([]byte, []int) {
-	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{46, 0}
+	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{65, 0}
 }
 
 func (x *ResetForLeaseRequest_VersionControl) GetGitCheckout() *ResetForLeaseRequest_VersionControl_GitCheckout {
@@ -5428,7 +6793,7 @@ type ResetForLeaseRequest_VersionControl_GitCheckout struct {
 
 func (x *ResetForLeaseRequest_VersionControl_GitCheckout) Reset() {
 	*x = ResetForLeaseRequest_VersionControl_GitCheckout{}
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[88]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[109]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5440,7 +6805,7 @@ func (x *ResetForLeaseRequest_VersionControl_GitCheckout) String() string {
 func (*ResetForLeaseRequest_VersionControl_GitCheckout) ProtoMessage() {}
 
 func (x *ResetForLeaseRequest_VersionControl_GitCheckout) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[88]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[109]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5453,7 +6818,7 @@ func (x *ResetForLeaseRequest_VersionControl_GitCheckout) ProtoReflect() protore
 
 // Deprecated: Use ResetForLeaseRequest_VersionControl_GitCheckout.ProtoReflect.Descriptor instead.
 func (*ResetForLeaseRequest_VersionControl_GitCheckout) Descriptor() ([]byte, []int) {
-	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{46, 0, 0}
+	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{65, 0, 0}
 }
 
 func (x *ResetForLeaseRequest_VersionControl_GitCheckout) GetRepository() string {
@@ -5479,7 +6844,7 @@ type ResetForLeaseRequest_VersionControl_GitCredentials struct {
 
 func (x *ResetForLeaseRequest_VersionControl_GitCredentials) Reset() {
 	*x = ResetForLeaseRequest_VersionControl_GitCredentials{}
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[89]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[110]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5491,7 +6856,7 @@ func (x *ResetForLeaseRequest_VersionControl_GitCredentials) String() string {
 func (*ResetForLeaseRequest_VersionControl_GitCredentials) ProtoMessage() {}
 
 func (x *ResetForLeaseRequest_VersionControl_GitCredentials) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[89]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[110]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5504,7 +6869,7 @@ func (x *ResetForLeaseRequest_VersionControl_GitCredentials) ProtoReflect() prot
 
 // Deprecated: Use ResetForLeaseRequest_VersionControl_GitCredentials.ProtoReflect.Descriptor instead.
 func (*ResetForLeaseRequest_VersionControl_GitCredentials) Descriptor() ([]byte, []int) {
-	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{46, 0, 1}
+	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{65, 0, 1}
 }
 
 func (x *ResetForLeaseRequest_VersionControl_GitCredentials) GetSecretId() string {
@@ -5524,7 +6889,7 @@ type ResetForLeaseEvent_Log struct {
 
 func (x *ResetForLeaseEvent_Log) Reset() {
 	*x = ResetForLeaseEvent_Log{}
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[90]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[111]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5536,7 +6901,7 @@ func (x *ResetForLeaseEvent_Log) String() string {
 func (*ResetForLeaseEvent_Log) ProtoMessage() {}
 
 func (x *ResetForLeaseEvent_Log) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[90]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[111]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5549,7 +6914,7 @@ func (x *ResetForLeaseEvent_Log) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ResetForLeaseEvent_Log.ProtoReflect.Descriptor instead.
 func (*ResetForLeaseEvent_Log) Descriptor() ([]byte, []int) {
-	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{47, 0}
+	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{66, 0}
 }
 
 func (x *ResetForLeaseEvent_Log) GetStream() string {
@@ -5576,7 +6941,7 @@ type ResetForLeaseEvent_Result struct {
 
 func (x *ResetForLeaseEvent_Result) Reset() {
 	*x = ResetForLeaseEvent_Result{}
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[91]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[112]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5588,7 +6953,7 @@ func (x *ResetForLeaseEvent_Result) String() string {
 func (*ResetForLeaseEvent_Result) ProtoMessage() {}
 
 func (x *ResetForLeaseEvent_Result) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[91]
+	mi := &file_proto_namespace_private_devbox_wire_wire_proto_msgTypes[112]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5601,7 +6966,7 @@ func (x *ResetForLeaseEvent_Result) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ResetForLeaseEvent_Result.ProtoReflect.Descriptor instead.
 func (*ResetForLeaseEvent_Result) Descriptor() ([]byte, []int) {
-	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{47, 1}
+	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP(), []int{66, 1}
 }
 
 func (x *ResetForLeaseEvent_Result) GetDuration() *durationpb.Duration {
@@ -5681,7 +7046,107 @@ const file_proto_namespace_private_devbox_wire_wire_proto_rawDesc = "" +
 	"\x0efrom_secret_id\x18\x03 \x01(\tR\ffromSecretId\"K\n" +
 	"\rValueOrSecret\x12\x14\n" +
 	"\x05value\x18\x01 \x01(\fR\x05value\x12$\n" +
-	"\x0efrom_secret_id\x18\x02 \x01(\tR\ffromSecretId\"\xcb\x01\n" +
+	"\x0efrom_secret_id\x18\x02 \x01(\tR\ffromSecretId\"\x96\x05\n" +
+	"\vServiceSpec\x12\x12\n" +
+	"\x04name\x18\x01 \x01(\tR\x04name\x12 \n" +
+	"\vdescription\x18\x02 \x01(\tR\vdescription\x12J\n" +
+	"\acommand\x18\x03 \x01(\v20.namespace.private.devbox.wire.v1beta.RunCommandR\acommand\x12`\n" +
+	"\fstart_policy\x18\x04 \x01(\x0e2=.namespace.private.devbox.wire.v1beta.ServiceSpec.StartPolicyR\vstartPolicy\x12f\n" +
+	"\x0erestart_policy\x18\x05 \x01(\x0e2?.namespace.private.devbox.wire.v1beta.ServiceSpec.RestartPolicyR\rrestartPolicy\x122\n" +
+	"\x15prevent_idle_shutdown\x18\x06 \x01(\bR\x13preventIdleShutdown\"\x80\x01\n" +
+	"\vStartPolicy\x12\x1c\n" +
+	"\x18START_POLICY_UNSPECIFIED\x10\x00\x12\x18\n" +
+	"\x14START_POLICY_ON_BOOT\x10\x01\x12 \n" +
+	"\x1cSTART_POLICY_ON_HTTP_INGRESS\x10\x02\x12\x17\n" +
+	"\x13START_POLICY_MANUAL\x10\x03\"\x83\x01\n" +
+	"\rRestartPolicy\x12\x1e\n" +
+	"\x1aRESTART_POLICY_UNSPECIFIED\x10\x00\x12\x18\n" +
+	"\x14RESTART_POLICY_NEVER\x10\x01\x12\x1d\n" +
+	"\x19RESTART_POLICY_ON_FAILURE\x10\x02\x12\x19\n" +
+	"\x15RESTART_POLICY_ALWAYS\x10\x03\"\xd0\x02\n" +
+	"\aService\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12E\n" +
+	"\x04spec\x18\x02 \x01(\v21.namespace.private.devbox.wire.v1beta.ServiceSpecR\x04spec\x12@\n" +
+	"\x05ports\x18\x03 \x03(\v2*.namespace.private.devbox.wire.v1beta.PortR\x05ports\x12I\n" +
+	"\x05owner\x18\x04 \x01(\x0e23.namespace.private.devbox.wire.v1beta.Service.OwnerR\x05owner\x12\x1c\n" +
+	"\tsuspended\x18\x05 \x01(\bR\tsuspended\"C\n" +
+	"\x05Owner\x12\x15\n" +
+	"\x11OWNER_UNSPECIFIED\x10\x00\x12\x0e\n" +
+	"\n" +
+	"OWNER_USER\x10\x01\x12\x13\n" +
+	"\x0fOWNER_NAMESPACE\x10\x02\"\xb4\x04\n" +
+	"\x0eServiceProcess\x12S\n" +
+	"\x06status\x18\x01 \x01(\x0e2;.namespace.private.devbox.wire.v1beta.ServiceProcess.StatusR\x06status\x12\x10\n" +
+	"\x03pid\x18\x02 \x01(\rR\x03pid\x129\n" +
+	"\n" +
+	"started_at\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampR\tstartedAt\x12V\n" +
+	"\tlast_exit\x18\x04 \x01(\v29.namespace.private.devbox.wire.v1beta.ServiceProcess.ExitR\blastExit\x12\x1a\n" +
+	"\brestarts\x18\x05 \x01(\rR\brestarts\x1am\n" +
+	"\x04Exit\x12\x12\n" +
+	"\x04code\x18\x01 \x01(\x05R\x04code\x12\x18\n" +
+	"\amessage\x18\x02 \x01(\tR\amessage\x127\n" +
+	"\texited_at\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampR\bexitedAt\"\x9c\x01\n" +
+	"\x06Status\x12\x16\n" +
+	"\x12STATUS_UNSPECIFIED\x10\x00\x12\x13\n" +
+	"\x0fSTATUS_STARTING\x10\x01\x12\x12\n" +
+	"\x0eSTATUS_RUNNING\x10\x02\x12\x13\n" +
+	"\x0fSTATUS_STOPPING\x10\x03\x12\x12\n" +
+	"\x0eSTATUS_STOPPED\x10\x04\x12\x11\n" +
+	"\rSTATUS_FAILED\x10\x05\x12\x15\n" +
+	"\x11STATUS_RESTARTING\x10\x06\"\x94\x03\n" +
+	"\x14CreateServiceRequest\x12E\n" +
+	"\x04spec\x18\x01 \x01(\v21.namespace.private.devbox.wire.v1beta.ServiceSpecR\x04spec\x12D\n" +
+	"\x05ports\x18\x02 \x03(\v2..namespace.private.devbox.wire.v1beta.PortSpecR\x05ports\x12l\n" +
+	"\rinitial_state\x18\x03 \x01(\x0e2G.namespace.private.devbox.wire.v1beta.CreateServiceRequest.InitialStateR\finitialState\"\x80\x01\n" +
+	"\fInitialState\x12\x1d\n" +
+	"\x19INITIAL_STATE_UNSPECIFIED\x10\x00\x12\x19\n" +
+	"\x15INITIAL_STATE_RUNNING\x10\x01\x12\x19\n" +
+	"\x15INITIAL_STATE_STOPPED\x10\x02\x12\x1b\n" +
+	"\x17INITIAL_STATE_SUSPENDED\x10\x03\"\xb0\x01\n" +
+	"\x15CreateServiceResponse\x12G\n" +
+	"\aservice\x18\x01 \x01(\v2-.namespace.private.devbox.wire.v1beta.ServiceR\aservice\x12N\n" +
+	"\aprocess\x18\x02 \x01(\v24.namespace.private.devbox.wire.v1beta.ServiceProcessR\aprocess\"\x15\n" +
+	"\x13ListServicesRequest\"\xa7\x02\n" +
+	"\x14ListServicesResponse\x12d\n" +
+	"\bservices\x18\x01 \x03(\v2H.namespace.private.devbox.wire.v1beta.ListServicesResponse.ListedServiceR\bservices\x1a\xa8\x01\n" +
+	"\rListedService\x12G\n" +
+	"\aservice\x18\x01 \x01(\v2-.namespace.private.devbox.wire.v1beta.ServiceR\aservice\x12N\n" +
+	"\aprocess\x18\x02 \x01(\v24.namespace.private.devbox.wire.v1beta.ServiceProcessR\aprocess\"4\n" +
+	"\x14DeleteServiceRequest\x12\x1c\n" +
+	"\n" +
+	"id_or_name\x18\x01 \x01(\tR\bidOrName\"\x17\n" +
+	"\x15DeleteServiceResponse\"4\n" +
+	"\x14ResumeServiceRequest\x12\x1c\n" +
+	"\n" +
+	"id_or_name\x18\x01 \x01(\tR\bidOrName\"g\n" +
+	"\x15ResumeServiceResponse\x12N\n" +
+	"\aprocess\x18\x01 \x01(\v24.namespace.private.devbox.wire.v1beta.ServiceProcessR\aprocess\"5\n" +
+	"\x15SuspendServiceRequest\x12\x1c\n" +
+	"\n" +
+	"id_or_name\x18\x01 \x01(\tR\bidOrName\"h\n" +
+	"\x16SuspendServiceResponse\x12N\n" +
+	"\aprocess\x18\x01 \x01(\v24.namespace.private.devbox.wire.v1beta.ServiceProcessR\aprocess\"3\n" +
+	"\x13StartServiceRequest\x12\x1c\n" +
+	"\n" +
+	"id_or_name\x18\x01 \x01(\tR\bidOrName\"f\n" +
+	"\x14StartServiceResponse\x12N\n" +
+	"\aprocess\x18\x01 \x01(\v24.namespace.private.devbox.wire.v1beta.ServiceProcessR\aprocess\"\xc6\x01\n" +
+	"\x12StopServiceRequest\x12\x1c\n" +
+	"\n" +
+	"id_or_name\x18\x01 \x01(\tR\bidOrName\x12Q\n" +
+	"\x04mode\x18\x02 \x01(\x0e2=.namespace.private.devbox.wire.v1beta.StopServiceRequest.ModeR\x04mode\"?\n" +
+	"\x04Mode\x12\x14\n" +
+	"\x10MODE_UNSPECIFIED\x10\x00\x12\x11\n" +
+	"\rMODE_GRACEFUL\x10\x01\x12\x0e\n" +
+	"\n" +
+	"MODE_FORCE\x10\x02\"e\n" +
+	"\x13StopServiceResponse\x12N\n" +
+	"\aprocess\x18\x01 \x01(\v24.namespace.private.devbox.wire.v1beta.ServiceProcessR\aprocess\"L\n" +
+	"\x14SignalServiceRequest\x12\x1c\n" +
+	"\n" +
+	"id_or_name\x18\x01 \x01(\tR\bidOrName\x12\x16\n" +
+	"\x06signal\x18\x02 \x01(\x05R\x06signal\"\x17\n" +
+	"\x15SignalServiceResponse\"\xcb\x01\n" +
 	"\bPortSpec\x12\x12\n" +
 	"\x04name\x18\x01 \x01(\tR\x04name\x12\x16\n" +
 	"\x06number\x18\x02 \x01(\rR\x06number\x12G\n" +
@@ -5712,9 +7177,9 @@ const file_proto_namespace_private_devbox_wire_wire_proto_rawDesc = "" +
 	"\x05ports\x18\x01 \x03(\v20.namespace.private.devbox.wire.v1beta.ListedPortR\x05ports\"L\n" +
 	"\n" +
 	"ListedPort\x12>\n" +
-	"\x04port\x18\x01 \x01(\v2*.namespace.private.devbox.wire.v1beta.PortR\x04port\"\xf0\x1d\n" +
+	"\x04port\x18\x01 \x01(\v2*.namespace.private.devbox.wire.v1beta.PortR\x04port\"\xea\x1e\n" +
 	"\tAgentBoot\x12D\n" +
-	"\x03ops\x18\x01 \x03(\v22.namespace.private.devbox.wire.v1beta.AgentBoot.OpR\x03ops\x1a\x9c\x1d\n" +
+	"\x03ops\x18\x01 \x03(\v22.namespace.private.devbox.wire.v1beta.AgentBoot.OpR\x03ops\x1a\x96\x1e\n" +
 	"\x02Op\x12\x12\n" +
 	"\x04name\x18\x01 \x01(\tR\x04name\x12\x96\x01\n" +
 	"\x1fsetup_namespace_git_credentials\x18\x02 \x01(\v2O.namespace.private.devbox.wire.v1beta.AgentBoot.Op.SetupNamespaceGitCredentialsR\x1csetupNamespaceGitCredentials\x12a\n" +
@@ -5737,7 +7202,8 @@ const file_proto_namespace_private_devbox_wire_wire_proto_rawDesc = "" +
 	"\x12setup_integrations\x18\x0e \x01(\v2D.namespace.private.devbox.wire.v1beta.AgentBoot.Op.SetupIntegrationsR\x11setupIntegrations\x12x\n" +
 	"\x15setup_egress_proxy_ca\x18\x0f \x01(\v2E.namespace.private.devbox.wire.v1beta.AgentBoot.Op.SetupEgressProxyCAR\x12setupEgressProxyCa\x12\x86\x01\n" +
 	"\x19accepting_ssh_connections\x18\x10 \x01(\v2J.namespace.private.devbox.wire.v1beta.AgentBoot.Op.AcceptingSSHConnectionsR\x17acceptingSshConnections\x12\x86\x01\n" +
-	"\x19git_checkout_repositories\x18\x11 \x01(\v2J.namespace.private.devbox.wire.v1beta.AgentBoot.Op.GitCheckoutRepositoriesR\x17gitCheckoutRepositories\x1aS\n" +
+	"\x19git_checkout_repositories\x18\x11 \x01(\v2J.namespace.private.devbox.wire.v1beta.AgentBoot.Op.GitCheckoutRepositoriesR\x17gitCheckoutRepositories\x12g\n" +
+	"\x0estart_services\x18\x12 \x01(\v2@.namespace.private.devbox.wire.v1beta.AgentBoot.Op.StartServicesR\rstartServices\x1aS\n" +
 	"\x1cSetupNamespaceGitCredentials\x12\"\n" +
 	"\frepositories\x18\x02 \x03(\tR\frepositoriesJ\x04\b\x01\x10\x02R\tsecret_id\x1a\xdd\x02\n" +
 	"\vGitCheckout\x12\x1e\n" +
@@ -5793,8 +7259,8 @@ const file_proto_namespace_private_devbox_wire_wire_proto_rawDesc = "" +
 	"\vClaudeAgent\x1a-\n" +
 	"\x12SetupEgressProxyCA\x12\x17\n" +
 	"\aca_path\x18\x01 \x01(\tR\x06caPath\x1a\x19\n" +
-	"\x17AcceptingSSHConnections\"\x9f\n" +
-	"\n" +
+	"\x17AcceptingSSHConnections\x1a\x0f\n" +
+	"\rStartServices\"\xd2\b\n" +
 	"\fAgentStartup\x12\x1e\n" +
 	"\n" +
 	"repository\x18\x01 \x01(\tR\n" +
@@ -5818,8 +7284,7 @@ const file_proto_namespace_private_devbox_wire_wire_proto_rawDesc = "" +
 	"\x06vscode\x18\x10 \x01(\v29.namespace.private.devbox.wire.v1beta.AgentStartup.VSCodeR\x06vscode\x12t\n" +
 	"\x15initial_configuration\x18\x11 \x01(\v2?.namespace.private.devbox.wire.v1beta.AgentRuntimeConfigurationR\x14initialConfiguration\x12\x1f\n" +
 	"\venable_dbus\x18\x12 \x01(\bR\n" +
-	"enableDbus\x12a\n" +
-	"\fclaude_agent\x18\x13 \x01(\v2>.namespace.private.devbox.wire.v1beta.AgentStartup.ClaudeAgentR\vclaudeAgent\x12D\n" +
+	"enableDbus\x12D\n" +
 	"\x05ports\x18\x15 \x03(\v2..namespace.private.devbox.wire.v1beta.PortSpecR\x05ports\x1a(\n" +
 	"\x06VSCode\x12\x1e\n" +
 	"\n" +
@@ -5827,12 +7292,7 @@ const file_proto_namespace_private_devbox_wire_wire_proto_rawDesc = "" +
 	"extensions\x1a3\n" +
 	"\tNamedPort\x12\x12\n" +
 	"\x04name\x18\x01 \x01(\tR\x04name\x12\x12\n" +
-	"\x04port\x18\x02 \x01(\x05R\x04port\x1a|\n" +
-	"\vClaudeAgent\x12%\n" +
-	"\x0eenvironment_id\x18\x01 \x01(\tR\renvironmentId\x12'\n" +
-	"\x0fenvironment_key\x18\x02 \x01(\tR\x0eenvironmentKey\x12\x1d\n" +
-	"\n" +
-	"session_id\x18\x03 \x01(\tR\tsessionIdJ\x04\b\x04\x10\x05R\rport_forwards\"\xa0\a\n" +
+	"\x04port\x18\x02 \x01(\x05R\x04portJ\x04\b\x04\x10\x05J\x04\b\x13\x10\x14R\rport_forwardsR\fclaude_agent\"\xa0\a\n" +
 	"\x19AgentRuntimeConfiguration\x12\x18\n" +
 	"\aversion\x18\x01 \x01(\x05R\aversion\x12Z\n" +
 	"\x1cbusy_ensure_minimum_duration\x18\x02 \x01(\v2\x19.google.protobuf.DurationR\x19busyEnsureMinimumDuration\x12e\n" +
@@ -6043,7 +7503,7 @@ const file_proto_namespace_private_devbox_wire_wire_proto_rawDesc = "" +
 	"\amessage\x18\x02 \x01(\tR\amessage\x1aU\n" +
 	"\x06Result\x125\n" +
 	"\bduration\x18\x01 \x01(\v2\x19.google.protobuf.DurationR\bduration\x12\x14\n" +
-	"\x05error\x18\x02 \x01(\tR\x05error2\xfe\x15\n" +
+	"\x05error\x18\x02 \x01(\tR\x05error2\xcd\x1e\n" +
 	"\fAgentService\x126\n" +
 	"\x04Ping\x12\x16.google.protobuf.Empty\x1a\x16.google.protobuf.Empty\x12:\n" +
 	"\bShutdown\x12\x16.google.protobuf.Empty\x1a\x16.google.protobuf.Empty\x12\x87\x01\n" +
@@ -6064,7 +7524,15 @@ const file_proto_namespace_private_devbox_wire_wire_proto_rawDesc = "" +
 	"\x12AddTerminalSession\x12?.namespace.private.devbox.wire.v1beta.AddTerminalSessionRequest\x1a5.namespace.private.devbox.wire.v1beta.TerminalSession\x12\x92\x01\n" +
 	"\x15CreateTerminalSession\x12B.namespace.private.devbox.wire.v1beta.CreateTerminalSessionRequest\x1a5.namespace.private.devbox.wire.v1beta.TerminalSession\x12s\n" +
 	"\x15DeleteTerminalSession\x12B.namespace.private.devbox.wire.v1beta.DeleteTerminalSessionRequest\x1a\x16.google.protobuf.Empty\x12r\n" +
-	"\x14ListTerminalSessions\x12\x16.google.protobuf.Empty\x1aB.namespace.private.devbox.wire.v1beta.ListTerminalSessionsResponse\x12\x7f\n" +
+	"\x14ListTerminalSessions\x12\x16.google.protobuf.Empty\x1aB.namespace.private.devbox.wire.v1beta.ListTerminalSessionsResponse\x12\x88\x01\n" +
+	"\rCreateService\x12:.namespace.private.devbox.wire.v1beta.CreateServiceRequest\x1a;.namespace.private.devbox.wire.v1beta.CreateServiceResponse\x12\x85\x01\n" +
+	"\fListServices\x129.namespace.private.devbox.wire.v1beta.ListServicesRequest\x1a:.namespace.private.devbox.wire.v1beta.ListServicesResponse\x12\x88\x01\n" +
+	"\rDeleteService\x12:.namespace.private.devbox.wire.v1beta.DeleteServiceRequest\x1a;.namespace.private.devbox.wire.v1beta.DeleteServiceResponse\x12\x88\x01\n" +
+	"\rResumeService\x12:.namespace.private.devbox.wire.v1beta.ResumeServiceRequest\x1a;.namespace.private.devbox.wire.v1beta.ResumeServiceResponse\x12\x8b\x01\n" +
+	"\x0eSuspendService\x12;.namespace.private.devbox.wire.v1beta.SuspendServiceRequest\x1a<.namespace.private.devbox.wire.v1beta.SuspendServiceResponse\x12\x85\x01\n" +
+	"\fStartService\x129.namespace.private.devbox.wire.v1beta.StartServiceRequest\x1a:.namespace.private.devbox.wire.v1beta.StartServiceResponse\x12\x82\x01\n" +
+	"\vStopService\x128.namespace.private.devbox.wire.v1beta.StopServiceRequest\x1a9.namespace.private.devbox.wire.v1beta.StopServiceResponse\x12\x88\x01\n" +
+	"\rSignalService\x12:.namespace.private.devbox.wire.v1beta.SignalServiceRequest\x1a;.namespace.private.devbox.wire.v1beta.SignalServiceResponse\x12\x7f\n" +
 	"\n" +
 	"CreatePort\x127.namespace.private.devbox.wire.v1beta.CreatePortRequest\x1a8.namespace.private.devbox.wire.v1beta.CreatePortResponse\x12\x7f\n" +
 	"\n" +
@@ -6085,260 +7553,326 @@ func file_proto_namespace_private_devbox_wire_wire_proto_rawDescGZIP() []byte {
 	return file_proto_namespace_private_devbox_wire_wire_proto_rawDescData
 }
 
-var file_proto_namespace_private_devbox_wire_wire_proto_enumTypes = make([]protoimpl.EnumInfo, 6)
-var file_proto_namespace_private_devbox_wire_wire_proto_msgTypes = make([]protoimpl.MessageInfo, 92)
+var file_proto_namespace_private_devbox_wire_wire_proto_enumTypes = make([]protoimpl.EnumInfo, 12)
+var file_proto_namespace_private_devbox_wire_wire_proto_msgTypes = make([]protoimpl.MessageInfo, 113)
 var file_proto_namespace_private_devbox_wire_wire_proto_goTypes = []any{
 	(StopExecRequest_Mode)(0),                            // 0: namespace.private.devbox.wire.v1beta.StopExecRequest.Mode
-	(PortSpec_Kind)(0),                                   // 1: namespace.private.devbox.wire.v1beta.PortSpec.Kind
-	(Port_Owner)(0),                                      // 2: namespace.private.devbox.wire.v1beta.Port.Owner
-	(AgentBoot_Op_GitCheckout_CheckoutMethod)(0),         // 3: namespace.private.devbox.wire.v1beta.AgentBoot.Op.GitCheckout.CheckoutMethod
-	(SignificantMount_Kind)(0),                           // 4: namespace.private.devbox.wire.v1beta.SignificantMount.Kind
-	(GitStatus_File_Flag)(0),                             // 5: namespace.private.devbox.wire.v1beta.GitStatus.File.Flag
-	(*CreateTerminalSessionRequest)(nil),                 // 6: namespace.private.devbox.wire.v1beta.CreateTerminalSessionRequest
-	(*RunCommand)(nil),                                   // 7: namespace.private.devbox.wire.v1beta.RunCommand
-	(*StartExecRequest)(nil),                             // 8: namespace.private.devbox.wire.v1beta.StartExecRequest
-	(*StartExecResponse)(nil),                            // 9: namespace.private.devbox.wire.v1beta.StartExecResponse
-	(*StopExecRequest)(nil),                              // 10: namespace.private.devbox.wire.v1beta.StopExecRequest
-	(*ListLogsRequest)(nil),                              // 11: namespace.private.devbox.wire.v1beta.ListLogsRequest
-	(*ListLogsResponse)(nil),                             // 12: namespace.private.devbox.wire.v1beta.ListLogsResponse
-	(*ExecLogMetadata)(nil),                              // 13: namespace.private.devbox.wire.v1beta.ExecLogMetadata
-	(*ExecLogAction)(nil),                                // 14: namespace.private.devbox.wire.v1beta.ExecLogAction
-	(*StreamExecLogsRequest)(nil),                        // 15: namespace.private.devbox.wire.v1beta.StreamExecLogsRequest
-	(*ExecLogChunk)(nil),                                 // 16: namespace.private.devbox.wire.v1beta.ExecLogChunk
-	(*Cwd)(nil),                                          // 17: namespace.private.devbox.wire.v1beta.Cwd
-	(*EnvVar)(nil),                                       // 18: namespace.private.devbox.wire.v1beta.EnvVar
-	(*ValueOrSecret)(nil),                                // 19: namespace.private.devbox.wire.v1beta.ValueOrSecret
-	(*PortSpec)(nil),                                     // 20: namespace.private.devbox.wire.v1beta.PortSpec
-	(*Port)(nil),                                         // 21: namespace.private.devbox.wire.v1beta.Port
-	(*CreatePortRequest)(nil),                            // 22: namespace.private.devbox.wire.v1beta.CreatePortRequest
-	(*CreatePortResponse)(nil),                           // 23: namespace.private.devbox.wire.v1beta.CreatePortResponse
-	(*DeletePortRequest)(nil),                            // 24: namespace.private.devbox.wire.v1beta.DeletePortRequest
-	(*DeletePortResponse)(nil),                           // 25: namespace.private.devbox.wire.v1beta.DeletePortResponse
-	(*ListPortsRequest)(nil),                             // 26: namespace.private.devbox.wire.v1beta.ListPortsRequest
-	(*ListPortsResponse)(nil),                            // 27: namespace.private.devbox.wire.v1beta.ListPortsResponse
-	(*ListedPort)(nil),                                   // 28: namespace.private.devbox.wire.v1beta.ListedPort
-	(*AgentBoot)(nil),                                    // 29: namespace.private.devbox.wire.v1beta.AgentBoot
-	(*AgentStartup)(nil),                                 // 30: namespace.private.devbox.wire.v1beta.AgentStartup
-	(*AgentRuntimeConfiguration)(nil),                    // 31: namespace.private.devbox.wire.v1beta.AgentRuntimeConfiguration
-	(*SignificantMount)(nil),                             // 32: namespace.private.devbox.wire.v1beta.SignificantMount
-	(*BootOpResult)(nil),                                 // 33: namespace.private.devbox.wire.v1beta.BootOpResult
-	(*StartupState)(nil),                                 // 34: namespace.private.devbox.wire.v1beta.StartupState
-	(*QueryStateRequest)(nil),                            // 35: namespace.private.devbox.wire.v1beta.QueryStateRequest
-	(*ResourceMetricsSubscription)(nil),                  // 36: namespace.private.devbox.wire.v1beta.ResourceMetricsSubscription
-	(*QueryStateResponse)(nil),                           // 37: namespace.private.devbox.wire.v1beta.QueryStateResponse
-	(*GitStatus)(nil),                                    // 38: namespace.private.devbox.wire.v1beta.GitStatus
-	(*WebSocketSSHInitiation)(nil),                       // 39: namespace.private.devbox.wire.v1beta.WebSocketSSHInitiation
-	(*RunOutputChunk)(nil),                               // 40: namespace.private.devbox.wire.v1beta.RunOutputChunk
-	(*GitWorktree)(nil),                                  // 41: namespace.private.devbox.wire.v1beta.GitWorktree
-	(*ListGitWorktreesRequest)(nil),                      // 42: namespace.private.devbox.wire.v1beta.ListGitWorktreesRequest
-	(*ListGitWorktreesResponse)(nil),                     // 43: namespace.private.devbox.wire.v1beta.ListGitWorktreesResponse
-	(*CreateGitWorktreeRequest)(nil),                     // 44: namespace.private.devbox.wire.v1beta.CreateGitWorktreeRequest
-	(*CreateGitWorktreeResponse)(nil),                    // 45: namespace.private.devbox.wire.v1beta.CreateGitWorktreeResponse
-	(*RemoveGitWorktreeRequest)(nil),                     // 46: namespace.private.devbox.wire.v1beta.RemoveGitWorktreeRequest
-	(*ListTerminalSessionsResponse)(nil),                 // 47: namespace.private.devbox.wire.v1beta.ListTerminalSessionsResponse
-	(*TerminalSession)(nil),                              // 48: namespace.private.devbox.wire.v1beta.TerminalSession
-	(*AddTerminalSessionRequest)(nil),                    // 49: namespace.private.devbox.wire.v1beta.AddTerminalSessionRequest
-	(*DeleteTerminalSessionRequest)(nil),                 // 50: namespace.private.devbox.wire.v1beta.DeleteTerminalSessionRequest
-	(*ResourceMetrics)(nil),                              // 51: namespace.private.devbox.wire.v1beta.ResourceMetrics
-	(*ResetForLeaseRequest)(nil),                         // 52: namespace.private.devbox.wire.v1beta.ResetForLeaseRequest
-	(*ResetForLeaseEvent)(nil),                           // 53: namespace.private.devbox.wire.v1beta.ResetForLeaseEvent
-	(*ExecLogChunk_Result)(nil),                          // 54: namespace.private.devbox.wire.v1beta.ExecLogChunk.Result
-	(*AgentBoot_Op)(nil),                                 // 55: namespace.private.devbox.wire.v1beta.AgentBoot.Op
-	(*AgentBoot_Op_SetupNamespaceGitCredentials)(nil),    // 56: namespace.private.devbox.wire.v1beta.AgentBoot.Op.SetupNamespaceGitCredentials
-	(*AgentBoot_Op_GitCheckout)(nil),                     // 57: namespace.private.devbox.wire.v1beta.AgentBoot.Op.GitCheckout
-	(*AgentBoot_Op_GitCheckoutRepositories)(nil),         // 58: namespace.private.devbox.wire.v1beta.AgentBoot.Op.GitCheckoutRepositories
-	(*AgentBoot_Op_GitCreateBranch)(nil),                 // 59: namespace.private.devbox.wire.v1beta.AgentBoot.Op.GitCreateBranch
-	(*AgentBoot_Op_GitSetUserAndEmail)(nil),              // 60: namespace.private.devbox.wire.v1beta.AgentBoot.Op.GitSetUserAndEmail
-	(*AgentBoot_Op_GitReset)(nil),                        // 61: namespace.private.devbox.wire.v1beta.AgentBoot.Op.GitReset
-	(*AgentBoot_Op_RunScript)(nil),                       // 62: namespace.private.devbox.wire.v1beta.AgentBoot.Op.RunScript
-	(*AgentBoot_Op_OnCreate)(nil),                        // 63: namespace.private.devbox.wire.v1beta.AgentBoot.Op.OnCreate
-	(*AgentBoot_Op_SetupDotfiles)(nil),                   // 64: namespace.private.devbox.wire.v1beta.AgentBoot.Op.SetupDotfiles
-	(*AgentBoot_Op_SetupDocker)(nil),                     // 65: namespace.private.devbox.wire.v1beta.AgentBoot.Op.SetupDocker
-	(*AgentBoot_Op_Concurrent)(nil),                      // 66: namespace.private.devbox.wire.v1beta.AgentBoot.Op.Concurrent
-	(*AgentBoot_Op_EnsureSessions)(nil),                  // 67: namespace.private.devbox.wire.v1beta.AgentBoot.Op.EnsureSessions
-	(*AgentBoot_Op_SetupIntegrations)(nil),               // 68: namespace.private.devbox.wire.v1beta.AgentBoot.Op.SetupIntegrations
-	(*AgentBoot_Op_SetupEgressProxyCA)(nil),              // 69: namespace.private.devbox.wire.v1beta.AgentBoot.Op.SetupEgressProxyCA
-	(*AgentBoot_Op_AcceptingSSHConnections)(nil),         // 70: namespace.private.devbox.wire.v1beta.AgentBoot.Op.AcceptingSSHConnections
-	(*AgentBoot_Op_SetupIntegrations_DevinOutposts)(nil), // 71: namespace.private.devbox.wire.v1beta.AgentBoot.Op.SetupIntegrations.DevinOutposts
-	(*AgentBoot_Op_SetupIntegrations_Cursor)(nil),        // 72: namespace.private.devbox.wire.v1beta.AgentBoot.Op.SetupIntegrations.Cursor
-	(*AgentBoot_Op_SetupIntegrations_ClaudeAgent)(nil),   // 73: namespace.private.devbox.wire.v1beta.AgentBoot.Op.SetupIntegrations.ClaudeAgent
-	(*AgentStartup_VSCode)(nil),                          // 74: namespace.private.devbox.wire.v1beta.AgentStartup.VSCode
-	(*AgentStartup_NamedPort)(nil),                       // 75: namespace.private.devbox.wire.v1beta.AgentStartup.NamedPort
-	(*AgentStartup_ClaudeAgent)(nil),                     // 76: namespace.private.devbox.wire.v1beta.AgentStartup.ClaudeAgent
-	(*AgentRuntimeConfiguration_TmuxConfiguration)(nil),  // 77: namespace.private.devbox.wire.v1beta.AgentRuntimeConfiguration.TmuxConfiguration
-	(*AgentRuntimeConfiguration_AutomaticPortForwardingConfiguration)(nil), // 78: namespace.private.devbox.wire.v1beta.AgentRuntimeConfiguration.AutomaticPortForwardingConfiguration
-	nil,                         // 79: namespace.private.devbox.wire.v1beta.AgentRuntimeConfiguration.TmuxConfiguration.ServerOptionsEntry
-	nil,                         // 80: namespace.private.devbox.wire.v1beta.AgentRuntimeConfiguration.TmuxConfiguration.GlobalOptionsEntry
-	(*BootOpResult_Node)(nil),   // 81: namespace.private.devbox.wire.v1beta.BootOpResult.Node
-	(*BootOpResult_Log)(nil),    // 82: namespace.private.devbox.wire.v1beta.BootOpResult.Log
-	(*BootOpResult_Result)(nil), // 83: namespace.private.devbox.wire.v1beta.BootOpResult.Result
-	(*QueryStateResponse_SignificantMountState)(nil),           // 84: namespace.private.devbox.wire.v1beta.QueryStateResponse.SignificantMountState
-	(*GitStatus_File)(nil),                                     // 85: namespace.private.devbox.wire.v1beta.GitStatus.File
-	(*GitStatus_Commit)(nil),                                   // 86: namespace.private.devbox.wire.v1beta.GitStatus.Commit
-	(*RunOutputChunk_Result)(nil),                              // 87: namespace.private.devbox.wire.v1beta.RunOutputChunk.Result
-	(*TerminalSession_RunCommand)(nil),                         // 88: namespace.private.devbox.wire.v1beta.TerminalSession.RunCommand
-	(*TerminalSession_RunScript)(nil),                          // 89: namespace.private.devbox.wire.v1beta.TerminalSession.RunScript
-	(*ResourceMetrics_CpuMetrics)(nil),                         // 90: namespace.private.devbox.wire.v1beta.ResourceMetrics.CpuMetrics
-	(*ResourceMetrics_MemoryMetrics)(nil),                      // 91: namespace.private.devbox.wire.v1beta.ResourceMetrics.MemoryMetrics
-	(*ResourceMetrics_CpuMetrics_PerCpuMetrics)(nil),           // 92: namespace.private.devbox.wire.v1beta.ResourceMetrics.CpuMetrics.PerCpuMetrics
-	(*ResetForLeaseRequest_VersionControl)(nil),                // 93: namespace.private.devbox.wire.v1beta.ResetForLeaseRequest.VersionControl
-	(*ResetForLeaseRequest_VersionControl_GitCheckout)(nil),    // 94: namespace.private.devbox.wire.v1beta.ResetForLeaseRequest.VersionControl.GitCheckout
-	(*ResetForLeaseRequest_VersionControl_GitCredentials)(nil), // 95: namespace.private.devbox.wire.v1beta.ResetForLeaseRequest.VersionControl.GitCredentials
-	(*ResetForLeaseEvent_Log)(nil),                             // 96: namespace.private.devbox.wire.v1beta.ResetForLeaseEvent.Log
-	(*ResetForLeaseEvent_Result)(nil),                          // 97: namespace.private.devbox.wire.v1beta.ResetForLeaseEvent.Result
-	(*timestamppb.Timestamp)(nil),                              // 98: google.protobuf.Timestamp
-	(*durationpb.Duration)(nil),                                // 99: google.protobuf.Duration
-	(*emptypb.Empty)(nil),                                      // 100: google.protobuf.Empty
+	(ServiceSpec_StartPolicy)(0),                         // 1: namespace.private.devbox.wire.v1beta.ServiceSpec.StartPolicy
+	(ServiceSpec_RestartPolicy)(0),                       // 2: namespace.private.devbox.wire.v1beta.ServiceSpec.RestartPolicy
+	(Service_Owner)(0),                                   // 3: namespace.private.devbox.wire.v1beta.Service.Owner
+	(ServiceProcess_Status)(0),                           // 4: namespace.private.devbox.wire.v1beta.ServiceProcess.Status
+	(CreateServiceRequest_InitialState)(0),               // 5: namespace.private.devbox.wire.v1beta.CreateServiceRequest.InitialState
+	(StopServiceRequest_Mode)(0),                         // 6: namespace.private.devbox.wire.v1beta.StopServiceRequest.Mode
+	(PortSpec_Kind)(0),                                   // 7: namespace.private.devbox.wire.v1beta.PortSpec.Kind
+	(Port_Owner)(0),                                      // 8: namespace.private.devbox.wire.v1beta.Port.Owner
+	(AgentBoot_Op_GitCheckout_CheckoutMethod)(0),         // 9: namespace.private.devbox.wire.v1beta.AgentBoot.Op.GitCheckout.CheckoutMethod
+	(SignificantMount_Kind)(0),                           // 10: namespace.private.devbox.wire.v1beta.SignificantMount.Kind
+	(GitStatus_File_Flag)(0),                             // 11: namespace.private.devbox.wire.v1beta.GitStatus.File.Flag
+	(*CreateTerminalSessionRequest)(nil),                 // 12: namespace.private.devbox.wire.v1beta.CreateTerminalSessionRequest
+	(*RunCommand)(nil),                                   // 13: namespace.private.devbox.wire.v1beta.RunCommand
+	(*StartExecRequest)(nil),                             // 14: namespace.private.devbox.wire.v1beta.StartExecRequest
+	(*StartExecResponse)(nil),                            // 15: namespace.private.devbox.wire.v1beta.StartExecResponse
+	(*StopExecRequest)(nil),                              // 16: namespace.private.devbox.wire.v1beta.StopExecRequest
+	(*ListLogsRequest)(nil),                              // 17: namespace.private.devbox.wire.v1beta.ListLogsRequest
+	(*ListLogsResponse)(nil),                             // 18: namespace.private.devbox.wire.v1beta.ListLogsResponse
+	(*ExecLogMetadata)(nil),                              // 19: namespace.private.devbox.wire.v1beta.ExecLogMetadata
+	(*ExecLogAction)(nil),                                // 20: namespace.private.devbox.wire.v1beta.ExecLogAction
+	(*StreamExecLogsRequest)(nil),                        // 21: namespace.private.devbox.wire.v1beta.StreamExecLogsRequest
+	(*ExecLogChunk)(nil),                                 // 22: namespace.private.devbox.wire.v1beta.ExecLogChunk
+	(*Cwd)(nil),                                          // 23: namespace.private.devbox.wire.v1beta.Cwd
+	(*EnvVar)(nil),                                       // 24: namespace.private.devbox.wire.v1beta.EnvVar
+	(*ValueOrSecret)(nil),                                // 25: namespace.private.devbox.wire.v1beta.ValueOrSecret
+	(*ServiceSpec)(nil),                                  // 26: namespace.private.devbox.wire.v1beta.ServiceSpec
+	(*Service)(nil),                                      // 27: namespace.private.devbox.wire.v1beta.Service
+	(*ServiceProcess)(nil),                               // 28: namespace.private.devbox.wire.v1beta.ServiceProcess
+	(*CreateServiceRequest)(nil),                         // 29: namespace.private.devbox.wire.v1beta.CreateServiceRequest
+	(*CreateServiceResponse)(nil),                        // 30: namespace.private.devbox.wire.v1beta.CreateServiceResponse
+	(*ListServicesRequest)(nil),                          // 31: namespace.private.devbox.wire.v1beta.ListServicesRequest
+	(*ListServicesResponse)(nil),                         // 32: namespace.private.devbox.wire.v1beta.ListServicesResponse
+	(*DeleteServiceRequest)(nil),                         // 33: namespace.private.devbox.wire.v1beta.DeleteServiceRequest
+	(*DeleteServiceResponse)(nil),                        // 34: namespace.private.devbox.wire.v1beta.DeleteServiceResponse
+	(*ResumeServiceRequest)(nil),                         // 35: namespace.private.devbox.wire.v1beta.ResumeServiceRequest
+	(*ResumeServiceResponse)(nil),                        // 36: namespace.private.devbox.wire.v1beta.ResumeServiceResponse
+	(*SuspendServiceRequest)(nil),                        // 37: namespace.private.devbox.wire.v1beta.SuspendServiceRequest
+	(*SuspendServiceResponse)(nil),                       // 38: namespace.private.devbox.wire.v1beta.SuspendServiceResponse
+	(*StartServiceRequest)(nil),                          // 39: namespace.private.devbox.wire.v1beta.StartServiceRequest
+	(*StartServiceResponse)(nil),                         // 40: namespace.private.devbox.wire.v1beta.StartServiceResponse
+	(*StopServiceRequest)(nil),                           // 41: namespace.private.devbox.wire.v1beta.StopServiceRequest
+	(*StopServiceResponse)(nil),                          // 42: namespace.private.devbox.wire.v1beta.StopServiceResponse
+	(*SignalServiceRequest)(nil),                         // 43: namespace.private.devbox.wire.v1beta.SignalServiceRequest
+	(*SignalServiceResponse)(nil),                        // 44: namespace.private.devbox.wire.v1beta.SignalServiceResponse
+	(*PortSpec)(nil),                                     // 45: namespace.private.devbox.wire.v1beta.PortSpec
+	(*Port)(nil),                                         // 46: namespace.private.devbox.wire.v1beta.Port
+	(*CreatePortRequest)(nil),                            // 47: namespace.private.devbox.wire.v1beta.CreatePortRequest
+	(*CreatePortResponse)(nil),                           // 48: namespace.private.devbox.wire.v1beta.CreatePortResponse
+	(*DeletePortRequest)(nil),                            // 49: namespace.private.devbox.wire.v1beta.DeletePortRequest
+	(*DeletePortResponse)(nil),                           // 50: namespace.private.devbox.wire.v1beta.DeletePortResponse
+	(*ListPortsRequest)(nil),                             // 51: namespace.private.devbox.wire.v1beta.ListPortsRequest
+	(*ListPortsResponse)(nil),                            // 52: namespace.private.devbox.wire.v1beta.ListPortsResponse
+	(*ListedPort)(nil),                                   // 53: namespace.private.devbox.wire.v1beta.ListedPort
+	(*AgentBoot)(nil),                                    // 54: namespace.private.devbox.wire.v1beta.AgentBoot
+	(*AgentStartup)(nil),                                 // 55: namespace.private.devbox.wire.v1beta.AgentStartup
+	(*AgentRuntimeConfiguration)(nil),                    // 56: namespace.private.devbox.wire.v1beta.AgentRuntimeConfiguration
+	(*SignificantMount)(nil),                             // 57: namespace.private.devbox.wire.v1beta.SignificantMount
+	(*BootOpResult)(nil),                                 // 58: namespace.private.devbox.wire.v1beta.BootOpResult
+	(*StartupState)(nil),                                 // 59: namespace.private.devbox.wire.v1beta.StartupState
+	(*QueryStateRequest)(nil),                            // 60: namespace.private.devbox.wire.v1beta.QueryStateRequest
+	(*ResourceMetricsSubscription)(nil),                  // 61: namespace.private.devbox.wire.v1beta.ResourceMetricsSubscription
+	(*QueryStateResponse)(nil),                           // 62: namespace.private.devbox.wire.v1beta.QueryStateResponse
+	(*GitStatus)(nil),                                    // 63: namespace.private.devbox.wire.v1beta.GitStatus
+	(*WebSocketSSHInitiation)(nil),                       // 64: namespace.private.devbox.wire.v1beta.WebSocketSSHInitiation
+	(*RunOutputChunk)(nil),                               // 65: namespace.private.devbox.wire.v1beta.RunOutputChunk
+	(*GitWorktree)(nil),                                  // 66: namespace.private.devbox.wire.v1beta.GitWorktree
+	(*ListGitWorktreesRequest)(nil),                      // 67: namespace.private.devbox.wire.v1beta.ListGitWorktreesRequest
+	(*ListGitWorktreesResponse)(nil),                     // 68: namespace.private.devbox.wire.v1beta.ListGitWorktreesResponse
+	(*CreateGitWorktreeRequest)(nil),                     // 69: namespace.private.devbox.wire.v1beta.CreateGitWorktreeRequest
+	(*CreateGitWorktreeResponse)(nil),                    // 70: namespace.private.devbox.wire.v1beta.CreateGitWorktreeResponse
+	(*RemoveGitWorktreeRequest)(nil),                     // 71: namespace.private.devbox.wire.v1beta.RemoveGitWorktreeRequest
+	(*ListTerminalSessionsResponse)(nil),                 // 72: namespace.private.devbox.wire.v1beta.ListTerminalSessionsResponse
+	(*TerminalSession)(nil),                              // 73: namespace.private.devbox.wire.v1beta.TerminalSession
+	(*AddTerminalSessionRequest)(nil),                    // 74: namespace.private.devbox.wire.v1beta.AddTerminalSessionRequest
+	(*DeleteTerminalSessionRequest)(nil),                 // 75: namespace.private.devbox.wire.v1beta.DeleteTerminalSessionRequest
+	(*ResourceMetrics)(nil),                              // 76: namespace.private.devbox.wire.v1beta.ResourceMetrics
+	(*ResetForLeaseRequest)(nil),                         // 77: namespace.private.devbox.wire.v1beta.ResetForLeaseRequest
+	(*ResetForLeaseEvent)(nil),                           // 78: namespace.private.devbox.wire.v1beta.ResetForLeaseEvent
+	(*ExecLogChunk_Result)(nil),                          // 79: namespace.private.devbox.wire.v1beta.ExecLogChunk.Result
+	(*ServiceProcess_Exit)(nil),                          // 80: namespace.private.devbox.wire.v1beta.ServiceProcess.Exit
+	(*ListServicesResponse_ListedService)(nil),           // 81: namespace.private.devbox.wire.v1beta.ListServicesResponse.ListedService
+	(*AgentBoot_Op)(nil),                                 // 82: namespace.private.devbox.wire.v1beta.AgentBoot.Op
+	(*AgentBoot_Op_SetupNamespaceGitCredentials)(nil),    // 83: namespace.private.devbox.wire.v1beta.AgentBoot.Op.SetupNamespaceGitCredentials
+	(*AgentBoot_Op_GitCheckout)(nil),                     // 84: namespace.private.devbox.wire.v1beta.AgentBoot.Op.GitCheckout
+	(*AgentBoot_Op_GitCheckoutRepositories)(nil),         // 85: namespace.private.devbox.wire.v1beta.AgentBoot.Op.GitCheckoutRepositories
+	(*AgentBoot_Op_GitCreateBranch)(nil),                 // 86: namespace.private.devbox.wire.v1beta.AgentBoot.Op.GitCreateBranch
+	(*AgentBoot_Op_GitSetUserAndEmail)(nil),              // 87: namespace.private.devbox.wire.v1beta.AgentBoot.Op.GitSetUserAndEmail
+	(*AgentBoot_Op_GitReset)(nil),                        // 88: namespace.private.devbox.wire.v1beta.AgentBoot.Op.GitReset
+	(*AgentBoot_Op_RunScript)(nil),                       // 89: namespace.private.devbox.wire.v1beta.AgentBoot.Op.RunScript
+	(*AgentBoot_Op_OnCreate)(nil),                        // 90: namespace.private.devbox.wire.v1beta.AgentBoot.Op.OnCreate
+	(*AgentBoot_Op_SetupDotfiles)(nil),                   // 91: namespace.private.devbox.wire.v1beta.AgentBoot.Op.SetupDotfiles
+	(*AgentBoot_Op_SetupDocker)(nil),                     // 92: namespace.private.devbox.wire.v1beta.AgentBoot.Op.SetupDocker
+	(*AgentBoot_Op_Concurrent)(nil),                      // 93: namespace.private.devbox.wire.v1beta.AgentBoot.Op.Concurrent
+	(*AgentBoot_Op_EnsureSessions)(nil),                  // 94: namespace.private.devbox.wire.v1beta.AgentBoot.Op.EnsureSessions
+	(*AgentBoot_Op_SetupIntegrations)(nil),               // 95: namespace.private.devbox.wire.v1beta.AgentBoot.Op.SetupIntegrations
+	(*AgentBoot_Op_SetupEgressProxyCA)(nil),              // 96: namespace.private.devbox.wire.v1beta.AgentBoot.Op.SetupEgressProxyCA
+	(*AgentBoot_Op_AcceptingSSHConnections)(nil),         // 97: namespace.private.devbox.wire.v1beta.AgentBoot.Op.AcceptingSSHConnections
+	(*AgentBoot_Op_StartServices)(nil),                   // 98: namespace.private.devbox.wire.v1beta.AgentBoot.Op.StartServices
+	(*AgentBoot_Op_SetupIntegrations_DevinOutposts)(nil), // 99: namespace.private.devbox.wire.v1beta.AgentBoot.Op.SetupIntegrations.DevinOutposts
+	(*AgentBoot_Op_SetupIntegrations_Cursor)(nil),        // 100: namespace.private.devbox.wire.v1beta.AgentBoot.Op.SetupIntegrations.Cursor
+	(*AgentBoot_Op_SetupIntegrations_ClaudeAgent)(nil),   // 101: namespace.private.devbox.wire.v1beta.AgentBoot.Op.SetupIntegrations.ClaudeAgent
+	(*AgentStartup_VSCode)(nil),                          // 102: namespace.private.devbox.wire.v1beta.AgentStartup.VSCode
+	(*AgentStartup_NamedPort)(nil),                       // 103: namespace.private.devbox.wire.v1beta.AgentStartup.NamedPort
+	(*AgentRuntimeConfiguration_TmuxConfiguration)(nil),  // 104: namespace.private.devbox.wire.v1beta.AgentRuntimeConfiguration.TmuxConfiguration
+	(*AgentRuntimeConfiguration_AutomaticPortForwardingConfiguration)(nil), // 105: namespace.private.devbox.wire.v1beta.AgentRuntimeConfiguration.AutomaticPortForwardingConfiguration
+	nil,                         // 106: namespace.private.devbox.wire.v1beta.AgentRuntimeConfiguration.TmuxConfiguration.ServerOptionsEntry
+	nil,                         // 107: namespace.private.devbox.wire.v1beta.AgentRuntimeConfiguration.TmuxConfiguration.GlobalOptionsEntry
+	(*BootOpResult_Node)(nil),   // 108: namespace.private.devbox.wire.v1beta.BootOpResult.Node
+	(*BootOpResult_Log)(nil),    // 109: namespace.private.devbox.wire.v1beta.BootOpResult.Log
+	(*BootOpResult_Result)(nil), // 110: namespace.private.devbox.wire.v1beta.BootOpResult.Result
+	(*QueryStateResponse_SignificantMountState)(nil),           // 111: namespace.private.devbox.wire.v1beta.QueryStateResponse.SignificantMountState
+	(*GitStatus_File)(nil),                                     // 112: namespace.private.devbox.wire.v1beta.GitStatus.File
+	(*GitStatus_Commit)(nil),                                   // 113: namespace.private.devbox.wire.v1beta.GitStatus.Commit
+	(*RunOutputChunk_Result)(nil),                              // 114: namespace.private.devbox.wire.v1beta.RunOutputChunk.Result
+	(*TerminalSession_RunCommand)(nil),                         // 115: namespace.private.devbox.wire.v1beta.TerminalSession.RunCommand
+	(*TerminalSession_RunScript)(nil),                          // 116: namespace.private.devbox.wire.v1beta.TerminalSession.RunScript
+	(*ResourceMetrics_CpuMetrics)(nil),                         // 117: namespace.private.devbox.wire.v1beta.ResourceMetrics.CpuMetrics
+	(*ResourceMetrics_MemoryMetrics)(nil),                      // 118: namespace.private.devbox.wire.v1beta.ResourceMetrics.MemoryMetrics
+	(*ResourceMetrics_CpuMetrics_PerCpuMetrics)(nil),           // 119: namespace.private.devbox.wire.v1beta.ResourceMetrics.CpuMetrics.PerCpuMetrics
+	(*ResetForLeaseRequest_VersionControl)(nil),                // 120: namespace.private.devbox.wire.v1beta.ResetForLeaseRequest.VersionControl
+	(*ResetForLeaseRequest_VersionControl_GitCheckout)(nil),    // 121: namespace.private.devbox.wire.v1beta.ResetForLeaseRequest.VersionControl.GitCheckout
+	(*ResetForLeaseRequest_VersionControl_GitCredentials)(nil), // 122: namespace.private.devbox.wire.v1beta.ResetForLeaseRequest.VersionControl.GitCredentials
+	(*ResetForLeaseEvent_Log)(nil),                             // 123: namespace.private.devbox.wire.v1beta.ResetForLeaseEvent.Log
+	(*ResetForLeaseEvent_Result)(nil),                          // 124: namespace.private.devbox.wire.v1beta.ResetForLeaseEvent.Result
+	(*timestamppb.Timestamp)(nil),                              // 125: google.protobuf.Timestamp
+	(*durationpb.Duration)(nil),                                // 126: google.protobuf.Duration
+	(*emptypb.Empty)(nil),                                      // 127: google.protobuf.Empty
 }
 var file_proto_namespace_private_devbox_wire_wire_proto_depIdxs = []int32{
-	17,  // 0: namespace.private.devbox.wire.v1beta.RunCommand.cwd:type_name -> namespace.private.devbox.wire.v1beta.Cwd
-	18,  // 1: namespace.private.devbox.wire.v1beta.RunCommand.additional_environment:type_name -> namespace.private.devbox.wire.v1beta.EnvVar
-	19,  // 2: namespace.private.devbox.wire.v1beta.RunCommand.stdin:type_name -> namespace.private.devbox.wire.v1beta.ValueOrSecret
-	7,   // 3: namespace.private.devbox.wire.v1beta.StartExecRequest.command:type_name -> namespace.private.devbox.wire.v1beta.RunCommand
+	23,  // 0: namespace.private.devbox.wire.v1beta.RunCommand.cwd:type_name -> namespace.private.devbox.wire.v1beta.Cwd
+	24,  // 1: namespace.private.devbox.wire.v1beta.RunCommand.additional_environment:type_name -> namespace.private.devbox.wire.v1beta.EnvVar
+	25,  // 2: namespace.private.devbox.wire.v1beta.RunCommand.stdin:type_name -> namespace.private.devbox.wire.v1beta.ValueOrSecret
+	13,  // 3: namespace.private.devbox.wire.v1beta.StartExecRequest.command:type_name -> namespace.private.devbox.wire.v1beta.RunCommand
 	0,   // 4: namespace.private.devbox.wire.v1beta.StopExecRequest.mode:type_name -> namespace.private.devbox.wire.v1beta.StopExecRequest.Mode
-	14,  // 5: namespace.private.devbox.wire.v1beta.ListLogsResponse.actions:type_name -> namespace.private.devbox.wire.v1beta.ExecLogAction
-	14,  // 6: namespace.private.devbox.wire.v1beta.ExecLogMetadata.actions:type_name -> namespace.private.devbox.wire.v1beta.ExecLogAction
-	7,   // 7: namespace.private.devbox.wire.v1beta.ExecLogAction.command:type_name -> namespace.private.devbox.wire.v1beta.RunCommand
-	55,  // 8: namespace.private.devbox.wire.v1beta.ExecLogAction.boot_op:type_name -> namespace.private.devbox.wire.v1beta.AgentBoot.Op
-	98,  // 9: namespace.private.devbox.wire.v1beta.ExecLogAction.started_at:type_name -> google.protobuf.Timestamp
-	98,  // 10: namespace.private.devbox.wire.v1beta.ExecLogAction.completed_at:type_name -> google.protobuf.Timestamp
-	54,  // 11: namespace.private.devbox.wire.v1beta.ExecLogChunk.result:type_name -> namespace.private.devbox.wire.v1beta.ExecLogChunk.Result
-	1,   // 12: namespace.private.devbox.wire.v1beta.PortSpec.kind:type_name -> namespace.private.devbox.wire.v1beta.PortSpec.Kind
-	20,  // 13: namespace.private.devbox.wire.v1beta.Port.spec:type_name -> namespace.private.devbox.wire.v1beta.PortSpec
-	2,   // 14: namespace.private.devbox.wire.v1beta.Port.owner:type_name -> namespace.private.devbox.wire.v1beta.Port.Owner
-	20,  // 15: namespace.private.devbox.wire.v1beta.CreatePortRequest.spec:type_name -> namespace.private.devbox.wire.v1beta.PortSpec
-	21,  // 16: namespace.private.devbox.wire.v1beta.CreatePortResponse.port:type_name -> namespace.private.devbox.wire.v1beta.Port
-	1,   // 17: namespace.private.devbox.wire.v1beta.ListPortsRequest.kinds:type_name -> namespace.private.devbox.wire.v1beta.PortSpec.Kind
-	28,  // 18: namespace.private.devbox.wire.v1beta.ListPortsResponse.ports:type_name -> namespace.private.devbox.wire.v1beta.ListedPort
-	21,  // 19: namespace.private.devbox.wire.v1beta.ListedPort.port:type_name -> namespace.private.devbox.wire.v1beta.Port
-	55,  // 20: namespace.private.devbox.wire.v1beta.AgentBoot.ops:type_name -> namespace.private.devbox.wire.v1beta.AgentBoot.Op
-	29,  // 21: namespace.private.devbox.wire.v1beta.AgentStartup.boot:type_name -> namespace.private.devbox.wire.v1beta.AgentBoot
-	32,  // 22: namespace.private.devbox.wire.v1beta.AgentStartup.significant_mounts:type_name -> namespace.private.devbox.wire.v1beta.SignificantMount
-	75,  // 23: namespace.private.devbox.wire.v1beta.AgentStartup.named_ports:type_name -> namespace.private.devbox.wire.v1beta.AgentStartup.NamedPort
-	74,  // 24: namespace.private.devbox.wire.v1beta.AgentStartup.vscode:type_name -> namespace.private.devbox.wire.v1beta.AgentStartup.VSCode
-	31,  // 25: namespace.private.devbox.wire.v1beta.AgentStartup.initial_configuration:type_name -> namespace.private.devbox.wire.v1beta.AgentRuntimeConfiguration
-	76,  // 26: namespace.private.devbox.wire.v1beta.AgentStartup.claude_agent:type_name -> namespace.private.devbox.wire.v1beta.AgentStartup.ClaudeAgent
-	20,  // 27: namespace.private.devbox.wire.v1beta.AgentStartup.ports:type_name -> namespace.private.devbox.wire.v1beta.PortSpec
-	99,  // 28: namespace.private.devbox.wire.v1beta.AgentRuntimeConfiguration.busy_ensure_minimum_duration:type_name -> google.protobuf.Duration
-	77,  // 29: namespace.private.devbox.wire.v1beta.AgentRuntimeConfiguration.tmux:type_name -> namespace.private.devbox.wire.v1beta.AgentRuntimeConfiguration.TmuxConfiguration
-	78,  // 30: namespace.private.devbox.wire.v1beta.AgentRuntimeConfiguration.automatic_port_forwarding:type_name -> namespace.private.devbox.wire.v1beta.AgentRuntimeConfiguration.AutomaticPortForwardingConfiguration
-	4,   // 31: namespace.private.devbox.wire.v1beta.SignificantMount.kind:type_name -> namespace.private.devbox.wire.v1beta.SignificantMount.Kind
-	81,  // 32: namespace.private.devbox.wire.v1beta.BootOpResult.node:type_name -> namespace.private.devbox.wire.v1beta.BootOpResult.Node
-	82,  // 33: namespace.private.devbox.wire.v1beta.BootOpResult.log:type_name -> namespace.private.devbox.wire.v1beta.BootOpResult.Log
-	83,  // 34: namespace.private.devbox.wire.v1beta.BootOpResult.result:type_name -> namespace.private.devbox.wire.v1beta.BootOpResult.Result
-	33,  // 35: namespace.private.devbox.wire.v1beta.StartupState.boot_op_results:type_name -> namespace.private.devbox.wire.v1beta.BootOpResult
-	36,  // 36: namespace.private.devbox.wire.v1beta.QueryStateRequest.resource_metrics:type_name -> namespace.private.devbox.wire.v1beta.ResourceMetricsSubscription
-	84,  // 37: namespace.private.devbox.wire.v1beta.QueryStateResponse.mount_states:type_name -> namespace.private.devbox.wire.v1beta.QueryStateResponse.SignificantMountState
-	38,  // 38: namespace.private.devbox.wire.v1beta.QueryStateResponse.git_status:type_name -> namespace.private.devbox.wire.v1beta.GitStatus
-	41,  // 39: namespace.private.devbox.wire.v1beta.QueryStateResponse.worktrees:type_name -> namespace.private.devbox.wire.v1beta.GitWorktree
-	51,  // 40: namespace.private.devbox.wire.v1beta.QueryStateResponse.resource_metrics:type_name -> namespace.private.devbox.wire.v1beta.ResourceMetrics
-	85,  // 41: namespace.private.devbox.wire.v1beta.GitStatus.tracked_files:type_name -> namespace.private.devbox.wire.v1beta.GitStatus.File
-	85,  // 42: namespace.private.devbox.wire.v1beta.GitStatus.untracked_files:type_name -> namespace.private.devbox.wire.v1beta.GitStatus.File
-	86,  // 43: namespace.private.devbox.wire.v1beta.GitStatus.local_commits:type_name -> namespace.private.devbox.wire.v1beta.GitStatus.Commit
-	87,  // 44: namespace.private.devbox.wire.v1beta.RunOutputChunk.result:type_name -> namespace.private.devbox.wire.v1beta.RunOutputChunk.Result
-	41,  // 45: namespace.private.devbox.wire.v1beta.ListGitWorktreesResponse.worktrees:type_name -> namespace.private.devbox.wire.v1beta.GitWorktree
-	48,  // 46: namespace.private.devbox.wire.v1beta.ListTerminalSessionsResponse.sessions:type_name -> namespace.private.devbox.wire.v1beta.TerminalSession
-	98,  // 47: namespace.private.devbox.wire.v1beta.TerminalSession.created_at:type_name -> google.protobuf.Timestamp
-	88,  // 48: namespace.private.devbox.wire.v1beta.TerminalSession.run_command:type_name -> namespace.private.devbox.wire.v1beta.TerminalSession.RunCommand
-	89,  // 49: namespace.private.devbox.wire.v1beta.TerminalSession.run_script:type_name -> namespace.private.devbox.wire.v1beta.TerminalSession.RunScript
-	88,  // 50: namespace.private.devbox.wire.v1beta.AddTerminalSessionRequest.run_command:type_name -> namespace.private.devbox.wire.v1beta.TerminalSession.RunCommand
-	89,  // 51: namespace.private.devbox.wire.v1beta.AddTerminalSessionRequest.run_script:type_name -> namespace.private.devbox.wire.v1beta.TerminalSession.RunScript
-	90,  // 52: namespace.private.devbox.wire.v1beta.ResourceMetrics.cpu:type_name -> namespace.private.devbox.wire.v1beta.ResourceMetrics.CpuMetrics
-	91,  // 53: namespace.private.devbox.wire.v1beta.ResourceMetrics.memory:type_name -> namespace.private.devbox.wire.v1beta.ResourceMetrics.MemoryMetrics
-	98,  // 54: namespace.private.devbox.wire.v1beta.ResourceMetrics.timestamp:type_name -> google.protobuf.Timestamp
-	93,  // 55: namespace.private.devbox.wire.v1beta.ResetForLeaseRequest.version_control:type_name -> namespace.private.devbox.wire.v1beta.ResetForLeaseRequest.VersionControl
-	96,  // 56: namespace.private.devbox.wire.v1beta.ResetForLeaseEvent.log:type_name -> namespace.private.devbox.wire.v1beta.ResetForLeaseEvent.Log
-	97,  // 57: namespace.private.devbox.wire.v1beta.ResetForLeaseEvent.result:type_name -> namespace.private.devbox.wire.v1beta.ResetForLeaseEvent.Result
-	99,  // 58: namespace.private.devbox.wire.v1beta.ExecLogChunk.Result.duration:type_name -> google.protobuf.Duration
-	56,  // 59: namespace.private.devbox.wire.v1beta.AgentBoot.Op.setup_namespace_git_credentials:type_name -> namespace.private.devbox.wire.v1beta.AgentBoot.Op.SetupNamespaceGitCredentials
-	57,  // 60: namespace.private.devbox.wire.v1beta.AgentBoot.Op.git_checkout:type_name -> namespace.private.devbox.wire.v1beta.AgentBoot.Op.GitCheckout
-	59,  // 61: namespace.private.devbox.wire.v1beta.AgentBoot.Op.git_create_branch:type_name -> namespace.private.devbox.wire.v1beta.AgentBoot.Op.GitCreateBranch
-	60,  // 62: namespace.private.devbox.wire.v1beta.AgentBoot.Op.git_set_user_and_email:type_name -> namespace.private.devbox.wire.v1beta.AgentBoot.Op.GitSetUserAndEmail
-	7,   // 63: namespace.private.devbox.wire.v1beta.AgentBoot.Op.run_command:type_name -> namespace.private.devbox.wire.v1beta.RunCommand
-	62,  // 64: namespace.private.devbox.wire.v1beta.AgentBoot.Op.run_script:type_name -> namespace.private.devbox.wire.v1beta.AgentBoot.Op.RunScript
-	63,  // 65: namespace.private.devbox.wire.v1beta.AgentBoot.Op.on_create:type_name -> namespace.private.devbox.wire.v1beta.AgentBoot.Op.OnCreate
-	64,  // 66: namespace.private.devbox.wire.v1beta.AgentBoot.Op.setup_dotfiles:type_name -> namespace.private.devbox.wire.v1beta.AgentBoot.Op.SetupDotfiles
-	65,  // 67: namespace.private.devbox.wire.v1beta.AgentBoot.Op.setup_docker:type_name -> namespace.private.devbox.wire.v1beta.AgentBoot.Op.SetupDocker
-	66,  // 68: namespace.private.devbox.wire.v1beta.AgentBoot.Op.concurrent:type_name -> namespace.private.devbox.wire.v1beta.AgentBoot.Op.Concurrent
-	67,  // 69: namespace.private.devbox.wire.v1beta.AgentBoot.Op.ensure_sessions:type_name -> namespace.private.devbox.wire.v1beta.AgentBoot.Op.EnsureSessions
-	61,  // 70: namespace.private.devbox.wire.v1beta.AgentBoot.Op.git_reset:type_name -> namespace.private.devbox.wire.v1beta.AgentBoot.Op.GitReset
-	68,  // 71: namespace.private.devbox.wire.v1beta.AgentBoot.Op.setup_integrations:type_name -> namespace.private.devbox.wire.v1beta.AgentBoot.Op.SetupIntegrations
-	69,  // 72: namespace.private.devbox.wire.v1beta.AgentBoot.Op.setup_egress_proxy_ca:type_name -> namespace.private.devbox.wire.v1beta.AgentBoot.Op.SetupEgressProxyCA
-	70,  // 73: namespace.private.devbox.wire.v1beta.AgentBoot.Op.accepting_ssh_connections:type_name -> namespace.private.devbox.wire.v1beta.AgentBoot.Op.AcceptingSSHConnections
-	58,  // 74: namespace.private.devbox.wire.v1beta.AgentBoot.Op.git_checkout_repositories:type_name -> namespace.private.devbox.wire.v1beta.AgentBoot.Op.GitCheckoutRepositories
-	3,   // 75: namespace.private.devbox.wire.v1beta.AgentBoot.Op.GitCheckout.checkout_method:type_name -> namespace.private.devbox.wire.v1beta.AgentBoot.Op.GitCheckout.CheckoutMethod
-	57,  // 76: namespace.private.devbox.wire.v1beta.AgentBoot.Op.GitCheckoutRepositories.repositories:type_name -> namespace.private.devbox.wire.v1beta.AgentBoot.Op.GitCheckout
-	18,  // 77: namespace.private.devbox.wire.v1beta.AgentBoot.Op.RunScript.additional_environment:type_name -> namespace.private.devbox.wire.v1beta.EnvVar
-	55,  // 78: namespace.private.devbox.wire.v1beta.AgentBoot.Op.OnCreate.ops:type_name -> namespace.private.devbox.wire.v1beta.AgentBoot.Op
-	55,  // 79: namespace.private.devbox.wire.v1beta.AgentBoot.Op.Concurrent.ops:type_name -> namespace.private.devbox.wire.v1beta.AgentBoot.Op
-	49,  // 80: namespace.private.devbox.wire.v1beta.AgentBoot.Op.EnsureSessions.sessions:type_name -> namespace.private.devbox.wire.v1beta.AddTerminalSessionRequest
-	71,  // 81: namespace.private.devbox.wire.v1beta.AgentBoot.Op.SetupIntegrations.devin_outposts:type_name -> namespace.private.devbox.wire.v1beta.AgentBoot.Op.SetupIntegrations.DevinOutposts
-	72,  // 82: namespace.private.devbox.wire.v1beta.AgentBoot.Op.SetupIntegrations.cursor:type_name -> namespace.private.devbox.wire.v1beta.AgentBoot.Op.SetupIntegrations.Cursor
-	73,  // 83: namespace.private.devbox.wire.v1beta.AgentBoot.Op.SetupIntegrations.claude_agent:type_name -> namespace.private.devbox.wire.v1beta.AgentBoot.Op.SetupIntegrations.ClaudeAgent
-	79,  // 84: namespace.private.devbox.wire.v1beta.AgentRuntimeConfiguration.TmuxConfiguration.server_options:type_name -> namespace.private.devbox.wire.v1beta.AgentRuntimeConfiguration.TmuxConfiguration.ServerOptionsEntry
-	80,  // 85: namespace.private.devbox.wire.v1beta.AgentRuntimeConfiguration.TmuxConfiguration.global_options:type_name -> namespace.private.devbox.wire.v1beta.AgentRuntimeConfiguration.TmuxConfiguration.GlobalOptionsEntry
-	55,  // 86: namespace.private.devbox.wire.v1beta.BootOpResult.Node.op:type_name -> namespace.private.devbox.wire.v1beta.AgentBoot.Op
-	99,  // 87: namespace.private.devbox.wire.v1beta.BootOpResult.Result.duration:type_name -> google.protobuf.Duration
-	32,  // 88: namespace.private.devbox.wire.v1beta.QueryStateResponse.SignificantMountState.mount:type_name -> namespace.private.devbox.wire.v1beta.SignificantMount
-	5,   // 89: namespace.private.devbox.wire.v1beta.GitStatus.File.flags:type_name -> namespace.private.devbox.wire.v1beta.GitStatus.File.Flag
-	98,  // 90: namespace.private.devbox.wire.v1beta.GitStatus.Commit.author_date:type_name -> google.protobuf.Timestamp
-	98,  // 91: namespace.private.devbox.wire.v1beta.GitStatus.Commit.commit_date:type_name -> google.protobuf.Timestamp
-	99,  // 92: namespace.private.devbox.wire.v1beta.RunOutputChunk.Result.duration:type_name -> google.protobuf.Duration
-	92,  // 93: namespace.private.devbox.wire.v1beta.ResourceMetrics.CpuMetrics.per_cpu:type_name -> namespace.private.devbox.wire.v1beta.ResourceMetrics.CpuMetrics.PerCpuMetrics
-	94,  // 94: namespace.private.devbox.wire.v1beta.ResetForLeaseRequest.VersionControl.git_checkout:type_name -> namespace.private.devbox.wire.v1beta.ResetForLeaseRequest.VersionControl.GitCheckout
-	95,  // 95: namespace.private.devbox.wire.v1beta.ResetForLeaseRequest.VersionControl.git_credentials:type_name -> namespace.private.devbox.wire.v1beta.ResetForLeaseRequest.VersionControl.GitCredentials
-	99,  // 96: namespace.private.devbox.wire.v1beta.ResetForLeaseEvent.Result.duration:type_name -> google.protobuf.Duration
-	100, // 97: namespace.private.devbox.wire.v1beta.AgentService.Ping:input_type -> google.protobuf.Empty
-	100, // 98: namespace.private.devbox.wire.v1beta.AgentService.Shutdown:input_type -> google.protobuf.Empty
-	52,  // 99: namespace.private.devbox.wire.v1beta.AgentService.ResetForLease:input_type -> namespace.private.devbox.wire.v1beta.ResetForLeaseRequest
-	100, // 100: namespace.private.devbox.wire.v1beta.AgentService.WatchBoot:input_type -> google.protobuf.Empty
-	35,  // 101: namespace.private.devbox.wire.v1beta.AgentService.QueryState:input_type -> namespace.private.devbox.wire.v1beta.QueryStateRequest
-	35,  // 102: namespace.private.devbox.wire.v1beta.AgentService.StreamQueryState:input_type -> namespace.private.devbox.wire.v1beta.QueryStateRequest
-	7,   // 103: namespace.private.devbox.wire.v1beta.AgentService.Run:input_type -> namespace.private.devbox.wire.v1beta.RunCommand
-	8,   // 104: namespace.private.devbox.wire.v1beta.AgentService.RunExec:input_type -> namespace.private.devbox.wire.v1beta.StartExecRequest
-	8,   // 105: namespace.private.devbox.wire.v1beta.AgentService.StartExec:input_type -> namespace.private.devbox.wire.v1beta.StartExecRequest
-	10,  // 106: namespace.private.devbox.wire.v1beta.AgentService.StopExec:input_type -> namespace.private.devbox.wire.v1beta.StopExecRequest
-	11,  // 107: namespace.private.devbox.wire.v1beta.AgentService.ListLogs:input_type -> namespace.private.devbox.wire.v1beta.ListLogsRequest
-	15,  // 108: namespace.private.devbox.wire.v1beta.AgentService.StreamExecLogs:input_type -> namespace.private.devbox.wire.v1beta.StreamExecLogsRequest
-	44,  // 109: namespace.private.devbox.wire.v1beta.AgentService.CreateGitWorktree:input_type -> namespace.private.devbox.wire.v1beta.CreateGitWorktreeRequest
-	42,  // 110: namespace.private.devbox.wire.v1beta.AgentService.ListGitWorktrees:input_type -> namespace.private.devbox.wire.v1beta.ListGitWorktreesRequest
-	46,  // 111: namespace.private.devbox.wire.v1beta.AgentService.RemoveGitWorktree:input_type -> namespace.private.devbox.wire.v1beta.RemoveGitWorktreeRequest
-	49,  // 112: namespace.private.devbox.wire.v1beta.AgentService.AddTerminalSession:input_type -> namespace.private.devbox.wire.v1beta.AddTerminalSessionRequest
-	6,   // 113: namespace.private.devbox.wire.v1beta.AgentService.CreateTerminalSession:input_type -> namespace.private.devbox.wire.v1beta.CreateTerminalSessionRequest
-	50,  // 114: namespace.private.devbox.wire.v1beta.AgentService.DeleteTerminalSession:input_type -> namespace.private.devbox.wire.v1beta.DeleteTerminalSessionRequest
-	100, // 115: namespace.private.devbox.wire.v1beta.AgentService.ListTerminalSessions:input_type -> google.protobuf.Empty
-	22,  // 116: namespace.private.devbox.wire.v1beta.AgentService.CreatePort:input_type -> namespace.private.devbox.wire.v1beta.CreatePortRequest
-	24,  // 117: namespace.private.devbox.wire.v1beta.AgentService.DeletePort:input_type -> namespace.private.devbox.wire.v1beta.DeletePortRequest
-	26,  // 118: namespace.private.devbox.wire.v1beta.AgentService.ListPorts:input_type -> namespace.private.devbox.wire.v1beta.ListPortsRequest
-	31,  // 119: namespace.private.devbox.wire.v1beta.AgentService.UpdateRuntimeConfiguration:input_type -> namespace.private.devbox.wire.v1beta.AgentRuntimeConfiguration
-	100, // 120: namespace.private.devbox.wire.v1beta.AgentService.Ping:output_type -> google.protobuf.Empty
-	100, // 121: namespace.private.devbox.wire.v1beta.AgentService.Shutdown:output_type -> google.protobuf.Empty
-	53,  // 122: namespace.private.devbox.wire.v1beta.AgentService.ResetForLease:output_type -> namespace.private.devbox.wire.v1beta.ResetForLeaseEvent
-	33,  // 123: namespace.private.devbox.wire.v1beta.AgentService.WatchBoot:output_type -> namespace.private.devbox.wire.v1beta.BootOpResult
-	37,  // 124: namespace.private.devbox.wire.v1beta.AgentService.QueryState:output_type -> namespace.private.devbox.wire.v1beta.QueryStateResponse
-	37,  // 125: namespace.private.devbox.wire.v1beta.AgentService.StreamQueryState:output_type -> namespace.private.devbox.wire.v1beta.QueryStateResponse
-	40,  // 126: namespace.private.devbox.wire.v1beta.AgentService.Run:output_type -> namespace.private.devbox.wire.v1beta.RunOutputChunk
-	16,  // 127: namespace.private.devbox.wire.v1beta.AgentService.RunExec:output_type -> namespace.private.devbox.wire.v1beta.ExecLogChunk
-	9,   // 128: namespace.private.devbox.wire.v1beta.AgentService.StartExec:output_type -> namespace.private.devbox.wire.v1beta.StartExecResponse
-	100, // 129: namespace.private.devbox.wire.v1beta.AgentService.StopExec:output_type -> google.protobuf.Empty
-	12,  // 130: namespace.private.devbox.wire.v1beta.AgentService.ListLogs:output_type -> namespace.private.devbox.wire.v1beta.ListLogsResponse
-	16,  // 131: namespace.private.devbox.wire.v1beta.AgentService.StreamExecLogs:output_type -> namespace.private.devbox.wire.v1beta.ExecLogChunk
-	45,  // 132: namespace.private.devbox.wire.v1beta.AgentService.CreateGitWorktree:output_type -> namespace.private.devbox.wire.v1beta.CreateGitWorktreeResponse
-	43,  // 133: namespace.private.devbox.wire.v1beta.AgentService.ListGitWorktrees:output_type -> namespace.private.devbox.wire.v1beta.ListGitWorktreesResponse
-	100, // 134: namespace.private.devbox.wire.v1beta.AgentService.RemoveGitWorktree:output_type -> google.protobuf.Empty
-	48,  // 135: namespace.private.devbox.wire.v1beta.AgentService.AddTerminalSession:output_type -> namespace.private.devbox.wire.v1beta.TerminalSession
-	48,  // 136: namespace.private.devbox.wire.v1beta.AgentService.CreateTerminalSession:output_type -> namespace.private.devbox.wire.v1beta.TerminalSession
-	100, // 137: namespace.private.devbox.wire.v1beta.AgentService.DeleteTerminalSession:output_type -> google.protobuf.Empty
-	47,  // 138: namespace.private.devbox.wire.v1beta.AgentService.ListTerminalSessions:output_type -> namespace.private.devbox.wire.v1beta.ListTerminalSessionsResponse
-	23,  // 139: namespace.private.devbox.wire.v1beta.AgentService.CreatePort:output_type -> namespace.private.devbox.wire.v1beta.CreatePortResponse
-	25,  // 140: namespace.private.devbox.wire.v1beta.AgentService.DeletePort:output_type -> namespace.private.devbox.wire.v1beta.DeletePortResponse
-	27,  // 141: namespace.private.devbox.wire.v1beta.AgentService.ListPorts:output_type -> namespace.private.devbox.wire.v1beta.ListPortsResponse
-	31,  // 142: namespace.private.devbox.wire.v1beta.AgentService.UpdateRuntimeConfiguration:output_type -> namespace.private.devbox.wire.v1beta.AgentRuntimeConfiguration
-	120, // [120:143] is the sub-list for method output_type
-	97,  // [97:120] is the sub-list for method input_type
-	97,  // [97:97] is the sub-list for extension type_name
-	97,  // [97:97] is the sub-list for extension extendee
-	0,   // [0:97] is the sub-list for field type_name
+	20,  // 5: namespace.private.devbox.wire.v1beta.ListLogsResponse.actions:type_name -> namespace.private.devbox.wire.v1beta.ExecLogAction
+	20,  // 6: namespace.private.devbox.wire.v1beta.ExecLogMetadata.actions:type_name -> namespace.private.devbox.wire.v1beta.ExecLogAction
+	13,  // 7: namespace.private.devbox.wire.v1beta.ExecLogAction.command:type_name -> namespace.private.devbox.wire.v1beta.RunCommand
+	82,  // 8: namespace.private.devbox.wire.v1beta.ExecLogAction.boot_op:type_name -> namespace.private.devbox.wire.v1beta.AgentBoot.Op
+	125, // 9: namespace.private.devbox.wire.v1beta.ExecLogAction.started_at:type_name -> google.protobuf.Timestamp
+	125, // 10: namespace.private.devbox.wire.v1beta.ExecLogAction.completed_at:type_name -> google.protobuf.Timestamp
+	79,  // 11: namespace.private.devbox.wire.v1beta.ExecLogChunk.result:type_name -> namespace.private.devbox.wire.v1beta.ExecLogChunk.Result
+	13,  // 12: namespace.private.devbox.wire.v1beta.ServiceSpec.command:type_name -> namespace.private.devbox.wire.v1beta.RunCommand
+	1,   // 13: namespace.private.devbox.wire.v1beta.ServiceSpec.start_policy:type_name -> namespace.private.devbox.wire.v1beta.ServiceSpec.StartPolicy
+	2,   // 14: namespace.private.devbox.wire.v1beta.ServiceSpec.restart_policy:type_name -> namespace.private.devbox.wire.v1beta.ServiceSpec.RestartPolicy
+	26,  // 15: namespace.private.devbox.wire.v1beta.Service.spec:type_name -> namespace.private.devbox.wire.v1beta.ServiceSpec
+	46,  // 16: namespace.private.devbox.wire.v1beta.Service.ports:type_name -> namespace.private.devbox.wire.v1beta.Port
+	3,   // 17: namespace.private.devbox.wire.v1beta.Service.owner:type_name -> namespace.private.devbox.wire.v1beta.Service.Owner
+	4,   // 18: namespace.private.devbox.wire.v1beta.ServiceProcess.status:type_name -> namespace.private.devbox.wire.v1beta.ServiceProcess.Status
+	125, // 19: namespace.private.devbox.wire.v1beta.ServiceProcess.started_at:type_name -> google.protobuf.Timestamp
+	80,  // 20: namespace.private.devbox.wire.v1beta.ServiceProcess.last_exit:type_name -> namespace.private.devbox.wire.v1beta.ServiceProcess.Exit
+	26,  // 21: namespace.private.devbox.wire.v1beta.CreateServiceRequest.spec:type_name -> namespace.private.devbox.wire.v1beta.ServiceSpec
+	45,  // 22: namespace.private.devbox.wire.v1beta.CreateServiceRequest.ports:type_name -> namespace.private.devbox.wire.v1beta.PortSpec
+	5,   // 23: namespace.private.devbox.wire.v1beta.CreateServiceRequest.initial_state:type_name -> namespace.private.devbox.wire.v1beta.CreateServiceRequest.InitialState
+	27,  // 24: namespace.private.devbox.wire.v1beta.CreateServiceResponse.service:type_name -> namespace.private.devbox.wire.v1beta.Service
+	28,  // 25: namespace.private.devbox.wire.v1beta.CreateServiceResponse.process:type_name -> namespace.private.devbox.wire.v1beta.ServiceProcess
+	81,  // 26: namespace.private.devbox.wire.v1beta.ListServicesResponse.services:type_name -> namespace.private.devbox.wire.v1beta.ListServicesResponse.ListedService
+	28,  // 27: namespace.private.devbox.wire.v1beta.ResumeServiceResponse.process:type_name -> namespace.private.devbox.wire.v1beta.ServiceProcess
+	28,  // 28: namespace.private.devbox.wire.v1beta.SuspendServiceResponse.process:type_name -> namespace.private.devbox.wire.v1beta.ServiceProcess
+	28,  // 29: namespace.private.devbox.wire.v1beta.StartServiceResponse.process:type_name -> namespace.private.devbox.wire.v1beta.ServiceProcess
+	6,   // 30: namespace.private.devbox.wire.v1beta.StopServiceRequest.mode:type_name -> namespace.private.devbox.wire.v1beta.StopServiceRequest.Mode
+	28,  // 31: namespace.private.devbox.wire.v1beta.StopServiceResponse.process:type_name -> namespace.private.devbox.wire.v1beta.ServiceProcess
+	7,   // 32: namespace.private.devbox.wire.v1beta.PortSpec.kind:type_name -> namespace.private.devbox.wire.v1beta.PortSpec.Kind
+	45,  // 33: namespace.private.devbox.wire.v1beta.Port.spec:type_name -> namespace.private.devbox.wire.v1beta.PortSpec
+	8,   // 34: namespace.private.devbox.wire.v1beta.Port.owner:type_name -> namespace.private.devbox.wire.v1beta.Port.Owner
+	45,  // 35: namespace.private.devbox.wire.v1beta.CreatePortRequest.spec:type_name -> namespace.private.devbox.wire.v1beta.PortSpec
+	46,  // 36: namespace.private.devbox.wire.v1beta.CreatePortResponse.port:type_name -> namespace.private.devbox.wire.v1beta.Port
+	7,   // 37: namespace.private.devbox.wire.v1beta.ListPortsRequest.kinds:type_name -> namespace.private.devbox.wire.v1beta.PortSpec.Kind
+	53,  // 38: namespace.private.devbox.wire.v1beta.ListPortsResponse.ports:type_name -> namespace.private.devbox.wire.v1beta.ListedPort
+	46,  // 39: namespace.private.devbox.wire.v1beta.ListedPort.port:type_name -> namespace.private.devbox.wire.v1beta.Port
+	82,  // 40: namespace.private.devbox.wire.v1beta.AgentBoot.ops:type_name -> namespace.private.devbox.wire.v1beta.AgentBoot.Op
+	54,  // 41: namespace.private.devbox.wire.v1beta.AgentStartup.boot:type_name -> namespace.private.devbox.wire.v1beta.AgentBoot
+	57,  // 42: namespace.private.devbox.wire.v1beta.AgentStartup.significant_mounts:type_name -> namespace.private.devbox.wire.v1beta.SignificantMount
+	103, // 43: namespace.private.devbox.wire.v1beta.AgentStartup.named_ports:type_name -> namespace.private.devbox.wire.v1beta.AgentStartup.NamedPort
+	102, // 44: namespace.private.devbox.wire.v1beta.AgentStartup.vscode:type_name -> namespace.private.devbox.wire.v1beta.AgentStartup.VSCode
+	56,  // 45: namespace.private.devbox.wire.v1beta.AgentStartup.initial_configuration:type_name -> namespace.private.devbox.wire.v1beta.AgentRuntimeConfiguration
+	45,  // 46: namespace.private.devbox.wire.v1beta.AgentStartup.ports:type_name -> namespace.private.devbox.wire.v1beta.PortSpec
+	126, // 47: namespace.private.devbox.wire.v1beta.AgentRuntimeConfiguration.busy_ensure_minimum_duration:type_name -> google.protobuf.Duration
+	104, // 48: namespace.private.devbox.wire.v1beta.AgentRuntimeConfiguration.tmux:type_name -> namespace.private.devbox.wire.v1beta.AgentRuntimeConfiguration.TmuxConfiguration
+	105, // 49: namespace.private.devbox.wire.v1beta.AgentRuntimeConfiguration.automatic_port_forwarding:type_name -> namespace.private.devbox.wire.v1beta.AgentRuntimeConfiguration.AutomaticPortForwardingConfiguration
+	10,  // 50: namespace.private.devbox.wire.v1beta.SignificantMount.kind:type_name -> namespace.private.devbox.wire.v1beta.SignificantMount.Kind
+	108, // 51: namespace.private.devbox.wire.v1beta.BootOpResult.node:type_name -> namespace.private.devbox.wire.v1beta.BootOpResult.Node
+	109, // 52: namespace.private.devbox.wire.v1beta.BootOpResult.log:type_name -> namespace.private.devbox.wire.v1beta.BootOpResult.Log
+	110, // 53: namespace.private.devbox.wire.v1beta.BootOpResult.result:type_name -> namespace.private.devbox.wire.v1beta.BootOpResult.Result
+	58,  // 54: namespace.private.devbox.wire.v1beta.StartupState.boot_op_results:type_name -> namespace.private.devbox.wire.v1beta.BootOpResult
+	61,  // 55: namespace.private.devbox.wire.v1beta.QueryStateRequest.resource_metrics:type_name -> namespace.private.devbox.wire.v1beta.ResourceMetricsSubscription
+	111, // 56: namespace.private.devbox.wire.v1beta.QueryStateResponse.mount_states:type_name -> namespace.private.devbox.wire.v1beta.QueryStateResponse.SignificantMountState
+	63,  // 57: namespace.private.devbox.wire.v1beta.QueryStateResponse.git_status:type_name -> namespace.private.devbox.wire.v1beta.GitStatus
+	66,  // 58: namespace.private.devbox.wire.v1beta.QueryStateResponse.worktrees:type_name -> namespace.private.devbox.wire.v1beta.GitWorktree
+	76,  // 59: namespace.private.devbox.wire.v1beta.QueryStateResponse.resource_metrics:type_name -> namespace.private.devbox.wire.v1beta.ResourceMetrics
+	112, // 60: namespace.private.devbox.wire.v1beta.GitStatus.tracked_files:type_name -> namespace.private.devbox.wire.v1beta.GitStatus.File
+	112, // 61: namespace.private.devbox.wire.v1beta.GitStatus.untracked_files:type_name -> namespace.private.devbox.wire.v1beta.GitStatus.File
+	113, // 62: namespace.private.devbox.wire.v1beta.GitStatus.local_commits:type_name -> namespace.private.devbox.wire.v1beta.GitStatus.Commit
+	114, // 63: namespace.private.devbox.wire.v1beta.RunOutputChunk.result:type_name -> namespace.private.devbox.wire.v1beta.RunOutputChunk.Result
+	66,  // 64: namespace.private.devbox.wire.v1beta.ListGitWorktreesResponse.worktrees:type_name -> namespace.private.devbox.wire.v1beta.GitWorktree
+	73,  // 65: namespace.private.devbox.wire.v1beta.ListTerminalSessionsResponse.sessions:type_name -> namespace.private.devbox.wire.v1beta.TerminalSession
+	125, // 66: namespace.private.devbox.wire.v1beta.TerminalSession.created_at:type_name -> google.protobuf.Timestamp
+	115, // 67: namespace.private.devbox.wire.v1beta.TerminalSession.run_command:type_name -> namespace.private.devbox.wire.v1beta.TerminalSession.RunCommand
+	116, // 68: namespace.private.devbox.wire.v1beta.TerminalSession.run_script:type_name -> namespace.private.devbox.wire.v1beta.TerminalSession.RunScript
+	115, // 69: namespace.private.devbox.wire.v1beta.AddTerminalSessionRequest.run_command:type_name -> namespace.private.devbox.wire.v1beta.TerminalSession.RunCommand
+	116, // 70: namespace.private.devbox.wire.v1beta.AddTerminalSessionRequest.run_script:type_name -> namespace.private.devbox.wire.v1beta.TerminalSession.RunScript
+	117, // 71: namespace.private.devbox.wire.v1beta.ResourceMetrics.cpu:type_name -> namespace.private.devbox.wire.v1beta.ResourceMetrics.CpuMetrics
+	118, // 72: namespace.private.devbox.wire.v1beta.ResourceMetrics.memory:type_name -> namespace.private.devbox.wire.v1beta.ResourceMetrics.MemoryMetrics
+	125, // 73: namespace.private.devbox.wire.v1beta.ResourceMetrics.timestamp:type_name -> google.protobuf.Timestamp
+	120, // 74: namespace.private.devbox.wire.v1beta.ResetForLeaseRequest.version_control:type_name -> namespace.private.devbox.wire.v1beta.ResetForLeaseRequest.VersionControl
+	123, // 75: namespace.private.devbox.wire.v1beta.ResetForLeaseEvent.log:type_name -> namespace.private.devbox.wire.v1beta.ResetForLeaseEvent.Log
+	124, // 76: namespace.private.devbox.wire.v1beta.ResetForLeaseEvent.result:type_name -> namespace.private.devbox.wire.v1beta.ResetForLeaseEvent.Result
+	126, // 77: namespace.private.devbox.wire.v1beta.ExecLogChunk.Result.duration:type_name -> google.protobuf.Duration
+	125, // 78: namespace.private.devbox.wire.v1beta.ServiceProcess.Exit.exited_at:type_name -> google.protobuf.Timestamp
+	27,  // 79: namespace.private.devbox.wire.v1beta.ListServicesResponse.ListedService.service:type_name -> namespace.private.devbox.wire.v1beta.Service
+	28,  // 80: namespace.private.devbox.wire.v1beta.ListServicesResponse.ListedService.process:type_name -> namespace.private.devbox.wire.v1beta.ServiceProcess
+	83,  // 81: namespace.private.devbox.wire.v1beta.AgentBoot.Op.setup_namespace_git_credentials:type_name -> namespace.private.devbox.wire.v1beta.AgentBoot.Op.SetupNamespaceGitCredentials
+	84,  // 82: namespace.private.devbox.wire.v1beta.AgentBoot.Op.git_checkout:type_name -> namespace.private.devbox.wire.v1beta.AgentBoot.Op.GitCheckout
+	86,  // 83: namespace.private.devbox.wire.v1beta.AgentBoot.Op.git_create_branch:type_name -> namespace.private.devbox.wire.v1beta.AgentBoot.Op.GitCreateBranch
+	87,  // 84: namespace.private.devbox.wire.v1beta.AgentBoot.Op.git_set_user_and_email:type_name -> namespace.private.devbox.wire.v1beta.AgentBoot.Op.GitSetUserAndEmail
+	13,  // 85: namespace.private.devbox.wire.v1beta.AgentBoot.Op.run_command:type_name -> namespace.private.devbox.wire.v1beta.RunCommand
+	89,  // 86: namespace.private.devbox.wire.v1beta.AgentBoot.Op.run_script:type_name -> namespace.private.devbox.wire.v1beta.AgentBoot.Op.RunScript
+	90,  // 87: namespace.private.devbox.wire.v1beta.AgentBoot.Op.on_create:type_name -> namespace.private.devbox.wire.v1beta.AgentBoot.Op.OnCreate
+	91,  // 88: namespace.private.devbox.wire.v1beta.AgentBoot.Op.setup_dotfiles:type_name -> namespace.private.devbox.wire.v1beta.AgentBoot.Op.SetupDotfiles
+	92,  // 89: namespace.private.devbox.wire.v1beta.AgentBoot.Op.setup_docker:type_name -> namespace.private.devbox.wire.v1beta.AgentBoot.Op.SetupDocker
+	93,  // 90: namespace.private.devbox.wire.v1beta.AgentBoot.Op.concurrent:type_name -> namespace.private.devbox.wire.v1beta.AgentBoot.Op.Concurrent
+	94,  // 91: namespace.private.devbox.wire.v1beta.AgentBoot.Op.ensure_sessions:type_name -> namespace.private.devbox.wire.v1beta.AgentBoot.Op.EnsureSessions
+	88,  // 92: namespace.private.devbox.wire.v1beta.AgentBoot.Op.git_reset:type_name -> namespace.private.devbox.wire.v1beta.AgentBoot.Op.GitReset
+	95,  // 93: namespace.private.devbox.wire.v1beta.AgentBoot.Op.setup_integrations:type_name -> namespace.private.devbox.wire.v1beta.AgentBoot.Op.SetupIntegrations
+	96,  // 94: namespace.private.devbox.wire.v1beta.AgentBoot.Op.setup_egress_proxy_ca:type_name -> namespace.private.devbox.wire.v1beta.AgentBoot.Op.SetupEgressProxyCA
+	97,  // 95: namespace.private.devbox.wire.v1beta.AgentBoot.Op.accepting_ssh_connections:type_name -> namespace.private.devbox.wire.v1beta.AgentBoot.Op.AcceptingSSHConnections
+	85,  // 96: namespace.private.devbox.wire.v1beta.AgentBoot.Op.git_checkout_repositories:type_name -> namespace.private.devbox.wire.v1beta.AgentBoot.Op.GitCheckoutRepositories
+	98,  // 97: namespace.private.devbox.wire.v1beta.AgentBoot.Op.start_services:type_name -> namespace.private.devbox.wire.v1beta.AgentBoot.Op.StartServices
+	9,   // 98: namespace.private.devbox.wire.v1beta.AgentBoot.Op.GitCheckout.checkout_method:type_name -> namespace.private.devbox.wire.v1beta.AgentBoot.Op.GitCheckout.CheckoutMethod
+	84,  // 99: namespace.private.devbox.wire.v1beta.AgentBoot.Op.GitCheckoutRepositories.repositories:type_name -> namespace.private.devbox.wire.v1beta.AgentBoot.Op.GitCheckout
+	24,  // 100: namespace.private.devbox.wire.v1beta.AgentBoot.Op.RunScript.additional_environment:type_name -> namespace.private.devbox.wire.v1beta.EnvVar
+	82,  // 101: namespace.private.devbox.wire.v1beta.AgentBoot.Op.OnCreate.ops:type_name -> namespace.private.devbox.wire.v1beta.AgentBoot.Op
+	82,  // 102: namespace.private.devbox.wire.v1beta.AgentBoot.Op.Concurrent.ops:type_name -> namespace.private.devbox.wire.v1beta.AgentBoot.Op
+	74,  // 103: namespace.private.devbox.wire.v1beta.AgentBoot.Op.EnsureSessions.sessions:type_name -> namespace.private.devbox.wire.v1beta.AddTerminalSessionRequest
+	99,  // 104: namespace.private.devbox.wire.v1beta.AgentBoot.Op.SetupIntegrations.devin_outposts:type_name -> namespace.private.devbox.wire.v1beta.AgentBoot.Op.SetupIntegrations.DevinOutposts
+	100, // 105: namespace.private.devbox.wire.v1beta.AgentBoot.Op.SetupIntegrations.cursor:type_name -> namespace.private.devbox.wire.v1beta.AgentBoot.Op.SetupIntegrations.Cursor
+	101, // 106: namespace.private.devbox.wire.v1beta.AgentBoot.Op.SetupIntegrations.claude_agent:type_name -> namespace.private.devbox.wire.v1beta.AgentBoot.Op.SetupIntegrations.ClaudeAgent
+	106, // 107: namespace.private.devbox.wire.v1beta.AgentRuntimeConfiguration.TmuxConfiguration.server_options:type_name -> namespace.private.devbox.wire.v1beta.AgentRuntimeConfiguration.TmuxConfiguration.ServerOptionsEntry
+	107, // 108: namespace.private.devbox.wire.v1beta.AgentRuntimeConfiguration.TmuxConfiguration.global_options:type_name -> namespace.private.devbox.wire.v1beta.AgentRuntimeConfiguration.TmuxConfiguration.GlobalOptionsEntry
+	82,  // 109: namespace.private.devbox.wire.v1beta.BootOpResult.Node.op:type_name -> namespace.private.devbox.wire.v1beta.AgentBoot.Op
+	126, // 110: namespace.private.devbox.wire.v1beta.BootOpResult.Result.duration:type_name -> google.protobuf.Duration
+	57,  // 111: namespace.private.devbox.wire.v1beta.QueryStateResponse.SignificantMountState.mount:type_name -> namespace.private.devbox.wire.v1beta.SignificantMount
+	11,  // 112: namespace.private.devbox.wire.v1beta.GitStatus.File.flags:type_name -> namespace.private.devbox.wire.v1beta.GitStatus.File.Flag
+	125, // 113: namespace.private.devbox.wire.v1beta.GitStatus.Commit.author_date:type_name -> google.protobuf.Timestamp
+	125, // 114: namespace.private.devbox.wire.v1beta.GitStatus.Commit.commit_date:type_name -> google.protobuf.Timestamp
+	126, // 115: namespace.private.devbox.wire.v1beta.RunOutputChunk.Result.duration:type_name -> google.protobuf.Duration
+	119, // 116: namespace.private.devbox.wire.v1beta.ResourceMetrics.CpuMetrics.per_cpu:type_name -> namespace.private.devbox.wire.v1beta.ResourceMetrics.CpuMetrics.PerCpuMetrics
+	121, // 117: namespace.private.devbox.wire.v1beta.ResetForLeaseRequest.VersionControl.git_checkout:type_name -> namespace.private.devbox.wire.v1beta.ResetForLeaseRequest.VersionControl.GitCheckout
+	122, // 118: namespace.private.devbox.wire.v1beta.ResetForLeaseRequest.VersionControl.git_credentials:type_name -> namespace.private.devbox.wire.v1beta.ResetForLeaseRequest.VersionControl.GitCredentials
+	126, // 119: namespace.private.devbox.wire.v1beta.ResetForLeaseEvent.Result.duration:type_name -> google.protobuf.Duration
+	127, // 120: namespace.private.devbox.wire.v1beta.AgentService.Ping:input_type -> google.protobuf.Empty
+	127, // 121: namespace.private.devbox.wire.v1beta.AgentService.Shutdown:input_type -> google.protobuf.Empty
+	77,  // 122: namespace.private.devbox.wire.v1beta.AgentService.ResetForLease:input_type -> namespace.private.devbox.wire.v1beta.ResetForLeaseRequest
+	127, // 123: namespace.private.devbox.wire.v1beta.AgentService.WatchBoot:input_type -> google.protobuf.Empty
+	60,  // 124: namespace.private.devbox.wire.v1beta.AgentService.QueryState:input_type -> namespace.private.devbox.wire.v1beta.QueryStateRequest
+	60,  // 125: namespace.private.devbox.wire.v1beta.AgentService.StreamQueryState:input_type -> namespace.private.devbox.wire.v1beta.QueryStateRequest
+	13,  // 126: namespace.private.devbox.wire.v1beta.AgentService.Run:input_type -> namespace.private.devbox.wire.v1beta.RunCommand
+	14,  // 127: namespace.private.devbox.wire.v1beta.AgentService.RunExec:input_type -> namespace.private.devbox.wire.v1beta.StartExecRequest
+	14,  // 128: namespace.private.devbox.wire.v1beta.AgentService.StartExec:input_type -> namespace.private.devbox.wire.v1beta.StartExecRequest
+	16,  // 129: namespace.private.devbox.wire.v1beta.AgentService.StopExec:input_type -> namespace.private.devbox.wire.v1beta.StopExecRequest
+	17,  // 130: namespace.private.devbox.wire.v1beta.AgentService.ListLogs:input_type -> namespace.private.devbox.wire.v1beta.ListLogsRequest
+	21,  // 131: namespace.private.devbox.wire.v1beta.AgentService.StreamExecLogs:input_type -> namespace.private.devbox.wire.v1beta.StreamExecLogsRequest
+	69,  // 132: namespace.private.devbox.wire.v1beta.AgentService.CreateGitWorktree:input_type -> namespace.private.devbox.wire.v1beta.CreateGitWorktreeRequest
+	67,  // 133: namespace.private.devbox.wire.v1beta.AgentService.ListGitWorktrees:input_type -> namespace.private.devbox.wire.v1beta.ListGitWorktreesRequest
+	71,  // 134: namespace.private.devbox.wire.v1beta.AgentService.RemoveGitWorktree:input_type -> namespace.private.devbox.wire.v1beta.RemoveGitWorktreeRequest
+	74,  // 135: namespace.private.devbox.wire.v1beta.AgentService.AddTerminalSession:input_type -> namespace.private.devbox.wire.v1beta.AddTerminalSessionRequest
+	12,  // 136: namespace.private.devbox.wire.v1beta.AgentService.CreateTerminalSession:input_type -> namespace.private.devbox.wire.v1beta.CreateTerminalSessionRequest
+	75,  // 137: namespace.private.devbox.wire.v1beta.AgentService.DeleteTerminalSession:input_type -> namespace.private.devbox.wire.v1beta.DeleteTerminalSessionRequest
+	127, // 138: namespace.private.devbox.wire.v1beta.AgentService.ListTerminalSessions:input_type -> google.protobuf.Empty
+	29,  // 139: namespace.private.devbox.wire.v1beta.AgentService.CreateService:input_type -> namespace.private.devbox.wire.v1beta.CreateServiceRequest
+	31,  // 140: namespace.private.devbox.wire.v1beta.AgentService.ListServices:input_type -> namespace.private.devbox.wire.v1beta.ListServicesRequest
+	33,  // 141: namespace.private.devbox.wire.v1beta.AgentService.DeleteService:input_type -> namespace.private.devbox.wire.v1beta.DeleteServiceRequest
+	35,  // 142: namespace.private.devbox.wire.v1beta.AgentService.ResumeService:input_type -> namespace.private.devbox.wire.v1beta.ResumeServiceRequest
+	37,  // 143: namespace.private.devbox.wire.v1beta.AgentService.SuspendService:input_type -> namespace.private.devbox.wire.v1beta.SuspendServiceRequest
+	39,  // 144: namespace.private.devbox.wire.v1beta.AgentService.StartService:input_type -> namespace.private.devbox.wire.v1beta.StartServiceRequest
+	41,  // 145: namespace.private.devbox.wire.v1beta.AgentService.StopService:input_type -> namespace.private.devbox.wire.v1beta.StopServiceRequest
+	43,  // 146: namespace.private.devbox.wire.v1beta.AgentService.SignalService:input_type -> namespace.private.devbox.wire.v1beta.SignalServiceRequest
+	47,  // 147: namespace.private.devbox.wire.v1beta.AgentService.CreatePort:input_type -> namespace.private.devbox.wire.v1beta.CreatePortRequest
+	49,  // 148: namespace.private.devbox.wire.v1beta.AgentService.DeletePort:input_type -> namespace.private.devbox.wire.v1beta.DeletePortRequest
+	51,  // 149: namespace.private.devbox.wire.v1beta.AgentService.ListPorts:input_type -> namespace.private.devbox.wire.v1beta.ListPortsRequest
+	56,  // 150: namespace.private.devbox.wire.v1beta.AgentService.UpdateRuntimeConfiguration:input_type -> namespace.private.devbox.wire.v1beta.AgentRuntimeConfiguration
+	127, // 151: namespace.private.devbox.wire.v1beta.AgentService.Ping:output_type -> google.protobuf.Empty
+	127, // 152: namespace.private.devbox.wire.v1beta.AgentService.Shutdown:output_type -> google.protobuf.Empty
+	78,  // 153: namespace.private.devbox.wire.v1beta.AgentService.ResetForLease:output_type -> namespace.private.devbox.wire.v1beta.ResetForLeaseEvent
+	58,  // 154: namespace.private.devbox.wire.v1beta.AgentService.WatchBoot:output_type -> namespace.private.devbox.wire.v1beta.BootOpResult
+	62,  // 155: namespace.private.devbox.wire.v1beta.AgentService.QueryState:output_type -> namespace.private.devbox.wire.v1beta.QueryStateResponse
+	62,  // 156: namespace.private.devbox.wire.v1beta.AgentService.StreamQueryState:output_type -> namespace.private.devbox.wire.v1beta.QueryStateResponse
+	65,  // 157: namespace.private.devbox.wire.v1beta.AgentService.Run:output_type -> namespace.private.devbox.wire.v1beta.RunOutputChunk
+	22,  // 158: namespace.private.devbox.wire.v1beta.AgentService.RunExec:output_type -> namespace.private.devbox.wire.v1beta.ExecLogChunk
+	15,  // 159: namespace.private.devbox.wire.v1beta.AgentService.StartExec:output_type -> namespace.private.devbox.wire.v1beta.StartExecResponse
+	127, // 160: namespace.private.devbox.wire.v1beta.AgentService.StopExec:output_type -> google.protobuf.Empty
+	18,  // 161: namespace.private.devbox.wire.v1beta.AgentService.ListLogs:output_type -> namespace.private.devbox.wire.v1beta.ListLogsResponse
+	22,  // 162: namespace.private.devbox.wire.v1beta.AgentService.StreamExecLogs:output_type -> namespace.private.devbox.wire.v1beta.ExecLogChunk
+	70,  // 163: namespace.private.devbox.wire.v1beta.AgentService.CreateGitWorktree:output_type -> namespace.private.devbox.wire.v1beta.CreateGitWorktreeResponse
+	68,  // 164: namespace.private.devbox.wire.v1beta.AgentService.ListGitWorktrees:output_type -> namespace.private.devbox.wire.v1beta.ListGitWorktreesResponse
+	127, // 165: namespace.private.devbox.wire.v1beta.AgentService.RemoveGitWorktree:output_type -> google.protobuf.Empty
+	73,  // 166: namespace.private.devbox.wire.v1beta.AgentService.AddTerminalSession:output_type -> namespace.private.devbox.wire.v1beta.TerminalSession
+	73,  // 167: namespace.private.devbox.wire.v1beta.AgentService.CreateTerminalSession:output_type -> namespace.private.devbox.wire.v1beta.TerminalSession
+	127, // 168: namespace.private.devbox.wire.v1beta.AgentService.DeleteTerminalSession:output_type -> google.protobuf.Empty
+	72,  // 169: namespace.private.devbox.wire.v1beta.AgentService.ListTerminalSessions:output_type -> namespace.private.devbox.wire.v1beta.ListTerminalSessionsResponse
+	30,  // 170: namespace.private.devbox.wire.v1beta.AgentService.CreateService:output_type -> namespace.private.devbox.wire.v1beta.CreateServiceResponse
+	32,  // 171: namespace.private.devbox.wire.v1beta.AgentService.ListServices:output_type -> namespace.private.devbox.wire.v1beta.ListServicesResponse
+	34,  // 172: namespace.private.devbox.wire.v1beta.AgentService.DeleteService:output_type -> namespace.private.devbox.wire.v1beta.DeleteServiceResponse
+	36,  // 173: namespace.private.devbox.wire.v1beta.AgentService.ResumeService:output_type -> namespace.private.devbox.wire.v1beta.ResumeServiceResponse
+	38,  // 174: namespace.private.devbox.wire.v1beta.AgentService.SuspendService:output_type -> namespace.private.devbox.wire.v1beta.SuspendServiceResponse
+	40,  // 175: namespace.private.devbox.wire.v1beta.AgentService.StartService:output_type -> namespace.private.devbox.wire.v1beta.StartServiceResponse
+	42,  // 176: namespace.private.devbox.wire.v1beta.AgentService.StopService:output_type -> namespace.private.devbox.wire.v1beta.StopServiceResponse
+	44,  // 177: namespace.private.devbox.wire.v1beta.AgentService.SignalService:output_type -> namespace.private.devbox.wire.v1beta.SignalServiceResponse
+	48,  // 178: namespace.private.devbox.wire.v1beta.AgentService.CreatePort:output_type -> namespace.private.devbox.wire.v1beta.CreatePortResponse
+	50,  // 179: namespace.private.devbox.wire.v1beta.AgentService.DeletePort:output_type -> namespace.private.devbox.wire.v1beta.DeletePortResponse
+	52,  // 180: namespace.private.devbox.wire.v1beta.AgentService.ListPorts:output_type -> namespace.private.devbox.wire.v1beta.ListPortsResponse
+	56,  // 181: namespace.private.devbox.wire.v1beta.AgentService.UpdateRuntimeConfiguration:output_type -> namespace.private.devbox.wire.v1beta.AgentRuntimeConfiguration
+	151, // [151:182] is the sub-list for method output_type
+	120, // [120:151] is the sub-list for method input_type
+	120, // [120:120] is the sub-list for extension type_name
+	120, // [120:120] is the sub-list for extension extendee
+	0,   // [0:120] is the sub-list for field type_name
 }
 
 func init() { file_proto_namespace_private_devbox_wire_wire_proto_init() }
@@ -6351,8 +7885,8 @@ func file_proto_namespace_private_devbox_wire_wire_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_proto_namespace_private_devbox_wire_wire_proto_rawDesc), len(file_proto_namespace_private_devbox_wire_wire_proto_rawDesc)),
-			NumEnums:      6,
-			NumMessages:   92,
+			NumEnums:      12,
+			NumMessages:   113,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
