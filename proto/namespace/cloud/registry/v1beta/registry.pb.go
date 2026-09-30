@@ -132,6 +132,56 @@ func (ExpirationEnforcement) EnumDescriptor() ([]byte, []int) {
 	return file_proto_namespace_cloud_registry_v1beta_registry_proto_rawDescGZIP(), []int{1}
 }
 
+type ListImagesRequest_DeletionFilter int32
+
+const (
+	ListImagesRequest_DELETION_FILTER_UNSPECIFIED ListImagesRequest_DeletionFilter = 0
+	ListImagesRequest_INCLUDE_DELETED             ListImagesRequest_DeletionFilter = 1
+	// Excludes images with deleted_at set, but does not exclude expired images.
+	ListImagesRequest_EXCLUDE_DELETED ListImagesRequest_DeletionFilter = 2
+)
+
+// Enum value maps for ListImagesRequest_DeletionFilter.
+var (
+	ListImagesRequest_DeletionFilter_name = map[int32]string{
+		0: "DELETION_FILTER_UNSPECIFIED",
+		1: "INCLUDE_DELETED",
+		2: "EXCLUDE_DELETED",
+	}
+	ListImagesRequest_DeletionFilter_value = map[string]int32{
+		"DELETION_FILTER_UNSPECIFIED": 0,
+		"INCLUDE_DELETED":             1,
+		"EXCLUDE_DELETED":             2,
+	}
+)
+
+func (x ListImagesRequest_DeletionFilter) Enum() *ListImagesRequest_DeletionFilter {
+	p := new(ListImagesRequest_DeletionFilter)
+	*p = x
+	return p
+}
+
+func (x ListImagesRequest_DeletionFilter) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (ListImagesRequest_DeletionFilter) Descriptor() protoreflect.EnumDescriptor {
+	return file_proto_namespace_cloud_registry_v1beta_registry_proto_enumTypes[2].Descriptor()
+}
+
+func (ListImagesRequest_DeletionFilter) Type() protoreflect.EnumType {
+	return &file_proto_namespace_cloud_registry_v1beta_registry_proto_enumTypes[2]
+}
+
+func (x ListImagesRequest_DeletionFilter) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use ListImagesRequest_DeletionFilter.Descriptor instead.
+func (ListImagesRequest_DeletionFilter) EnumDescriptor() ([]byte, []int) {
+	return file_proto_namespace_cloud_registry_v1beta_registry_proto_rawDescGZIP(), []int{5, 0}
+}
+
 type ShareImageRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// The repository that contains the image to be shared.
@@ -472,9 +522,12 @@ type ListImagesRequest struct {
 	CreatedAt *stdlib.TimestampRange `protobuf:"bytes,4,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
 	// Filter images by expiration timestamp range, with exclusive before/after bounds.
 	// When either bound is set, images that never expire are excluded.
-	ExpiresAt     *stdlib.TimestampRange `protobuf:"bytes,5,opt,name=expires_at,json=expiresAt,proto3" json:"expires_at,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	ExpiresAt *stdlib.TimestampRange `protobuf:"bytes,5,opt,name=expires_at,json=expiresAt,proto3" json:"expires_at,omitempty"`
+	// Unspecified includes deleted images on the first request and inherits the
+	// original filter on cursor continuation. Explicit continuation values must match.
+	DeletionFilter ListImagesRequest_DeletionFilter `protobuf:"varint,6,opt,name=deletion_filter,json=deletionFilter,proto3,enum=namespace.cloud.registry.v1beta.ListImagesRequest_DeletionFilter" json:"deletion_filter,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
 }
 
 func (x *ListImagesRequest) Reset() {
@@ -540,6 +593,13 @@ func (x *ListImagesRequest) GetExpiresAt() *stdlib.TimestampRange {
 		return x.ExpiresAt
 	}
 	return nil
+}
+
+func (x *ListImagesRequest) GetDeletionFilter() ListImagesRequest_DeletionFilter {
+	if x != nil {
+		return x.DeletionFilter
+	}
+	return ListImagesRequest_DELETION_FILTER_UNSPECIFIED
 }
 
 type ListImagesResponse struct {
@@ -1853,7 +1913,7 @@ const file_proto_namespace_cloud_registry_v1beta_registry_proto_rawDesc = "" +
 	"\n" +
 	"visibility\x18\x06 \x01(\x0e2+.namespace.cloud.registry.v1beta.VisibilityR\n" +
 	"visibility\x12\x16\n" +
-	"\x06suffix\x18\a \x01(\tR\x06suffix\"\xaf\x02\n" +
+	"\x06suffix\x18\a \x01(\tR\x06suffix\"\xf8\x03\n" +
 	"\x11ListImagesRequest\x12+\n" +
 	"\x11pagination_cursor\x18\x01 \x01(\fR\x10paginationCursor\x12\x1f\n" +
 	"\vmax_entries\x18\x02 \x01(\x03R\n" +
@@ -1862,7 +1922,12 @@ const file_proto_namespace_cloud_registry_v1beta_registry_proto_rawDesc = "" +
 	"\n" +
 	"created_at\x18\x04 \x01(\v2 .namespace.stdlib.TimestampRangeR\tcreatedAt\x12?\n" +
 	"\n" +
-	"expires_at\x18\x05 \x01(\v2 .namespace.stdlib.TimestampRangeR\texpiresAt\"\x81\x01\n" +
+	"expires_at\x18\x05 \x01(\v2 .namespace.stdlib.TimestampRangeR\texpiresAt\x12j\n" +
+	"\x0fdeletion_filter\x18\x06 \x01(\x0e2A.namespace.cloud.registry.v1beta.ListImagesRequest.DeletionFilterR\x0edeletionFilter\"[\n" +
+	"\x0eDeletionFilter\x12\x1f\n" +
+	"\x1bDELETION_FILTER_UNSPECIFIED\x10\x00\x12\x13\n" +
+	"\x0fINCLUDE_DELETED\x10\x01\x12\x13\n" +
+	"\x0fEXCLUDE_DELETED\x10\x02\"\x81\x01\n" +
 	"\x12ListImagesResponse\x12>\n" +
 	"\x06images\x18\x01 \x03(\v2&.namespace.cloud.registry.v1beta.ImageR\x06images\x12+\n" +
 	"\x11pagination_cursor\x18\x02 \x01(\fR\x10paginationCursor\"g\n" +
@@ -2009,113 +2074,115 @@ func file_proto_namespace_cloud_registry_v1beta_registry_proto_rawDescGZIP() []b
 	return file_proto_namespace_cloud_registry_v1beta_registry_proto_rawDescData
 }
 
-var file_proto_namespace_cloud_registry_v1beta_registry_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
+var file_proto_namespace_cloud_registry_v1beta_registry_proto_enumTypes = make([]protoimpl.EnumInfo, 3)
 var file_proto_namespace_cloud_registry_v1beta_registry_proto_msgTypes = make([]protoimpl.MessageInfo, 27)
 var file_proto_namespace_cloud_registry_v1beta_registry_proto_goTypes = []any{
 	(Visibility)(0),                       // 0: namespace.cloud.registry.v1beta.Visibility
 	(ExpirationEnforcement)(0),            // 1: namespace.cloud.registry.v1beta.ExpirationEnforcement
-	(*ShareImageRequest)(nil),             // 2: namespace.cloud.registry.v1beta.ShareImageRequest
-	(*UnshareImageRequest)(nil),           // 3: namespace.cloud.registry.v1beta.UnshareImageRequest
-	(*ListSharedImagesRequest)(nil),       // 4: namespace.cloud.registry.v1beta.ListSharedImagesRequest
-	(*ListSharedImagesResponse)(nil),      // 5: namespace.cloud.registry.v1beta.ListSharedImagesResponse
-	(*SharedImage)(nil),                   // 6: namespace.cloud.registry.v1beta.SharedImage
-	(*ListImagesRequest)(nil),             // 7: namespace.cloud.registry.v1beta.ListImagesRequest
-	(*ListImagesResponse)(nil),            // 8: namespace.cloud.registry.v1beta.ListImagesResponse
-	(*ListRepositoriesRequest)(nil),       // 9: namespace.cloud.registry.v1beta.ListRepositoriesRequest
-	(*ListRepositoriesResponse)(nil),      // 10: namespace.cloud.registry.v1beta.ListRepositoriesResponse
-	(*Repository)(nil),                    // 11: namespace.cloud.registry.v1beta.Repository
-	(*ListTagsRequest)(nil),               // 12: namespace.cloud.registry.v1beta.ListTagsRequest
-	(*ListTagsResponse)(nil),              // 13: namespace.cloud.registry.v1beta.ListTagsResponse
-	(*ListTagVersionsRequest)(nil),        // 14: namespace.cloud.registry.v1beta.ListTagVersionsRequest
-	(*ListTagVersionsResponse)(nil),       // 15: namespace.cloud.registry.v1beta.ListTagVersionsResponse
-	(*GetImageRequest)(nil),               // 16: namespace.cloud.registry.v1beta.GetImageRequest
-	(*GetImageResponse)(nil),              // 17: namespace.cloud.registry.v1beta.GetImageResponse
-	(*Image)(nil),                         // 18: namespace.cloud.registry.v1beta.Image
-	(*Tag)(nil),                           // 19: namespace.cloud.registry.v1beta.Tag
-	(*UpdateImageLifetimeRequest)(nil),    // 20: namespace.cloud.registry.v1beta.UpdateImageLifetimeRequest
-	(*UpdateImageLifetimeResponse)(nil),   // 21: namespace.cloud.registry.v1beta.UpdateImageLifetimeResponse
-	(*UpdateDefaultPolicyRequest)(nil),    // 22: namespace.cloud.registry.v1beta.UpdateDefaultPolicyRequest
-	(*GetDefaultPolicyResponse)(nil),      // 23: namespace.cloud.registry.v1beta.GetDefaultPolicyResponse
-	(*UpdateRepositoryPolicyRequest)(nil), // 24: namespace.cloud.registry.v1beta.UpdateRepositoryPolicyRequest
-	(*GetRepositoryPolicyRequest)(nil),    // 25: namespace.cloud.registry.v1beta.GetRepositoryPolicyRequest
-	(*GetRepositoryPolicyResponse)(nil),   // 26: namespace.cloud.registry.v1beta.GetRepositoryPolicyResponse
-	(*Image_Sizes)(nil),                   // 27: namespace.cloud.registry.v1beta.Image.Sizes
-	nil,                                   // 28: namespace.cloud.registry.v1beta.Image.Sizes.PerPlatformEntry
-	(*timestamppb.Timestamp)(nil),         // 29: google.protobuf.Timestamp
-	(*stdlib.StringMatcher)(nil),          // 30: namespace.stdlib.StringMatcher
-	(*stdlib.TimestampRange)(nil),         // 31: namespace.stdlib.TimestampRange
-	(*stdlib.Label)(nil),                  // 32: namespace.stdlib.Label
-	(*durationpb.Duration)(nil),           // 33: google.protobuf.Duration
-	(*emptypb.Empty)(nil),                 // 34: google.protobuf.Empty
+	(ListImagesRequest_DeletionFilter)(0), // 2: namespace.cloud.registry.v1beta.ListImagesRequest.DeletionFilter
+	(*ShareImageRequest)(nil),             // 3: namespace.cloud.registry.v1beta.ShareImageRequest
+	(*UnshareImageRequest)(nil),           // 4: namespace.cloud.registry.v1beta.UnshareImageRequest
+	(*ListSharedImagesRequest)(nil),       // 5: namespace.cloud.registry.v1beta.ListSharedImagesRequest
+	(*ListSharedImagesResponse)(nil),      // 6: namespace.cloud.registry.v1beta.ListSharedImagesResponse
+	(*SharedImage)(nil),                   // 7: namespace.cloud.registry.v1beta.SharedImage
+	(*ListImagesRequest)(nil),             // 8: namespace.cloud.registry.v1beta.ListImagesRequest
+	(*ListImagesResponse)(nil),            // 9: namespace.cloud.registry.v1beta.ListImagesResponse
+	(*ListRepositoriesRequest)(nil),       // 10: namespace.cloud.registry.v1beta.ListRepositoriesRequest
+	(*ListRepositoriesResponse)(nil),      // 11: namespace.cloud.registry.v1beta.ListRepositoriesResponse
+	(*Repository)(nil),                    // 12: namespace.cloud.registry.v1beta.Repository
+	(*ListTagsRequest)(nil),               // 13: namespace.cloud.registry.v1beta.ListTagsRequest
+	(*ListTagsResponse)(nil),              // 14: namespace.cloud.registry.v1beta.ListTagsResponse
+	(*ListTagVersionsRequest)(nil),        // 15: namespace.cloud.registry.v1beta.ListTagVersionsRequest
+	(*ListTagVersionsResponse)(nil),       // 16: namespace.cloud.registry.v1beta.ListTagVersionsResponse
+	(*GetImageRequest)(nil),               // 17: namespace.cloud.registry.v1beta.GetImageRequest
+	(*GetImageResponse)(nil),              // 18: namespace.cloud.registry.v1beta.GetImageResponse
+	(*Image)(nil),                         // 19: namespace.cloud.registry.v1beta.Image
+	(*Tag)(nil),                           // 20: namespace.cloud.registry.v1beta.Tag
+	(*UpdateImageLifetimeRequest)(nil),    // 21: namespace.cloud.registry.v1beta.UpdateImageLifetimeRequest
+	(*UpdateImageLifetimeResponse)(nil),   // 22: namespace.cloud.registry.v1beta.UpdateImageLifetimeResponse
+	(*UpdateDefaultPolicyRequest)(nil),    // 23: namespace.cloud.registry.v1beta.UpdateDefaultPolicyRequest
+	(*GetDefaultPolicyResponse)(nil),      // 24: namespace.cloud.registry.v1beta.GetDefaultPolicyResponse
+	(*UpdateRepositoryPolicyRequest)(nil), // 25: namespace.cloud.registry.v1beta.UpdateRepositoryPolicyRequest
+	(*GetRepositoryPolicyRequest)(nil),    // 26: namespace.cloud.registry.v1beta.GetRepositoryPolicyRequest
+	(*GetRepositoryPolicyResponse)(nil),   // 27: namespace.cloud.registry.v1beta.GetRepositoryPolicyResponse
+	(*Image_Sizes)(nil),                   // 28: namespace.cloud.registry.v1beta.Image.Sizes
+	nil,                                   // 29: namespace.cloud.registry.v1beta.Image.Sizes.PerPlatformEntry
+	(*timestamppb.Timestamp)(nil),         // 30: google.protobuf.Timestamp
+	(*stdlib.StringMatcher)(nil),          // 31: namespace.stdlib.StringMatcher
+	(*stdlib.TimestampRange)(nil),         // 32: namespace.stdlib.TimestampRange
+	(*stdlib.Label)(nil),                  // 33: namespace.stdlib.Label
+	(*durationpb.Duration)(nil),           // 34: google.protobuf.Duration
+	(*emptypb.Empty)(nil),                 // 35: google.protobuf.Empty
 }
 var file_proto_namespace_cloud_registry_v1beta_registry_proto_depIdxs = []int32{
-	29, // 0: namespace.cloud.registry.v1beta.ShareImageRequest.expires_at:type_name -> google.protobuf.Timestamp
+	30, // 0: namespace.cloud.registry.v1beta.ShareImageRequest.expires_at:type_name -> google.protobuf.Timestamp
 	0,  // 1: namespace.cloud.registry.v1beta.ShareImageRequest.visibility:type_name -> namespace.cloud.registry.v1beta.Visibility
-	30, // 2: namespace.cloud.registry.v1beta.ListSharedImagesRequest.match_repositories:type_name -> namespace.stdlib.StringMatcher
+	31, // 2: namespace.cloud.registry.v1beta.ListSharedImagesRequest.match_repositories:type_name -> namespace.stdlib.StringMatcher
 	0,  // 3: namespace.cloud.registry.v1beta.ListSharedImagesRequest.match_visibility:type_name -> namespace.cloud.registry.v1beta.Visibility
-	6,  // 4: namespace.cloud.registry.v1beta.ListSharedImagesResponse.shared_images:type_name -> namespace.cloud.registry.v1beta.SharedImage
-	29, // 5: namespace.cloud.registry.v1beta.SharedImage.expires_at:type_name -> google.protobuf.Timestamp
+	7,  // 4: namespace.cloud.registry.v1beta.ListSharedImagesResponse.shared_images:type_name -> namespace.cloud.registry.v1beta.SharedImage
+	30, // 5: namespace.cloud.registry.v1beta.SharedImage.expires_at:type_name -> google.protobuf.Timestamp
 	0,  // 6: namespace.cloud.registry.v1beta.SharedImage.visibility:type_name -> namespace.cloud.registry.v1beta.Visibility
-	30, // 7: namespace.cloud.registry.v1beta.ListImagesRequest.match_repository:type_name -> namespace.stdlib.StringMatcher
-	31, // 8: namespace.cloud.registry.v1beta.ListImagesRequest.created_at:type_name -> namespace.stdlib.TimestampRange
-	31, // 9: namespace.cloud.registry.v1beta.ListImagesRequest.expires_at:type_name -> namespace.stdlib.TimestampRange
-	18, // 10: namespace.cloud.registry.v1beta.ListImagesResponse.images:type_name -> namespace.cloud.registry.v1beta.Image
-	11, // 11: namespace.cloud.registry.v1beta.ListRepositoriesResponse.repositories:type_name -> namespace.cloud.registry.v1beta.Repository
-	29, // 12: namespace.cloud.registry.v1beta.Repository.last_push:type_name -> google.protobuf.Timestamp
-	19, // 13: namespace.cloud.registry.v1beta.ListTagsResponse.tags:type_name -> namespace.cloud.registry.v1beta.Tag
-	19, // 14: namespace.cloud.registry.v1beta.ListTagVersionsResponse.versions:type_name -> namespace.cloud.registry.v1beta.Tag
-	18, // 15: namespace.cloud.registry.v1beta.GetImageResponse.image:type_name -> namespace.cloud.registry.v1beta.Image
-	29, // 16: namespace.cloud.registry.v1beta.Image.created_at:type_name -> google.protobuf.Timestamp
-	29, // 17: namespace.cloud.registry.v1beta.Image.expires_at:type_name -> google.protobuf.Timestamp
-	27, // 18: namespace.cloud.registry.v1beta.Image.sizes:type_name -> namespace.cloud.registry.v1beta.Image.Sizes
-	29, // 19: namespace.cloud.registry.v1beta.Image.deleted_at:type_name -> google.protobuf.Timestamp
-	32, // 20: namespace.cloud.registry.v1beta.Image.labels:type_name -> namespace.stdlib.Label
-	18, // 21: namespace.cloud.registry.v1beta.Tag.image:type_name -> namespace.cloud.registry.v1beta.Image
-	29, // 22: namespace.cloud.registry.v1beta.Tag.created_at:type_name -> google.protobuf.Timestamp
-	33, // 23: namespace.cloud.registry.v1beta.UpdateImageLifetimeRequest.extend_by:type_name -> google.protobuf.Duration
-	33, // 24: namespace.cloud.registry.v1beta.UpdateImageLifetimeRequest.ensure_minimum_remaining:type_name -> google.protobuf.Duration
-	29, // 25: namespace.cloud.registry.v1beta.UpdateImageLifetimeRequest.new_expiry:type_name -> google.protobuf.Timestamp
-	29, // 26: namespace.cloud.registry.v1beta.UpdateImageLifetimeResponse.new_expiry:type_name -> google.protobuf.Timestamp
-	33, // 27: namespace.cloud.registry.v1beta.UpdateDefaultPolicyRequest.default_expiration:type_name -> google.protobuf.Duration
-	1,  // 28: namespace.cloud.registry.v1beta.UpdateDefaultPolicyRequest.expiration_enforcement:type_name -> namespace.cloud.registry.v1beta.ExpirationEnforcement
-	33, // 29: namespace.cloud.registry.v1beta.GetDefaultPolicyResponse.default_expiration:type_name -> google.protobuf.Duration
-	1,  // 30: namespace.cloud.registry.v1beta.GetDefaultPolicyResponse.expiration_enforcement:type_name -> namespace.cloud.registry.v1beta.ExpirationEnforcement
-	33, // 31: namespace.cloud.registry.v1beta.UpdateRepositoryPolicyRequest.expiration:type_name -> google.protobuf.Duration
-	1,  // 32: namespace.cloud.registry.v1beta.UpdateRepositoryPolicyRequest.expiration_enforcement:type_name -> namespace.cloud.registry.v1beta.ExpirationEnforcement
-	33, // 33: namespace.cloud.registry.v1beta.GetRepositoryPolicyResponse.expiration:type_name -> google.protobuf.Duration
-	1,  // 34: namespace.cloud.registry.v1beta.GetRepositoryPolicyResponse.expiration_enforcement:type_name -> namespace.cloud.registry.v1beta.ExpirationEnforcement
-	28, // 35: namespace.cloud.registry.v1beta.Image.Sizes.per_platform:type_name -> namespace.cloud.registry.v1beta.Image.Sizes.PerPlatformEntry
-	16, // 36: namespace.cloud.registry.v1beta.ContainerRegistryService.GetImage:input_type -> namespace.cloud.registry.v1beta.GetImageRequest
-	7,  // 37: namespace.cloud.registry.v1beta.ContainerRegistryService.ListImages:input_type -> namespace.cloud.registry.v1beta.ListImagesRequest
-	9,  // 38: namespace.cloud.registry.v1beta.ContainerRegistryService.ListRepositories:input_type -> namespace.cloud.registry.v1beta.ListRepositoriesRequest
-	12, // 39: namespace.cloud.registry.v1beta.ContainerRegistryService.ListTags:input_type -> namespace.cloud.registry.v1beta.ListTagsRequest
-	14, // 40: namespace.cloud.registry.v1beta.ContainerRegistryService.ListTagVersions:input_type -> namespace.cloud.registry.v1beta.ListTagVersionsRequest
-	2,  // 41: namespace.cloud.registry.v1beta.ContainerRegistryService.ShareImage:input_type -> namespace.cloud.registry.v1beta.ShareImageRequest
-	3,  // 42: namespace.cloud.registry.v1beta.ContainerRegistryService.UnshareImage:input_type -> namespace.cloud.registry.v1beta.UnshareImageRequest
-	4,  // 43: namespace.cloud.registry.v1beta.ContainerRegistryService.ListSharedImages:input_type -> namespace.cloud.registry.v1beta.ListSharedImagesRequest
-	20, // 44: namespace.cloud.registry.v1beta.ContainerRegistryService.UpdateImageLifetime:input_type -> namespace.cloud.registry.v1beta.UpdateImageLifetimeRequest
-	22, // 45: namespace.cloud.registry.v1beta.ContainerRegistryService.UpdateDefaultPolicy:input_type -> namespace.cloud.registry.v1beta.UpdateDefaultPolicyRequest
-	34, // 46: namespace.cloud.registry.v1beta.ContainerRegistryService.GetDefaultPolicy:input_type -> google.protobuf.Empty
-	24, // 47: namespace.cloud.registry.v1beta.ContainerRegistryService.UpdateRepositoryPolicy:input_type -> namespace.cloud.registry.v1beta.UpdateRepositoryPolicyRequest
-	25, // 48: namespace.cloud.registry.v1beta.ContainerRegistryService.GetRepositoryPolicy:input_type -> namespace.cloud.registry.v1beta.GetRepositoryPolicyRequest
-	17, // 49: namespace.cloud.registry.v1beta.ContainerRegistryService.GetImage:output_type -> namespace.cloud.registry.v1beta.GetImageResponse
-	8,  // 50: namespace.cloud.registry.v1beta.ContainerRegistryService.ListImages:output_type -> namespace.cloud.registry.v1beta.ListImagesResponse
-	10, // 51: namespace.cloud.registry.v1beta.ContainerRegistryService.ListRepositories:output_type -> namespace.cloud.registry.v1beta.ListRepositoriesResponse
-	13, // 52: namespace.cloud.registry.v1beta.ContainerRegistryService.ListTags:output_type -> namespace.cloud.registry.v1beta.ListTagsResponse
-	15, // 53: namespace.cloud.registry.v1beta.ContainerRegistryService.ListTagVersions:output_type -> namespace.cloud.registry.v1beta.ListTagVersionsResponse
-	6,  // 54: namespace.cloud.registry.v1beta.ContainerRegistryService.ShareImage:output_type -> namespace.cloud.registry.v1beta.SharedImage
-	34, // 55: namespace.cloud.registry.v1beta.ContainerRegistryService.UnshareImage:output_type -> google.protobuf.Empty
-	5,  // 56: namespace.cloud.registry.v1beta.ContainerRegistryService.ListSharedImages:output_type -> namespace.cloud.registry.v1beta.ListSharedImagesResponse
-	21, // 57: namespace.cloud.registry.v1beta.ContainerRegistryService.UpdateImageLifetime:output_type -> namespace.cloud.registry.v1beta.UpdateImageLifetimeResponse
-	34, // 58: namespace.cloud.registry.v1beta.ContainerRegistryService.UpdateDefaultPolicy:output_type -> google.protobuf.Empty
-	23, // 59: namespace.cloud.registry.v1beta.ContainerRegistryService.GetDefaultPolicy:output_type -> namespace.cloud.registry.v1beta.GetDefaultPolicyResponse
-	34, // 60: namespace.cloud.registry.v1beta.ContainerRegistryService.UpdateRepositoryPolicy:output_type -> google.protobuf.Empty
-	26, // 61: namespace.cloud.registry.v1beta.ContainerRegistryService.GetRepositoryPolicy:output_type -> namespace.cloud.registry.v1beta.GetRepositoryPolicyResponse
-	49, // [49:62] is the sub-list for method output_type
-	36, // [36:49] is the sub-list for method input_type
-	36, // [36:36] is the sub-list for extension type_name
-	36, // [36:36] is the sub-list for extension extendee
-	0,  // [0:36] is the sub-list for field type_name
+	31, // 7: namespace.cloud.registry.v1beta.ListImagesRequest.match_repository:type_name -> namespace.stdlib.StringMatcher
+	32, // 8: namespace.cloud.registry.v1beta.ListImagesRequest.created_at:type_name -> namespace.stdlib.TimestampRange
+	32, // 9: namespace.cloud.registry.v1beta.ListImagesRequest.expires_at:type_name -> namespace.stdlib.TimestampRange
+	2,  // 10: namespace.cloud.registry.v1beta.ListImagesRequest.deletion_filter:type_name -> namespace.cloud.registry.v1beta.ListImagesRequest.DeletionFilter
+	19, // 11: namespace.cloud.registry.v1beta.ListImagesResponse.images:type_name -> namespace.cloud.registry.v1beta.Image
+	12, // 12: namespace.cloud.registry.v1beta.ListRepositoriesResponse.repositories:type_name -> namespace.cloud.registry.v1beta.Repository
+	30, // 13: namespace.cloud.registry.v1beta.Repository.last_push:type_name -> google.protobuf.Timestamp
+	20, // 14: namespace.cloud.registry.v1beta.ListTagsResponse.tags:type_name -> namespace.cloud.registry.v1beta.Tag
+	20, // 15: namespace.cloud.registry.v1beta.ListTagVersionsResponse.versions:type_name -> namespace.cloud.registry.v1beta.Tag
+	19, // 16: namespace.cloud.registry.v1beta.GetImageResponse.image:type_name -> namespace.cloud.registry.v1beta.Image
+	30, // 17: namespace.cloud.registry.v1beta.Image.created_at:type_name -> google.protobuf.Timestamp
+	30, // 18: namespace.cloud.registry.v1beta.Image.expires_at:type_name -> google.protobuf.Timestamp
+	28, // 19: namespace.cloud.registry.v1beta.Image.sizes:type_name -> namespace.cloud.registry.v1beta.Image.Sizes
+	30, // 20: namespace.cloud.registry.v1beta.Image.deleted_at:type_name -> google.protobuf.Timestamp
+	33, // 21: namespace.cloud.registry.v1beta.Image.labels:type_name -> namespace.stdlib.Label
+	19, // 22: namespace.cloud.registry.v1beta.Tag.image:type_name -> namespace.cloud.registry.v1beta.Image
+	30, // 23: namespace.cloud.registry.v1beta.Tag.created_at:type_name -> google.protobuf.Timestamp
+	34, // 24: namespace.cloud.registry.v1beta.UpdateImageLifetimeRequest.extend_by:type_name -> google.protobuf.Duration
+	34, // 25: namespace.cloud.registry.v1beta.UpdateImageLifetimeRequest.ensure_minimum_remaining:type_name -> google.protobuf.Duration
+	30, // 26: namespace.cloud.registry.v1beta.UpdateImageLifetimeRequest.new_expiry:type_name -> google.protobuf.Timestamp
+	30, // 27: namespace.cloud.registry.v1beta.UpdateImageLifetimeResponse.new_expiry:type_name -> google.protobuf.Timestamp
+	34, // 28: namespace.cloud.registry.v1beta.UpdateDefaultPolicyRequest.default_expiration:type_name -> google.protobuf.Duration
+	1,  // 29: namespace.cloud.registry.v1beta.UpdateDefaultPolicyRequest.expiration_enforcement:type_name -> namespace.cloud.registry.v1beta.ExpirationEnforcement
+	34, // 30: namespace.cloud.registry.v1beta.GetDefaultPolicyResponse.default_expiration:type_name -> google.protobuf.Duration
+	1,  // 31: namespace.cloud.registry.v1beta.GetDefaultPolicyResponse.expiration_enforcement:type_name -> namespace.cloud.registry.v1beta.ExpirationEnforcement
+	34, // 32: namespace.cloud.registry.v1beta.UpdateRepositoryPolicyRequest.expiration:type_name -> google.protobuf.Duration
+	1,  // 33: namespace.cloud.registry.v1beta.UpdateRepositoryPolicyRequest.expiration_enforcement:type_name -> namespace.cloud.registry.v1beta.ExpirationEnforcement
+	34, // 34: namespace.cloud.registry.v1beta.GetRepositoryPolicyResponse.expiration:type_name -> google.protobuf.Duration
+	1,  // 35: namespace.cloud.registry.v1beta.GetRepositoryPolicyResponse.expiration_enforcement:type_name -> namespace.cloud.registry.v1beta.ExpirationEnforcement
+	29, // 36: namespace.cloud.registry.v1beta.Image.Sizes.per_platform:type_name -> namespace.cloud.registry.v1beta.Image.Sizes.PerPlatformEntry
+	17, // 37: namespace.cloud.registry.v1beta.ContainerRegistryService.GetImage:input_type -> namespace.cloud.registry.v1beta.GetImageRequest
+	8,  // 38: namespace.cloud.registry.v1beta.ContainerRegistryService.ListImages:input_type -> namespace.cloud.registry.v1beta.ListImagesRequest
+	10, // 39: namespace.cloud.registry.v1beta.ContainerRegistryService.ListRepositories:input_type -> namespace.cloud.registry.v1beta.ListRepositoriesRequest
+	13, // 40: namespace.cloud.registry.v1beta.ContainerRegistryService.ListTags:input_type -> namespace.cloud.registry.v1beta.ListTagsRequest
+	15, // 41: namespace.cloud.registry.v1beta.ContainerRegistryService.ListTagVersions:input_type -> namespace.cloud.registry.v1beta.ListTagVersionsRequest
+	3,  // 42: namespace.cloud.registry.v1beta.ContainerRegistryService.ShareImage:input_type -> namespace.cloud.registry.v1beta.ShareImageRequest
+	4,  // 43: namespace.cloud.registry.v1beta.ContainerRegistryService.UnshareImage:input_type -> namespace.cloud.registry.v1beta.UnshareImageRequest
+	5,  // 44: namespace.cloud.registry.v1beta.ContainerRegistryService.ListSharedImages:input_type -> namespace.cloud.registry.v1beta.ListSharedImagesRequest
+	21, // 45: namespace.cloud.registry.v1beta.ContainerRegistryService.UpdateImageLifetime:input_type -> namespace.cloud.registry.v1beta.UpdateImageLifetimeRequest
+	23, // 46: namespace.cloud.registry.v1beta.ContainerRegistryService.UpdateDefaultPolicy:input_type -> namespace.cloud.registry.v1beta.UpdateDefaultPolicyRequest
+	35, // 47: namespace.cloud.registry.v1beta.ContainerRegistryService.GetDefaultPolicy:input_type -> google.protobuf.Empty
+	25, // 48: namespace.cloud.registry.v1beta.ContainerRegistryService.UpdateRepositoryPolicy:input_type -> namespace.cloud.registry.v1beta.UpdateRepositoryPolicyRequest
+	26, // 49: namespace.cloud.registry.v1beta.ContainerRegistryService.GetRepositoryPolicy:input_type -> namespace.cloud.registry.v1beta.GetRepositoryPolicyRequest
+	18, // 50: namespace.cloud.registry.v1beta.ContainerRegistryService.GetImage:output_type -> namespace.cloud.registry.v1beta.GetImageResponse
+	9,  // 51: namespace.cloud.registry.v1beta.ContainerRegistryService.ListImages:output_type -> namespace.cloud.registry.v1beta.ListImagesResponse
+	11, // 52: namespace.cloud.registry.v1beta.ContainerRegistryService.ListRepositories:output_type -> namespace.cloud.registry.v1beta.ListRepositoriesResponse
+	14, // 53: namespace.cloud.registry.v1beta.ContainerRegistryService.ListTags:output_type -> namespace.cloud.registry.v1beta.ListTagsResponse
+	16, // 54: namespace.cloud.registry.v1beta.ContainerRegistryService.ListTagVersions:output_type -> namespace.cloud.registry.v1beta.ListTagVersionsResponse
+	7,  // 55: namespace.cloud.registry.v1beta.ContainerRegistryService.ShareImage:output_type -> namespace.cloud.registry.v1beta.SharedImage
+	35, // 56: namespace.cloud.registry.v1beta.ContainerRegistryService.UnshareImage:output_type -> google.protobuf.Empty
+	6,  // 57: namespace.cloud.registry.v1beta.ContainerRegistryService.ListSharedImages:output_type -> namespace.cloud.registry.v1beta.ListSharedImagesResponse
+	22, // 58: namespace.cloud.registry.v1beta.ContainerRegistryService.UpdateImageLifetime:output_type -> namespace.cloud.registry.v1beta.UpdateImageLifetimeResponse
+	35, // 59: namespace.cloud.registry.v1beta.ContainerRegistryService.UpdateDefaultPolicy:output_type -> google.protobuf.Empty
+	24, // 60: namespace.cloud.registry.v1beta.ContainerRegistryService.GetDefaultPolicy:output_type -> namespace.cloud.registry.v1beta.GetDefaultPolicyResponse
+	35, // 61: namespace.cloud.registry.v1beta.ContainerRegistryService.UpdateRepositoryPolicy:output_type -> google.protobuf.Empty
+	27, // 62: namespace.cloud.registry.v1beta.ContainerRegistryService.GetRepositoryPolicy:output_type -> namespace.cloud.registry.v1beta.GetRepositoryPolicyResponse
+	50, // [50:63] is the sub-list for method output_type
+	37, // [37:50] is the sub-list for method input_type
+	37, // [37:37] is the sub-list for extension type_name
+	37, // [37:37] is the sub-list for extension extendee
+	0,  // [0:37] is the sub-list for field type_name
 }
 
 func init() { file_proto_namespace_cloud_registry_v1beta_registry_proto_init() }
@@ -2128,7 +2195,7 @@ func file_proto_namespace_cloud_registry_v1beta_registry_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_proto_namespace_cloud_registry_v1beta_registry_proto_rawDesc), len(file_proto_namespace_cloud_registry_v1beta_registry_proto_rawDesc)),
-			NumEnums:      2,
+			NumEnums:      3,
 			NumMessages:   27,
 			NumExtensions: 0,
 			NumServices:   1,
