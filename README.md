@@ -57,6 +57,8 @@ standalone, or with [Namespace](https://namespace.so)'s cloud.
   (git only passes the repository path to helpers when `useHttpPath` is
   enabled; helper flags such as `--debug` go before the action, e.g.
   `git config --global credential.helper "/path/git-credential-nsc --debug"`).
+  Use `git-credential-nsc --version` (or `-v`) to print its build's Git commit
+  SHA; `--debug` also prints the SHA to stderr during `get` operations.
 - `git-credential-nsc-github-credentials`: A git credential helper that issues
   GitHub-only short-term tokens for a fixed `--repository`/`--secret_id` pair
   via `ObtainGitHubCredentials`.
