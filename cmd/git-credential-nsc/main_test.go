@@ -68,6 +68,22 @@ func TestNonGetActionsAreSilent(t *testing.T) {
 	}
 }
 
+func TestVersionFlags(t *testing.T) {
+	for _, flag := range []string{"--version", "-v"} {
+		stdout := &strings.Builder{}
+		stderr := &strings.Builder{}
+		if code := run([]string{flag}, devnull{t}, stdout, stderr); code != 0 {
+			t.Errorf("run(%q) = %d, want 0", flag, code)
+		}
+		if want := buildRevision() + "\n"; stdout.String() != want {
+			t.Errorf("run(%q) stdout = %q, want %q", flag, stdout.String(), want)
+		}
+		if stderr.Len() != 0 {
+			t.Errorf("run(%q) wrote to stderr: %q", flag, stderr.String())
+		}
+	}
+}
+
 func TestInvalidInvocations(t *testing.T) {
 	endpoint := testEndpoint(t, func(t *testing.T, r *http.Request) {
 		t.Errorf("unexpected request to the secrets service: %s", r.URL.Path)
@@ -142,5 +158,8 @@ func TestGetEndToEndViaRun(t *testing.T) {
 	}
 	if !strings.Contains(debug.String(), "https://github.com/namespacelabs/internal.git") {
 		t.Errorf("debug output should log the validated repository URL: %s", debug.String())
+	}
+	if !strings.Contains(debug.String(), "git-credential-nsc version "+buildRevision()) {
+		t.Errorf("debug output should include the build revision: %s", debug.String())
 	}
 }

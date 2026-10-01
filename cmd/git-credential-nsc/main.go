@@ -7,6 +7,7 @@ import (
 	"io"
 	"net/url"
 	"os"
+	"runtime/debug"
 
 	"namespacelabs.dev/integrations/auth"
 	"namespacelabs.dev/integrations/nsc/apienv"
@@ -25,9 +26,16 @@ func run(args []string, stdin io.Reader, stdout, stderr io.Writer) int {
 		repository = flags.String("repository", "", "The repository URL to fetch credentials for (used with --validate).")
 		validate   = flags.Bool("validate", false, "If true, validates that credentials can be obtained for --repository.")
 		debug      = flags.Bool("debug", false, "Whether to emit debug statements.")
+		version    bool
 	)
+	flags.BoolVar(&version, "version", false, "Print the build's Git commit SHA.")
+	flags.BoolVar(&version, "v", false, "Print the build's Git commit SHA (same as --version).")
 	if err := flags.Parse(args); err != nil {
 		return 2
+	}
+	if version {
+		fmt.Fprintln(stdout, buildRevision())
+		return 0
 	}
 
 	endpoint := apienv.IAMEndpoint() + gitcredentials.ObtainGitCredentialsPath
@@ -48,6 +56,9 @@ func run(args []string, stdin io.Reader, stdout, stderr io.Writer) int {
 
 	if flags.Arg(0) != "get" {
 		return 0
+	}
+	if *debug {
+		fmt.Fprintf(stderr, "git-credential-nsc version %s\n", buildRevision())
 	}
 
 	tokenSource, err := auth.LoadDefaults()
@@ -102,4 +113,18 @@ func debugWriter(stderr io.Writer, debug bool) io.Writer {
 		return stderr
 	}
 	return nil
+}
+
+func buildRevision() string {
+	info, ok := debug.ReadBuildInfo()
+	if !ok {
+		return "unknown"
+	}
+
+	for _, setting := range info.Settings {
+		if setting.Key == "vcs.revision" && setting.Value != "" {
+			return setting.Value
+		}
+	}
+	return "unknown"
 }
