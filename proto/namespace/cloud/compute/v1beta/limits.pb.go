@@ -27,6 +27,7 @@ type UsagePolicy struct {
 	UsageLimits       *UsagePolicy_UsageLimits                  `protobuf:"bytes,2,opt,name=usage_limits,json=usageLimits,proto3" json:"usage_limits,omitempty"`                                                                                               // If set, limits how many resources can be used in a period.
 	EnabledPlatforms  []string                                  `protobuf:"bytes,3,rep,name=enabled_platforms,json=enabledPlatforms,proto3" json:"enabled_platforms,omitempty"`                                                                                // Overwrites the set of enabled platforms. E.g. linux/arm64, linux/amd64, macos/arm64, windows/amd64.
 	PerPlatformLimits map[string]*UsagePolicy_PerPlatformLimits `protobuf:"bytes,4,rep,name=per_platform_limits,json=perPlatformLimits,proto3" json:"per_platform_limits,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"` // Key is linux/amd64, linux/arm64, macos/arm64 or windows/amd64.
+	DevboxLimits      *UsagePolicy_DevboxLimits                 `protobuf:"bytes,5,opt,name=devbox_limits,json=devboxLimits,proto3" json:"devbox_limits,omitempty"`                                                                                            // If set, applies limits to devboxes created in a tenant.
 	unknownFields     protoimpl.UnknownFields
 	sizeCache         protoimpl.SizeCache
 }
@@ -85,6 +86,13 @@ func (x *UsagePolicy) GetEnabledPlatforms() []string {
 func (x *UsagePolicy) GetPerPlatformLimits() map[string]*UsagePolicy_PerPlatformLimits {
 	if x != nil {
 		return x.PerPlatformLimits
+	}
+	return nil
+}
+
+func (x *UsagePolicy) GetDevboxLimits() *UsagePolicy_DevboxLimits {
+	if x != nil {
+		return x.DevboxLimits
 	}
 	return nil
 }
@@ -417,16 +425,61 @@ func (x *UsagePolicy_PerShapeLimits) GetLimits() *UsagePolicy_ConcurrencyLimits 
 	return nil
 }
 
+type UsagePolicy_DevboxLimits struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	MaxCount      int32                  `protobuf:"varint,1,opt,name=max_count,json=maxCount,proto3" json:"max_count,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UsagePolicy_DevboxLimits) Reset() {
+	*x = UsagePolicy_DevboxLimits{}
+	mi := &file_proto_namespace_cloud_compute_v1beta_limits_proto_msgTypes[8]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UsagePolicy_DevboxLimits) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UsagePolicy_DevboxLimits) ProtoMessage() {}
+
+func (x *UsagePolicy_DevboxLimits) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_namespace_cloud_compute_v1beta_limits_proto_msgTypes[8]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UsagePolicy_DevboxLimits.ProtoReflect.Descriptor instead.
+func (*UsagePolicy_DevboxLimits) Descriptor() ([]byte, []int) {
+	return file_proto_namespace_cloud_compute_v1beta_limits_proto_rawDescGZIP(), []int{0, 7}
+}
+
+func (x *UsagePolicy_DevboxLimits) GetMaxCount() int32 {
+	if x != nil {
+		return x.MaxCount
+	}
+	return 0
+}
+
 var File_proto_namespace_cloud_compute_v1beta_limits_proto protoreflect.FileDescriptor
 
 const file_proto_namespace_cloud_compute_v1beta_limits_proto_rawDesc = "" +
 	"\n" +
-	"1proto/namespace/cloud/compute/v1beta/limits.proto\x12\x1enamespace.cloud.compute.v1beta\"\xba\v\n" +
+	"1proto/namespace/cloud/compute/v1beta/limits.proto\x12\x1enamespace.cloud.compute.v1beta\"\xc6\f\n" +
 	"\vUsagePolicy\x12l\n" +
 	"\x12concurrency_limits\x18\x01 \x01(\v2=.namespace.cloud.compute.v1beta.UsagePolicy.ConcurrencyLimitsR\x11concurrencyLimits\x12Z\n" +
 	"\fusage_limits\x18\x02 \x01(\v27.namespace.cloud.compute.v1beta.UsagePolicy.UsageLimitsR\vusageLimits\x12+\n" +
 	"\x11enabled_platforms\x18\x03 \x03(\tR\x10enabledPlatforms\x12r\n" +
-	"\x13per_platform_limits\x18\x04 \x03(\v2B.namespace.cloud.compute.v1beta.UsagePolicy.PerPlatformLimitsEntryR\x11perPlatformLimits\x1a\x83\x01\n" +
+	"\x13per_platform_limits\x18\x04 \x03(\v2B.namespace.cloud.compute.v1beta.UsagePolicy.PerPlatformLimitsEntryR\x11perPlatformLimits\x12]\n" +
+	"\rdevbox_limits\x18\x05 \x01(\v28.namespace.cloud.compute.v1beta.UsagePolicy.DevboxLimitsR\fdevboxLimits\x1a\x83\x01\n" +
 	"\x16PerPlatformLimitsEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12S\n" +
 	"\x05value\x18\x02 \x01(\v2=.namespace.cloud.compute.v1beta.UsagePolicy.PerPlatformLimitsR\x05value:\x028\x01\x1a~\n" +
@@ -449,7 +502,9 @@ const file_proto_namespace_cloud_compute_v1beta_limits_proto_rawDesc = "" +
 	"\tmemory_mb\x18\x02 \x01(\x03R\bmemoryMb\x1a\xbb\x01\n" +
 	"\x0ePerShapeLimits\x12R\n" +
 	"\x05shape\x18\x01 \x01(\v2<.namespace.cloud.compute.v1beta.UsagePolicy.MachineShapeSizeR\x05shape\x12U\n" +
-	"\x06limits\x18\x02 \x01(\v2=.namespace.cloud.compute.v1beta.UsagePolicy.ConcurrencyLimitsR\x06limitsB\xa1\x02\n" +
+	"\x06limits\x18\x02 \x01(\v2=.namespace.cloud.compute.v1beta.UsagePolicy.ConcurrencyLimitsR\x06limits\x1a+\n" +
+	"\fDevboxLimits\x12\x1b\n" +
+	"\tmax_count\x18\x01 \x01(\x05R\bmaxCountB\xa1\x02\n" +
 	"\"com.namespace.cloud.compute.v1betaB\vLimitsProtoP\x01ZQnamespacelabs.dev/integrations/proto/namespace/cloud/compute/v1beta;computev1beta\xa2\x02\x03NCC\xaa\x02\x1eNamespace.Cloud.Compute.V1beta\xca\x02\x1fNamespace_\\Cloud\\Compute\\V1beta\xe2\x02+Namespace_\\Cloud\\Compute\\V1beta\\GPBMetadata\xea\x02!Namespace::Cloud::Compute::V1betab\x06proto3"
 
 var (
@@ -464,7 +519,7 @@ func file_proto_namespace_cloud_compute_v1beta_limits_proto_rawDescGZIP() []byte
 	return file_proto_namespace_cloud_compute_v1beta_limits_proto_rawDescData
 }
 
-var file_proto_namespace_cloud_compute_v1beta_limits_proto_msgTypes = make([]protoimpl.MessageInfo, 8)
+var file_proto_namespace_cloud_compute_v1beta_limits_proto_msgTypes = make([]protoimpl.MessageInfo, 9)
 var file_proto_namespace_cloud_compute_v1beta_limits_proto_goTypes = []any{
 	(*UsagePolicy)(nil),                   // 0: namespace.cloud.compute.v1beta.UsagePolicy
 	nil,                                   // 1: namespace.cloud.compute.v1beta.UsagePolicy.PerPlatformLimitsEntry
@@ -474,23 +529,25 @@ var file_proto_namespace_cloud_compute_v1beta_limits_proto_goTypes = []any{
 	(*UsagePolicy_PerPlatformLimits)(nil), // 5: namespace.cloud.compute.v1beta.UsagePolicy.PerPlatformLimits
 	(*UsagePolicy_MachineShapeSize)(nil),  // 6: namespace.cloud.compute.v1beta.UsagePolicy.MachineShapeSize
 	(*UsagePolicy_PerShapeLimits)(nil),    // 7: namespace.cloud.compute.v1beta.UsagePolicy.PerShapeLimits
+	(*UsagePolicy_DevboxLimits)(nil),      // 8: namespace.cloud.compute.v1beta.UsagePolicy.DevboxLimits
 }
 var file_proto_namespace_cloud_compute_v1beta_limits_proto_depIdxs = []int32{
 	2,  // 0: namespace.cloud.compute.v1beta.UsagePolicy.concurrency_limits:type_name -> namespace.cloud.compute.v1beta.UsagePolicy.ConcurrencyLimits
 	3,  // 1: namespace.cloud.compute.v1beta.UsagePolicy.usage_limits:type_name -> namespace.cloud.compute.v1beta.UsagePolicy.UsageLimits
 	1,  // 2: namespace.cloud.compute.v1beta.UsagePolicy.per_platform_limits:type_name -> namespace.cloud.compute.v1beta.UsagePolicy.PerPlatformLimitsEntry
-	5,  // 3: namespace.cloud.compute.v1beta.UsagePolicy.PerPlatformLimitsEntry.value:type_name -> namespace.cloud.compute.v1beta.UsagePolicy.PerPlatformLimits
-	6,  // 4: namespace.cloud.compute.v1beta.UsagePolicy.ShapeLimits.largest_acceptable_shape:type_name -> namespace.cloud.compute.v1beta.UsagePolicy.MachineShapeSize
-	2,  // 5: namespace.cloud.compute.v1beta.UsagePolicy.PerPlatformLimits.concurrency_limits:type_name -> namespace.cloud.compute.v1beta.UsagePolicy.ConcurrencyLimits
-	4,  // 6: namespace.cloud.compute.v1beta.UsagePolicy.PerPlatformLimits.shape_limits:type_name -> namespace.cloud.compute.v1beta.UsagePolicy.ShapeLimits
-	7,  // 7: namespace.cloud.compute.v1beta.UsagePolicy.PerPlatformLimits.per_shape_limits:type_name -> namespace.cloud.compute.v1beta.UsagePolicy.PerShapeLimits
-	6,  // 8: namespace.cloud.compute.v1beta.UsagePolicy.PerShapeLimits.shape:type_name -> namespace.cloud.compute.v1beta.UsagePolicy.MachineShapeSize
-	2,  // 9: namespace.cloud.compute.v1beta.UsagePolicy.PerShapeLimits.limits:type_name -> namespace.cloud.compute.v1beta.UsagePolicy.ConcurrencyLimits
-	10, // [10:10] is the sub-list for method output_type
-	10, // [10:10] is the sub-list for method input_type
-	10, // [10:10] is the sub-list for extension type_name
-	10, // [10:10] is the sub-list for extension extendee
-	0,  // [0:10] is the sub-list for field type_name
+	8,  // 3: namespace.cloud.compute.v1beta.UsagePolicy.devbox_limits:type_name -> namespace.cloud.compute.v1beta.UsagePolicy.DevboxLimits
+	5,  // 4: namespace.cloud.compute.v1beta.UsagePolicy.PerPlatformLimitsEntry.value:type_name -> namespace.cloud.compute.v1beta.UsagePolicy.PerPlatformLimits
+	6,  // 5: namespace.cloud.compute.v1beta.UsagePolicy.ShapeLimits.largest_acceptable_shape:type_name -> namespace.cloud.compute.v1beta.UsagePolicy.MachineShapeSize
+	2,  // 6: namespace.cloud.compute.v1beta.UsagePolicy.PerPlatformLimits.concurrency_limits:type_name -> namespace.cloud.compute.v1beta.UsagePolicy.ConcurrencyLimits
+	4,  // 7: namespace.cloud.compute.v1beta.UsagePolicy.PerPlatformLimits.shape_limits:type_name -> namespace.cloud.compute.v1beta.UsagePolicy.ShapeLimits
+	7,  // 8: namespace.cloud.compute.v1beta.UsagePolicy.PerPlatformLimits.per_shape_limits:type_name -> namespace.cloud.compute.v1beta.UsagePolicy.PerShapeLimits
+	6,  // 9: namespace.cloud.compute.v1beta.UsagePolicy.PerShapeLimits.shape:type_name -> namespace.cloud.compute.v1beta.UsagePolicy.MachineShapeSize
+	2,  // 10: namespace.cloud.compute.v1beta.UsagePolicy.PerShapeLimits.limits:type_name -> namespace.cloud.compute.v1beta.UsagePolicy.ConcurrencyLimits
+	11, // [11:11] is the sub-list for method output_type
+	11, // [11:11] is the sub-list for method input_type
+	11, // [11:11] is the sub-list for extension type_name
+	11, // [11:11] is the sub-list for extension extendee
+	0,  // [0:11] is the sub-list for field type_name
 }
 
 func init() { file_proto_namespace_cloud_compute_v1beta_limits_proto_init() }
@@ -504,7 +561,7 @@ func file_proto_namespace_cloud_compute_v1beta_limits_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_proto_namespace_cloud_compute_v1beta_limits_proto_rawDesc), len(file_proto_namespace_cloud_compute_v1beta_limits_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   8,
+			NumMessages:   9,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
