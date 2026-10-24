@@ -16,6 +16,7 @@ import (
 	"os"
 	"path/filepath"
 	"slices"
+	"strconv"
 	"strings"
 	"sync"
 	"sync/atomic"
@@ -243,6 +244,9 @@ func downloadChunk(ctx context.Context, output *os.File, chunk, totalSize int64,
 	if resp.StatusCode != http.StatusPartialContent {
 		return 0, "", fmt.Errorf("download chunk %d: unexpected HTTP status %d", chunk, resp.StatusCode)
 	}
+	if value := resp.Header.Get("Content-Range"); !validContentRange(value, start, end, totalSize) {
+		return 0, "", fmt.Errorf("download chunk %d: unexpected Content-Range %q for bytes %d-%d/%d", chunk, value, start, end, totalSize)
+	}
 
 	hasher := sha256.New()
 	w := io.MultiWriter(io.NewOffsetWriter(output, start), hasher)
@@ -256,6 +260,40 @@ func downloadChunk(ctx context.Context, output *os.File, chunk, totalSize int64,
 
 	return written, "sha256:" + hex.EncodeToString(hasher.Sum(nil)), nil
 }
+
+// --- Content-Range validation helpers ---
+
+// validContentRange prevents a successful response for a different byte interval
+// from being written at the requested offset and recorded as a completed chunk.
+func validContentRange(value string, start, end, total int64) bool {
+	unit, value, ok := strings.Cut(strings.TrimSpace(value), " ")
+	if !ok || !strings.EqualFold(unit, "bytes") {
+		return false
+	}
+	interval, length, ok := strings.Cut(value, "/")
+	if !ok {
+		return false
+	}
+	first, last, ok := strings.Cut(interval, "-")
+	if !ok {
+		return false
+	}
+	firstPos, err := strconv.ParseUint(first, 10, 63)
+	if err != nil || firstPos != uint64(start) {
+		return false
+	}
+	lastPos, err := strconv.ParseUint(last, 10, 63)
+	if err != nil || lastPos != uint64(end) {
+		return false
+	}
+	if length == "*" {
+		return true
+	}
+	completeLength, err := strconv.ParseUint(length, 10, 63)
+	return err == nil && completeLength == uint64(total)
+}
+
+// --- End Content-Range validation helpers ---
 
 func downloadSingleStream(ctx context.Context, destPath string, opts Options) (retErr error) {
 	url, err := opts.ResolveURL(ctx)
