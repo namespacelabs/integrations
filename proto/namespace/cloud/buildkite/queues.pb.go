@@ -121,6 +121,55 @@ func (OpenTelemetrySettings_OTLPProtocol) EnumDescriptor() ([]byte, []int) {
 	return file_proto_namespace_cloud_buildkite_queues_proto_rawDescGZIP(), []int{6, 0}
 }
 
+type CacheVolumeSettings_CacheVolumePermissions int32
+
+const (
+	CacheVolumeSettings_CACHE_VOLUME_PERMISSIONS_UNSPECIFIED CacheVolumeSettings_CacheVolumePermissions = 0
+	CacheVolumeSettings_CACHE_VOLUME_PERMISSIONS_READ_WRITE  CacheVolumeSettings_CacheVolumePermissions = 1
+	CacheVolumeSettings_CACHE_VOLUME_PERMISSIONS_READ_ONLY   CacheVolumeSettings_CacheVolumePermissions = 2
+)
+
+// Enum value maps for CacheVolumeSettings_CacheVolumePermissions.
+var (
+	CacheVolumeSettings_CacheVolumePermissions_name = map[int32]string{
+		0: "CACHE_VOLUME_PERMISSIONS_UNSPECIFIED",
+		1: "CACHE_VOLUME_PERMISSIONS_READ_WRITE",
+		2: "CACHE_VOLUME_PERMISSIONS_READ_ONLY",
+	}
+	CacheVolumeSettings_CacheVolumePermissions_value = map[string]int32{
+		"CACHE_VOLUME_PERMISSIONS_UNSPECIFIED": 0,
+		"CACHE_VOLUME_PERMISSIONS_READ_WRITE":  1,
+		"CACHE_VOLUME_PERMISSIONS_READ_ONLY":   2,
+	}
+)
+
+func (x CacheVolumeSettings_CacheVolumePermissions) Enum() *CacheVolumeSettings_CacheVolumePermissions {
+	p := new(CacheVolumeSettings_CacheVolumePermissions)
+	*p = x
+	return p
+}
+
+func (x CacheVolumeSettings_CacheVolumePermissions) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (CacheVolumeSettings_CacheVolumePermissions) Descriptor() protoreflect.EnumDescriptor {
+	return file_proto_namespace_cloud_buildkite_queues_proto_enumTypes[2].Descriptor()
+}
+
+func (CacheVolumeSettings_CacheVolumePermissions) Type() protoreflect.EnumType {
+	return &file_proto_namespace_cloud_buildkite_queues_proto_enumTypes[2]
+}
+
+func (x CacheVolumeSettings_CacheVolumePermissions) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use CacheVolumeSettings_CacheVolumePermissions.Descriptor instead.
+func (CacheVolumeSettings_CacheVolumePermissions) EnumDescriptor() ([]byte, []int) {
+	return file_proto_namespace_cloud_buildkite_queues_proto_rawDescGZIP(), []int{8, 0}
+}
+
 type ListQueuesRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	unknownFields protoimpl.UnknownFields
@@ -354,6 +403,7 @@ type QueueSettings struct {
 	// Jobs fail if they also set nsc-egress-policy in their agent tags.
 	EgressPolicyTag       string                 `protobuf:"bytes,2,opt,name=egress_policy_tag,json=egressPolicyTag,proto3" json:"egress_policy_tag,omitempty"`
 	OpenTelemetrySettings *OpenTelemetrySettings `protobuf:"bytes,3,opt,name=open_telemetry_settings,json=openTelemetrySettings,proto3" json:"open_telemetry_settings,omitempty"`
+	CacheVolumeSettings   *CacheVolumeSettings   `protobuf:"bytes,4,opt,name=cache_volume_settings,json=cacheVolumeSettings,proto3" json:"cache_volume_settings,omitempty"`
 	unknownFields         protoimpl.UnknownFields
 	sizeCache             protoimpl.SizeCache
 }
@@ -409,10 +459,17 @@ func (x *QueueSettings) GetOpenTelemetrySettings() *OpenTelemetrySettings {
 	return nil
 }
 
+func (x *QueueSettings) GetCacheVolumeSettings() *CacheVolumeSettings {
+	if x != nil {
+		return x.CacheVolumeSettings
+	}
+	return nil
+}
+
 type OpenTelemetrySettings struct {
 	state        protoimpl.MessageState `protogen:"open.v1"`
 	OtlpEndpoint string                 `protobuf:"bytes,1,opt,name=otlp_endpoint,json=otlpEndpoint,proto3" json:"otlp_endpoint,omitempty"`
-	// Headers to be passed to the OTel collector..
+	// Headers to be passed to the OTel collector.
 	// Example: {name: "Authorization", value_from: {from_secret_id: "sec_abcdefg"}}
 	// with sec_abcdefg containing the value "Bearer <token>".
 	// Many providers also support additional or custom headers.
@@ -536,6 +593,50 @@ func (x *Permissions) GetWorkloadPermissions() []*v1beta.Permission {
 	return nil
 }
 
+type CacheVolumeSettings struct {
+	state         protoimpl.MessageState                     `protogen:"open.v1"`
+	Permissions   CacheVolumeSettings_CacheVolumePermissions `protobuf:"varint,1,opt,name=permissions,proto3,enum=namespace.cloud.buildkite.CacheVolumeSettings_CacheVolumePermissions" json:"permissions,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CacheVolumeSettings) Reset() {
+	*x = CacheVolumeSettings{}
+	mi := &file_proto_namespace_cloud_buildkite_queues_proto_msgTypes[8]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CacheVolumeSettings) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CacheVolumeSettings) ProtoMessage() {}
+
+func (x *CacheVolumeSettings) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_namespace_cloud_buildkite_queues_proto_msgTypes[8]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CacheVolumeSettings.ProtoReflect.Descriptor instead.
+func (*CacheVolumeSettings) Descriptor() ([]byte, []int) {
+	return file_proto_namespace_cloud_buildkite_queues_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *CacheVolumeSettings) GetPermissions() CacheVolumeSettings_CacheVolumePermissions {
+	if x != nil {
+		return x.Permissions
+	}
+	return CacheVolumeSettings_CACHE_VOLUME_PERMISSIONS_UNSPECIFIED
+}
+
 type BuildkiteQueue struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// The managed queue ID generated by Namespace.
@@ -554,7 +655,7 @@ type BuildkiteQueue struct {
 
 func (x *BuildkiteQueue) Reset() {
 	*x = BuildkiteQueue{}
-	mi := &file_proto_namespace_cloud_buildkite_queues_proto_msgTypes[8]
+	mi := &file_proto_namespace_cloud_buildkite_queues_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -566,7 +667,7 @@ func (x *BuildkiteQueue) String() string {
 func (*BuildkiteQueue) ProtoMessage() {}
 
 func (x *BuildkiteQueue) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_cloud_buildkite_queues_proto_msgTypes[8]
+	mi := &file_proto_namespace_cloud_buildkite_queues_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -579,7 +680,7 @@ func (x *BuildkiteQueue) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BuildkiteQueue.ProtoReflect.Descriptor instead.
 func (*BuildkiteQueue) Descriptor() ([]byte, []int) {
-	return file_proto_namespace_cloud_buildkite_queues_proto_rawDescGZIP(), []int{8}
+	return file_proto_namespace_cloud_buildkite_queues_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *BuildkiteQueue) GetId() string {
@@ -629,7 +730,7 @@ type Organization struct {
 
 func (x *Organization) Reset() {
 	*x = Organization{}
-	mi := &file_proto_namespace_cloud_buildkite_queues_proto_msgTypes[9]
+	mi := &file_proto_namespace_cloud_buildkite_queues_proto_msgTypes[10]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -641,7 +742,7 @@ func (x *Organization) String() string {
 func (*Organization) ProtoMessage() {}
 
 func (x *Organization) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_namespace_cloud_buildkite_queues_proto_msgTypes[9]
+	mi := &file_proto_namespace_cloud_buildkite_queues_proto_msgTypes[10]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -654,7 +755,7 @@ func (x *Organization) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Organization.ProtoReflect.Descriptor instead.
 func (*Organization) Descriptor() ([]byte, []int) {
-	return file_proto_namespace_cloud_buildkite_queues_proto_rawDescGZIP(), []int{9}
+	return file_proto_namespace_cloud_buildkite_queues_proto_rawDescGZIP(), []int{10}
 }
 
 func (x *Organization) GetOrgSlug() string {
@@ -685,11 +786,12 @@ const file_proto_namespace_cloud_buildkite_queues_proto_rawDesc = "" +
 	"\x05queue\x18\x01 \x01(\v2).namespace.cloud.buildkite.BuildkiteQueueR\x05queue\"u\n" +
 	"\x12UpdateQueueRequest\x12\x19\n" +
 	"\bqueue_id\x18\x01 \x01(\tR\aqueueId\x12D\n" +
-	"\bsettings\x18\x02 \x01(\v2(.namespace.cloud.buildkite.QueueSettingsR\bsettings\"\xef\x01\n" +
+	"\bsettings\x18\x02 \x01(\v2(.namespace.cloud.buildkite.QueueSettingsR\bsettings\"\xd3\x02\n" +
 	"\rQueueSettings\x12H\n" +
 	"\vpermissions\x18\x01 \x01(\v2&.namespace.cloud.buildkite.PermissionsR\vpermissions\x12*\n" +
 	"\x11egress_policy_tag\x18\x02 \x01(\tR\x0fegressPolicyTag\x12h\n" +
-	"\x17open_telemetry_settings\x18\x03 \x01(\v20.namespace.cloud.buildkite.OpenTelemetrySettingsR\x15openTelemetrySettings\"\x82\x04\n" +
+	"\x17open_telemetry_settings\x18\x03 \x01(\v20.namespace.cloud.buildkite.OpenTelemetrySettingsR\x15openTelemetrySettings\x12b\n" +
+	"\x15cache_volume_settings\x18\x04 \x01(\v2..namespace.cloud.buildkite.CacheVolumeSettingsR\x13cacheVolumeSettings\"\x82\x04\n" +
 	"\x15OpenTelemetrySettings\x12#\n" +
 	"\rotlp_endpoint\x18\x01 \x01(\tR\fotlpEndpoint\x126\n" +
 	"\aheaders\x18\x02 \x03(\v2\x1c.namespace.stdlib.HttpHeaderR\aheaders\x12b\n" +
@@ -704,7 +806,13 @@ const file_proto_namespace_cloud_buildkite_queues_proto_rawDesc = "" +
 	"\x1bOTLP_PROTOCOL_HTTP_PROTOBUF\x10\x02\"\xbf\x01\n" +
 	"\vPermissions\x12U\n" +
 	"\x10permissions_type\x18\x01 \x01(\x0e2*.namespace.cloud.buildkite.PermissionsTypeR\x0fpermissionsType\x12Y\n" +
-	"\x14workload_permissions\x18\x02 \x03(\v2&.namespace.cloud.iam.v1beta.PermissionR\x13workloadPermissions\"\xec\x01\n" +
+	"\x14workload_permissions\x18\x02 \x03(\v2&.namespace.cloud.iam.v1beta.PermissionR\x13workloadPermissions\"\x94\x02\n" +
+	"\x13CacheVolumeSettings\x12g\n" +
+	"\vpermissions\x18\x01 \x01(\x0e2E.namespace.cloud.buildkite.CacheVolumeSettings.CacheVolumePermissionsR\vpermissions\"\x93\x01\n" +
+	"\x16CacheVolumePermissions\x12(\n" +
+	"$CACHE_VOLUME_PERMISSIONS_UNSPECIFIED\x10\x00\x12'\n" +
+	"#CACHE_VOLUME_PERMISSIONS_READ_WRITE\x10\x01\x12&\n" +
+	"\"CACHE_VOLUME_PERMISSIONS_READ_ONLY\x10\x02\"\xec\x01\n" +
 	"\x0eBuildkiteQueue\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1d\n" +
 	"\n" +
@@ -739,49 +847,53 @@ func file_proto_namespace_cloud_buildkite_queues_proto_rawDescGZIP() []byte {
 	return file_proto_namespace_cloud_buildkite_queues_proto_rawDescData
 }
 
-var file_proto_namespace_cloud_buildkite_queues_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
-var file_proto_namespace_cloud_buildkite_queues_proto_msgTypes = make([]protoimpl.MessageInfo, 11)
+var file_proto_namespace_cloud_buildkite_queues_proto_enumTypes = make([]protoimpl.EnumInfo, 3)
+var file_proto_namespace_cloud_buildkite_queues_proto_msgTypes = make([]protoimpl.MessageInfo, 12)
 var file_proto_namespace_cloud_buildkite_queues_proto_goTypes = []any{
-	(PermissionsType)(0),                    // 0: namespace.cloud.buildkite.PermissionsType
-	(OpenTelemetrySettings_OTLPProtocol)(0), // 1: namespace.cloud.buildkite.OpenTelemetrySettings.OTLPProtocol
-	(*ListQueuesRequest)(nil),               // 2: namespace.cloud.buildkite.ListQueuesRequest
-	(*ListQueuesResponse)(nil),              // 3: namespace.cloud.buildkite.ListQueuesResponse
-	(*GetQueueRequest)(nil),                 // 4: namespace.cloud.buildkite.GetQueueRequest
-	(*QueueResponse)(nil),                   // 5: namespace.cloud.buildkite.QueueResponse
-	(*UpdateQueueRequest)(nil),              // 6: namespace.cloud.buildkite.UpdateQueueRequest
-	(*QueueSettings)(nil),                   // 7: namespace.cloud.buildkite.QueueSettings
-	(*OpenTelemetrySettings)(nil),           // 8: namespace.cloud.buildkite.OpenTelemetrySettings
-	(*Permissions)(nil),                     // 9: namespace.cloud.buildkite.Permissions
-	(*BuildkiteQueue)(nil),                  // 10: namespace.cloud.buildkite.BuildkiteQueue
-	(*Organization)(nil),                    // 11: namespace.cloud.buildkite.Organization
-	nil,                                     // 12: namespace.cloud.buildkite.OpenTelemetrySettings.ResourceAttributesEntry
-	(*stdlib.HttpHeader)(nil),               // 13: namespace.stdlib.HttpHeader
-	(*v1beta.Permission)(nil),               // 14: namespace.cloud.iam.v1beta.Permission
+	(PermissionsType)(0),                            // 0: namespace.cloud.buildkite.PermissionsType
+	(OpenTelemetrySettings_OTLPProtocol)(0),         // 1: namespace.cloud.buildkite.OpenTelemetrySettings.OTLPProtocol
+	(CacheVolumeSettings_CacheVolumePermissions)(0), // 2: namespace.cloud.buildkite.CacheVolumeSettings.CacheVolumePermissions
+	(*ListQueuesRequest)(nil),                       // 3: namespace.cloud.buildkite.ListQueuesRequest
+	(*ListQueuesResponse)(nil),                      // 4: namespace.cloud.buildkite.ListQueuesResponse
+	(*GetQueueRequest)(nil),                         // 5: namespace.cloud.buildkite.GetQueueRequest
+	(*QueueResponse)(nil),                           // 6: namespace.cloud.buildkite.QueueResponse
+	(*UpdateQueueRequest)(nil),                      // 7: namespace.cloud.buildkite.UpdateQueueRequest
+	(*QueueSettings)(nil),                           // 8: namespace.cloud.buildkite.QueueSettings
+	(*OpenTelemetrySettings)(nil),                   // 9: namespace.cloud.buildkite.OpenTelemetrySettings
+	(*Permissions)(nil),                             // 10: namespace.cloud.buildkite.Permissions
+	(*CacheVolumeSettings)(nil),                     // 11: namespace.cloud.buildkite.CacheVolumeSettings
+	(*BuildkiteQueue)(nil),                          // 12: namespace.cloud.buildkite.BuildkiteQueue
+	(*Organization)(nil),                            // 13: namespace.cloud.buildkite.Organization
+	nil,                                             // 14: namespace.cloud.buildkite.OpenTelemetrySettings.ResourceAttributesEntry
+	(*stdlib.HttpHeader)(nil),                       // 15: namespace.stdlib.HttpHeader
+	(*v1beta.Permission)(nil),                       // 16: namespace.cloud.iam.v1beta.Permission
 }
 var file_proto_namespace_cloud_buildkite_queues_proto_depIdxs = []int32{
-	10, // 0: namespace.cloud.buildkite.ListQueuesResponse.queues:type_name -> namespace.cloud.buildkite.BuildkiteQueue
-	10, // 1: namespace.cloud.buildkite.QueueResponse.queue:type_name -> namespace.cloud.buildkite.BuildkiteQueue
-	7,  // 2: namespace.cloud.buildkite.UpdateQueueRequest.settings:type_name -> namespace.cloud.buildkite.QueueSettings
-	9,  // 3: namespace.cloud.buildkite.QueueSettings.permissions:type_name -> namespace.cloud.buildkite.Permissions
-	8,  // 4: namespace.cloud.buildkite.QueueSettings.open_telemetry_settings:type_name -> namespace.cloud.buildkite.OpenTelemetrySettings
-	13, // 5: namespace.cloud.buildkite.OpenTelemetrySettings.headers:type_name -> namespace.stdlib.HttpHeader
-	1,  // 6: namespace.cloud.buildkite.OpenTelemetrySettings.otlp_protocol:type_name -> namespace.cloud.buildkite.OpenTelemetrySettings.OTLPProtocol
-	12, // 7: namespace.cloud.buildkite.OpenTelemetrySettings.resource_attributes:type_name -> namespace.cloud.buildkite.OpenTelemetrySettings.ResourceAttributesEntry
-	0,  // 8: namespace.cloud.buildkite.Permissions.permissions_type:type_name -> namespace.cloud.buildkite.PermissionsType
-	14, // 9: namespace.cloud.buildkite.Permissions.workload_permissions:type_name -> namespace.cloud.iam.v1beta.Permission
-	11, // 10: namespace.cloud.buildkite.BuildkiteQueue.organization:type_name -> namespace.cloud.buildkite.Organization
-	7,  // 11: namespace.cloud.buildkite.BuildkiteQueue.settings:type_name -> namespace.cloud.buildkite.QueueSettings
-	2,  // 12: namespace.cloud.buildkite.QueueService.ListQueues:input_type -> namespace.cloud.buildkite.ListQueuesRequest
-	4,  // 13: namespace.cloud.buildkite.QueueService.GetQueue:input_type -> namespace.cloud.buildkite.GetQueueRequest
-	6,  // 14: namespace.cloud.buildkite.QueueService.UpdateQueue:input_type -> namespace.cloud.buildkite.UpdateQueueRequest
-	3,  // 15: namespace.cloud.buildkite.QueueService.ListQueues:output_type -> namespace.cloud.buildkite.ListQueuesResponse
-	5,  // 16: namespace.cloud.buildkite.QueueService.GetQueue:output_type -> namespace.cloud.buildkite.QueueResponse
-	5,  // 17: namespace.cloud.buildkite.QueueService.UpdateQueue:output_type -> namespace.cloud.buildkite.QueueResponse
-	15, // [15:18] is the sub-list for method output_type
-	12, // [12:15] is the sub-list for method input_type
-	12, // [12:12] is the sub-list for extension type_name
-	12, // [12:12] is the sub-list for extension extendee
-	0,  // [0:12] is the sub-list for field type_name
+	12, // 0: namespace.cloud.buildkite.ListQueuesResponse.queues:type_name -> namespace.cloud.buildkite.BuildkiteQueue
+	12, // 1: namespace.cloud.buildkite.QueueResponse.queue:type_name -> namespace.cloud.buildkite.BuildkiteQueue
+	8,  // 2: namespace.cloud.buildkite.UpdateQueueRequest.settings:type_name -> namespace.cloud.buildkite.QueueSettings
+	10, // 3: namespace.cloud.buildkite.QueueSettings.permissions:type_name -> namespace.cloud.buildkite.Permissions
+	9,  // 4: namespace.cloud.buildkite.QueueSettings.open_telemetry_settings:type_name -> namespace.cloud.buildkite.OpenTelemetrySettings
+	11, // 5: namespace.cloud.buildkite.QueueSettings.cache_volume_settings:type_name -> namespace.cloud.buildkite.CacheVolumeSettings
+	15, // 6: namespace.cloud.buildkite.OpenTelemetrySettings.headers:type_name -> namespace.stdlib.HttpHeader
+	1,  // 7: namespace.cloud.buildkite.OpenTelemetrySettings.otlp_protocol:type_name -> namespace.cloud.buildkite.OpenTelemetrySettings.OTLPProtocol
+	14, // 8: namespace.cloud.buildkite.OpenTelemetrySettings.resource_attributes:type_name -> namespace.cloud.buildkite.OpenTelemetrySettings.ResourceAttributesEntry
+	0,  // 9: namespace.cloud.buildkite.Permissions.permissions_type:type_name -> namespace.cloud.buildkite.PermissionsType
+	16, // 10: namespace.cloud.buildkite.Permissions.workload_permissions:type_name -> namespace.cloud.iam.v1beta.Permission
+	2,  // 11: namespace.cloud.buildkite.CacheVolumeSettings.permissions:type_name -> namespace.cloud.buildkite.CacheVolumeSettings.CacheVolumePermissions
+	13, // 12: namespace.cloud.buildkite.BuildkiteQueue.organization:type_name -> namespace.cloud.buildkite.Organization
+	8,  // 13: namespace.cloud.buildkite.BuildkiteQueue.settings:type_name -> namespace.cloud.buildkite.QueueSettings
+	3,  // 14: namespace.cloud.buildkite.QueueService.ListQueues:input_type -> namespace.cloud.buildkite.ListQueuesRequest
+	5,  // 15: namespace.cloud.buildkite.QueueService.GetQueue:input_type -> namespace.cloud.buildkite.GetQueueRequest
+	7,  // 16: namespace.cloud.buildkite.QueueService.UpdateQueue:input_type -> namespace.cloud.buildkite.UpdateQueueRequest
+	4,  // 17: namespace.cloud.buildkite.QueueService.ListQueues:output_type -> namespace.cloud.buildkite.ListQueuesResponse
+	6,  // 18: namespace.cloud.buildkite.QueueService.GetQueue:output_type -> namespace.cloud.buildkite.QueueResponse
+	6,  // 19: namespace.cloud.buildkite.QueueService.UpdateQueue:output_type -> namespace.cloud.buildkite.QueueResponse
+	17, // [17:20] is the sub-list for method output_type
+	14, // [14:17] is the sub-list for method input_type
+	14, // [14:14] is the sub-list for extension type_name
+	14, // [14:14] is the sub-list for extension extendee
+	0,  // [0:14] is the sub-list for field type_name
 }
 
 func init() { file_proto_namespace_cloud_buildkite_queues_proto_init() }
@@ -794,8 +906,8 @@ func file_proto_namespace_cloud_buildkite_queues_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_proto_namespace_cloud_buildkite_queues_proto_rawDesc), len(file_proto_namespace_cloud_buildkite_queues_proto_rawDesc)),
-			NumEnums:      2,
-			NumMessages:   11,
+			NumEnums:      3,
+			NumMessages:   12,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
