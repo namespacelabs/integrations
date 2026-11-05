@@ -12,6 +12,7 @@ import (
 	emptypb "google.golang.org/protobuf/types/known/emptypb"
 	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
 	v1beta "namespacelabs.dev/integrations/proto/namespace/cloud/compute/v1beta"
+	v1beta1 "namespacelabs.dev/integrations/proto/namespace/cloud/iam/v1beta"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
@@ -94,6 +95,7 @@ const (
 	AccessLevel_ACCESS_LEVEL_LIMITED AccessLevel = 2
 	// Disables Namespace feature access for the workload.
 	AccessLevel_ACCESS_LEVEL_RESTRICTED AccessLevel = 3
+	AccessLevel_ACCESS_LEVEL_CUSTOM     AccessLevel = 4
 )
 
 // Enum value maps for AccessLevel.
@@ -103,12 +105,14 @@ var (
 		1: "ACCESS_LEVEL_PERMISSIVE",
 		2: "ACCESS_LEVEL_LIMITED",
 		3: "ACCESS_LEVEL_RESTRICTED",
+		4: "ACCESS_LEVEL_CUSTOM",
 	}
 	AccessLevel_value = map[string]int32{
 		"ACCESS_LEVEL_UNSPECIFIED": 0,
 		"ACCESS_LEVEL_PERMISSIVE":  1,
 		"ACCESS_LEVEL_LIMITED":     2,
 		"ACCESS_LEVEL_RESTRICTED":  3,
+		"ACCESS_LEVEL_CUSTOM":      4,
 	}
 )
 
@@ -391,8 +395,6 @@ func (x *RunnerProfileWithStatus) GetStatus() *RunnerProfileStatus {
 // CacheVolumeSettings configures persistent volumes attached to runners.
 type CacheVolumeSettings struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// Unique identifier for this cache volume within the profile.
-	VolumeTag string `protobuf:"bytes,1,opt,name=volume_tag,json=volumeTag,proto3" json:"volume_tag,omitempty"`
 	// Total size of the volume in gigabytes.
 	VolumeSizeGb int32 `protobuf:"varint,2,opt,name=volume_size_gb,json=volumeSizeGb,proto3" json:"volume_size_gb,omitempty"`
 	// Reserved size that cannot be used by the cache, in gigabytes.
@@ -442,13 +444,6 @@ func (x *CacheVolumeSettings) ProtoReflect() protoreflect.Message {
 // Deprecated: Use CacheVolumeSettings.ProtoReflect.Descriptor instead.
 func (*CacheVolumeSettings) Descriptor() ([]byte, []int) {
 	return file_proto_namespace_cloud_github_v1beta_profiles_proto_rawDescGZIP(), []int{2}
-}
-
-func (x *CacheVolumeSettings) GetVolumeTag() string {
-	if x != nil {
-		return x.VolumeTag
-	}
-	return ""
 }
 
 func (x *CacheVolumeSettings) GetVolumeSizeGb() int32 {
@@ -839,9 +834,10 @@ type RunnerProfileSpec struct {
 	// Controls which Namespace features the runner workload can access.
 	AccessLevel AccessLevel `protobuf:"varint,11,opt,name=access_level,json=accessLevel,proto3,enum=namespace.cloud.github.v1beta.AccessLevel" json:"access_level,omitempty"`
 	// Size of the swap file to provision on the runner, in megabytes.
-	SwapSizeMb    int32 `protobuf:"varint,12,opt,name=swap_size_mb,json=swapSizeMb,proto3" json:"swap_size_mb,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	SwapSizeMb        int32                 `protobuf:"varint,12,opt,name=swap_size_mb,json=swapSizeMb,proto3" json:"swap_size_mb,omitempty"`
+	CustomPermissions []*v1beta1.Permission `protobuf:"bytes,13,rep,name=custom_permissions,json=customPermissions,proto3" json:"custom_permissions,omitempty"`
+	unknownFields     protoimpl.UnknownFields
+	sizeCache         protoimpl.SizeCache
 }
 
 func (x *RunnerProfileSpec) Reset() {
@@ -956,6 +952,13 @@ func (x *RunnerProfileSpec) GetSwapSizeMb() int32 {
 		return x.SwapSizeMb
 	}
 	return 0
+}
+
+func (x *RunnerProfileSpec) GetCustomPermissions() []*v1beta1.Permission {
+	if x != nil {
+		return x.CustomPermissions
+	}
+	return nil
 }
 
 // NetworkPolicy configures network egress restrictions for runners.
@@ -1424,7 +1427,7 @@ var File_proto_namespace_cloud_github_v1beta_profiles_proto protoreflect.FileDes
 
 const file_proto_namespace_cloud_github_v1beta_profiles_proto_rawDesc = "" +
 	"\n" +
-	"2proto/namespace/cloud/github/v1beta/profiles.proto\x12\x1dnamespace.cloud.github.v1beta\x1a\x1bgoogle/protobuf/empty.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a2proto/namespace/cloud/compute/v1beta/compute.proto\"w\n" +
+	"2proto/namespace/cloud/github/v1beta/profiles.proto\x12\x1dnamespace.cloud.github.v1beta\x1a\x1bgoogle/protobuf/empty.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a2proto/namespace/cloud/compute/v1beta/compute.proto\x1a,proto/namespace/cloud/iam/v1beta/authz.proto\"w\n" +
 	"\x13RunnerProfileStatus\x12`\n" +
 	"\x13custom_runner_image\x18\x01 \x03(\v20.namespace.cloud.github.v1beta.CustomRunnerImageR\x11customRunnerImage\"\xda\x02\n" +
 	"\x17RunnerProfileWithStatus\x12\x1d\n" +
@@ -1436,10 +1439,8 @@ const file_proto_namespace_cloud_github_v1beta_profiles_proto_rawDesc = "" +
 	"created_at\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\x129\n" +
 	"\n" +
 	"updated_at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\tupdatedAt\x12J\n" +
-	"\x06status\x18\x06 \x01(\v22.namespace.cloud.github.v1beta.RunnerProfileStatusR\x06status\"\xe4\x03\n" +
-	"\x13CacheVolumeSettings\x12\x1d\n" +
-	"\n" +
-	"volume_tag\x18\x01 \x01(\tR\tvolumeTag\x12$\n" +
+	"\x06status\x18\x06 \x01(\v22.namespace.cloud.github.v1beta.RunnerProfileStatusR\x06status\"\xd7\x03\n" +
+	"\x13CacheVolumeSettings\x12$\n" +
 	"\x0evolume_size_gb\x18\x02 \x01(\x05R\fvolumeSizeGb\x125\n" +
 	"\x17volume_reserved_size_gb\x18\x03 \x01(\x05R\x14volumeReservedSizeGb\x126\n" +
 	"\x17bundled_container_cache\x18\x04 \x01(\bR\x15bundledContainerCache\x124\n" +
@@ -1447,7 +1448,8 @@ const file_proto_namespace_cloud_github_v1beta_profiles_proto_rawDesc = "" +
 	"\x12bundled_git_mirror\x18\x06 \x01(\bR\x10bundledGitMirror\x12;\n" +
 	"\x1abundled_runner_tools_cache\x18\a \x01(\bR\x17bundledRunnerToolsCache\x12?\n" +
 	"\x1cbundled_runner_actions_cache\x18\b \x01(\bR\x19bundledRunnerActionsCache\x127\n" +
-	"\x18allow_commit_from_branch\x18\t \x03(\tR\x15allowCommitFromBranch\"6\n" +
+	"\x18allow_commit_from_branch\x18\t \x03(\tR\x15allowCommitFromBranchJ\x04\b\x01\x10\x02R\n" +
+	"volume_tag\"6\n" +
 	"\x13UbuntuBaseImageSpec\x12\x1f\n" +
 	"\vapt_package\x18\x01 \x03(\tR\n" +
 	"aptPackage\"D\n" +
@@ -1475,7 +1477,7 @@ const file_proto_namespace_cloud_github_v1beta_profiles_proto_rawDesc = "" +
 	"\x11CustomRunnerImage\x12S\n" +
 	"\n" +
 	"image_spec\x18\x01 \x01(\v24.namespace.cloud.github.v1beta.CustomRunnerImageSpecR\timageSpec\x12Y\n" +
-	"\fimage_status\x18\x02 \x01(\v26.namespace.cloud.github.v1beta.CustomRunnerImageStatusR\vimageStatus\"\xe4\x05\n" +
+	"\fimage_status\x18\x02 \x01(\v26.namespace.cloud.github.v1beta.CustomRunnerImageStatusR\vimageStatus\"\xbb\x06\n" +
 	"\x11RunnerProfileSpec\x12\x10\n" +
 	"\x03tag\x18\x01 \x01(\tR\x03tag\x12 \n" +
 	"\vdescription\x18\x02 \x01(\tR\vdescription\x12\x0e\n" +
@@ -1490,7 +1492,8 @@ const file_proto_namespace_cloud_github_v1beta_profiles_proto_rawDesc = "" +
 	" \x01(\v2,.namespace.cloud.github.v1beta.NetworkPolicyR\rnetworkPolicy\x12M\n" +
 	"\faccess_level\x18\v \x01(\x0e2*.namespace.cloud.github.v1beta.AccessLevelR\vaccessLevel\x12 \n" +
 	"\fswap_size_mb\x18\f \x01(\x05R\n" +
-	"swapSizeMb\"\xe2\x02\n" +
+	"swapSizeMb\x12U\n" +
+	"\x12custom_permissions\x18\r \x03(\v2&.namespace.cloud.iam.v1beta.PermissionR\x11customPermissions\"\xe2\x02\n" +
 	"\rNetworkPolicy\x12Q\n" +
 	"\x06egress\x18\x01 \x01(\x0e29.namespace.cloud.github.v1beta.NetworkPolicy.EgressPolicyR\x06egress\x127\n" +
 	"\x18egress_domain_allow_list\x18\x02 \x03(\tR\x15egressDomainAllowList\x12\x1a\n" +
@@ -1527,12 +1530,13 @@ const file_proto_namespace_cloud_github_v1beta_profiles_proto_rawDesc = "" +
 	"\x12USE_REMOTE_BUILDER\x10\x01\x12\x13\n" +
 	"\x0fUSE_LOCAL_CACHE\x10\x02\x12\x0e\n" +
 	"\n" +
-	"NO_CACHING\x10\x03*\x7f\n" +
+	"NO_CACHING\x10\x03*\x98\x01\n" +
 	"\vAccessLevel\x12\x1c\n" +
 	"\x18ACCESS_LEVEL_UNSPECIFIED\x10\x00\x12\x1b\n" +
 	"\x17ACCESS_LEVEL_PERMISSIVE\x10\x01\x12\x18\n" +
 	"\x14ACCESS_LEVEL_LIMITED\x10\x02\x12\x1b\n" +
-	"\x17ACCESS_LEVEL_RESTRICTED\x10\x032\xd2\x04\n" +
+	"\x17ACCESS_LEVEL_RESTRICTED\x10\x03\x12\x17\n" +
+	"\x13ACCESS_LEVEL_CUSTOM\x10\x042\xd2\x04\n" +
 	"\x0eProfileService\x12z\n" +
 	"\rCreateProfile\x123.namespace.cloud.github.v1beta.CreateProfileRequest\x1a4.namespace.cloud.github.v1beta.CreateProfileResponse\x12z\n" +
 	"\rUpdateProfile\x123.namespace.cloud.github.v1beta.UpdateProfileRequest\x1a4.namespace.cloud.github.v1beta.UpdateProfileResponse\x12[\n" +
@@ -1580,7 +1584,8 @@ var file_proto_namespace_cloud_github_v1beta_profiles_proto_goTypes = []any{
 	(*RebuildProfileImageResponse)(nil), // 21: namespace.cloud.github.v1beta.RebuildProfileImageResponse
 	(*timestamppb.Timestamp)(nil),       // 22: google.protobuf.Timestamp
 	(*v1beta.InstanceShape)(nil),        // 23: namespace.cloud.compute.v1beta.InstanceShape
-	(*emptypb.Empty)(nil),               // 24: google.protobuf.Empty
+	(*v1beta1.Permission)(nil),          // 24: namespace.cloud.iam.v1beta.Permission
+	(*emptypb.Empty)(nil),               // 25: google.protobuf.Empty
 }
 var file_proto_namespace_cloud_github_v1beta_profiles_proto_depIdxs = []int32{
 	11, // 0: namespace.cloud.github.v1beta.RunnerProfileStatus.custom_runner_image:type_name -> namespace.cloud.github.v1beta.CustomRunnerImage
@@ -1602,28 +1607,29 @@ var file_proto_namespace_cloud_github_v1beta_profiles_proto_depIdxs = []int32{
 	9,  // 16: namespace.cloud.github.v1beta.RunnerProfileSpec.custom_runner_image_spec:type_name -> namespace.cloud.github.v1beta.CustomRunnerImageSpec
 	13, // 17: namespace.cloud.github.v1beta.RunnerProfileSpec.network_policy:type_name -> namespace.cloud.github.v1beta.NetworkPolicy
 	1,  // 18: namespace.cloud.github.v1beta.RunnerProfileSpec.access_level:type_name -> namespace.cloud.github.v1beta.AccessLevel
-	3,  // 19: namespace.cloud.github.v1beta.NetworkPolicy.egress:type_name -> namespace.cloud.github.v1beta.NetworkPolicy.EgressPolicy
-	12, // 20: namespace.cloud.github.v1beta.CreateProfileRequest.spec:type_name -> namespace.cloud.github.v1beta.RunnerProfileSpec
-	5,  // 21: namespace.cloud.github.v1beta.CreateProfileResponse.profile:type_name -> namespace.cloud.github.v1beta.RunnerProfileWithStatus
-	12, // 22: namespace.cloud.github.v1beta.UpdateProfileRequest.spec:type_name -> namespace.cloud.github.v1beta.RunnerProfileSpec
-	5,  // 23: namespace.cloud.github.v1beta.UpdateProfileResponse.profile:type_name -> namespace.cloud.github.v1beta.RunnerProfileWithStatus
-	5,  // 24: namespace.cloud.github.v1beta.ListProfilesResponse.profiles:type_name -> namespace.cloud.github.v1beta.RunnerProfileWithStatus
-	4,  // 25: namespace.cloud.github.v1beta.RebuildProfileImageResponse.status:type_name -> namespace.cloud.github.v1beta.RunnerProfileStatus
-	14, // 26: namespace.cloud.github.v1beta.ProfileService.CreateProfile:input_type -> namespace.cloud.github.v1beta.CreateProfileRequest
-	16, // 27: namespace.cloud.github.v1beta.ProfileService.UpdateProfile:input_type -> namespace.cloud.github.v1beta.UpdateProfileRequest
-	24, // 28: namespace.cloud.github.v1beta.ProfileService.ListProfiles:input_type -> google.protobuf.Empty
-	19, // 29: namespace.cloud.github.v1beta.ProfileService.DeleteProfile:input_type -> namespace.cloud.github.v1beta.DeleteProfileRequest
-	20, // 30: namespace.cloud.github.v1beta.ProfileService.RebuildProfileImage:input_type -> namespace.cloud.github.v1beta.RebuildProfileImageRequest
-	15, // 31: namespace.cloud.github.v1beta.ProfileService.CreateProfile:output_type -> namespace.cloud.github.v1beta.CreateProfileResponse
-	17, // 32: namespace.cloud.github.v1beta.ProfileService.UpdateProfile:output_type -> namespace.cloud.github.v1beta.UpdateProfileResponse
-	18, // 33: namespace.cloud.github.v1beta.ProfileService.ListProfiles:output_type -> namespace.cloud.github.v1beta.ListProfilesResponse
-	24, // 34: namespace.cloud.github.v1beta.ProfileService.DeleteProfile:output_type -> google.protobuf.Empty
-	21, // 35: namespace.cloud.github.v1beta.ProfileService.RebuildProfileImage:output_type -> namespace.cloud.github.v1beta.RebuildProfileImageResponse
-	31, // [31:36] is the sub-list for method output_type
-	26, // [26:31] is the sub-list for method input_type
-	26, // [26:26] is the sub-list for extension type_name
-	26, // [26:26] is the sub-list for extension extendee
-	0,  // [0:26] is the sub-list for field type_name
+	24, // 19: namespace.cloud.github.v1beta.RunnerProfileSpec.custom_permissions:type_name -> namespace.cloud.iam.v1beta.Permission
+	3,  // 20: namespace.cloud.github.v1beta.NetworkPolicy.egress:type_name -> namespace.cloud.github.v1beta.NetworkPolicy.EgressPolicy
+	12, // 21: namespace.cloud.github.v1beta.CreateProfileRequest.spec:type_name -> namespace.cloud.github.v1beta.RunnerProfileSpec
+	5,  // 22: namespace.cloud.github.v1beta.CreateProfileResponse.profile:type_name -> namespace.cloud.github.v1beta.RunnerProfileWithStatus
+	12, // 23: namespace.cloud.github.v1beta.UpdateProfileRequest.spec:type_name -> namespace.cloud.github.v1beta.RunnerProfileSpec
+	5,  // 24: namespace.cloud.github.v1beta.UpdateProfileResponse.profile:type_name -> namespace.cloud.github.v1beta.RunnerProfileWithStatus
+	5,  // 25: namespace.cloud.github.v1beta.ListProfilesResponse.profiles:type_name -> namespace.cloud.github.v1beta.RunnerProfileWithStatus
+	4,  // 26: namespace.cloud.github.v1beta.RebuildProfileImageResponse.status:type_name -> namespace.cloud.github.v1beta.RunnerProfileStatus
+	14, // 27: namespace.cloud.github.v1beta.ProfileService.CreateProfile:input_type -> namespace.cloud.github.v1beta.CreateProfileRequest
+	16, // 28: namespace.cloud.github.v1beta.ProfileService.UpdateProfile:input_type -> namespace.cloud.github.v1beta.UpdateProfileRequest
+	25, // 29: namespace.cloud.github.v1beta.ProfileService.ListProfiles:input_type -> google.protobuf.Empty
+	19, // 30: namespace.cloud.github.v1beta.ProfileService.DeleteProfile:input_type -> namespace.cloud.github.v1beta.DeleteProfileRequest
+	20, // 31: namespace.cloud.github.v1beta.ProfileService.RebuildProfileImage:input_type -> namespace.cloud.github.v1beta.RebuildProfileImageRequest
+	15, // 32: namespace.cloud.github.v1beta.ProfileService.CreateProfile:output_type -> namespace.cloud.github.v1beta.CreateProfileResponse
+	17, // 33: namespace.cloud.github.v1beta.ProfileService.UpdateProfile:output_type -> namespace.cloud.github.v1beta.UpdateProfileResponse
+	18, // 34: namespace.cloud.github.v1beta.ProfileService.ListProfiles:output_type -> namespace.cloud.github.v1beta.ListProfilesResponse
+	25, // 35: namespace.cloud.github.v1beta.ProfileService.DeleteProfile:output_type -> google.protobuf.Empty
+	21, // 36: namespace.cloud.github.v1beta.ProfileService.RebuildProfileImage:output_type -> namespace.cloud.github.v1beta.RebuildProfileImageResponse
+	32, // [32:37] is the sub-list for method output_type
+	27, // [27:32] is the sub-list for method input_type
+	27, // [27:27] is the sub-list for extension type_name
+	27, // [27:27] is the sub-list for extension extendee
+	0,  // [0:27] is the sub-list for field type_name
 }
 
 func init() { file_proto_namespace_cloud_github_v1beta_profiles_proto_init() }
