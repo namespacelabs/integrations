@@ -20,6 +20,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/stretchr/testify/assert"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 	"google.golang.org/grpc/test/bufconn"
@@ -33,7 +34,11 @@ func TestDownloadArtifact(t *testing.T) {
 	httpServer := newRangeServer(t, data, nil)
 	defer httpServer.Close()
 
-	artifactServer := &testArtifactServer{url: httpServer.URL}
+	artifactServer := &testArtifactServer{}
+	artifactServer.current.Store(&storagev1beta.ResolveArtifactResponse{
+		Description:       &storagev1beta.Artifact{Id: "original"},
+		SignedDownloadUrl: httpServer.URL,
+	})
 	listener := bufconn.Listen(1024 * 1024)
 	grpcServer := grpc.NewServer()
 	storagev1beta.RegisterArtifactsServiceServer(grpcServer, artifactServer)
@@ -60,9 +65,38 @@ func TestDownloadArtifact(t *testing.T) {
 	assertFileContents(t, dest, data)
 	assertPathMissing(t, dest+".state")
 	assertPathMissing(t, dest+".download")
-	if got := artifactServer.calls.Load(); got != 4 {
-		t.Errorf("ResolveArtifact calls = %d, want 4", got)
+
+	replacementData := bytes.Repeat([]byte{0xa7}, len(data))
+	replacementServer := newRangeServer(t, replacementData, nil)
+	defer replacementServer.Close()
+	replacement := &storagev1beta.ResolveArtifactResponse{
+		Description:       &storagev1beta.Artifact{Id: "replacement"},
+		SignedDownloadUrl: replacementServer.URL,
 	}
+	client := storageapi.Client{Artifacts: storagev1beta.NewArtifactsServiceClient(conn), Conn: conn}
+	opts := Options{
+		ChunkSize:  chunkSize,
+		Concurrent: 1,
+		Resume:     true,
+		OnProgress: func(downloaded, _ int64) {
+			if downloaded > 0 {
+				artifactServer.current.Store(replacement)
+			}
+		},
+		retryDelay: func(int) time.Duration { return 0 },
+	}
+	err = DownloadArtifact(context.Background(), client, "main", "build/output", dest, opts)
+	assert.ErrorContains(t, err, "artifact changed during download")
+	assertFileContents(t, dest, data)
+	assertPathExists(t, dest+".state")
+	assertPathExists(t, dest+".download")
+
+	opts.OnProgress = nil
+	err = DownloadArtifact(context.Background(), client, "main", "build/output", dest, opts)
+	assert.NoError(t, err)
+	assertFileContents(t, dest, replacementData)
+	assertPathMissing(t, dest+".state")
+	assertPathMissing(t, dest+".download")
 }
 
 func TestDownloadParallelWithRetry(t *testing.T) {
@@ -275,16 +309,14 @@ type rangeServer struct {
 
 type testArtifactServer struct {
 	storagev1beta.UnimplementedArtifactsServiceServer
-	url   string
-	calls atomic.Int64
+	current atomic.Pointer[storagev1beta.ResolveArtifactResponse]
 }
 
 func (s *testArtifactServer) ResolveArtifact(_ context.Context, req *storagev1beta.ResolveArtifactRequest) (*storagev1beta.ResolveArtifactResponse, error) {
 	if req.GetNamespace() != "main" || req.GetPath() != "build/output" {
 		return nil, fmt.Errorf("unexpected artifact: %s/%s", req.GetNamespace(), req.GetPath())
 	}
-	s.calls.Add(1)
-	return &storagev1beta.ResolveArtifactResponse{SignedDownloadUrl: s.url}, nil
+	return s.current.Load(), nil
 }
 
 func newRangeServer(t *testing.T, data []byte, status func(start int64) int) *rangeServer {

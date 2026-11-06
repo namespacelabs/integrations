@@ -53,11 +53,13 @@ type Options struct {
 	// OnRetry may be called concurrently before a failed chunk is retried.
 	OnRetry func(chunk int64, err error, delay time.Duration)
 
+	sourceID   string
 	retryDelay func(attempt int) time.Duration
 }
 
 type downloadState struct {
 	Version         int              `json:"version"`
+	SourceID        string           `json:"source_id,omitempty"`
 	ChunkSize       int64            `json:"chunk_size"`
 	ChunksDone      []int64          `json:"chunks_done"`
 	Digests         map[int64]string `json:"digests,omitempty"`
@@ -118,13 +120,15 @@ func Download(ctx context.Context, destPath string, opts Options) error {
 		if err != nil {
 			return fmt.Errorf("validate partial download: %w", err)
 		}
-		if !valid {
+		// Equal file sizes and intact local chunks do not imply the same artifact version.
+		if !valid || state.state.SourceID != opts.sourceID {
 			state = newState(stateFile, opts.ChunkSize)
 			isNew = true
 		}
 	}
 
 	if isNew {
+		state.state.SourceID = opts.sourceID
 		if err := state.save(); err != nil {
 			return fmt.Errorf("save initial download state: %w", err)
 		}
