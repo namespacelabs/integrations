@@ -20,6 +20,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/stretchr/testify/assert"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 	"google.golang.org/grpc/test/bufconn"
@@ -30,10 +31,35 @@ import (
 func TestDownloadArtifact(t *testing.T) {
 	const chunkSize = 64 * 1024
 	data := testData(3 * chunkSize)
-	httpServer := newRangeServer(t, data, nil)
+	artifactServer := &testArtifactServer{}
+	replacementData := bytes.Repeat([]byte("x"), len(data)+890)
+	var failReplacement atomic.Bool
+	replacementServer := newRangeServer(t, replacementData, func(start int64) int {
+		if failReplacement.Load() && start == chunkSize {
+			return http.StatusServiceUnavailable
+		}
+		return http.StatusPartialContent
+	})
+	defer replacementServer.Close()
+	replacement := &storagev1beta.ResolveArtifactResponse{
+		Description:       &storagev1beta.Artifact{Id: "replacement"},
+		SignedDownloadUrl: replacementServer.URL,
+	}
+	var failed atomic.Bool
+	httpServer := newRangeServer(t, data, func(start int64) int {
+		// Republish after HEAD, then force a retry of the first chunk.
+		artifactServer.current.Store(replacement)
+		if start == 0 && !failed.Swap(true) {
+			return http.StatusServiceUnavailable
+		}
+		return http.StatusPartialContent
+	})
 	defer httpServer.Close()
 
-	artifactServer := &testArtifactServer{url: httpServer.URL}
+	artifactServer.current.Store(&storagev1beta.ResolveArtifactResponse{
+		Description:       &storagev1beta.Artifact{Id: "original"},
+		SignedDownloadUrl: httpServer.URL,
+	})
 	listener := bufconn.Listen(1024 * 1024)
 	grpcServer := grpc.NewServer()
 	storagev1beta.RegisterArtifactsServiceServer(grpcServer, artifactServer)
@@ -49,10 +75,12 @@ func TestDownloadArtifact(t *testing.T) {
 	t.Cleanup(func() { _ = conn.Close() })
 
 	dest := filepath.Join(t.TempDir(), "artifact.bin")
-	err = DownloadArtifact(context.Background(), storageapi.Client{
+	cli := storageapi.Client{
 		Artifacts: storagev1beta.NewArtifactsServiceClient(conn),
 		Conn:      conn,
-	}, "main", "build/output", dest, Options{ChunkSize: chunkSize, Concurrent: 2, Resume: true})
+	}
+	opts := Options{ChunkSize: chunkSize, Concurrent: 1, Resume: true, retryDelay: func(int) time.Duration { return 0 }}
+	err = DownloadArtifact(context.Background(), cli, "main", "build/output", dest, opts)
 	if err != nil {
 		t.Fatalf("DownloadArtifact() error: %v", err)
 	}
@@ -60,9 +88,27 @@ func TestDownloadArtifact(t *testing.T) {
 	assertFileContents(t, dest, data)
 	assertPathMissing(t, dest+".state")
 	assertPathMissing(t, dest+".download")
-	if got := artifactServer.calls.Load(); got != 4 {
-		t.Errorf("ResolveArtifact calls = %d, want 4", got)
+
+	// A partial download must not resume into another version, even at the same size.
+	failReplacement.Store(true)
+	assert.Error(t, DownloadArtifact(context.Background(), cli, "main", "build/output", dest, opts))
+	assertFileContents(t, dest, data)
+	assertPathExists(t, dest+".state")
+	assertPathExists(t, dest+".download")
+
+	newData := bytes.Repeat([]byte("y"), len(replacementData))
+	newServer := newRangeServer(t, newData, nil)
+	defer newServer.Close()
+	artifactServer.current.Store(&storagev1beta.ResolveArtifactResponse{
+		Description:       &storagev1beta.Artifact{Id: "new-version"},
+		SignedDownloadUrl: newServer.URL,
+	})
+	if !assert.NoError(t, DownloadArtifact(context.Background(), cli, "main", "build/output", dest, opts)) {
+		return
 	}
+	assertFileContents(t, dest, newData)
+	assertPathMissing(t, dest+".state")
+	assertPathMissing(t, dest+".download")
 }
 
 func TestDownloadParallelWithRetry(t *testing.T) {
@@ -275,16 +321,14 @@ type rangeServer struct {
 
 type testArtifactServer struct {
 	storagev1beta.UnimplementedArtifactsServiceServer
-	url   string
-	calls atomic.Int64
+	current atomic.Pointer[storagev1beta.ResolveArtifactResponse]
 }
 
 func (s *testArtifactServer) ResolveArtifact(_ context.Context, req *storagev1beta.ResolveArtifactRequest) (*storagev1beta.ResolveArtifactResponse, error) {
 	if req.GetNamespace() != "main" || req.GetPath() != "build/output" {
 		return nil, fmt.Errorf("unexpected artifact: %s/%s", req.GetNamespace(), req.GetPath())
 	}
-	s.calls.Add(1)
-	return &storagev1beta.ResolveArtifactResponse{SignedDownloadUrl: s.url}, nil
+	return s.current.Load(), nil
 }
 
 func newRangeServer(t *testing.T, data []byte, status func(start int64) int) *rangeServer {
