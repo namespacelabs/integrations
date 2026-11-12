@@ -2855,7 +2855,9 @@ type AllocatedContainer struct {
 	Name string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
 	// The allocated exported ports, which include the allocated public ingress
 	// URLs.
-	ExportedPort  []*AllocatedContainer_ExportedContainerPort `protobuf:"bytes,3,rep,name=exported_port,json=exportedPort,proto3" json:"exported_port,omitempty"`
+	ExportedPort []*AllocatedContainer_ExportedContainerPort `protobuf:"bytes,3,rep,name=exported_port,json=exportedPort,proto3" json:"exported_port,omitempty"`
+	// The resolved image reference used to back this container.
+	ImageRef      string `protobuf:"bytes,4,opt,name=image_ref,json=imageRef,proto3" json:"image_ref,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -2909,6 +2911,13 @@ func (x *AllocatedContainer) GetExportedPort() []*AllocatedContainer_ExportedCon
 		return x.ExportedPort
 	}
 	return nil
+}
+
+func (x *AllocatedContainer) GetImageRef() string {
+	if x != nil {
+		return x.ImageRef
+	}
+	return ""
 }
 
 type SuspendInstanceRequest struct {
@@ -7929,11 +7938,12 @@ const file_proto_namespace_cloud_compute_v1beta_compute_proto_rawDesc = "" +
 	"\x15does_not_require_auth\x18\x02 \x01(\bR\x12doesNotRequireAuth\x1a7\n" +
 	"\tHttpMatch\x12\x16\n" +
 	"\x06method\x18\x01 \x03(\tR\x06method\x12\x12\n" +
-	"\x04path\x18\x02 \x01(\tR\x04path\"\xd1\x04\n" +
+	"\x04path\x18\x02 \x01(\tR\x04path\"\xee\x04\n" +
 	"\x12AllocatedContainer\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12m\n" +
-	"\rexported_port\x18\x03 \x03(\v2H.namespace.cloud.compute.v1beta.AllocatedContainer.ExportedContainerPortR\fexportedPort\x1a\xa7\x03\n" +
+	"\rexported_port\x18\x03 \x03(\v2H.namespace.cloud.compute.v1beta.AllocatedContainer.ExportedContainerPortR\fexportedPort\x12\x1b\n" +
+	"\timage_ref\x18\x04 \x01(\tR\bimageRef\x1a\xa7\x03\n" +
 	"\x15ExportedContainerPort\x12I\n" +
 	"\x05proto\x18\x01 \x01(\x0e23.namespace.cloud.compute.v1beta.ContainerPort.ProtoR\x05proto\x12%\n" +
 	"\x0econtainer_port\x18\x02 \x01(\x05R\rcontainerPort\x12U\n" +
